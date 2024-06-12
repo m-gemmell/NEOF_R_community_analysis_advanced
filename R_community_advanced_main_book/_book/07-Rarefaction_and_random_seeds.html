@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 7 Rarefaction and random seeds | R community advanced analysis</title>
+  <title>Chapter 7 Random seeds | R community advanced analysis</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 7 Rarefaction and random seeds | R community advanced analysis" />
+  <meta property="og:title" content="Chapter 7 Random seeds | R community advanced analysis" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/figures/NEOF.png" />
   <meta property="og:description" content="NEOF book for the R community advanced analysis course" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 7 Rarefaction and random seeds | R community advanced analysis" />
+  <meta name="twitter:title" content="Chapter 7 Random seeds | R community advanced analysis" />
   
   <meta name="twitter:description" content="NEOF book for the R community advanced analysis course" />
   <meta name="twitter:image" content="/figures/NEOF.png" />
@@ -191,11 +191,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2" data-path="06-Iterative_rarefaction.html"><a href="06-Iterative_rarefaction.html#using-iterations"><i class="fa fa-check"></i><b>6.2</b> Using iterations</a></li>
 <li class="chapter" data-level="6.3" data-path="06-Iterative_rarefaction.html"><a href="06-Iterative_rarefaction.html#section-contents"><i class="fa fa-check"></i><b>6.3</b> Section contents</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="07-Rarefaction_and_random_seeds.html"><a href="07-Rarefaction_and_random_seeds.html"><i class="fa fa-check"></i><b>7</b> Rarefaction and random seeds</a>
+<li class="chapter" data-level="7" data-path="07-Rarefaction_and_random_seeds.html"><a href="07-Rarefaction_and_random_seeds.html"><i class="fa fa-check"></i><b>7</b> Random seeds</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="07-Rarefaction_and_random_seeds.html"><a href="07-Rarefaction_and_random_seeds.html#should-you-rarefy-1"><i class="fa fa-check"></i><b>7.1</b> Should you rarefy?</a></li>
-<li class="chapter" data-level="7.2" data-path="07-Rarefaction_and_random_seeds.html"><a href="07-Rarefaction_and_random_seeds.html#using-iterations-1"><i class="fa fa-check"></i><b>7.2</b> Using iterations</a></li>
-<li class="chapter" data-level="7.3" data-path="07-Rarefaction_and_random_seeds.html"><a href="07-Rarefaction_and_random_seeds.html#section-contents-1"><i class="fa fa-check"></i><b>7.3</b> Section contents</a></li>
+<li class="chapter" data-level="7.1" data-path="07-Rarefaction_and_random_seeds.html"><a href="07-Rarefaction_and_random_seeds.html#random-seed-notebook"><i class="fa fa-check"></i><b>7.1</b> Random seed notebook</a></li>
+<li class="chapter" data-level="7.2" data-path="07-Rarefaction_and_random_seeds.html"><a href="07-Rarefaction_and_random_seeds.html#random-seeds"><i class="fa fa-check"></i><b>7.2</b> Random seeds</a></li>
+<li class="chapter" data-level="7.3" data-path="07-Rarefaction_and_random_seeds.html"><a href="07-Rarefaction_and_random_seeds.html#random-sampling"><i class="fa fa-check"></i><b>7.3</b> Random sampling</a></li>
+<li class="chapter" data-level="7.4" data-path="07-Rarefaction_and_random_seeds.html"><a href="07-Rarefaction_and_random_seeds.html#sampling-with-replacement"><i class="fa fa-check"></i><b>7.4</b> Sampling with replacement</a></li>
+<li class="chapter" data-level="7.5" data-path="07-Rarefaction_and_random_seeds.html"><a href="07-Rarefaction_and_random_seeds.html#setting-a-random-seed"><i class="fa fa-check"></i><b>7.5</b> Setting a random seed</a></li>
+<li class="chapter" data-level="7.6" data-path="07-Rarefaction_and_random_seeds.html"><a href="07-Rarefaction_and_random_seeds.html#reset-seed"><i class="fa fa-check"></i><b>7.6</b> Reset seed</a></li>
+<li class="chapter" data-level="7.7" data-path="07-Rarefaction_and_random_seeds.html"><a href="07-Rarefaction_and_random_seeds.html#random-seed-practice"><i class="fa fa-check"></i><b>7.7</b> Random seed practice</a>
+<ul>
+<li class="chapter" data-level="7.7.1" data-path="07-Rarefaction_and_random_seeds.html"><a href="07-Rarefaction_and_random_seeds.html#random-seed-question-1"><i class="fa fa-check"></i><b>7.7.1</b> Random seed: Question 1</a></li>
+<li class="chapter" data-level="7.7.2" data-path="07-Rarefaction_and_random_seeds.html"><a href="07-Rarefaction_and_random_seeds.html#random-seed-question-2"><i class="fa fa-check"></i><b>7.7.2</b> Random seed: Question 2</a></li>
+<li class="chapter" data-level="7.7.3" data-path="07-Rarefaction_and_random_seeds.html"><a href="07-Rarefaction_and_random_seeds.html#random-seed-question-3"><i class="fa fa-check"></i><b>7.7.3</b> Random seed: Question 3</a></li>
+</ul></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -217,53 +226,157 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="rarefaction_randomw_seeds_chap" class="section level1 hasAnchor" number="7">
-<h1><span class="header-section-number">Chapter 7</span> Rarefaction and random seeds<a href="07-Rarefaction_and_random_seeds.html#rarefaction_randomw_seeds_chap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<center>
-<img src="figures/half_tablespoon.png" style="width:200px" />
-</center>
-<p>Rarefaction is the process of randomly subsetting samples so the total count values are identical across all samples.
-Rarefaction is intended to correct for bias caused by varying sampling depths across the samples to be analysed.</p>
-<div id="should-you-rarefy-1" class="section level2 hasAnchor" number="7.1">
-<h2><span class="header-section-number">7.1</span> Should you rarefy?<a href="07-Rarefaction_and_random_seeds.html#should-you-rarefy-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Rarefaction can be a hotly debated topic with two main points of view.</p>
-<ol style="list-style-type: decimal">
-<li>Some researchers believe it is not appropriate.
-<ol style="list-style-type: decimal">
-<li>This is backed up by the 2014 paper <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531">"Waste Not, Want Not: Why Rarefying Microbiome Data Is Inadmissible"</a></li>
-<li>Various R package developers do not recommend it such as the developers of <a href="https://joey711.github.io/phyloseq/"><code>phyloseq</code></a> &amp; <a href="https://microbiome.github.io/tutorials/"><code>microbiome</code></a>.</li>
-</ol></li>
-<li>Some researchers believe it is appropriate.
-<ol style="list-style-type: decimal">
-<li>This is backed up by the 2022 paper <a href="https://academic.oup.com/bioinformatics/article/38/9/2389/6536959">"To rarefy or not to rarefy: robustness and efficiency trade-offs of rarefying microbiome data"</a></li>
-<li>The QIIME2 developers include rarefaction in their tutorials/SOPs for alpha and beta diversity analysis</li>
-</ol></li>
-</ol>
-<p>We use rarefaction in our analyses but it is ultimately up to you whether you utilise it or not.</p>
+<div id="random_seeds_chap" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Random seeds<a href="07-Rarefaction_and_random_seeds.html#random_seeds_chap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In this chapter we will demonstrate the use of random seeds.
+This is to help understand what random seeds are and why they are used.
+We won't do anything of value with the results in this chapter, instead this knowledge will be useful for understanding iterative rarefaction.</p>
+<div id="random-seed-notebook" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Random seed notebook<a href="07-Rarefaction_and_random_seeds.html#random-seed-notebook" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Create a new R jupyter-notebook called "Random_seeds.ipynb".
+We will use this for this chapter.</p>
 </div>
-<div id="using-iterations-1" class="section level2 hasAnchor" number="7.2">
-<h2><span class="header-section-number">7.2</span> Using iterations<a href="07-Rarefaction_and_random_seeds.html#using-iterations-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In our initial R community analysis workshop we only rarefy once for each sample.
-In this section we will rarefy multiple times to calculate average values for alpha and beta diversity metrics.
-This is an iterative rarefaction analysis.</p>
-<p>This iterative approach will, in theory, smooth out any extreme results one round of rarefaction may cause, Extreme results being possibly due the random nature of rarefaction.
-These extreme results can include:</p>
-<ul>
-<li>Leaving important features (ASVs, taxonomic groups, etc.) with no counts</li>
-<li>Causing a few features to have much higher relative abundances than</li>
-<li>Varying alpha and beta diversity values with different sets of rarefaction</li>
-</ul>
+<div id="random-seeds" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Random seeds<a href="07-Rarefaction_and_random_seeds.html#random-seeds" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>What are random seeds?</p>
+<p>Random seeds are numbers that computational tasks use to determine how they will carry out a random task.</p>
 </div>
-<div id="section-contents-1" class="section level2 hasAnchor" number="7.3">
-<h2><span class="header-section-number">7.3</span> Section contents<a href="07-Rarefaction_and_random_seeds.html#section-contents-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>CHECK below sentence</p>
-<p>In the next 3 chapters (X-Y) we will learn how to:</p>
+<div id="random-sampling" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Random sampling<a href="07-Rarefaction_and_random_seeds.html#random-sampling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To demonstrate this we will use the R function <code>sample()</code>.
+This function randomly samples a set of numbers.</p>
+<p>Create the below code in a code cell.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb12-1"><a href="07-Rarefaction_and_random_seeds.html#cb12-1" tabindex="-1"></a><span class="co">#Create a vector containing the numbers 0 to 10</span></span>
+<span id="cb12-2"><a href="07-Rarefaction_and_random_seeds.html#cb12-2" tabindex="-1"></a>num_vec <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb12-3"><a href="07-Rarefaction_and_random_seeds.html#cb12-3" tabindex="-1"></a><span class="co">#Randomly sample 5 of these numbers</span></span>
+<span id="cb12-4"><a href="07-Rarefaction_and_random_seeds.html#cb12-4" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p>If you run the code you will get five random single digit numbers.</p>
+<p>Run this multiple times and you will hopefully see the sampled numbers are different every time.</p>
+</div>
+<div id="sampling-with-replacement" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> Sampling with replacement<a href="07-Rarefaction_and_random_seeds.html#sampling-with-replacement" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You may also notice that within each sample there are no repeating numbers.
+You can change this by adding the options <code>replace = TRUE</code>.</p>
+<p>Try this out in a new cell.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb13-1"><a href="07-Rarefaction_and_random_seeds.html#cb13-1" tabindex="-1"></a><span class="co">#Randomly sample 5 of these numbers with replacement</span></span>
+<span id="cb13-2"><a href="07-Rarefaction_and_random_seeds.html#cb13-2" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Run this a few times and you will hopefully notice that there are repeats.</p>
+<p>When sampling with replacement you put back any results back into the sampling pool.
+When sampling without replacement you don't put back any results into the sampling pool.</p>
+<p>The famous example is sampling green and yellow balls from a bag.
+If you had a bag with 1000 balls and you wanted a rough idea of the ratio of yellow and green balls you could count the number of these balls of only 50.
+Without replacement you would take out a ball, mark its colour and throw it in a separate container.
+With replacement you would take out a ball, mark its colour and put it back into the intial bag, meanig it could possibly be recounted.</p>
+<p>One advantage of sampling with replacement is that your sampling size can be larger than your actual population size.
+For example, you could create a random sampling of 50 with a bag containing 10 balls with replacement.
+This would not work without replacement.
+The below script will cause R to produce an error saying it can be done with replacement.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb14-1"><a href="07-Rarefaction_and_random_seeds.html#cb14-1" tabindex="-1"></a><span class="co">#Randomly sample 5 of these numbers with replacement</span></span>
+<span id="cb14-2"><a href="07-Rarefaction_and_random_seeds.html#cb14-2" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Importantly for us rarefaction uses sampling without replacement.</p>
+</div>
+<div id="setting-a-random-seed" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> Setting a random seed<a href="07-Rarefaction_and_random_seeds.html#setting-a-random-seed" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We'll sample, without replacement, the numbers one more time in a new cell.
+However, this time we will set the random seed with the function <code>seet.seed()</code>.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb15-1"><a href="07-Rarefaction_and_random_seeds.html#cb15-1" tabindex="-1"></a><span class="co">#Set random seed</span></span>
+<span id="cb15-2"><a href="07-Rarefaction_and_random_seeds.html#cb15-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb15-3"><a href="07-Rarefaction_and_random_seeds.html#cb15-3" tabindex="-1"></a><span class="co">#Randomly sample 12 of these numbers without replacement</span></span>
+<span id="cb15-4"><a href="07-Rarefaction_and_random_seeds.html#cb15-4" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">12</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-5"><a href="07-Rarefaction_and_random_seeds.html#cb15-5" tabindex="-1"></a><span class="co">#Reset random seed</span></span>
+<span id="cb15-6"><a href="07-Rarefaction_and_random_seeds.html#cb15-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div>
+<p>Before we explain the code further, try running the cell multiple times.
+If it is identical to the above code you will get the numbers "9, 5, 4, 3, &amp; 6".</p>
+<p>How come you are getting these results if it is random?</p>
+<p>True randomness is pretty much impossible, especially in computing.
+To get around this many programs use seeds to determine how random tasks will be carried out.
+Various programs that use random seeds include:</p>
 <ul>
-<li>Carry out iterative rarefaction by creating sets of random seeds</li>
-<li>Using iterative rarefaction to carry out alpha diversity analysis</li>
-<li>Using iterative rarefaction to carry out beta diversity analysis</li>
+<li>Sampling tools such as <code>sample()</code> and rarefaction</li>
+<li>Creating bootstrapped phylogenies</li>
+<li>Creating procedural content such as building Minecraft worlds</li>
 </ul>
+<p>Therefore if you run a tool that will use randomness you will always get the same results if:</p>
+<ul>
+<li>You use the same random seed</li>
+<li>You use the same data</li>
+<li>You use the same replacement method (with or without)</li>
+</ul>
+<p>In fact, run the below code in a new code cell and you may notice a similarity with your previous output.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb16-1"><a href="07-Rarefaction_and_random_seeds.html#cb16-1" tabindex="-1"></a><span class="co">#Set random seed</span></span>
+<span id="cb16-2"><a href="07-Rarefaction_and_random_seeds.html#cb16-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb16-3"><a href="07-Rarefaction_and_random_seeds.html#cb16-3" tabindex="-1"></a><span class="co">#Create a vector containing the numbers 0 to 10</span></span>
+<span id="cb16-4"><a href="07-Rarefaction_and_random_seeds.html#cb16-4" tabindex="-1"></a>larger_num_vec <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">19</span></span>
+<span id="cb16-5"><a href="07-Rarefaction_and_random_seeds.html#cb16-5" tabindex="-1"></a><span class="co">#Randomly sample 5 of these numbers</span></span>
+<span id="cb16-6"><a href="07-Rarefaction_and_random_seeds.html#cb16-6" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">5</span>)</span>
+<span id="cb16-7"><a href="07-Rarefaction_and_random_seeds.html#cb16-7" tabindex="-1"></a><span class="co">#Reset random seed</span></span>
+<span id="cb16-8"><a href="07-Rarefaction_and_random_seeds.html#cb16-8" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div>
+<p>That's right, <code>sample()</code> will always take the 10th (9/19), 6th (5/15), 5th (4/14), 4th (3/13), and 7th (6/16) values if it is given the random seed of (1234) and provided with a 11 length vector.</p>
+<p>Setting our randomness is incredible beneficial for reproducibility in research.</p>
+<p>When you carry out analysis you may need to redo some work.
+This could be due to reviewer comments or you want to incorporate some new methods.
+As long as you saved the random seeds you used you can get the same results where you need to.
+It also means others can replicate your results.</p>
+</div>
+<div id="reset-seed" class="section level2 hasAnchor" number="7.6">
+<h2><span class="header-section-number">7.6</span> Reset seed<a href="07-Rarefaction_and_random_seeds.html#reset-seed" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We set a random seed at the start of the cell for reproducibility and control, but why do we then run the line <code>set.seed(NULL)</code>?</p>
+<p>The normal operation of R means that, in effect, its random seed changes every time it is used.
+This means R normally randomly determines randomness.
+This is how it should be until we want to set the randomness.
+It is therefore good practice to set the seed to <code>NULL</code> after you have utilised your set seeds.
+This will revert the seed to its normal random operations.</p>
+<p>One last point to note is R versions.
+Version 3.6 changed R's sampling methods, therefore if you use Version 3.5 or below you will get different results than we have got.
+Hopefully the R developers will not change this in a later version again.</p>
+</div>
+<div id="random-seed-practice" class="section level2 hasAnchor" number="7.7">
+<h2><span class="header-section-number">7.7</span> Random seed practice<a href="07-Rarefaction_and_random_seeds.html#random-seed-practice" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Brilliant! To reinforce the above knowledge try out the following challenges.</p>
+<p>First create the following vector:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb17-1"><a href="07-Rarefaction_and_random_seeds.html#cb17-1" tabindex="-1"></a>second_millenium <span class="ot">&lt;-</span> <span class="dv">1001</span><span class="sc">:</span><span class="dv">2000</span></span></code></pre></div>
+<p><strong>Note:</strong> Remember it is best practice to <code>set.seed(NULL)</code> at the end of a code cell.</p>
+<div id="random-seed-question-1" class="section level3 hasAnchor" number="7.7.1">
+<h3><span class="header-section-number">7.7.1</span> Random seed: Question 1<a href="07-Rarefaction_and_random_seeds.html#random-seed-question-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Sample the object <code>second_millenium</code> with the following values:</p>
+<ul>
+<li>Extract 10 values</li>
+<li>Without replacement</li>
+<li>Use the random seed <code>489</code></li>
+</ul>
+What is the fourth number in the produced vector?
+<div id="radio_HFFIQWDJAD" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_HFFIQWDJAD" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_HFFIQWDJAD" value="answer"></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_HFFIQWDJAD" value=""></input> <span><strong>1744</strong></span></label>
+</div>
+</div>
+<div id="random-seed-question-2" class="section level3 hasAnchor" number="7.7.2">
+<h3><span class="header-section-number">7.7.2</span> Random seed: Question 2<a href="07-Rarefaction_and_random_seeds.html#random-seed-question-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Sample the object <code>second_millenium</code> with the following values:</p>
+<ul>
+<li>Extract 24 values</li>
+<li>Without replacement</li>
+<li>Use the answer to the previous question as the random seed</li>
+</ul>
+What is the 16th number in the produced vector?
+<div id="radio_LGGAJBRIRD" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_LGGAJBRIRD" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_LGGAJBRIRD" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_LGGAJBRIRD" value="answer"></input> <span><strong>1744</strong></span></label>
+</div>
+</div>
+<div id="random-seed-question-3" class="section level3 hasAnchor" number="7.7.3">
+<h3><span class="header-section-number">7.7.3</span> Random seed: Question 3<a href="07-Rarefaction_and_random_seeds.html#random-seed-question-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Sample the object <code>second_millenium</code> with the following values:</p>
+<ul>
+<li>Extract a number of values equal to the answer of the second question</li>
+<li>With replacement</li>
+<li>Use the first question as the random seed</li>
+</ul>
+What is the 999th number in the produced vector?
+<div id="radio_WTYDWEBCRS" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_WTYDWEBCRS" value="answer"></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_WTYDWEBCRS" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_WTYDWEBCRS" value=""></input> <span><strong>1744</strong></span></label>
+</div>
+<p>Once you are happy you can save then close and halt your "Random_seeds.ipynb" notebook.</p>
 
+</div>
 </div>
 </div>
 <script>

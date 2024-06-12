@@ -39,8 +39,9 @@ These extreme results can include:
 
 CHECK below sentence
 
-In the next 3 chapters (X-Y) we will learn how to:
+In this section we will learn how to:
 
--   Carry out iterative rarefaction by creating sets of random seeds
--   Using iterative rarefaction to carry out alpha diversity analysis
--   Using iterative rarefaction to carry out beta diversity analysis
+- Use random seeds for sampling
+- Carry out iterative rarefaction with sets of random seeds
+- Use iterative rarefaction to carry out alpha diversity analysis
+- Use iterative rarefaction to carry out beta diversity analysis
