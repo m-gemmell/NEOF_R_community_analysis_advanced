@@ -1,5 +1,5 @@
 --- 
-title: "R community analysis"
+title: "R community advanced analysis"
 author: "Matthew R. Gemmell"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
@@ -9,7 +9,7 @@ bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
 favicon: figures/NEOF_favicon.png
-description: NEOF book for the R community analysis workflow
+description: NEOF book for the R community advanced analysis course
 cover-image: "figures/NEOF.png"
 ---
 

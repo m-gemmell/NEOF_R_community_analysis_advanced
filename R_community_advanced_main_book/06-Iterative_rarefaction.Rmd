@@ -1,0 +1,46 @@
+# (PART\*) Iterative rarefaction {.unnumbered}
+
+# Iterative rarefaction intro {#rarefaction_intro_chap}
+
+<center>
+![](figures/half_tablespoon.png){style="width:200px"}
+</center>
+
+Rarefaction is the process of randomly subsetting samples so the total count values are identical across all samples.
+Rarefaction is intended to correct for bias caused by varying sampling depths across the samples to be analysed.
+
+## Should you rarefy?
+
+Rarefaction can be a hotly debated topic with two main points of view.
+
+1.  Some researchers believe it is not appropriate.
+    1.  This is backed up by the 2014 paper ["Waste Not, Want Not: Why Rarefying Microbiome Data Is Inadmissible"](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531)
+    2.  Various R package developers do not recommend it such as the developers of [`phyloseq`](https://joey711.github.io/phyloseq/) & [`microbiome`](https://microbiome.github.io/tutorials/).
+2.  Some researchers believe it is appropriate.
+    1.  This is backed up by the 2022 paper ["To rarefy or not to rarefy: robustness and efficiency trade-offs of rarefying microbiome data"](https://academic.oup.com/bioinformatics/article/38/9/2389/6536959)
+    2.  The QIIME2 developers include rarefaction in their tutorials/SOPs for alpha and beta diversity analysis
+
+We use rarefaction in our analyses but it is ultimately up to you whether you utilise it or not.
+
+## Using iterations
+
+In our initial R community analysis workshop we only rarefy once for each sample.
+In this section we will rarefy multiple times to calculate average values for alpha and beta diversity metrics.
+This is an iterative rarefaction analysis.
+
+This iterative approach will, in theory, smooth out any extreme results one round of rarefaction may cause, Extreme results being possibly due the random nature of rarefaction.
+These extreme results can include:
+
+-   Leaving important features (ASVs, taxonomic groups, etc.) with no counts
+-   Causing a few features to have much higher relative abundances than
+-   Varying alpha and beta diversity values with different sets of rarefaction
+
+## Section contents
+
+CHECK below sentence
+
+In the next 3 chapters (X-Y) we will learn how to:
+
+-   Carry out iterative rarefaction by creating sets of random seeds
+-   Using iterative rarefaction to carry out alpha diversity analysis
+-   Using iterative rarefaction to carry out beta diversity analysis
