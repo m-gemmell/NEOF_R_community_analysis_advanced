@@ -3,13 +3,16 @@
 # Iterative rarefaction intro {#rarefaction_intro_chap}
 
 <center>
-![](figures/half_tablespoon.png){style="width:200px"}
+![](figures/iteration.png){style="width:200px"}
 </center>
 
 Rarefaction is the process of randomly subsetting samples so the total count values are identical across all samples.
 Rarefaction is intended to correct for bias caused by varying sampling depths across the samples to be analysed.
 
 ## Should you rarefy?
+<center>
+![](figures/choice_sign.png){style="width:200px"}
+</center>
 
 Rarefaction can be a hotly debated topic with two main points of view.
 
@@ -23,6 +26,9 @@ Rarefaction can be a hotly debated topic with two main points of view.
 We use rarefaction in our analyses but it is ultimately up to you whether you utilise it or not.
 
 ## Using iterations
+<center>
+![](figures/iterations.png){style="width:200px; background-color:white; border-radius:15px"}
+</center>
 
 In our initial R community analysis workshop we only rarefy once for each sample.
 In this section we will rarefy multiple times to calculate average values for alpha and beta diversity metrics.
@@ -36,8 +42,9 @@ These extreme results can include:
 -   Varying alpha and beta diversity values with different sets of rarefaction
 
 ## Section contents
-
-CHECK below sentence
+<center>
+![](figures/contents.png){style="width:200px; background-color:white; border-radius:15px"}
+</center>
 
 In this section we will learn how to:
 

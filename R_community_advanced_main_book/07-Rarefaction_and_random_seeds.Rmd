@@ -1,4 +1,7 @@
 # Random seeds {#random_seeds_chap}
+<center>
+![](figures/random_seeds.png){style="width:200px"}
+</center>
 
 What are random seeds?
 
@@ -10,10 +13,17 @@ We won't do anything of value with the results in this chapter, instead this kno
 
 ## Random seed notebook
 
+<center>
+![](figures/seed_notebook.png){style="width:100px"}
+</center>
+
 Create a new R jupyter-notebook called "Random_seeds.ipynb".
 We will use this for this chapter.
 
 ## Random sampling
+<center>
+![](figures/random_sampling.png){style="width:200px; background:white; border-radius:5px"}
+</center>
 
 To demonstrate this we will use the R function `sample()`. 
 This function randomly samples a set of numbers.
@@ -32,6 +42,9 @@ If you run the code you will get five random single digit numbers.
 Run this multiple times and you will hopefully see the sampled numbers are different every time.
 
 ## Sampling with replacement
+<center>
+![](figures/balls.png){style="width:200px"}
+</center>
 
 You may also notice that within each sample there are no repeating numbers.
 You can change this by adding the options `replace = TRUE`.
@@ -66,6 +79,9 @@ sample(x = num_vec, size = 5, replace = TRUE)
 Importantly for us rarefaction uses sampling without replacement.
 
 ## Setting a random seed
+<center>
+![](figures/set_a_seed.png){style="width:400px"}
+</center>
 
 We'll sample, without replacement, the numbers one more time in a new cell.
 However, this time we will set the random seed with the function `seet.seed()`.
@@ -121,6 +137,9 @@ As long as you saved the random seeds you used you can get the same results wher
 It also means others can replicate your results.
 
 ## Reset seed
+<center>
+![](figures/reset_seed.png){style="width:400px"}
+</center>
 
 We set a random seed at the start of the cell for reproducibility and control, but why do we then run the line `set.seed(NULL)`?
 
@@ -135,6 +154,9 @@ Version 3.6 changed R's sampling methods, therefore if you use Version 3.5 or be
 Hopefully the R developers will not change this in a later version again.
 
 ## Random seed practice
+<center>
+![](figures/seed_sowing.png){style="width:200px"}
+</center>
 
 Brilliant! To reinforce the above knowledge try out the following challenges.
 
@@ -165,7 +187,7 @@ Sample the object `second_millenium` with the following parameters:
 
 - Extract 24 values
 - Without replacement
-- Use the answer to the previous question as the random seed
+- Use the answer to the first question as the random seed
 
 ```{r, echo = FALSE}
 opts_p <- c("__1120__", "__1369__", answer="__1744__")
@@ -178,7 +200,7 @@ Sample the object `second_millenium` with the following parameters:
 
 - Extract a number of values equal to the answer of the second question
 - With replacement
-- Use the first question as the random seed
+- Use the answer to the first question as the random seed
 
 ```{r, echo = FALSE}
 opts_p <- c(answer="__1120__", "__1369__", "__1744__")
@@ -186,3 +208,5 @@ opts_p <- c(answer="__1120__", "__1369__", "__1744__")
 What is the 999th number in the produced vector? `r longmcq(opts_p)`
 
 Once you are happy you can save then close and halt your "Random_seeds.ipynb" notebook.
+
+Hopefully this has given you a good undertstanding of the principle of random seeds. With this you can continue onto iterative rarefaction.

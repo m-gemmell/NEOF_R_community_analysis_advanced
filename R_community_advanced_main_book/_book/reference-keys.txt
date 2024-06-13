@@ -28,7 +28,6 @@ using-iterations
 section-contents
 random_seeds_chap
 random-seed-notebook
-random-seeds
 random-sampling
 sampling-with-replacement
 setting-a-random-seed
