@@ -31,7 +31,7 @@
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
 <link rel="prev" href="06-Iterative_rarefaction.html"/>
-
+<link rel="next" href="08-Iterating_rarefaction.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -201,6 +201,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.6.3" data-path="07-Rarefaction_and_random_seeds.html"><a href="07-Rarefaction_and_random_seeds.html#random-seed-question-3"><i class="fa fa-check"></i><b>7.6.3</b> Random seed: Question 3</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="8" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html"><i class="fa fa-check"></i><b>8</b> Iterating rarefaction</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#iterating-rarefaction-dataset"><i class="fa fa-check"></i><b>8.1</b> Iterating rarefaction dataset</a></li>
+<li class="chapter" data-level="8.2" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#iterating-rarefaction-setup"><i class="fa fa-check"></i><b>8.2</b> Iterating rarefaction setup</a></li>
+<li class="chapter" data-level="8.3" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#rarefaction-iterations"><i class="fa fa-check"></i><b>8.3</b> Rarefaction iterations</a></li>
+<li class="chapter" data-level="8.4" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#rng-vector-creation"><i class="fa fa-check"></i><b>8.4</b> RNG vector creation</a></li>
+<li class="chapter" data-level="8.5" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#random-sampling-1"><i class="fa fa-check"></i><b>8.5</b> Random sampling</a></li>
+<li class="chapter" data-level="8.6" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#sampling-with-replacement-1"><i class="fa fa-check"></i><b>8.6</b> Sampling with replacement</a></li>
+<li class="chapter" data-level="8.7" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#setting-a-random-seed-1"><i class="fa fa-check"></i><b>8.7</b> Setting a random seed</a></li>
+<li class="chapter" data-level="8.8" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#reset-seed-1"><i class="fa fa-check"></i><b>8.8</b> Reset seed</a></li>
+<li class="chapter" data-level="8.9" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#random-seed-practice-1"><i class="fa fa-check"></i><b>8.9</b> Random seed practice</a>
+<ul>
+<li class="chapter" data-level="8.9.1" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#random-seed-question-1-1"><i class="fa fa-check"></i><b>8.9.1</b> Random seed: Question 1</a></li>
+<li class="chapter" data-level="8.9.2" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#random-seed-question-2-1"><i class="fa fa-check"></i><b>8.9.2</b> Random seed: Question 2</a></li>
+<li class="chapter" data-level="8.9.3" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#random-seed-question-3-1"><i class="fa fa-check"></i><b>8.9.3</b> Random seed: Question 3</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -358,8 +375,8 @@ Hopefully the R developers will not change this in a later version again.</p>
 <li>Use the random seed <code>489</code></li>
 </ul>
 What is the fourth number in the produced vector?
-<div id="radio_DNJMFGXNBJ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_DNJMFGXNBJ" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_DNJMFGXNBJ" value="answer"></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_DNJMFGXNBJ" value=""></input> <span><strong>1744</strong></span></label>
+<div id="radio_UKAFNPGFTQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_UKAFNPGFTQ" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_UKAFNPGFTQ" value="answer"></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_UKAFNPGFTQ" value=""></input> <span><strong>1744</strong></span></label>
 </div>
 </div>
 <div id="random-seed-question-2" class="section level3 hasAnchor" number="7.6.2">
@@ -371,8 +388,8 @@ What is the fourth number in the produced vector?
 <li>Use the answer to the first question as the random seed</li>
 </ul>
 What is the 16th number in the produced vector?
-<div id="radio_KPLGCPOYPP" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_KPLGCPOYPP" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_KPLGCPOYPP" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_KPLGCPOYPP" value="answer"></input> <span><strong>1744</strong></span></label>
+<div id="radio_UUCHTTPWAD" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_UUCHTTPWAD" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_UUCHTTPWAD" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_UUCHTTPWAD" value="answer"></input> <span><strong>1744</strong></span></label>
 </div>
 </div>
 <div id="random-seed-question-3" class="section level3 hasAnchor" number="7.6.3">
@@ -384,8 +401,8 @@ What is the 16th number in the produced vector?
 <li>Use the answer to the first question as the random seed</li>
 </ul>
 What is the 999th number in the produced vector?
-<div id="radio_DJSHEVDPDC" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_DJSHEVDPDC" value="answer"></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_DJSHEVDPDC" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_DJSHEVDPDC" value=""></input> <span><strong>1744</strong></span></label>
+<div id="radio_XSKFBPIMMZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XSKFBPIMMZ" value="answer"></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_XSKFBPIMMZ" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_XSKFBPIMMZ" value=""></input> <span><strong>1744</strong></span></label>
 </div>
 <p>Once you are happy you can save then close and halt your "Random_seeds.ipynb" notebook.</p>
 <p>Hopefully this has given you a good undertstanding of the principle of random seeds. With this you can continue onto iterative rarefaction.</p>
@@ -604,8 +621,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="06-Iterative_rarefaction.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="06-Iterative_rarefaction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="08-Iterating_rarefaction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

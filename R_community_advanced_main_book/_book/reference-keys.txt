@@ -36,3 +36,16 @@ random-seed-practice
 random-seed-question-1
 random-seed-question-2
 random-seed-question-3
+iterating_rarefaction_chap
+iterating-rarefaction-dataset
+iterating-rarefaction-setup
+rarefaction-iterations
+rng-vector-creation
+random-sampling-1
+sampling-with-replacement-1
+setting-a-random-seed-1
+reset-seed-1
+random-seed-practice-1
+random-seed-question-1-1
+random-seed-question-2-1
+random-seed-question-3-1

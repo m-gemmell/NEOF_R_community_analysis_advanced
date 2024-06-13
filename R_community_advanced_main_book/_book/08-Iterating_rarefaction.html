@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Dataset &amp; workflow | R community advanced analysis</title>
+  <title>Chapter 8 Iterating rarefaction | R community advanced analysis</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Dataset &amp; workflow | R community advanced analysis" />
+  <meta property="og:title" content="Chapter 8 Iterating rarefaction | R community advanced analysis" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/figures/NEOF.png" />
   <meta property="og:description" content="NEOF book for the R community advanced analysis course" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Dataset &amp; workflow | R community advanced analysis" />
+  <meta name="twitter:title" content="Chapter 8 Iterating rarefaction | R community advanced analysis" />
   
   <meta name="twitter:description" content="NEOF book for the R community advanced analysis course" />
   <meta name="twitter:image" content="/figures/NEOF.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
-<link rel="prev" href="01-R_community_advanced_main_book.html"/>
-<link rel="next" href="03-R_packages.html"/>
+<link rel="prev" href="07-Rarefaction_and_random_seeds.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -238,77 +238,237 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="datasetandworkflowchap" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Dataset &amp; workflow<a href="02-Dataset_and_workflow.html#datasetandworkflowchap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="iterating_rarefaction_chap" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Iterating rarefaction<a href="08-Iterating_rarefaction.html#iterating_rarefaction_chap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <center>
-<img src="figures/data.png" style="width:200px" />
+<img src="figures/random_seeds.png" style="width:200px" />
 </center>
-<div id="dataset" class="section level2 hasAnchor" number="2.1">
-<h2><span class="header-section-number">2.1</span> Dataset<a href="02-Dataset_and_workflow.html#dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<center>
-<img src="figures/freshwater_france.png" style="border-radius: 5px; width: 500px; border: 5px solid #333333" />
-</center>
-<p>In this tutorial we will be using a 16S metabarcoding dataset derived from surface water from the Durance River in the south-east of France.
-Two major comparisons were carried out in combination with each other.</p>
-<p><a href="https://www.mdpi.com/2076-2607/8/8/1129">Link to paper</a></p>
-<div id="sites" class="section level3 hasAnchor" number="2.1.1">
-<h3><span class="header-section-number">2.1.1</span> Sites<a href="02-Dataset_and_workflow.html#sites" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In this chapter we will create code to carry out iterative rarefaction.
+For this we create a vector of random seeds, each used for a different iteration of rarefaction.
+We will loop through these random seeds, using each random seed to carry out one iteration of rarefaction.
+In the next chapters we will utilise this code to produce alpha and beta diveristy values that we will analyse.</p>
+<div id="iterating-rarefaction-dataset" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Iterating rarefaction dataset<a href="08-Iterating_rarefaction.html#iterating-rarefaction-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
 <img src="figures/river.png" style="width:200px" />
 </center>
-<p>Three different sites were chosen on the Durance River. These three sites were representative of an anthropisation (transformation of land by humans) gradient along a river stream. These sites were:</p>
+<p>We will utilise the same dataset used in the <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/02-Dataset_and_workflow.html#dataset">R community analysis workshop</a>.</p>
+<p>Below are brief bullet points about the data:</p>
 <ul>
-<li><strong>Upper Durance sampling site (UD)</strong>: Alpine part of the river with little/no anthropisation.</li>
-<li><strong>Middle Durance sampling site (MD)</strong>: Upper part of agricultural land dominated by apple and pear production.</li>
-<li><strong>Lower Durance sampling site (LD)</strong>: Lower part of agricultural land with intensive production of fruits, cereals, and vegetables.</li>
+<li>It is a 16S dataset of ASV counts with taxonomy and phylogeny produced by QIIME2</li>
+<li>The samples come from surface water from the Durance River in the south-east of France</li>
+<li>There are three sampling site on an anthropisation gradient (low to high agriculture)
+<ul>
+<li>Upper Durance (UD)</li>
+<li>Middle Durance (MD)</li>
+<li>Lower Durance (LD)</li>
+</ul></li>
+<li>Four different media approaches were used to produce bacterial lawns that were sequenced.
+<ul>
+<li>Environmental sample (ENV): No media used, frozen at -20°C.</li>
+<li>TSA 10% incubated at 28°C for 2 days.</li>
+<li>KBC incubated at 28°C for 2 days.</li>
+<li>CVP incubated at 28°C for 3 days.</li>
+</ul></li>
 </ul>
 </div>
-<div id="culture-media" class="section level3 hasAnchor" number="2.1.2">
-<h3><span class="header-section-number">2.1.2</span> Culture media<a href="02-Dataset_and_workflow.html#culture-media" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<center>
-<img src="figures/petri.png" style="width:200px" />
-</center>
-<p>Surface water was sampled and different culture media were used to produce bacterial lawns for each site. The media used were:</p>
+<div id="iterating-rarefaction-setup" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Iterating rarefaction setup<a href="08-Iterating_rarefaction.html#iterating-rarefaction-setup" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>First, create a new R jupyter-notebook called "Iterating_rarefaction.ipynb".</p>
+<p>At the top of this notebook create a code cell to load in the various packages and data we need. The code is below:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb18-1"><a href="08-Iterating_rarefaction.html#cb18-1" tabindex="-1"></a><span class="co">#Libaries</span></span>
+<span id="cb18-2"><a href="08-Iterating_rarefaction.html#cb18-2" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="08-Iterating_rarefaction.html#cb18-3" tabindex="-1"></a><span class="co">#Data</span></span></code></pre></div>
+</div>
+<div id="rarefaction-iterations" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">8.3</span> Rarefaction iterations<a href="08-Iterating_rarefaction.html#rarefaction-iterations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We need to choose the number of iterations we are going to carry out.</p>
+<p>For our <strong>practice</strong> we will use <strong>10 iterations</strong> for speed.
+In your real analysis I would recommend using <strong>1000 iterations</strong>.</p>
+<p>Let's create a variable for our number of iterations.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb19-1"><a href="08-Iterating_rarefaction.html#cb19-1" tabindex="-1"></a><span class="co">#Number of rarefaction iterations to be carried out</span></span>
+<span id="cb19-2"><a href="08-Iterating_rarefaction.html#cb19-2" tabindex="-1"></a><span class="co">#Using 10 here for speed, real analysis should use 1000</span></span>
+<span id="cb19-3"><a href="08-Iterating_rarefaction.html#cb19-3" tabindex="-1"></a>rarefaction_iters <span class="ot">&lt;-</span> <span class="dv">10</span></span></code></pre></div>
+</div>
+<div id="rng-vector-creation" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> RNG vector creation<a href="08-Iterating_rarefaction.html#rng-vector-creation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can now carry out <strong>Random Number Generation (RNG)</strong> to create a number of random seeds equal to the number of iterations planned.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb20-1"><a href="08-Iterating_rarefaction.html#cb20-1" tabindex="-1"></a><span class="co">#Create rngseed vector</span></span>
+<span id="cb20-2"><a href="08-Iterating_rarefaction.html#cb20-2" tabindex="-1"></a><span class="co">#Set seed for reproducibility</span></span>
+<span id="cb20-3"><a href="08-Iterating_rarefaction.html#cb20-3" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2605</span>)</span>
+<span id="cb20-4"><a href="08-Iterating_rarefaction.html#cb20-4" tabindex="-1"></a><span class="co">#Sample 10 (number of iters) values from the number range 1-100,000</span></span>
+<span id="cb20-5"><a href="08-Iterating_rarefaction.html#cb20-5" tabindex="-1"></a>rngseed_vec <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">100000</span>, <span class="at">size =</span> rarefaction_iters, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb20-6"><a href="08-Iterating_rarefaction.html#cb20-6" tabindex="-1"></a><span class="co">#Print out vector</span></span>
+<span id="cb20-7"><a href="08-Iterating_rarefaction.html#cb20-7" tabindex="-1"></a>rngseed_vec</span>
+<span id="cb20-8"><a href="08-Iterating_rarefaction.html#cb20-8" tabindex="-1"></a><span class="co">#Save our rngseed vector</span></span>
+<span id="cb20-9"><a href="08-Iterating_rarefaction.html#cb20-9" tabindex="-1"></a><span class="fu">save</span>(rngseed_vec, <span class="at">file=</span><span class="st">&quot;rngseeds.RData&quot;</span>)</span>
+<span id="cb20-10"><a href="08-Iterating_rarefaction.html#cb20-10" tabindex="-1"></a><span class="co">#Reset seed</span></span>
+<span id="cb20-11"><a href="08-Iterating_rarefaction.html#cb20-11" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div>
+<p>There are a lot of steps above. These are:</p>
 <ul>
-<li><strong>Environmental sample (ENV)</strong>: No media used, frozen at -20°C.</li>
-<li><strong>TSA 10%</strong> incubated at 28°C for 2 days.</li>
-<li><strong>KBC</strong> incubated at 28°C for 2 days.</li>
-<li><strong>CVP</strong> incubated at 28°C for 3 days.</li>
+<li><strong>Setting the random seed:</strong> We carry this out so we will always get the same rngseed vector that will be used for the rarefaction iterations. This is important so you will always get the same results if you need to rework some analysis, stats, or plots. ALso useful here so you get the same results as the instructor and other attendees.</li>
+<li><strong>Creating the rngseed vector:</strong> We use our old friend <code>sample()</code> to create a random number for each iteration we will carry out.
+<ul>
+<li>We arbitrarily sample from the numbers 1-100,000, you could change this to a larger range in your future research.</li>
+<li>We use our previous object <code>rarefaction_iters</code> as <code>size=</code> to produce a random number for each of our iterations.</li>
+<li>We carry this out without replacement so none of our rarefaction iterations are identical.</li>
+</ul></li>
+<li><strong>Save the rngseed vector:</strong> We save the vector as a file. We will load this in our alpha and beta diversity notebooks to be used for iterative rarefaction. This is also useful so you have a backup file of the rngseed vectors.</li>
+<li><strong>Reset seed:</strong> Always good to reset the seed at the end of a cell.</li>
 </ul>
 </div>
-<div id="sum_and_qs" class="section level3 hasAnchor" number="2.1.3">
-<h3><span class="header-section-number">2.1.3</span> Summary &amp; questions<a href="02-Dataset_and_workflow.html#sum_and_qs" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="random-sampling-1" class="section level2 hasAnchor" number="8.5">
+<h2><span class="header-section-number">8.5</span> Random sampling<a href="08-Iterating_rarefaction.html#random-sampling-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
-<img src="figures/sum_red.png" style="width:200px" />
+<img src="figures/random_sampling.png" style="width:200px; background:white; border-radius:5px" />
 </center>
-<p>Each sample and media combination was produced in replicates of three giving a total of 36 samples (3 X 4 X 3 = 36). The three replicates were cultured on three different plates with the same media. An ASV table, taxonomy table, and phylogenetic tree were produced with QIIME2 and DADA2.</p>
-<p>With this data we can ask and investigate the following questions:</p>
+<p>To demonstrate this we will use the R function <code>sample()</code>.
+This function randomly samples a set of numbers.</p>
+<p>Create the below code in a code cell.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb21-1"><a href="08-Iterating_rarefaction.html#cb21-1" tabindex="-1"></a><span class="co">#Create a vector containing the numbers 0 to 10</span></span>
+<span id="cb21-2"><a href="08-Iterating_rarefaction.html#cb21-2" tabindex="-1"></a>num_vec <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb21-3"><a href="08-Iterating_rarefaction.html#cb21-3" tabindex="-1"></a><span class="co">#Randomly sample 5 of these numbers</span></span>
+<span id="cb21-4"><a href="08-Iterating_rarefaction.html#cb21-4" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p>If you run the code you will get five random single digit numbers.</p>
+<p>Run this multiple times and you will hopefully see the sampled numbers are different every time.</p>
+</div>
+<div id="sampling-with-replacement-1" class="section level2 hasAnchor" number="8.6">
+<h2><span class="header-section-number">8.6</span> Sampling with replacement<a href="08-Iterating_rarefaction.html#sampling-with-replacement-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/balls.png" style="width:200px" />
+</center>
+<p>You may also notice that within each sample there are no repeating numbers.
+You can change this by adding the options <code>replace = TRUE</code>.</p>
+<p>Try this out in a new cell.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb22-1"><a href="08-Iterating_rarefaction.html#cb22-1" tabindex="-1"></a><span class="co">#Randomly sample 5 of these numbers with replacement</span></span>
+<span id="cb22-2"><a href="08-Iterating_rarefaction.html#cb22-2" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Run this a few times and you will hopefully notice that there are repeats.</p>
+<p>When sampling with replacement you put back any results back into the sampling pool.
+When sampling without replacement you don't put back any results into the sampling pool.</p>
+<p>The famous example is sampling green and yellow balls from a bag.
+If you had a bag with 1000 balls and you wanted a rough idea of the ratio of yellow and green balls you could count the number of these balls of only 50.
+Without replacement you would take out a ball, mark its colour and throw it in a separate container.
+With replacement you would take out a ball, mark its colour and put it back into the intial bag, meanig it could possibly be recounted.</p>
+<p>One advantage of sampling with replacement is that your sampling size can be larger than your actual population size.
+For example, you could create a random sampling of 50 with a bag containing 10 balls with replacement.
+This would not work without replacement.
+The below script will cause R to produce an error saying it can be done with replacement.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb23-1"><a href="08-Iterating_rarefaction.html#cb23-1" tabindex="-1"></a><span class="co">#Randomly sample 5 of these numbers with replacement</span></span>
+<span id="cb23-2"><a href="08-Iterating_rarefaction.html#cb23-2" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Importantly for us rarefaction uses sampling without replacement.</p>
+</div>
+<div id="setting-a-random-seed-1" class="section level2 hasAnchor" number="8.7">
+<h2><span class="header-section-number">8.7</span> Setting a random seed<a href="08-Iterating_rarefaction.html#setting-a-random-seed-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/set_a_seed.png" style="width:400px" />
+</center>
+<p>We'll sample, without replacement, the numbers one more time in a new cell.
+However, this time we will set the random seed with the function <code>seet.seed()</code>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb24-1"><a href="08-Iterating_rarefaction.html#cb24-1" tabindex="-1"></a><span class="co">#Set random seed</span></span>
+<span id="cb24-2"><a href="08-Iterating_rarefaction.html#cb24-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb24-3"><a href="08-Iterating_rarefaction.html#cb24-3" tabindex="-1"></a><span class="co">#Randomly sample 12 of these numbers without replacement</span></span>
+<span id="cb24-4"><a href="08-Iterating_rarefaction.html#cb24-4" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">12</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb24-5"><a href="08-Iterating_rarefaction.html#cb24-5" tabindex="-1"></a><span class="co">#Reset random seed</span></span>
+<span id="cb24-6"><a href="08-Iterating_rarefaction.html#cb24-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div>
+<p>Before we explain the code further, try running the cell multiple times.
+If it is identical to the above code you will get the numbers "9, 5, 4, 3, &amp; 6".</p>
+<p>How come you are getting these results if it is random?</p>
+<p>True randomness is pretty much impossible, especially in computing.
+To get around this many programs use seeds to determine how random tasks will be carried out.
+Various programs that use random seeds include:</p>
 <ul>
-<li>How do the bacterial communities change across the anthropisation gradient?</li>
-<li>Is there a difference in the replicates of one site and media combination? I.e. do any of the media produce inconsistent profiles?</li>
-<li>Is there more difference between the sites or the media used?</li>
-<li>Do the media samples differ from the ENV samples? If so, how?</li>
+<li>Sampling tools such as <code>sample()</code> and rarefaction</li>
+<li>Creating bootstrapped phylogenies</li>
+<li>Creating procedural content such as building Minecraft worlds</li>
 </ul>
+<p>Therefore if you run a tool that will use randomness you will always get the same results if:</p>
+<ul>
+<li>You use the same random seed</li>
+<li>You use the same data</li>
+<li>You use the same replacement method (with or without)</li>
+</ul>
+<p>In fact, run the below code in a new code cell and you may notice a similarity with your previous output.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb25-1"><a href="08-Iterating_rarefaction.html#cb25-1" tabindex="-1"></a><span class="co">#Set random seed</span></span>
+<span id="cb25-2"><a href="08-Iterating_rarefaction.html#cb25-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
+<span id="cb25-3"><a href="08-Iterating_rarefaction.html#cb25-3" tabindex="-1"></a><span class="co">#Create a vector containing the numbers 0 to 10</span></span>
+<span id="cb25-4"><a href="08-Iterating_rarefaction.html#cb25-4" tabindex="-1"></a>larger_num_vec <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">19</span></span>
+<span id="cb25-5"><a href="08-Iterating_rarefaction.html#cb25-5" tabindex="-1"></a><span class="co">#Randomly sample 5 of these numbers</span></span>
+<span id="cb25-6"><a href="08-Iterating_rarefaction.html#cb25-6" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">5</span>)</span>
+<span id="cb25-7"><a href="08-Iterating_rarefaction.html#cb25-7" tabindex="-1"></a><span class="co">#Reset random seed</span></span>
+<span id="cb25-8"><a href="08-Iterating_rarefaction.html#cb25-8" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div>
+<p>That's right, <code>sample()</code> will always take the 10th (9/19), 6th (5/15), 5th (4/14), 4th (3/13), and 7th (6/16) values if it is given the random seed of (1234) and provided with a 11 length vector.</p>
+<p>Setting our randomness is incredible beneficial for reproducibility in research.</p>
+<p>When you carry out analysis you may need to redo some work.
+This could be due to reviewer comments or you want to incorporate some new methods.
+As long as you saved the random seeds you used you can get the same results where you need to.
+It also means others can replicate your results.</p>
 </div>
-</div>
-<div id="workflow" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> Workflow<a href="02-Dataset_and_workflow.html#workflow" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="reset-seed-1" class="section level2 hasAnchor" number="8.8">
+<h2><span class="header-section-number">8.8</span> Reset seed<a href="08-Iterating_rarefaction.html#reset-seed-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
-<img src="figures/workflow.png" style="width:200px; border-radius:15px; background:white" />
+<img src="figures/reset_seed.png" style="width:400px" />
 </center>
-<ol style="list-style-type: decimal">
-<li><a href="#import_chap">Import</a>: Import QIIME2 artifacts into a <code>phyloseq</code> object with <code>qiime2R</code>.</li>
-<li><a href="#sum_phyloseq_chap">Summarisations</a>: Check our <code>phyloseq</code> object with summarisations.</li>
-<li><a href="#mindepthchap">Minimum depth</a>: Determine the minimum depth we should use and remove samples with lower depth.</li>
-<li><a href="#taxa_relabund_chap">Taxanomic relative abundance</a>: Create taxonomic relative abundance tables.</li>
-<li><a href="#chaptaxaplots">Taxa plots</a>: Produce heat maps and bar plots of taxa relative abundances.</li>
-<li><a href="#family_genus_chap">Family and genus</a>: Using the last step to produce family and genus based taxa plots.</li>
-<li><a href="#rarefaction_chap">Rarefaction</a>: Carry out sample depth normalisation with rarefactions. This will be used for alpha and beta diversity analysis.</li>
-<li><a href="#alpha_chap">Alpha diversity</a>: Carry out alpha diversity analysis through plots and statistics.</li>
-<li><a href="#beta_chap">Beta diversity</a>: Carry out beta diversity analysis through plots and statistics.</li>
-<li><a href="#DA_chap">Differenital abundance anlaysis</a>: Detect biomarkers compared to a reference group with ANCOM.</li>
-</ol>
+<p>We set a random seed at the start of the cell for reproducibility and control, but why do we then run the line <code>set.seed(NULL)</code>?</p>
+<p>The normal operation of R means that, in effect, its random seed changes every time it is used.
+This means R normally randomly determines randomness.
+This is how it should be until we want to set the randomness.
+It is therefore good practice to set the seed to <code>NULL</code> after you have utilised your set seeds.
+This will revert the seed to its normal random operations.</p>
+<p>One last point to note is R versions.
+Version 3.6 changed R's sampling methods, therefore if you use Version 3.5 or below you will get different results than we have got.
+Hopefully the R developers will not change this in a later version again.</p>
+</div>
+<div id="random-seed-practice-1" class="section level2 hasAnchor" number="8.9">
+<h2><span class="header-section-number">8.9</span> Random seed practice<a href="08-Iterating_rarefaction.html#random-seed-practice-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/seed_sowing.png" style="width:200px" />
+</center>
+<p>Brilliant! To reinforce the above knowledge try out the following challenges.</p>
+<p>First create the following vector:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb26-1"><a href="08-Iterating_rarefaction.html#cb26-1" tabindex="-1"></a>second_millenium <span class="ot">&lt;-</span> <span class="dv">1001</span><span class="sc">:</span><span class="dv">2000</span></span></code></pre></div>
+<p><strong>Note:</strong> Remember it is best practice to <code>set.seed(NULL)</code> at the end of a code cell.</p>
+<div id="random-seed-question-1-1" class="section level3 hasAnchor" number="8.9.1">
+<h3><span class="header-section-number">8.9.1</span> Random seed: Question 1<a href="08-Iterating_rarefaction.html#random-seed-question-1-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Sample the object <code>second_millenium</code> with the following parameters:</p>
+<ul>
+<li>Extract 10 values</li>
+<li>Without replacement</li>
+<li>Use the random seed <code>489</code></li>
+</ul>
+What is the fourth number in the produced vector?
+<div id="radio_JDSAUUYWWT" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_JDSAUUYWWT" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_JDSAUUYWWT" value="answer"></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_JDSAUUYWWT" value=""></input> <span><strong>1744</strong></span></label>
+</div>
+</div>
+<div id="random-seed-question-2-1" class="section level3 hasAnchor" number="8.9.2">
+<h3><span class="header-section-number">8.9.2</span> Random seed: Question 2<a href="08-Iterating_rarefaction.html#random-seed-question-2-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Sample the object <code>second_millenium</code> with the following parameters:</p>
+<ul>
+<li>Extract 24 values</li>
+<li>Without replacement</li>
+<li>Use the answer to the first question as the random seed</li>
+</ul>
+What is the 16th number in the produced vector?
+<div id="radio_TMFYXBZEWX" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_TMFYXBZEWX" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_TMFYXBZEWX" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_TMFYXBZEWX" value="answer"></input> <span><strong>1744</strong></span></label>
+</div>
+</div>
+<div id="random-seed-question-3-1" class="section level3 hasAnchor" number="8.9.3">
+<h3><span class="header-section-number">8.9.3</span> Random seed: Question 3<a href="08-Iterating_rarefaction.html#random-seed-question-3-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Sample the object <code>second_millenium</code> with the following parameters:</p>
+<ul>
+<li>Extract a number of values equal to the answer of the second question</li>
+<li>With replacement</li>
+<li>Use the answer to the first question as the random seed</li>
+</ul>
+What is the 999th number in the produced vector?
+<div id="radio_WSZCTKUYKS" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_WSZCTKUYKS" value="answer"></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_WSZCTKUYKS" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_WSZCTKUYKS" value=""></input> <span><strong>1744</strong></span></label>
+</div>
+<p>Once you are happy you can save then close and halt your "Random_seeds.ipynb" notebook.</p>
+<p>Hopefully this has given you a good undertstanding of the principle of random seeds. With this you can continue onto iterative rarefaction.</p>
 
+</div>
 </div>
 </div>
 <script>
@@ -522,8 +682,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="01-R_community_advanced_main_book.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="03-R_packages.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="07-Rarefaction_and_random_seeds.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
