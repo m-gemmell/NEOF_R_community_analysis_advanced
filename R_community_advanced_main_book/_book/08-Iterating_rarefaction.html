@@ -23,7 +23,7 @@
 <meta name="author" content="Matthew R. Gemmell" />
 
 
-<meta name="date" content="2024-06-13" />
+<meta name="date" content="2024-06-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -274,14 +274,23 @@ In the next chapters we will utilise this code to produce alpha and beta diveris
 </div>
 <div id="iterating-rarefaction-setup" class="section level2 hasAnchor" number="8.2">
 <h2><span class="header-section-number">8.2</span> Iterating rarefaction setup<a href="08-Iterating_rarefaction.html#iterating-rarefaction-setup" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/setup_5.png" style="width:200px" />
+</center>
 <p>First, create a new R jupyter-notebook called "Iterating_rarefaction.ipynb".</p>
 <p>At the top of this notebook create a code cell to load in the various packages and data we need. The code is below:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb18-1"><a href="08-Iterating_rarefaction.html#cb18-1" tabindex="-1"></a><span class="co">#Libaries</span></span>
-<span id="cb18-2"><a href="08-Iterating_rarefaction.html#cb18-2" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="08-Iterating_rarefaction.html#cb18-3" tabindex="-1"></a><span class="co">#Data</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb18-1"><a href="08-Iterating_rarefaction.html#cb18-1" tabindex="-1"></a><span class="co">#Libraries</span></span>
+<span id="cb18-2"><a href="08-Iterating_rarefaction.html#cb18-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;phyloseq&quot;</span>)</span>
+<span id="cb18-3"><a href="08-Iterating_rarefaction.html#cb18-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;microbiome&quot;</span>)</span>
+<span id="cb18-4"><a href="08-Iterating_rarefaction.html#cb18-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;IRdisplay&quot;</span>)</span>
+<span id="cb18-5"><a href="08-Iterating_rarefaction.html#cb18-5" tabindex="-1"></a><span class="co">#Load processed but unrarefied data from R community analysis workshop</span></span>
+<span id="cb18-6"><a href="08-Iterating_rarefaction.html#cb18-6" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;phyloseq.RData&quot;</span>)</span></code></pre></div>
 </div>
 <div id="rarefaction-iterations" class="section level2 hasAnchor" number="8.3">
 <h2><span class="header-section-number">8.3</span> Rarefaction iterations<a href="08-Iterating_rarefaction.html#rarefaction-iterations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/number_pad.png" style="width:200px" />
+</center>
 <p>We need to choose the number of iterations we are going to carry out.</p>
 <p>For our <strong>practice</strong> we will use <strong>10 iterations</strong> for speed.
 In your real analysis I would recommend using <strong>1000 iterations</strong>.</p>
@@ -292,6 +301,9 @@ In your real analysis I would recommend using <strong>1000 iterations</strong>.<
 </div>
 <div id="rng-vector-creation" class="section level2 hasAnchor" number="8.4">
 <h2><span class="header-section-number">8.4</span> RNG vector creation<a href="08-Iterating_rarefaction.html#rng-vector-creation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/list.png" style="width:200px; background-color:white; border-radius:15px" />
+</center>
 <p>We can now carry out <strong>Random Number Generation (RNG)</strong> to create a number of random seeds equal to the number of iterations planned.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb20-1"><a href="08-Iterating_rarefaction.html#cb20-1" tabindex="-1"></a><span class="co">#Create rngseed vector</span></span>
 <span id="cb20-2"><a href="08-Iterating_rarefaction.html#cb20-2" tabindex="-1"></a><span class="co">#Set seed for reproducibility</span></span>
@@ -436,8 +448,8 @@ Hopefully the R developers will not change this in a later version again.</p>
 <li>Use the random seed <code>489</code></li>
 </ul>
 What is the fourth number in the produced vector?
-<div id="radio_JDSAUUYWWT" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_JDSAUUYWWT" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_JDSAUUYWWT" value="answer"></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_JDSAUUYWWT" value=""></input> <span><strong>1744</strong></span></label>
+<div id="radio_HDVQUSWBOA" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_HDVQUSWBOA" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_HDVQUSWBOA" value="answer"></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_HDVQUSWBOA" value=""></input> <span><strong>1744</strong></span></label>
 </div>
 </div>
 <div id="random-seed-question-2-1" class="section level3 hasAnchor" number="8.9.2">
@@ -449,8 +461,8 @@ What is the fourth number in the produced vector?
 <li>Use the answer to the first question as the random seed</li>
 </ul>
 What is the 16th number in the produced vector?
-<div id="radio_TMFYXBZEWX" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_TMFYXBZEWX" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_TMFYXBZEWX" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_TMFYXBZEWX" value="answer"></input> <span><strong>1744</strong></span></label>
+<div id="radio_AOQBIQKVPF" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_AOQBIQKVPF" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_AOQBIQKVPF" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_AOQBIQKVPF" value="answer"></input> <span><strong>1744</strong></span></label>
 </div>
 </div>
 <div id="random-seed-question-3-1" class="section level3 hasAnchor" number="8.9.3">
@@ -462,8 +474,8 @@ What is the 16th number in the produced vector?
 <li>Use the answer to the first question as the random seed</li>
 </ul>
 What is the 999th number in the produced vector?
-<div id="radio_WSZCTKUYKS" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_WSZCTKUYKS" value="answer"></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_WSZCTKUYKS" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_WSZCTKUYKS" value=""></input> <span><strong>1744</strong></span></label>
+<div id="radio_APTTRZYBVB" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_APTTRZYBVB" value="answer"></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_APTTRZYBVB" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_APTTRZYBVB" value=""></input> <span><strong>1744</strong></span></label>
 </div>
 <p>Once you are happy you can save then close and halt your "Random_seeds.ipynb" notebook.</p>
 <p>Hopefully this has given you a good undertstanding of the principle of random seeds. With this you can continue onto iterative rarefaction.</p>

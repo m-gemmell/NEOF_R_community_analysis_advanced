@@ -824,18 +824,27 @@ Below are brief bullet points about the data:
   - CVP incubated at 28°C for 3 days.
 
 ## Iterating rarefaction setup
+<center>
+![](figures/setup_5.png){style="width:200px"}
+</center>
 
 First, create a new R jupyter-notebook called "Iterating_rarefaction.ipynb".
 
 At the top of this notebook create a code cell to load in the various packages and data we need. The code is below:
 
 ```{R, eval=FALSE}
-#Libaries
-
-#Data
+#Libraries
+library("phyloseq")
+library("microbiome")
+library("IRdisplay")
+#Load processed but unrarefied data from R community analysis workshop
+load("phyloseq.RData")
 ```
 
 ## Rarefaction iterations
+<center>
+![](figures/number_pad.png){style="width:200px"}
+</center>
 
 We need to choose the number of iterations we are going to carry out.
 
@@ -851,6 +860,9 @@ rarefaction_iters <- 10
 ```
 
 ## RNG vector creation
+<center>
+![](figures/list.png){style="width:200px; background-color:white; border-radius:15px"}
+</center>
 
 We can now carry out __Random Number Generation (RNG)__ to create a number of random seeds equal to the number of iterations planned.
 
