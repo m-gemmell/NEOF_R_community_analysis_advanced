@@ -522,15 +522,15 @@ library(webexercises)
 ![](figures/iteration.png){style="width:200px"}
 </center>
 
-Rarefaction is the process of randomly subsetting samples so the total count values are identical across all samples.
-Rarefaction is intended to correct for bias caused by varying sampling depths across the samples to be analysed.
+__Rarefaction__ is the process of randomly subsetting samples so the total count values are identical across all samples.
+__Rarefaction__ is intended to correct for bias caused by varying sampling depths across the samples to be analysed.
 
 ## Should you rarefy?
 <center>
 ![](figures/choice_sign.png){style="width:200px"}
 </center>
 
-Rarefaction can be a hotly debated topic with two main points of view.
+__Rarefaction__ can be a hotly debated topic with two main points of view.
 
 1.  Some researchers believe it is not appropriate.
     1.  This is backed up by the 2014 paper ["Waste Not, Want Not: Why Rarefying Microbiome Data Is Inadmissible"](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531)
@@ -539,22 +539,22 @@ Rarefaction can be a hotly debated topic with two main points of view.
     1.  This is backed up by the 2022 paper ["To rarefy or not to rarefy: robustness and efficiency trade-offs of rarefying microbiome data"](https://academic.oup.com/bioinformatics/article/38/9/2389/6536959)
     2.  The QIIME2 developers include rarefaction in their tutorials/SOPs for alpha and beta diversity analysis
 
-We use rarefaction in our analyses but it is ultimately up to you whether you utilise it or not.
+We use __rarefaction__ in our analyses but it is ultimately up to you whether you utilise it or not.
 
 ## Using iterations
 <center>
 ![](figures/iterations.png){style="width:200px; background-color:white; border-radius:15px"}
 </center>
 
-In our initial R community analysis workshop we only rarefy once for each sample.
-In this section we will rarefy multiple times to calculate average values for alpha and beta diversity metrics.
-This is an iterative rarefaction analysis.
+In our initial R community analysis workshop we only __rarefy__ once for each sample.
+In this section we will __rarefy__ multiple times to calculate average values for alpha and beta diversity metrics.
+This is __iterative rarefaction__ analysis.
 
-This iterative approach will, in theory, smooth out any extreme results one round of rarefaction may cause, Extreme results being possibly due the random nature of rarefaction.
+This iterative approach will, in theory, smooth out any extreme results one round of __rarefaction__ may cause. Extreme results are possibly due the random nature of __rarefaction__.
 These extreme results can include:
 
 -   Leaving important features (ASVs, taxonomic groups, etc.) with no counts
--   Causing a few features to have much higher relative abundances than
+-   Causing a few features to have much higher relative abundances
 -   Varying alpha and beta diversity values with different sets of rarefaction
 
 ## Section contents
@@ -564,10 +564,10 @@ These extreme results can include:
 
 In this section we will learn how to:
 
-- Use random seeds for sampling
-- Carry out iterative rarefaction with sets of random seeds
-- Use iterative rarefaction to carry out alpha diversity analysis
-- Use iterative rarefaction to carry out beta diversity analysis
+- Use __random seeds__ for sampling
+- Carry out __iterative rarefaction__ with sets of __random seeds__
+- Use __iterative rarefaction__ to carry out alpha diversity analysis
+- Use __iterative rarefaction__ to carry out beta diversity analysis
 
 <!--chapter:end:06-Iterative_rarefaction.Rmd-->
 
@@ -579,13 +579,13 @@ library(webexercises)
 ![](figures/random_seeds.png){style="width:200px"}
 </center>
 
-What are random seeds?
+What are __random seeds__?
 
-Random seeds are numbers that computational tasks use to determine how they will carry out a random task.
+__Random seeds__ are numbers that computational tasks use to determine how they will carry out a random task.
 
-In this chapter we will demonstrate the use of random seeds. 
+In this chapter we will demonstrate the use of __random seeds__. 
 This is to help understand what they are and why they are used.
-We won't do anything of value with the results in this chapter, instead this knowledge will be useful for understanding iterative rarefaction.
+We won't do anything of value with the results in this chapter, instead this knowledge will be useful for understanding __iterative rarefaction__.
 
 ## Random seed notebook
 
@@ -601,7 +601,7 @@ We will use this for this chapter.
 ![](figures/random_sampling.png){style="width:200px; background:white; border-radius:5px"}
 </center>
 
-To demonstrate this we will use the R function `sample()`. 
+To demonstrate to use of random seed we will use the R function `sample()`. 
 This function randomly samples a set of numbers.
 
 Create the below code in a code cell.
@@ -632,15 +632,15 @@ Try this out in a new cell.
 sample(x = num_vec, size = 5, replace = TRUE)
 ```
 
-Run this a few times and you will hopefully notice that there are repeats.
+Run this a few times and you will hopefully notice that the five numbers are not always unique.
 
-When sampling with replacement you put back any results back into the sampling pool.
-When sampling without replacement you don't put back any results into the sampling pool.
+When sampling __with replacement__ you put back any results back into the sampling pool.
+When sampling __without replacement__ you don't put back any results into the sampling pool.
 
 The famous example is sampling green and yellow balls from a bag.
-If you had a bag with 1000 balls and you wanted a rough idea of the ratio of yellow and green balls you could count the number of these balls of only 50.
-Without replacement you would take out a ball, mark its colour and throw it in a separate container.
-With replacement you would take out a ball, mark its colour and put it back into the intial bag, meanig it could possibly be recounted.
+If you had a bag with 1000 balls and you wanted a rough idea of the ratio of yellow and green balls you could count the number of these balls within a sample of only 50.
+Without replacement you would take out a ball, record its colour and throw it in a separate container.
+With replacement you would take out a ball, record its colour and put it back into the initial bag, meaning it could possibly be recounted.
 
 One advantage of sampling with replacement is that your sampling size can be larger than your actual population size.
 For example, you could create a random sampling of 50 with a bag containing 10 balls with replacement.
@@ -652,7 +652,7 @@ The below script will cause R to produce an error saying it can be done with rep
 sample(x = num_vec, size = 5, replace = TRUE)
 ```
 
-Importantly for us rarefaction uses sampling without replacement.
+Importantly for us __rarefaction__ uses sampling __without replacement__.
 
 ## Setting a random seed
 <center>
@@ -660,7 +660,7 @@ Importantly for us rarefaction uses sampling without replacement.
 </center>
 
 We'll sample, without replacement, the numbers one more time in a new cell.
-However, this time we will set the random seed with the function `seet.seed()`.
+However, this time we will set the __random seed__ with the function `seet.seed()`.
 
 ```{R, eval=FALSE}
 #Set random seed
@@ -677,18 +677,18 @@ If it is identical to the above code you will get the numbers "9, 5, 4, 3, & 6".
 How come you are getting these results if it is random?
 
 True randomness is pretty much impossible, especially in computing.
-To get around this many programs use seeds to determine how random tasks will be carried out.
-Various programs that use random seeds include:
+Therefore, many programs use __seeds__ to determine how random tasks will be carried out.
+Various programs that use __random seeds__ include:
 
 - Sampling tools such as `sample()` and rarefaction
 - Creating bootstrapped phylogenies
 - Creating procedural content such as building Minecraft worlds
 
-Therefore if you run a tool that will use randomness you will always get the same results if:
+If you run a tool that uses random sampling you will always get the same results if:
 
 - You use the same random seed
 - You use the same data
-- You use the same replacement method (with or without)
+- You use the same parameters including the replacement method (with or without)
 
 In fact, run the below code in a new code cell and you may notice a similarity with your previous output.
 
@@ -703,7 +703,7 @@ sample(x = num_vec, size = 5)
 set.seed(NULL)
 ```
 
-That's right, `sample()` will always take the 10th (9/19), 6th (5/15), 5th (4/14), 4th (3/13), and 7th (6/16) values if it is given the random seed of (1234) and provided with a 11 length vector.
+That's right, `sample()` will always take the 10th (9/19), 6th (5/15), 5th (4/14), 4th (3/13), and 7th (6/16) values if it is given the __random seed__ of __1234__, provided with an 11 length vector, and asked to sample 5 values.
 
 Setting our randomness is incredible beneficial for reproducibility in research.
 
@@ -717,13 +717,13 @@ It also means others can replicate your results.
 ![](figures/reset_seed.png){style="width:400px"}
 </center>
 
-We set a random seed at the start of the cell for reproducibility and control, but why do we then run the line `set.seed(NULL)`?
+We set a __random seed__ at the start of the cell for reproducibility and control, but why do we then run the line `set.seed(NULL)`?
 
-The normal operation of R means that, in effect, its random seed changes every time it is used.
+The normal operation of R means that, in effect, its __random seed__ changes every time it is used.
 This means R normally randomly determines randomness.
 This is how it should be until we want to set the randomness.
-It is therefore good practice to set the seed to `NULL` after you have utilised your set seeds.
-This will revert the seed to its normal random operations.
+It is therefore good practice to set the seed to `NULL` after you have utilised your set __seeds__.
+This will revert the __seed__ to its normal random operations.
 
 One last point to note is R versions. 
 Version 3.6 changed R's sampling methods, therefore if you use Version 3.5 or below you will get different results than we have got.
@@ -750,7 +750,7 @@ Sample the object `second_millenium` with the following parameters:
 
 - Extract 10 values
 - Without replacement
-- Use the random seed `489`
+- Use the __random seed__ `489`
 
 ```{r, echo = FALSE}
 opts_p <- c("__1120__", answer="__1369__", "__1744__")
@@ -763,7 +763,7 @@ Sample the object `second_millenium` with the following parameters:
 
 - Extract 24 values
 - Without replacement
-- Use the answer to the first question as the random seed
+- Use the answer to the first question as the __random seed__
 
 ```{r, echo = FALSE}
 opts_p <- c("__1120__", "__1369__", answer="__1744__")
@@ -776,7 +776,7 @@ Sample the object `second_millenium` with the following parameters:
 
 - Extract a number of values equal to the answer of the second question
 - With replacement
-- Use the answer to the first question as the random seed
+- Use the answer to the first question as the __random seed__
 
 ```{r, echo = FALSE}
 opts_p <- c(answer="__1120__", "__1369__", "__1744__")
@@ -785,7 +785,7 @@ What is the 999th number in the produced vector? `r longmcq(opts_p)`
 
 Once you are happy you can save then close and halt your "Random_seeds.ipynb" notebook.
 
-Hopefully this has given you a good undertstanding of the principle of random seeds. With this you can continue onto iterative rarefaction.
+Hopefully this has given you a good understanding of the principle of __random seeds__. With this you can continue onto __iterative rarefaction__.
 
 <!--chapter:end:07-Rarefaction_and_random_seeds.Rmd-->
 
@@ -794,13 +794,13 @@ library(webexercises)
 ```
 # Iterating rarefaction {#iterating_rarefaction_chap}
 <center>
-![](figures/random_seeds.png){style="width:200px"}
+![](figures/france.png){style="width:200px"}
 </center>
 
-In this chapter we will create code to carry out iterative rarefaction.
-For this we create a vector of random seeds, each used for a different iteration of rarefaction.
-We will loop through these random seeds, using each random seed to carry out one iteration of rarefaction.
-In the next chapters we will utilise this code to produce alpha and beta diveristy values that we will analyse.
+In this chapter we will create code to carry out __iterative rarefaction__.
+For this we create a vector of __random seeds__, each used for a different __iteration__ of __rarefaction__.
+We will loop through these __random seeds__, using each __random seed__ to carry out one __iteration__ of __rarefaction__.
+In the next chapters we will utilise this code to produce alpha and beta diversity values that we will analyse.
 
 ## Iterating rarefaction dataset
 <center>
@@ -813,15 +813,16 @@ Below are brief bullet points about the data:
 
 - It is a 16S dataset of ASV counts with taxonomy and phylogeny produced by QIIME2
 - The samples come from surface water from the Durance River in the south-east of France
-- There are three sampling site on an anthropisation gradient (low to high agriculture)
+- There are three sampling sites on an anthropisation gradient (low to high agriculture)
   - Upper Durance (UD)
   - Middle Durance (MD)
   - Lower Durance (LD)
-- Four different media approaches were used to produce bacterial lawns that were sequenced.
+- Four different media approaches were used to produce bacterial lawns that were sequenced
   - Environmental sample (ENV): No media used, frozen at -20°C.
   - TSA 10% incubated at 28°C for 2 days.
   - KBC incubated at 28°C for 2 days.
   - CVP incubated at 28°C for 3 days.
+- There are three replicates for each sampling site and media combination (36 samples total)
 
 ## Iterating rarefaction setup
 <center>
@@ -846,12 +847,12 @@ load("phyloseq.RData")
 ![](figures/number_pad.png){style="width:200px"}
 </center>
 
-We need to choose the number of iterations we are going to carry out.
+We need to choose the number of __iterations__ we are going to carry out.
 
 For our __practice__ we will use __10 iterations__ for speed. 
 In your real analysis I would recommend using __1000 iterations__.
 
-Let's create a variable for our number of iterations.
+Let's create a variable for our number of __iterations__.
 
 ```{R, eval=FALSE}
 #Number of rarefaction iterations to be carried out
@@ -864,11 +865,12 @@ rarefaction_iters <- 10
 ![](figures/list.png){style="width:200px; background-color:white; border-radius:15px"}
 </center>
 
-We can now carry out __Random Number Generation (RNG)__ to create a number of random seeds equal to the number of iterations planned.
+We can now carry out __Random Number Generation (RNG)__ to create a number of __random seeds__ equal to the number of iterations planned.
 
 ```{R, eval=FALSE}
 #Create rngseed vector
 #Set seed for reproducibility
+#This number was chosen randomly
 set.seed(2605)
 #Sample 10 (number of iters) values from the number range 1-100,000
 rngseed_vec <- sample(x=1:100000, size = rarefaction_iters, replace = FALSE)
@@ -882,204 +884,231 @@ set.seed(NULL)
 
 There are a lot of steps above. These are:
 
-- __Setting the random seed:__ We carry this out so we will always get the same rngseed vector that will be used for the rarefaction iterations. This is important so you will always get the same results if you need to rework some analysis, stats, or plots. ALso useful here so you get the same results as the instructor and other attendees.
-- __Creating the rngseed vector:__ We use our old friend `sample()` to create a random number for each iteration we will carry out. 
+- __Setting the random seed:__ We carry this out so we will always get the same rngseed vector that will be used for the rarefaction iterations. This is important so you will always get the same results if you need to rework some analysis, stats, or plots. Also useful here so you get the same results as the instructor and other attendees.
+- __Creating the rngseed vector:__ We use our old friend `sample()` to create a random number for each __iteration__ we will carry out. 
   - We arbitrarily sample from the numbers 1-100,000, you could change this to a larger range in your future research.
-  - We use our previous object `rarefaction_iters` as `size=` to produce a random number for each of our iterations.
-  - We carry this out without replacement so none of our rarefaction iterations are identical.
+  - We use our previous object `rarefaction_iters` as `size=` to produce a random number for each of our __iterations__.
+  - We carry this out __without replacement__ so none of our __rarefaction iterations__ are identical.
 - __Save the rngseed vector:__ We save the vector as a file. We will load this in our alpha and beta diversity notebooks to be used for iterative rarefaction. This is also useful so you have a backup file of the rngseed vectors. 
 - __Reset seed:__ Always good to reset the seed at the end of a cell.
 
-## Random sampling
-<center>
-![](figures/random_sampling.png){style="width:200px; background:white; border-radius:5px"}
-</center>
+## Phyla relative abundance
 
-To demonstrate this we will use the R function `sample()`. 
-This function randomly samples a set of numbers.
+Prior to __iterative rarefaction__ we will look at the phyla composition of the environmental samples.
 
-Create the below code in a code cell.
+### Subset and phyla aggregation
 
-```{R, eval=FALSE}
-#Create a vector containing the numbers 0 to 10
-num_vec <- 0:10
-#Randomly sample 5 of these numbers
-sample(x = num_vec, size = 5)
-```
+For demonstrative purposes we will reduce the amount of samples and features in our data for this chapter. We will carry this out by:
 
-If you run the code you will get five random single digit numbers.
-
-Run this multiple times and you will hopefully see the sampled numbers are different every time.
-
-## Sampling with replacement
-<center>
-![](figures/balls.png){style="width:200px"}
-</center>
-
-You may also notice that within each sample there are no repeating numbers.
-You can change this by adding the options `replace = TRUE`.
-
-Try this out in a new cell.
+- Subsetting the data so it only contains the 9 environmental samples.
+- Aggregate the taxa to phyla whilst aggregating rare taxa to one "other group"
 
 ```{R, eval=FALSE}
-#Randomly sample 5 of these numbers with replacement
-sample(x = num_vec, size = 5, replace = TRUE)
+#Reduce data for demonstrative purposes
+#Subset phyloseq object to only retain the ENV samples
+#I.e. remove the media samples
+physeq_env <- phyloseq::subset_samples(pseq, media == "ENV")
+
+#Aggregate to phyla level whilst aggregating rare phyla
+pseq_env_phyla <- microbiome::aggregate_rare(pseq_env, level = "Phylum",
+                                             detection = 0.1, prevalence = 0.5,
+                                             verbose = FALSE)
+#View count table
+otu_table(pseq_env_phyla)
+#Sum count of samples
+microbiome::readcount(pseq_env_phyla)
+#Remove unwanted objects
+rm(pseq, pseq_env)
 ```
 
-Run this a few times and you will hopefully notice that there are repeats.
+### Phyla relative abundance bar chart
 
-When sampling with replacement you put back any results back into the sampling pool.
-When sampling without replacement you don't put back any results into the sampling pool.
+Let's have a quick look at the non rarefied phyla relative abundance through a bar chart.
 
-The famous example is sampling green and yellow balls from a bag.
-If you had a bag with 1000 balls and you wanted a rough idea of the ratio of yellow and green balls you could count the number of these balls of only 50.
-Without replacement you would take out a ball, mark its colour and throw it in a separate container.
-With replacement you would take out a ball, mark its colour and put it back into the intial bag, meanig it could possibly be recounted.
-
-One advantage of sampling with replacement is that your sampling size can be larger than your actual population size.
-For example, you could create a random sampling of 50 with a bag containing 10 balls with replacement.
-This would not work without replacement.
-The below script will cause R to produce an error saying it can be done with replacement.
+__Note:__ This is how you would normally at this type of bar chart.
 
 ```{R, eval=FALSE}
-#Randomly sample 5 of these numbers with replacement
-sample(x = num_vec, size = 5, replace = TRUE)
+#Quick phyla bar chart of relative abundance
+#Relative abundance transformation
+pseq_env_phyla_relabund <- microbiome::transform(pseq_env_phyla, "compositional")
+#Create, save, and display bar chart
+phylum_bar <- microbiome::plot_composition(pseq_env_phyla_relabund)
+ggsave(filename = "./env_phyla_relabund.png", plot = phylum_bar,
+       device = "png", dpi = 300, units = "mm", height = 100, width = 100)
+IRdisplay::display_png(file = "./env_phyla_relabund.png")
 ```
 
-Importantly for us rarefaction uses sampling without replacement.
+## One Round (1R) of rarefaction
 
-## Setting a random seed
-<center>
-![](figures/set_a_seed.png){style="width:400px"}
-</center>
+We will first carry out one round of __rarefaction__ .
+This is so we can get a reminder of how to carry it out and to compare the results of no __rarefaction__ and only one round.
 
-We'll sample, without replacement, the numbers one more time in a new cell.
-However, this time we will set the random seed with the function `seet.seed()`.
+### 1R: Rarefaction
+
+Carry out one round of __rarefaction__ and view the __rarefied__ counts.
+
+We are using the environmental samples subsetted and phyla aggregated data.
+Additionally, we are using the first of our __random seeds__ in `rng_seed_vec` and the minimum read count as our __rarefaction__ size.
 
 ```{R, eval=FALSE}
-#Set random seed
-set.seed(1234)
-#Randomly sample 12 of these numbers without replacement
-sample(x = num_vec, size = 12, replace = FALSE)
-#Reset random seed
-set.seed(NULL)
+#One round of rarefaction
+pseq_env_phyla_rarefy_1 <- phyloseq::rarefy_even_depth(
+  pseq_env_phyla,
+  #Minimum read count as rarefaction size
+  sample.size = min(microbiome::readcount(pseq_env_phyla)),
+  #First random seed as the rng seed
+  rngseed = rngseed_vec[1])
+#View count table
+otu_table(pseq_env_phyla_rarefy_1)
+#Sum count of samples
+microbiome::readcount(pseq_env_phyla_rarefy_1)
 ```
 
-Before we explain the code further, try running the cell multiple times.
-If it is identical to the above code you will get the numbers "9, 5, 4, 3, & 6".
+You should see that all the samples now have a total count of __11046__.
 
-How come you are getting these results if it is random?
+### 1R: Relative abundance bar chart
 
-True randomness is pretty much impossible, especially in computing.
-To get around this many programs use seeds to determine how random tasks will be carried out.
-Various programs that use random seeds include:
-
-- Sampling tools such as `sample()` and rarefaction
-- Creating bootstrapped phylogenies
-- Creating procedural content such as building Minecraft worlds
-
-Therefore if you run a tool that will use randomness you will always get the same results if:
-
-- You use the same random seed
-- You use the same data
-- You use the same replacement method (with or without)
-
-In fact, run the below code in a new code cell and you may notice a similarity with your previous output.
+Now to create a relative abundance bar chart with our __rarefied__ data to compare to our non-rarefied data.
 
 ```{R, eval=FALSE}
-#Set random seed
-set.seed(1234)
-#Create a vector containing the numbers 0 to 10
-larger_num_vec <- 10:19
-#Randomly sample 5 of these numbers
-sample(x = num_vec, size = 5)
-#Reset random seed
-set.seed(NULL)
+#Quick phyla bar chart of relative abundance
+#Relative abundance transformation
+pseq_env_phyla_rarefy_1_relabund <- microbiome::transform(pseq_env_phyla_rarefy_1, "compositional")
+#Create, save, and display bar chart
+phylum_bar <- microbiome::plot_composition(pseq_env_phyla_rarefy_1_relabund)
+ggsave(filename = "./env_phyla_rarefy_1_relabund.png", plot = phylum_bar,
+       device = "png", dpi = 300, units = "mm", height = 100, width = 100)
+IRdisplay::display_png(file = "./env_phyla_rarefy_1_relabund.png")
 ```
 
-That's right, `sample()` will always take the 10th (9/19), 6th (5/15), 5th (4/14), 4th (3/13), and 7th (6/16) values if it is given the random seed of (1234) and provided with a 11 length vector.
+Viewing the non-rarefied and __rarefied__ based bar charts shows some differences. However, these are quite difficult to discern.
 
-Setting our randomness is incredible beneficial for reproducibility in research.
+### 1R: Difference from non-rarefied
 
-When you carry out analysis you may need to redo some work. 
-This could be due to reviewer comments or you want to incorporate some new methods.
-As long as you saved the random seeds you used you can get the same results where you need to.
-It also means others can replicate your results.
-
-## Reset seed
-<center>
-![](figures/reset_seed.png){style="width:400px"}
-</center>
-
-We set a random seed at the start of the cell for reproducibility and control, but why do we then run the line `set.seed(NULL)`?
-
-The normal operation of R means that, in effect, its random seed changes every time it is used.
-This means R normally randomly determines randomness.
-This is how it should be until we want to set the randomness.
-It is therefore good practice to set the seed to `NULL` after you have utilised your set seeds.
-This will revert the seed to its normal random operations.
-
-One last point to note is R versions. 
-Version 3.6 changed R's sampling methods, therefore if you use Version 3.5 or below you will get different results than we have got.
-Hopefully the R developers will not change this in a later version again.
-
-## Random seed practice
-<center>
-![](figures/seed_sowing.png){style="width:200px"}
-</center>
-
-Brilliant! To reinforce the above knowledge try out the following challenges.
-
-First create the following vector:
+To more easily see the differences we will subtract the two relative abundance tables from each other.
+This will produce a matrix of differences.
 
 ```{R, eval=FALSE}
-second_millenium <- 1001:2000
+#Value difference matrix
+single_rarefaction_diff <- 
+  phyloseq::otu_table(pseq_env_phyla) - phyloseq::otu_table(pseq_env_phyla_rarefy_1_relabund)
+single_rarefaction_diff
 ```
 
-__Note:__ Remember it is best practice to `set.seed(NULL)` at the end of a code cell.
+We can see there are some differences.
+To make these differences even clearer let's make a histogram.
 
-### Random seed: Question 1
-
-Sample the object `second_millenium` with the following parameters:
-
-- Extract 10 values
-- Without replacement
-- Use the random seed `489`
+```{R, eval = FALSE}
+#Histogram of differences
+hist(single_rarefaction_diff, main = "Single rarefaction")
+```
 
 ```{r, echo = FALSE}
-opts_p <- c("__1120__", answer="__1369__", "__1744__")
+opts_p <- c("__-0.0003(-3e-04) to 0.0003(3e-04)__", "__-0.003 to 0.003__", answer="__-0.015 to 0.015__")
 ```
-What is the fourth number in the produced vector? `r longmcq(opts_p)`
+What is the range of the differences? `r longmcq(opts_p)`
 
-### Random seed: Question 2
+Although these values appear quite small keep in mind we are working with relative abundance values.
+Each sample has a total relative abundance of 1.00 so a relative abundance value of 0.01 is 1%.
 
-Sample the object `second_millenium` with the following parameters:
+Let's see if we can get these differences smaller with multiple rounds of rarefaction.
 
-- Extract 24 values
-- Without replacement
-- Use the answer to the first question as the random seed
+## Multiple Rarefaction (MR) iterations
+
+We will now carry out iterative rarefaction.
+
+### MR: Rarefaction
+
+The below loop creates a relative abundance table created by 10 rounds of iteration.
+Type the code and read the annotations to understand what is going on.
+Then run the code.
+
+```{R, eval=FALSE}
+#Iterative rarefaction to produce an average rarefied relative abundance table
+
+#Assign rarefaction size
+rarefaction_size <- min(microbiome::readcount(pseq_env_phyla))
+#Read in our rng seed vector
+load("rngseeds.RData")
+
+#Initalise where we will store the output
+#In this case we create the first iteration
+#Carry out first rarefaction
+pseq_rarefy <- phyloseq::rarefy_even_depth(pseq_env_phyla,
+                                           sample.size = rarefaction_size
+                                           #First random seed as the rng seed
+                                           rngseed = rngseed_vec[1])
+#Calculate relative abundance
+pseq_rarefy_relabund <- microbiome::transform(pseq_rarefy, "compositional")
+#Relabund phyla table object
+relabund_phyla_table <- as.data.frame(phyloseq::otu_table(pseq_rarefy_relabund))
+
+#Loop through the next 9 iterations
+#Add the relabund rarefied values to phyla_table
+for (i in 2:length(rngseed_vec)){
+  #Rarefy
+  pseq_rarefy <- phyloseq::rarefy_even_depth(pseq_env_phyla,
+                                           sample.size = rarefaction_size
+                                           #First random seed as the rng seed
+                                           rngseed = rngseed_vec[i])
+  #Calculate relative abundance
+  pseq_rarefy_relabund <- microbiome::transform(pseq_rarefy, "compositional")
+  #Add values to phyla_table
+  relabund_phyla_table <- 
+    relabund_phyla_table + as.data.frame(phyloseq::otu_table(pseq_rarefy_relabund))
+}
+#Average the values of the summed relabund phyla_table
+relabund_phyla_table <- relabund_phyla_table / length(rngseed_vec)
+```
+
+### MR: Difference from non-rarefied
+
+We'll skip the bar chart this time and only look at the difference of the values.
+
+```{R, eval=FALSE}
+#Value difference matrix
+iterative_rarefaction_diff <- 
+  as.matrix(phyloseq::otu_table(pseq_env_phyla) - relabund_phyla_table)
+iterative_rarefaction_diff
+#Histogram
+hist(iterative_rarefaction_diff)
+```
 
 ```{r, echo = FALSE}
-opts_p <- c("__1120__", "__1369__", answer="__1744__")
+opts_p <- c("__-0.0003(-3e-04) to 0.0003(3e-04)__", answer="__-0.003 to 0.003__", "__-0.015 to 0.015__")
 ```
-What is the 16th number in the produced vector? `r longmcq(opts_p)`
+What is the range of the differences? `r longmcq(opts_p)`
 
-### Random seed: Question 3
+You should notice that the differences are much smaller.
+This indicates that the structure of the __iterative rarefied__ data is much closer to the non-rarefied data than the one __rarefied__ data.
+This is what we want.
 
-Sample the object `second_millenium` with the following parameters:
+## Iterating rarefaction task
 
-- Extract a number of values equal to the answer of the second question
-- With replacement
-- Use the answer to the first question as the random seed
+Superlative! Now that you know how to carry out __iterative rarefaction__ I'll ask you to do it once more for the phyla data.
+
+Create a rarefaction averaged phyla relative abundance as we have done above but with 1000 __rarefaction iterations__.
+For this task use __153478__ as the __seed__ when creating your vector of 1000 __rng seeds__.
+
+After creating the relative abundance matrix determine how different the values are compared to the non-rarefied relative abundance.
 
 ```{r, echo = FALSE}
-opts_p <- c(answer="__1120__", "__1369__", "__1744__")
+opts_p <- c(answer="__-0.0003(-3e-04) to 0.0003(3e-04)__", "__-0.003 to 0.003__", "__-0.015 to 0.015__")
 ```
-What is the 999th number in the produced vector? `r longmcq(opts_p)`
+What is the range of the differences? `r longmcq(opts_p)`
 
-Once you are happy you can save then close and halt your "Random_seeds.ipynb" notebook.
+## Iterating rarefaction recap
 
-Hopefully this has given you a good undertstanding of the principle of random seeds. With this you can continue onto iterative rarefaction.
+With this chapter you have learnt:
+
+- How to create a vector of rngseeds
+- How to use rng seeds to carry out itertaive rarefaction
+
+In you real life analysis you would not use this method to create relative abundance taxonomy bar charts, you would use the non-rarefied relative abundance.
+However, this hopefully gave you a good idea of how __iterataive rarefaction__ works so we can utilise it the next 2 chapters for alpha and beta diversity analysis.
+
+
+
 
 <!--chapter:end:08-Iterating_rarefaction.Rmd-->
 
