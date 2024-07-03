@@ -206,7 +206,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.1" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#iterating-rarefaction-dataset"><i class="fa fa-check"></i><b>8.1</b> Iterating rarefaction dataset</a></li>
 <li class="chapter" data-level="8.2" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#iterating-rarefaction-setup"><i class="fa fa-check"></i><b>8.2</b> Iterating rarefaction setup</a></li>
 <li class="chapter" data-level="8.3" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#rarefaction-iterations"><i class="fa fa-check"></i><b>8.3</b> Rarefaction iterations</a></li>
-<li class="chapter" data-level="8.4" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#rng-vector-creation"><i class="fa fa-check"></i><b>8.4</b> RNG vector creation</a></li>
+<li class="chapter" data-level="8.4" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#rng_vec_creation"><i class="fa fa-check"></i><b>8.4</b> RNG vector creation</a></li>
 <li class="chapter" data-level="8.5" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#phyla-relative-abundance"><i class="fa fa-check"></i><b>8.5</b> Phyla relative abundance</a>
 <ul>
 <li class="chapter" data-level="8.5.1" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#subset-and-phyla-aggregation"><i class="fa fa-check"></i><b>8.5.1</b> Subset and phyla aggregation</a></li>
@@ -226,6 +226,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.8" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#iterating-rarefaction-task"><i class="fa fa-check"></i><b>8.8</b> Iterating rarefaction task</a></li>
 <li class="chapter" data-level="8.9" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#iterating-rarefaction-recap"><i class="fa fa-check"></i><b>8.9</b> Iterating rarefaction recap</a></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html"><i class="fa fa-check"></i><b>9</b> Alpha Diversity</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-diversity-setup"><i class="fa fa-check"></i><b>9.1</b> Alpha diversity setup</a></li>
+<li class="chapter" data-level="9.2" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-diversity-iterative-rarefaction-values"><i class="fa fa-check"></i><b>9.2</b> Alpha diversity iterative rarefaction values</a></li>
+<li class="chapter" data-level="9.3" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-diversity-iterative-rarefaction-loop"><i class="fa fa-check"></i><b>9.3</b> Alpha diversity iterative rarefaction loop</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html"><i class="fa fa-check"></i><b>10</b> Beta Diversity</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -383,8 +390,8 @@ Hopefully the R developers will not change this in a later version again.</p>
 <li>Use the <strong>random seed</strong> <code>489</code></li>
 </ul>
 What is the fourth number in the produced vector?
-<div id="radio_MSPRIWCLQM" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_MSPRIWCLQM" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_MSPRIWCLQM" value="answer"></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_MSPRIWCLQM" value=""></input> <span><strong>1744</strong></span></label>
+<div id="radio_EFGCKXHBZP" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_EFGCKXHBZP" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_EFGCKXHBZP" value="answer"></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_EFGCKXHBZP" value=""></input> <span><strong>1744</strong></span></label>
 </div>
 </div>
 <div id="random-seed-question-2" class="section level3 hasAnchor" number="7.6.2">
@@ -396,8 +403,8 @@ What is the fourth number in the produced vector?
 <li>Use the answer to the first question as the <strong>random seed</strong></li>
 </ul>
 What is the 16th number in the produced vector?
-<div id="radio_YXQOPHKBHA" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_YXQOPHKBHA" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_YXQOPHKBHA" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_YXQOPHKBHA" value="answer"></input> <span><strong>1744</strong></span></label>
+<div id="radio_PPFDIYQGYU" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_PPFDIYQGYU" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_PPFDIYQGYU" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_PPFDIYQGYU" value="answer"></input> <span><strong>1744</strong></span></label>
 </div>
 </div>
 <div id="random-seed-question-3" class="section level3 hasAnchor" number="7.6.3">
@@ -409,8 +416,8 @@ What is the 16th number in the produced vector?
 <li>Use the answer to the first question as the <strong>random seed</strong></li>
 </ul>
 What is the 999th number in the produced vector?
-<div id="radio_AVFUMJMQJN" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_AVFUMJMQJN" value="answer"></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_AVFUMJMQJN" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_AVFUMJMQJN" value=""></input> <span><strong>1744</strong></span></label>
+<div id="radio_CMFFEGXDJJ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_CMFFEGXDJJ" value="answer"></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_CMFFEGXDJJ" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_CMFFEGXDJJ" value=""></input> <span><strong>1744</strong></span></label>
 </div>
 <p>Once you are happy you can save then close and halt your "Random_seeds.ipynb" notebook.</p>
 <p>Hopefully this has given you a good understanding of the principle of <strong>random seeds</strong>. With this you can continue onto <strong>iterative rarefaction</strong>.</p>

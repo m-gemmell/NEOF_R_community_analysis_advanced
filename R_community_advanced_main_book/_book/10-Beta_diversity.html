@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 Iterative rarefaction intro | R community advanced analysis</title>
+  <title>Chapter 10 Beta Diversity | R community advanced analysis</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 Iterative rarefaction intro | R community advanced analysis" />
+  <meta property="og:title" content="Chapter 10 Beta Diversity | R community advanced analysis" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/figures/NEOF.png" />
   <meta property="og:description" content="NEOF book for the R community advanced analysis course" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Iterative rarefaction intro | R community advanced analysis" />
+  <meta name="twitter:title" content="Chapter 10 Beta Diversity | R community advanced analysis" />
   
   <meta name="twitter:description" content="NEOF book for the R community advanced analysis course" />
   <meta name="twitter:image" content="/figures/NEOF.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
-<link rel="prev" href="05-Jupyter.html"/>
-<link rel="next" href="07-Rarefaction_and_random_seeds.html"/>
+<link rel="prev" href="09-Alpha_diversity.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -253,63 +253,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="rarefaction_intro_chap" class="section level1 hasAnchor" number="6">
-<h1><span class="header-section-number">Chapter 6</span> Iterative rarefaction intro<a href="06-Iterative_rarefaction.html#rarefaction_intro_chap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="beta_chap" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Beta Diversity<a href="10-Beta_diversity.html#beta_chap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <center>
-<img src="figures/iteration.png" style="width:200px" />
+<img src="figures/beta_iterative_rarefaction.png" style="width:300px" />
 </center>
-<p><strong>Rarefaction</strong> is the process of randomly subsetting samples so the total count values are identical across all samples.
-<strong>Rarefaction</strong> is intended to correct for bias caused by varying sampling depths across the samples to be analysed.</p>
-<div id="should-you-rarefy" class="section level2 hasAnchor" number="6.1">
-<h2><span class="header-section-number">6.1</span> Should you rarefy?<a href="06-Iterative_rarefaction.html#should-you-rarefy" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<center>
-<img src="figures/choice_sign.png" style="width:200px" />
-</center>
-<p><strong>Rarefaction</strong> can be a hotly debated topic with two main points of view.</p>
-<ol style="list-style-type: decimal">
-<li>Some researchers believe it is not appropriate.
-<ol style="list-style-type: decimal">
-<li>This is backed up by the 2014 paper <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531">"Waste Not, Want Not: Why Rarefying Microbiome Data Is Inadmissible"</a></li>
-<li>Various R package developers do not recommend it such as the developers of <a href="https://joey711.github.io/phyloseq/"><code>phyloseq</code></a> &amp; <a href="https://microbiome.github.io/tutorials/"><code>microbiome</code></a>.</li>
-</ol></li>
-<li>Some researchers believe it is appropriate.
-<ol style="list-style-type: decimal">
-<li>This is backed up by the 2022 paper <a href="https://academic.oup.com/bioinformatics/article/38/9/2389/6536959">"To rarefy or not to rarefy: robustness and efficiency trade-offs of rarefying microbiome data"</a></li>
-<li>The QIIME2 developers include rarefaction in their tutorials/SOPs for alpha and beta diversity analysis</li>
-</ol></li>
-</ol>
-<p>We use <strong>rarefaction</strong> in our analyses but it is ultimately up to you whether you utilise it or not.</p>
-</div>
-<div id="using-iterations" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> Using iterations<a href="06-Iterative_rarefaction.html#using-iterations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<center>
-<img src="figures/iterations.png" style="width:200px; background-color:white; border-radius:15px" />
-</center>
-<p>In our initial R community analysis workshop we only <strong>rarefy</strong> once for each sample.
-In this section we will <strong>rarefy</strong> multiple times to calculate average values for alpha and beta diversity metrics.
-This is <strong>iterative rarefaction</strong> analysis.</p>
-<p>This iterative approach will, in theory, smooth out any extreme results one round of <strong>rarefaction</strong> may cause. Extreme results are possibly due the random nature of <strong>rarefaction</strong>.
-These extreme results can include:</p>
-<ul>
-<li>Leaving important features (ASVs, taxonomic groups, etc.) with no counts</li>
-<li>Causing a few features to have much higher relative abundances</li>
-<li>Varying alpha and beta diversity values with different sets of rarefaction</li>
-</ul>
-</div>
-<div id="section-contents" class="section level2 hasAnchor" number="6.3">
-<h2><span class="header-section-number">6.3</span> Section contents<a href="06-Iterative_rarefaction.html#section-contents" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<center>
-<img src="figures/contents.png" style="width:200px; background-color:white; border-radius:15px" />
-</center>
-<p>In this section we will learn how to:</p>
-<ul>
-<li>Use <strong>random seeds</strong> for sampling</li>
-<li>Carry out <strong>iterative rarefaction</strong> with sets of <strong>random seeds</strong></li>
-<li>Use <strong>iterative rarefaction</strong> to carry out alpha diversity analysis</li>
-<li>Use <strong>iterative rarefaction</strong> to carry out beta diversity analysis</li>
-</ul>
 
-</div>
 </div>
 <script>
 
@@ -522,8 +471,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="05-Jupyter.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="07-Rarefaction_and_random_seeds.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="09-Alpha_diversity.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

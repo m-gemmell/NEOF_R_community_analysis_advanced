@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 Iterative rarefaction intro | R community advanced analysis</title>
+  <title>Chapter 9 Alpha Diversity | R community advanced analysis</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 Iterative rarefaction intro | R community advanced analysis" />
+  <meta property="og:title" content="Chapter 9 Alpha Diversity | R community advanced analysis" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/figures/NEOF.png" />
   <meta property="og:description" content="NEOF book for the R community advanced analysis course" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 Iterative rarefaction intro | R community advanced analysis" />
+  <meta name="twitter:title" content="Chapter 9 Alpha Diversity | R community advanced analysis" />
   
   <meta name="twitter:description" content="NEOF book for the R community advanced analysis course" />
   <meta name="twitter:image" content="/figures/NEOF.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
-<link rel="prev" href="05-Jupyter.html"/>
-<link rel="next" href="07-Rarefaction_and_random_seeds.html"/>
+<link rel="prev" href="08-Iterating_rarefaction.html"/>
+<link rel="next" href="10-Beta_diversity.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -253,61 +253,104 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="rarefaction_intro_chap" class="section level1 hasAnchor" number="6">
-<h1><span class="header-section-number">Chapter 6</span> Iterative rarefaction intro<a href="06-Iterative_rarefaction.html#rarefaction_intro_chap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="alpha_chap" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">Chapter 9</span> Alpha Diversity<a href="09-Alpha_diversity.html#alpha_chap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <center>
-<img src="figures/iteration.png" style="width:200px" />
+<img src="figures/alpha_iterative_rarefaction.png" style="width:300px" />
 </center>
-<p><strong>Rarefaction</strong> is the process of randomly subsetting samples so the total count values are identical across all samples.
-<strong>Rarefaction</strong> is intended to correct for bias caused by varying sampling depths across the samples to be analysed.</p>
-<div id="should-you-rarefy" class="section level2 hasAnchor" number="6.1">
-<h2><span class="header-section-number">6.1</span> Should you rarefy?<a href="06-Iterative_rarefaction.html#should-you-rarefy" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this chapter we'll carry out alpha diversity analysis using the <strong>iterative rarefaction</strong> approach.
+We will carry this out on the ASV counts rather than at a taxonomy level such as phyla.</p>
+<p>These materials are mostly a combination of the <strong>iterative rarefaction</strong> in this book and the <strong>alpha diversity</strong> analysis in the R community workshop.
+Due to this we won't go into great detail, instead focussing on giving you the code to be able to carry this out.</p>
+<div id="alpha-diversity-setup" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Alpha diversity setup<a href="09-Alpha_diversity.html#alpha-diversity-setup" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
-<img src="figures/choice_sign.png" style="width:200px" />
+<img src="figures/setup_6.png" style="width:200px; background-color:white; border-radius:15px" />
 </center>
-<p><strong>Rarefaction</strong> can be a hotly debated topic with two main points of view.</p>
-<ol style="list-style-type: decimal">
-<li>Some researchers believe it is not appropriate.
-<ol style="list-style-type: decimal">
-<li>This is backed up by the 2014 paper <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531">"Waste Not, Want Not: Why Rarefying Microbiome Data Is Inadmissible"</a></li>
-<li>Various R package developers do not recommend it such as the developers of <a href="https://joey711.github.io/phyloseq/"><code>phyloseq</code></a> &amp; <a href="https://microbiome.github.io/tutorials/"><code>microbiome</code></a>.</li>
-</ol></li>
-<li>Some researchers believe it is appropriate.
-<ol style="list-style-type: decimal">
-<li>This is backed up by the 2022 paper <a href="https://academic.oup.com/bioinformatics/article/38/9/2389/6536959">"To rarefy or not to rarefy: robustness and efficiency trade-offs of rarefying microbiome data"</a></li>
-<li>The QIIME2 developers include rarefaction in their tutorials/SOPs for alpha and beta diversity analysis</li>
-</ol></li>
-</ol>
-<p>We use <strong>rarefaction</strong> in our analyses but it is ultimately up to you whether you utilise it or not.</p>
+<p>Create a new R jupyter notebook called "Alpha_diversity.ipynb".</p>
+<p>Load the required data and libraries.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb32-1"><a href="09-Alpha_diversity.html#cb32-1" tabindex="-1"></a><span class="co">#Libraries</span></span>
+<span id="cb32-2"><a href="09-Alpha_diversity.html#cb32-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;phyloseq&quot;</span>)</span>
+<span id="cb32-3"><a href="09-Alpha_diversity.html#cb32-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;microbiome&quot;</span>)</span>
+<span id="cb32-4"><a href="09-Alpha_diversity.html#cb32-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
+<span id="cb32-5"><a href="09-Alpha_diversity.html#cb32-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;IRdisplay&quot;</span>)</span>
+<span id="cb32-6"><a href="09-Alpha_diversity.html#cb32-6" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggpubr&quot;</span>)</span>
+<span id="cb32-7"><a href="09-Alpha_diversity.html#cb32-7" tabindex="-1"></a><span class="co">#Load processed but unrarefied ASV data from main R community workshop</span></span>
+<span id="cb32-8"><a href="09-Alpha_diversity.html#cb32-8" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;phyloseq.RData&quot;</span>)</span></code></pre></div>
 </div>
-<div id="using-iterations" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> Using iterations<a href="06-Iterative_rarefaction.html#using-iterations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="alpha-diversity-iterative-rarefaction-values" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> Alpha diversity iterative rarefaction values<a href="09-Alpha_diversity.html#alpha-diversity-iterative-rarefaction-values" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
-<img src="figures/iterations.png" style="width:200px; background-color:white; border-radius:15px" />
+<img src="figures/ten_rng_seeds.png" style="width:200px" />
 </center>
-<p>In our initial R community analysis workshop we only <strong>rarefy</strong> once for each sample.
-In this section we will <strong>rarefy</strong> multiple times to calculate average values for alpha and beta diversity metrics.
-This is <strong>iterative rarefaction</strong> analysis.</p>
-<p>This iterative approach will, in theory, smooth out any extreme results one round of <strong>rarefaction</strong> may cause. Extreme results are possibly due the random nature of <strong>rarefaction</strong>.
-These extreme results can include:</p>
+<p>Before carrying out <strong>iterative rarefaction</strong> we need to decide on a few values</p>
 <ul>
-<li>Leaving important features (ASVs, taxonomic groups, etc.) with no counts</li>
-<li>Causing a few features to have much higher relative abundances</li>
-<li>Varying alpha and beta diversity values with different sets of rarefaction</li>
+<li><strong>Rarefaction size:</strong> The sequence depth to normalise samples to
+<ul>
+<li>We are using the minimum sample depth here.</li>
+<li>The size you choose will be based on your data and what you feel is appropriate. More info in the R community workshop.</li>
+</ul></li>
+<li><strong>RNG seeds:</strong> The rng seeds we will use for all the rarefactions
+<ul>
+<li>We created these in the previous <a href="08-Iterating_rarefaction.html#rng_vec_creation">chapter</a></li>
+</ul></li>
+<li><strong>Rarefaction iterations:</strong> The number of rarefaction iterations we will use
+<ul>
+<li>We are using 10 here based on the length of our rng seed vector</li>
+<li>We recommend you use 1000 in your real analysis</li>
+</ul></li>
 </ul>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb33-1"><a href="09-Alpha_diversity.html#cb33-1" tabindex="-1"></a><span class="co">#Rarefaction values</span></span>
+<span id="cb33-2"><a href="09-Alpha_diversity.html#cb33-2" tabindex="-1"></a><span class="co">#Rarefaction size</span></span>
+<span id="cb33-3"><a href="09-Alpha_diversity.html#cb33-3" tabindex="-1"></a><span class="co">#Minimum sample depth in this case</span></span>
+<span id="cb33-4"><a href="09-Alpha_diversity.html#cb33-4" tabindex="-1"></a>rarefaction_size <span class="ot">&lt;-</span> <span class="fu">min</span>(microbiome<span class="sc">::</span><span class="fu">readcount</span>(pseq))</span>
+<span id="cb33-5"><a href="09-Alpha_diversity.html#cb33-5" tabindex="-1"></a><span class="co">#Load the vector of 10 rngseeds created in the previous chapter</span></span>
+<span id="cb33-6"><a href="09-Alpha_diversity.html#cb33-6" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;rngseeds.RData&quot;</span>)</span>
+<span id="cb33-7"><a href="09-Alpha_diversity.html#cb33-7" tabindex="-1"></a><span class="co">#Number of rarefaction iterations to be carried out</span></span>
+<span id="cb33-8"><a href="09-Alpha_diversity.html#cb33-8" tabindex="-1"></a><span class="co">#Based on length of rn seed vector</span></span>
+<span id="cb33-9"><a href="09-Alpha_diversity.html#cb33-9" tabindex="-1"></a>rarefaction_iters <span class="ot">&lt;-</span> <span class="fu">length</span>(rngseed_vec)</span></code></pre></div>
 </div>
-<div id="section-contents" class="section level2 hasAnchor" number="6.3">
-<h2><span class="header-section-number">6.3</span> Section contents<a href="06-Iterative_rarefaction.html#section-contents" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="alpha-diversity-iterative-rarefaction-loop" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Alpha diversity iterative rarefaction loop<a href="09-Alpha_diversity.html#alpha-diversity-iterative-rarefaction-loop" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
-<img src="figures/contents.png" style="width:200px; background-color:white; border-radius:15px" />
+<img src="figures/iterative_loops.png" style="width:300px" />
 </center>
-<p>In this section we will learn how to:</p>
+<p>Now we will create averaged <strong>alpha diversity</strong> values through <strong>iterative rarefaction</strong>.
+We will carry this out by:</p>
 <ul>
-<li>Use <strong>random seeds</strong> for sampling</li>
-<li>Carry out <strong>iterative rarefaction</strong> with sets of <strong>random seeds</strong></li>
-<li>Use <strong>iterative rarefaction</strong> to carry out alpha diversity analysis</li>
-<li>Use <strong>iterative rarefaction</strong> to carry out beta diversity analysis</li>
+<li>Calculating initial <strong>alpha diversity</strong> values from the first <strong>iteration</strong></li>
+<li>Looping through the subsequent <strong>rarefaction iterations</strong> and adding/summing calculated <strong>alpha diversity</strong> values to the initial <strong>alpha diversity</strong> values</li>
+<li>Dividing each value of the final summed <strong>alpha diversity</strong> by the number of <strong>rarefaction iterations</strong>.</li>
 </ul>
+<p>For this we will use the function <code>microbiome::alpha()</code> to calculate our alpha diversity values.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb34-1"><a href="09-Alpha_diversity.html#cb34-1" tabindex="-1"></a><span class="co">#Loop to create iteration based rarefied alpha diversity values</span></span>
+<span id="cb34-2"><a href="09-Alpha_diversity.html#cb34-2" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="09-Alpha_diversity.html#cb34-3" tabindex="-1"></a><span class="co">#Create data frame to contain final summed alpha diversity values</span></span>
+<span id="cb34-4"><a href="09-Alpha_diversity.html#cb34-4" tabindex="-1"></a><span class="co">#In this case we&#39;ll run the first rarefied alpha diversity analysis</span></span>
+<span id="cb34-5"><a href="09-Alpha_diversity.html#cb34-5" tabindex="-1"></a>pseq_rarefy <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">rarefy_even_depth</span>(pseq,</span>
+<span id="cb34-6"><a href="09-Alpha_diversity.html#cb34-6" tabindex="-1"></a>                                           <span class="at">sample.size =</span> rarefaction_size,</span>
+<span id="cb34-7"><a href="09-Alpha_diversity.html#cb34-7" tabindex="-1"></a>                                           <span class="at">rngseed =</span> rngseed_vec[<span class="dv">1</span>], <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb34-8"><a href="09-Alpha_diversity.html#cb34-8" tabindex="-1"></a><span class="co">#Alpha diversity</span></span>
+<span id="cb34-9"><a href="09-Alpha_diversity.html#cb34-9" tabindex="-1"></a>alpha_df_sum <span class="ot">&lt;-</span> microbiome<span class="sc">::</span><span class="fu">alpha</span>(pseq_rarefy, <span class="at">index =</span> <span class="st">&quot;all&quot;</span>)</span>
+<span id="cb34-10"><a href="09-Alpha_diversity.html#cb34-10" tabindex="-1"></a></span>
+<span id="cb34-11"><a href="09-Alpha_diversity.html#cb34-11" tabindex="-1"></a><span class="co">#Loop through 2 to the number of iterations</span></span>
+<span id="cb34-12"><a href="09-Alpha_diversity.html#cb34-12" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>rarefaction_iters){</span>
+<span id="cb34-13"><a href="09-Alpha_diversity.html#cb34-13" tabindex="-1"></a>  pseq_rarefy <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">rarefy_even_depth</span>(pseq,</span>
+<span id="cb34-14"><a href="09-Alpha_diversity.html#cb34-14" tabindex="-1"></a>                                           <span class="at">sample.size =</span> rarefaction_size,</span>
+<span id="cb34-15"><a href="09-Alpha_diversity.html#cb34-15" tabindex="-1"></a>                                           <span class="at">rngseed =</span> rngseed_vec[i], <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb34-16"><a href="09-Alpha_diversity.html#cb34-16" tabindex="-1"></a>  <span class="co">#Alpha diversity</span></span>
+<span id="cb34-17"><a href="09-Alpha_diversity.html#cb34-17" tabindex="-1"></a>  alpha_df <span class="ot">&lt;-</span> microbiome<span class="sc">::</span><span class="fu">alpha</span>(pseq_rarefy, <span class="at">index =</span> <span class="st">&quot;all&quot;</span>)</span>
+<span id="cb34-18"><a href="09-Alpha_diversity.html#cb34-18" tabindex="-1"></a>  <span class="co">#Add/sum the new data frame values to sum data frame</span></span>
+<span id="cb34-19"><a href="09-Alpha_diversity.html#cb34-19" tabindex="-1"></a>  alpha_df_sum <span class="ot">&lt;-</span> alpha_df_sum <span class="sc">+</span> alpha_df</span>
+<span id="cb34-20"><a href="09-Alpha_diversity.html#cb34-20" tabindex="-1"></a>}</span>
+<span id="cb34-21"><a href="09-Alpha_diversity.html#cb34-21" tabindex="-1"></a><span class="co">#Divide by number of rarefaction iterations to get average</span></span>
+<span id="cb34-22"><a href="09-Alpha_diversity.html#cb34-22" tabindex="-1"></a>alpha_df_mean <span class="ot">&lt;-</span> alpha_df_sum <span class="sc">/</span> rarefaction_iters</span>
+<span id="cb34-23"><a href="09-Alpha_diversity.html#cb34-23" tabindex="-1"></a><span class="co">#Save alpha mean data frame</span></span>
+<span id="cb34-24"><a href="09-Alpha_diversity.html#cb34-24" tabindex="-1"></a><span class="fu">save</span>(alpha_df_mean, <span class="at">file =</span> <span class="st">&quot;alpha_df_mean.RData&quot;</span>)</span>
+<span id="cb34-25"><a href="09-Alpha_diversity.html#cb34-25" tabindex="-1"></a><span class="co">#Remove unneeded objects</span></span>
+<span id="cb34-26"><a href="09-Alpha_diversity.html#cb34-26" tabindex="-1"></a><span class="fu">rm</span>(pseq_rarefy, alpha_df_sum, alpha_df)</span></code></pre></div>
+<p>You can check the structure and contents of our aalpha diveristy data fraem with <code>head()</code>.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb35-1"><a href="09-Alpha_diversity.html#cb35-1" tabindex="-1"></a><span class="fu">head</span>(alpha_df_mean)</span></code></pre></div>
 
 </div>
 </div>
@@ -522,8 +565,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="05-Jupyter.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="07-Rarefaction_and_random_seeds.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="08-Iterating_rarefaction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="10-Beta_diversity.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

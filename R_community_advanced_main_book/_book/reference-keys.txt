@@ -40,7 +40,7 @@ iterating_rarefaction_chap
 iterating-rarefaction-dataset
 iterating-rarefaction-setup
 rarefaction-iterations
-rng-vector-creation
+rng_vec_creation
 phyla-relative-abundance
 subset-and-phyla-aggregation
 phyla-relative-abundance-bar-chart
@@ -53,3 +53,8 @@ mr-rarefaction
 mr-difference-from-non-rarefied
 iterating-rarefaction-task
 iterating-rarefaction-recap
+alpha_chap
+alpha-diversity-setup
+alpha-diversity-iterative-rarefaction-values
+alpha-diversity-iterative-rarefaction-loop
+beta_chap

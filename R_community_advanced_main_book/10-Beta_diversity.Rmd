@@ -1,0 +1,4 @@
+# Beta Diversity {#beta_chap}
+<center>
+![](figures/beta_iterative_rarefaction.png){style="width:300px"}
+</center>

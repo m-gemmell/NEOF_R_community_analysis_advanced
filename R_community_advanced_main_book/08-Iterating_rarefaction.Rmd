@@ -66,7 +66,7 @@ Let's create a variable for our number of __iterations__.
 rarefaction_iters <- 10
 ```
 
-## RNG vector creation
+## RNG vector creation {#rng_vec_creation}
 <center>
 ![](figures/list.png){style="width:200px; background-color:white; border-radius:15px"}
 </center>
@@ -414,7 +414,6 @@ With this chapter you have learnt:
 - How to use rng seeds to carry out __iterative rarefaction__
 
 In you real life analysis you would not use this method to create relative abundance taxonomy bar charts, you would use the non-rarefied relative abundance.
-However, this hopefully gave you a good idea of how __iterataive rarefaction__ works so we can utilise it the next 2 chapters for alpha and beta diversity analysis.
+However, this hopefully gave you a good idea of how __iterative rarefaction__ works so we can utilise it the next 2 chapters for alpha and beta diversity analysis.
 
-
-
+Feel free to save then close and halt your "Iterating_rarefaction.ipynb" notebook.

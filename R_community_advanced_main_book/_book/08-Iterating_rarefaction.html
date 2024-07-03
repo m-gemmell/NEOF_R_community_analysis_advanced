@@ -31,7 +31,7 @@
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
 <link rel="prev" href="07-Rarefaction_and_random_seeds.html"/>
-
+<link rel="next" href="09-Alpha_diversity.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -206,7 +206,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.1" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#iterating-rarefaction-dataset"><i class="fa fa-check"></i><b>8.1</b> Iterating rarefaction dataset</a></li>
 <li class="chapter" data-level="8.2" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#iterating-rarefaction-setup"><i class="fa fa-check"></i><b>8.2</b> Iterating rarefaction setup</a></li>
 <li class="chapter" data-level="8.3" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#rarefaction-iterations"><i class="fa fa-check"></i><b>8.3</b> Rarefaction iterations</a></li>
-<li class="chapter" data-level="8.4" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#rng-vector-creation"><i class="fa fa-check"></i><b>8.4</b> RNG vector creation</a></li>
+<li class="chapter" data-level="8.4" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#rng_vec_creation"><i class="fa fa-check"></i><b>8.4</b> RNG vector creation</a></li>
 <li class="chapter" data-level="8.5" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#phyla-relative-abundance"><i class="fa fa-check"></i><b>8.5</b> Phyla relative abundance</a>
 <ul>
 <li class="chapter" data-level="8.5.1" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#subset-and-phyla-aggregation"><i class="fa fa-check"></i><b>8.5.1</b> Subset and phyla aggregation</a></li>
@@ -226,6 +226,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8.8" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#iterating-rarefaction-task"><i class="fa fa-check"></i><b>8.8</b> Iterating rarefaction task</a></li>
 <li class="chapter" data-level="8.9" data-path="08-Iterating_rarefaction.html"><a href="08-Iterating_rarefaction.html#iterating-rarefaction-recap"><i class="fa fa-check"></i><b>8.9</b> Iterating rarefaction recap</a></li>
 </ul></li>
+<li class="chapter" data-level="9" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html"><i class="fa fa-check"></i><b>9</b> Alpha Diversity</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-diversity-setup"><i class="fa fa-check"></i><b>9.1</b> Alpha diversity setup</a></li>
+<li class="chapter" data-level="9.2" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-diversity-iterative-rarefaction-values"><i class="fa fa-check"></i><b>9.2</b> Alpha diversity iterative rarefaction values</a></li>
+<li class="chapter" data-level="9.3" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-diversity-iterative-rarefaction-loop"><i class="fa fa-check"></i><b>9.3</b> Alpha diversity iterative rarefaction loop</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html"><i class="fa fa-check"></i><b>10</b> Beta Diversity</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -308,8 +315,8 @@ In your real analysis I would recommend using <strong>1000 iterations</strong>.<
 <span id="cb19-2"><a href="08-Iterating_rarefaction.html#cb19-2" tabindex="-1"></a><span class="co">#Using 10 here for speed, real analysis should use 1000</span></span>
 <span id="cb19-3"><a href="08-Iterating_rarefaction.html#cb19-3" tabindex="-1"></a>rarefaction_iters <span class="ot">&lt;-</span> <span class="dv">10</span></span></code></pre></div>
 </div>
-<div id="rng-vector-creation" class="section level2 hasAnchor" number="8.4">
-<h2><span class="header-section-number">8.4</span> RNG vector creation<a href="08-Iterating_rarefaction.html#rng-vector-creation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="rng_vec_creation" class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> RNG vector creation<a href="08-Iterating_rarefaction.html#rng_vec_creation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
 <img src="figures/list.png" style="width:200px; background-color:white; border-radius:15px" />
 </center>
@@ -448,8 +455,8 @@ To make these differences even clearer let's make a histogram.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb26-1"><a href="08-Iterating_rarefaction.html#cb26-1" tabindex="-1"></a><span class="co">#Histogram of differences</span></span>
 <span id="cb26-2"><a href="08-Iterating_rarefaction.html#cb26-2" tabindex="-1"></a><span class="fu">hist</span>(single_rarefaction_diff, <span class="at">main =</span> <span class="st">&quot;Single rarefaction&quot;</span>)</span></code></pre></div>
 What is the range of the differences compared to the non rarefied relative abundance values?
-<div id="radio_NXPDDJWEBZ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_NXPDDJWEBZ" value=""></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_NXPDDJWEBZ" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_NXPDDJWEBZ" value="answer"></input> <span><strong>-0.015 to 0.015</strong></span></label>
+<div id="radio_MLZCAENSSP" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_MLZCAENSSP" value=""></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_MLZCAENSSP" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_MLZCAENSSP" value="answer"></input> <span><strong>-0.015 to 0.015</strong></span></label>
 </div>
 <p>Although these values appear quite small keep in mind we are working with relative abundance values.
 Each sample has a total relative abundance of 1.00 so a relative abundance value of 0.01 is 1%.</p>
@@ -518,8 +525,8 @@ Then run the code.</p>
 <span id="cb28-5"><a href="08-Iterating_rarefaction.html#cb28-5" tabindex="-1"></a><span class="co">#Histogram</span></span>
 <span id="cb28-6"><a href="08-Iterating_rarefaction.html#cb28-6" tabindex="-1"></a><span class="fu">hist</span>(iterative_rarefaction_diff)</span></code></pre></div>
 What is the range of the differences compared to the non rarefied relative abundance values?
-<div id="radio_YUAPWMSCFO" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_YUAPWMSCFO" value=""></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_YUAPWMSCFO" value="answer"></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_YUAPWMSCFO" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
+<div id="radio_IICYGAVHMV" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_IICYGAVHMV" value=""></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_IICYGAVHMV" value="answer"></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_IICYGAVHMV" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
 </div>
 <p>You should notice that the differences are much smaller.
 This indicates that the structure of the <strong>iterative rarefied</strong> data is much closer to the non-rarefied data than the one <strong>rarefied</strong> data.
@@ -538,8 +545,8 @@ Save this vector of rngseeds to a file called "rngseeds_1000.RData".</p>
 <p><strong>Note:</strong> The iterative rarefaction step may take a few minutes.</p>
 <p>After creating the relative abundance matrix determine how different the values are compared to the non-rarefied relative abundance with a histogram.</p>
 What is the range of the differences compared to the non rarefied relative abundance values?
-<div id="radio_BKOFWGVAVS" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_BKOFWGVAVS" value="answer"></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_BKOFWGVAVS" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_BKOFWGVAVS" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
+<div id="radio_XDVYESARMJ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XDVYESARMJ" value="answer"></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_XDVYESARMJ" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_XDVYESARMJ" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
 </div>
 <p>Please attempt the task yourself before looking at the solution code in the below expandable box.</p>
 <div class="webex-solution">
@@ -610,7 +617,8 @@ Task solution code
 <li>How to use rng seeds to carry out <strong>iterative rarefaction</strong></li>
 </ul>
 <p>In you real life analysis you would not use this method to create relative abundance taxonomy bar charts, you would use the non-rarefied relative abundance.
-However, this hopefully gave you a good idea of how <strong>iterataive rarefaction</strong> works so we can utilise it the next 2 chapters for alpha and beta diversity analysis.</p>
+However, this hopefully gave you a good idea of how <strong>iterative rarefaction</strong> works so we can utilise it the next 2 chapters for alpha and beta diversity analysis.</p>
+<p>Feel free to save then close and halt your "Iterating_rarefaction.ipynb" notebook.</p>
 
 </div>
 </div>
@@ -825,8 +833,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="07-Rarefaction_and_random_seeds.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="07-Rarefaction_and_random_seeds.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="09-Alpha_diversity.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
