@@ -894,9 +894,16 @@ There are a lot of steps above. These are:
 
 ## Phyla relative abundance
 
+<center>
+![](figures/river_2.png){style="width:200px"}
+</center>
+
 Prior to __iterative rarefaction__ we will look at the phyla composition of the environmental samples.
 
 ### Subset and phyla aggregation
+<center>
+![](figures/aggregate.png){style="width:200px"}
+</center>
 
 For demonstrative purposes we will reduce the amount of samples and features in our data for this chapter. We will carry this out by:
 
@@ -922,10 +929,13 @@ rm(pseq, pseq_env)
 ```
 
 ### Phyla relative abundance bar chart
+<center>
+![](figures/stacked_bar_chart.png){style="width:200px"}
+</center>
 
 Let's have a quick look at the non rarefied phyla relative abundance through a bar chart.
 
-__Note:__ This is how you would normally at this type of bar chart.
+__Note:__ This is how you would normally look at this type of bar chart.
 
 ```{R, eval=FALSE}
 #Quick phyla bar chart of relative abundance
@@ -939,11 +949,17 @@ IRdisplay::display_png(file = "./env_phyla_relabund.png")
 ```
 
 ## One Round (1R) of rarefaction
+<center>
+![](figures/one_round.png){style="width:200px"}
+</center>
 
 We will first carry out one round of __rarefaction__ .
 This is so we can get a reminder of how to carry it out and to compare the results of no __rarefaction__ and only one round.
 
 ### 1R: Rarefaction
+<center>
+![](figures/black_rhino.png){style="width:300px"}
+</center>
 
 Carry out one round of __rarefaction__ and view the __rarefied__ counts.
 
@@ -967,6 +983,9 @@ microbiome::readcount(pseq_env_phyla_rarefy_1)
 You should see that all the samples now have a total count of __11046__.
 
 ### 1R: Relative abundance bar chart
+<center>
+![](figures/stacked_bar_chart_2.png){style="width:200px"}
+</center>
 
 Now to create a relative abundance bar chart with our __rarefied__ data to compare to our non-rarefied data.
 
@@ -984,6 +1003,9 @@ IRdisplay::display_png(file = "./env_phyla_rarefy_1_relabund.png")
 Viewing the non-rarefied and __rarefied__ based bar charts shows some differences. However, these are quite difficult to discern.
 
 ### 1R: Difference from non-rarefied
+<center>
+![](figures/histogram_1.png){style="width:300px"}
+</center>
 
 To more easily see the differences we will subtract the two relative abundance tables from each other.
 This will produce a matrix of differences.
@@ -991,11 +1013,11 @@ This will produce a matrix of differences.
 ```{R, eval=FALSE}
 #Value difference matrix
 single_rarefaction_diff <- 
-  phyloseq::otu_table(pseq_env_phyla) - phyloseq::otu_table(pseq_env_phyla_rarefy_1_relabund)
+  phyloseq::otu_table(pseq_env_phyla_relabund) - phyloseq::otu_table(pseq_env_phyla_rarefy_1_relabund)
 single_rarefaction_diff
 ```
 
-We can see there are some differences.
+We can see there are differences.
 To make these differences even clearer let's make a histogram.
 
 ```{R, eval = FALSE}
@@ -1006,7 +1028,7 @@ hist(single_rarefaction_diff, main = "Single rarefaction")
 ```{r, echo = FALSE}
 opts_p <- c("__-0.0003(-3e-04) to 0.0003(3e-04)__", "__-0.003 to 0.003__", answer="__-0.015 to 0.015__")
 ```
-What is the range of the differences? `r longmcq(opts_p)`
+What is the range of the differences compared to the non rarefied relative abundance values? `r longmcq(opts_p)`
 
 Although these values appear quite small keep in mind we are working with relative abundance values.
 Each sample has a total relative abundance of 1.00 so a relative abundance value of 0.01 is 1%.
@@ -1014,10 +1036,16 @@ Each sample has a total relative abundance of 1.00 so a relative abundance value
 Let's see if we can get these differences smaller with multiple rounds of rarefaction.
 
 ## Multiple Rarefaction (MR) iterations
+<center>
+![](figures/ten_rounds.png){style="width:200px"}
+</center>
 
 We will now carry out iterative rarefaction.
 
 ### MR: Rarefaction
+<center>
+![](figures/tiger.png){style="width:300px"}
+</center>
 
 The below loop creates a relative abundance table created by 10 rounds of iteration.
 Type the code and read the annotations to understand what is going on.
@@ -1049,11 +1077,10 @@ for (i in 2:length(rngseed_vec)){
   #Rarefy
   pseq_rarefy <- phyloseq::rarefy_even_depth(pseq_env_phyla,
                                            sample.size = rarefaction_size
-                                           #First random seed as the rng seed
                                            rngseed = rngseed_vec[i])
   #Calculate relative abundance
   pseq_rarefy_relabund <- microbiome::transform(pseq_rarefy, "compositional")
-  #Add values to phyla_table
+  #Sum values to phyla_table
   relabund_phyla_table <- 
     relabund_phyla_table + as.data.frame(phyloseq::otu_table(pseq_rarefy_relabund))
 }
@@ -1062,13 +1089,16 @@ relabund_phyla_table <- relabund_phyla_table / length(rngseed_vec)
 ```
 
 ### MR: Difference from non-rarefied
+<center>
+![](figures/histogram_3.png){style="width:200px"}
+</center>
 
 We'll skip the bar chart this time and only look at the difference of the values.
 
 ```{R, eval=FALSE}
 #Value difference matrix
 iterative_rarefaction_diff <- 
-  as.matrix(phyloseq::otu_table(pseq_env_phyla) - relabund_phyla_table)
+  as.matrix(phyloseq::otu_table(pseq_env_phyla_relabund) - relabund_phyla_table)
 iterative_rarefaction_diff
 #Histogram
 hist(iterative_rarefaction_diff)
@@ -1077,32 +1107,105 @@ hist(iterative_rarefaction_diff)
 ```{r, echo = FALSE}
 opts_p <- c("__-0.0003(-3e-04) to 0.0003(3e-04)__", answer="__-0.003 to 0.003__", "__-0.015 to 0.015__")
 ```
-What is the range of the differences? `r longmcq(opts_p)`
+What is the range of the differences compared to the non rarefied relative abundance values? `r longmcq(opts_p)`
 
 You should notice that the differences are much smaller.
 This indicates that the structure of the __iterative rarefied__ data is much closer to the non-rarefied data than the one __rarefied__ data.
 This is what we want.
 
 ## Iterating rarefaction task
+<center>
+![](figures/per_thousand.png){style="width:200px"}
+</center>
 
 Superlative! Now that you know how to carry out __iterative rarefaction__ I'll ask you to do it once more for the phyla data.
 
 Create a rarefaction averaged phyla relative abundance as we have done above but with 1000 __rarefaction iterations__.
 For this task use __153478__ as the __seed__ when creating your vector of 1000 __rng seeds__.
+Save this vector of rngseeds to a file called "rngseeds_1000.RData".
 
-After creating the relative abundance matrix determine how different the values are compared to the non-rarefied relative abundance.
+__Note:__ The iterative rarefaction step may take a few minutes. 
+
+After creating the relative abundance matrix determine how different the values are compared to the non-rarefied relative abundance with a histogram.
 
 ```{r, echo = FALSE}
 opts_p <- c(answer="__-0.0003(-3e-04) to 0.0003(3e-04)__", "__-0.003 to 0.003__", "__-0.015 to 0.015__")
 ```
-What is the range of the differences? `r longmcq(opts_p)`
+What is the range of the differences compared to the non rarefied relative abundance values? `r longmcq(opts_p)`
+
+Please attempt the task yourself before looking at the solution code in the below expandable box.
+
+`r hide("Task solution code")`
+```{R, eval=FALSE}
+#Number of rarefaction iterations to be carried out
+rarefaction_iters <- 1000
+#Create rngseed vector
+#Set seed for reproducibility
+set.seed(153478)
+#Create the rngseed vector
+#Sample 1000 (number of iters) values from the number range 1-100,000
+rngseed_vec <- sample(x=1:100000, size = rarefaction_iters, replace = FALSE)
+#Save our rngseed vector
+save(rngseed_vec, file="rngseeds_1000.RData")
+#Reset seed
+set.seed(NULL)
+```
+
+```{R, eval=FALSE}
+#Iterative rarefaction to produce an average rarefied relative abundance table
+
+#Assign rarefaction size
+rarefaction_size <- min(microbiome::readcount(pseq_env_phyla))
+#Read in our rng seed vector
+load("rngseeds_1000.RData")
+
+#Initalise where we will store the output
+#In this case we create the first iteration
+#Carry out first rarefaction
+pseq_rarefy <- phyloseq::rarefy_even_depth(pseq_env_phyla,
+                                           sample.size = rarefaction_size
+                                           rngseed = rngseed_vec[1])
+#Calculate relative abundance
+pseq_rarefy_relabund <- microbiome::transform(pseq_rarefy, "compositional")
+#Relabund phyla table object
+relabund_phyla_table <- as.data.frame(phyloseq::otu_table(pseq_rarefy_relabund))
+
+#Loop through the next 999 iterations
+#Add the relabund rarefied values to phyla_table
+for (i in 2:length(rngseed_vec)){
+  #Rarefy
+  pseq_rarefy <- phyloseq::rarefy_even_depth(pseq_env_phyla,
+                                           sample.size = rarefaction_size
+                                           rngseed = rngseed_vec[i])
+  #Calculate relative abundance
+  pseq_rarefy_relabund <- microbiome::transform(pseq_rarefy, "compositional")
+  #Sum values to phyla_table
+  relabund_phyla_table <- 
+    relabund_phyla_table + as.data.frame(phyloseq::otu_table(pseq_rarefy_relabund))
+}
+#Average the values of the summed relabund phyla_table
+relabund_phyla_table <- relabund_phyla_table / length(rngseed_vec)
+```
+
+```{R, eval=FALSE}
+#Value difference matrix
+iterative_rarefaction_1000_diff <- 
+  as.matrix(phyloseq::otu_table(pseq_env_phyla_relabund) - relabund_phyla_table)
+iterative_rarefaction_diff
+#Histogram
+hist(iterative_rarefaction_diff)
+```
+`r unhide()`
 
 ## Iterating rarefaction recap
+<center>
+![](figures/recap.png){style="width:200px"}
+</center>
 
 With this chapter you have learnt:
 
 - How to create a vector of rngseeds
-- How to use rng seeds to carry out itertaive rarefaction
+- How to use rng seeds to carry out __iterative rarefaction__
 
 In you real life analysis you would not use this method to create relative abundance taxonomy bar charts, you would use the non-rarefied relative abundance.
 However, this hopefully gave you a good idea of how __iterataive rarefaction__ works so we can utilise it the next 2 chapters for alpha and beta diversity analysis.
