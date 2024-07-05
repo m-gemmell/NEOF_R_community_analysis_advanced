@@ -23,7 +23,7 @@
 <meta name="author" content="Matthew R. Gemmell" />
 
 
-<meta name="date" content="2024-07-03" />
+<meta name="date" content="2024-07-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -228,9 +228,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html"><i class="fa fa-check"></i><b>9</b> Alpha Diversity</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-diversity-setup"><i class="fa fa-check"></i><b>9.1</b> Alpha diversity setup</a></li>
-<li class="chapter" data-level="9.2" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-diversity-iterative-rarefaction-values"><i class="fa fa-check"></i><b>9.2</b> Alpha diversity iterative rarefaction values</a></li>
-<li class="chapter" data-level="9.3" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-diversity-iterative-rarefaction-loop"><i class="fa fa-check"></i><b>9.3</b> Alpha diversity iterative rarefaction loop</a></li>
+<li class="chapter" data-level="9.1" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-setup"><i class="fa fa-check"></i><b>9.1</b> <span class="math inline">\(\alpha\)</span>: Setup</a></li>
+<li class="chapter" data-level="9.2" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-iterative-rarefaction-values"><i class="fa fa-check"></i><b>9.2</b> <span class="math inline">\(\alpha\)</span>: Iterative rarefaction values</a></li>
+<li class="chapter" data-level="9.3" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-iterative-rarefaction-loop"><i class="fa fa-check"></i><b>9.3</b> <span class="math inline">\(\alpha\)</span>: Iterative rarefaction loop</a></li>
+<li class="chapter" data-level="9.4" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-metric-and-metadata-data-frame"><i class="fa fa-check"></i><b>9.4</b> <span class="math inline">\(\alpha\)</span>: Metric and metadata data frame</a></li>
+<li class="chapter" data-level="9.5" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha_long_df"><i class="fa fa-check"></i><b>9.5</b> <span class="math inline">\(\alpha\)</span>: Long data frame</a></li>
+<li class="chapter" data-level="9.6" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-subset-metrics"><i class="fa fa-check"></i><b>9.6</b> <span class="math inline">\(\alpha\)</span>: Subset metrics</a></li>
+<li class="chapter" data-level="9.7" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-violin-plot"><i class="fa fa-check"></i><b>9.7</b> <span class="math inline">\(\alpha\)</span>: Violin plot</a></li>
+<li class="chapter" data-level="9.8" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-stats"><i class="fa fa-check"></i><b>9.8</b> <span class="math inline">\(\alpha\)</span>: Stats</a>
+<ul>
+<li class="chapter" data-level="9.8.1" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#kruskal-wallis-test"><i class="fa fa-check"></i><b>9.8.1</b> Kruskal Wallis test</a></li>
+<li class="chapter" data-level="9.8.2" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#paired-wilcoxon-test"><i class="fa fa-check"></i><b>9.8.2</b> Paired wilcoxon test</a></li>
+</ul></li>
+<li class="chapter" data-level="9.9" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-plot-with-stats"><i class="fa fa-check"></i><b>9.9</b> <span class="math inline">\(\alpha\)</span>: Plot with stats</a>
+<ul>
+<li class="chapter" data-level="9.9.1" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#list-of-comparisons"><i class="fa fa-check"></i><b>9.9.1</b> List of comparisons</a></li>
+<li class="chapter" data-level="9.9.2" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#violin-plot-with-stats"><i class="fa fa-check"></i><b>9.9.2</b> Violin plot with stats</a></li>
+<li class="chapter" data-level="9.9.3" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#reorder-x-axis-and-stats"><i class="fa fa-check"></i><b>9.9.3</b> Reorder x-axis and stats</a></li>
+</ul></li>
+<li class="chapter" data-level="9.10" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-task"><i class="fa fa-check"></i><b>9.10</b> <span class="math inline">\(\alpha\)</span>: Task</a></li>
+<li class="chapter" data-level="9.11" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-recap"><i class="fa fa-check"></i><b>9.11</b> <span class="math inline">\(\alpha\)</span>: Recap</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html"><i class="fa fa-check"></i><b>10</b> Beta Diversity</a></li>
 <li class="divider"></li>
@@ -258,12 +275,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <center>
 <img src="figures/alpha_iterative_rarefaction.png" style="width:300px" />
 </center>
-<p>In this chapter we'll carry out alpha diversity analysis using the <strong>iterative rarefaction</strong> approach.
+<p>In this chapter we'll carry out <strong>alpha diversity</strong> analysis using the <strong>iterative rarefaction</strong> approach.
 We will carry this out on the ASV counts rather than at a taxonomy level such as phyla.</p>
 <p>These materials are mostly a combination of the <strong>iterative rarefaction</strong> in this book and the <strong>alpha diversity</strong> analysis in the R community workshop.
 Due to this we won't go into great detail, instead focussing on giving you the code to be able to carry this out.</p>
-<div id="alpha-diversity-setup" class="section level2 hasAnchor" number="9.1">
-<h2><span class="header-section-number">9.1</span> Alpha diversity setup<a href="09-Alpha_diversity.html#alpha-diversity-setup" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="alpha-setup" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> <span class="math inline">\(\alpha\)</span>: Setup<a href="09-Alpha_diversity.html#alpha-setup" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
 <img src="figures/setup_6.png" style="width:200px; background-color:white; border-radius:15px" />
 </center>
@@ -278,8 +295,8 @@ Due to this we won't go into great detail, instead focussing on giving you the c
 <span id="cb32-7"><a href="09-Alpha_diversity.html#cb32-7" tabindex="-1"></a><span class="co">#Load processed but unrarefied ASV data from main R community workshop</span></span>
 <span id="cb32-8"><a href="09-Alpha_diversity.html#cb32-8" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;phyloseq.RData&quot;</span>)</span></code></pre></div>
 </div>
-<div id="alpha-diversity-iterative-rarefaction-values" class="section level2 hasAnchor" number="9.2">
-<h2><span class="header-section-number">9.2</span> Alpha diversity iterative rarefaction values<a href="09-Alpha_diversity.html#alpha-diversity-iterative-rarefaction-values" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="alpha-iterative-rarefaction-values" class="section level2 hasAnchor" number="9.2">
+<h2><span class="header-section-number">9.2</span> <span class="math inline">\(\alpha\)</span>: Iterative rarefaction values<a href="09-Alpha_diversity.html#alpha-iterative-rarefaction-values" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
 <img src="figures/ten_rng_seeds.png" style="width:200px" />
 </center>
@@ -287,8 +304,9 @@ Due to this we won't go into great detail, instead focussing on giving you the c
 <ul>
 <li><strong>Rarefaction size:</strong> The sequence depth to normalise samples to
 <ul>
-<li>We are using the minimum sample depth here.</li>
-<li>The size you choose will be based on your data and what you feel is appropriate. More info in the R community workshop.</li>
+<li>We are using the minimum sample depth here</li>
+<li>The size you choose will be based on your data and what you feel is appropriate</li>
+<li>More info in the R community workshop</li>
 </ul></li>
 <li><strong>RNG seeds:</strong> The rng seeds we will use for all the rarefactions
 <ul>
@@ -307,11 +325,11 @@ Due to this we won't go into great detail, instead focussing on giving you the c
 <span id="cb33-5"><a href="09-Alpha_diversity.html#cb33-5" tabindex="-1"></a><span class="co">#Load the vector of 10 rngseeds created in the previous chapter</span></span>
 <span id="cb33-6"><a href="09-Alpha_diversity.html#cb33-6" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;rngseeds.RData&quot;</span>)</span>
 <span id="cb33-7"><a href="09-Alpha_diversity.html#cb33-7" tabindex="-1"></a><span class="co">#Number of rarefaction iterations to be carried out</span></span>
-<span id="cb33-8"><a href="09-Alpha_diversity.html#cb33-8" tabindex="-1"></a><span class="co">#Based on length of rn seed vector</span></span>
+<span id="cb33-8"><a href="09-Alpha_diversity.html#cb33-8" tabindex="-1"></a><span class="co">#Based on length of rng seed vector</span></span>
 <span id="cb33-9"><a href="09-Alpha_diversity.html#cb33-9" tabindex="-1"></a>rarefaction_iters <span class="ot">&lt;-</span> <span class="fu">length</span>(rngseed_vec)</span></code></pre></div>
 </div>
-<div id="alpha-diversity-iterative-rarefaction-loop" class="section level2 hasAnchor" number="9.3">
-<h2><span class="header-section-number">9.3</span> Alpha diversity iterative rarefaction loop<a href="09-Alpha_diversity.html#alpha-diversity-iterative-rarefaction-loop" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="alpha-iterative-rarefaction-loop" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> <span class="math inline">\(\alpha\)</span>: Iterative rarefaction loop<a href="09-Alpha_diversity.html#alpha-iterative-rarefaction-loop" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
 <img src="figures/iterative_loops.png" style="width:300px" />
 </center>
@@ -340,7 +358,7 @@ We will carry this out by:</p>
 <span id="cb34-15"><a href="09-Alpha_diversity.html#cb34-15" tabindex="-1"></a>                                           <span class="at">rngseed =</span> rngseed_vec[i], <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb34-16"><a href="09-Alpha_diversity.html#cb34-16" tabindex="-1"></a>  <span class="co">#Alpha diversity</span></span>
 <span id="cb34-17"><a href="09-Alpha_diversity.html#cb34-17" tabindex="-1"></a>  alpha_df <span class="ot">&lt;-</span> microbiome<span class="sc">::</span><span class="fu">alpha</span>(pseq_rarefy, <span class="at">index =</span> <span class="st">&quot;all&quot;</span>)</span>
-<span id="cb34-18"><a href="09-Alpha_diversity.html#cb34-18" tabindex="-1"></a>  <span class="co">#Add/sum the new data frame values to sum data frame</span></span>
+<span id="cb34-18"><a href="09-Alpha_diversity.html#cb34-18" tabindex="-1"></a>  <span class="co">#Add/sum the new data frame values to the sum data frame</span></span>
 <span id="cb34-19"><a href="09-Alpha_diversity.html#cb34-19" tabindex="-1"></a>  alpha_df_sum <span class="ot">&lt;-</span> alpha_df_sum <span class="sc">+</span> alpha_df</span>
 <span id="cb34-20"><a href="09-Alpha_diversity.html#cb34-20" tabindex="-1"></a>}</span>
 <span id="cb34-21"><a href="09-Alpha_diversity.html#cb34-21" tabindex="-1"></a><span class="co">#Divide by number of rarefaction iterations to get average</span></span>
@@ -348,9 +366,352 @@ We will carry this out by:</p>
 <span id="cb34-23"><a href="09-Alpha_diversity.html#cb34-23" tabindex="-1"></a><span class="co">#Save alpha mean data frame</span></span>
 <span id="cb34-24"><a href="09-Alpha_diversity.html#cb34-24" tabindex="-1"></a><span class="fu">save</span>(alpha_df_mean, <span class="at">file =</span> <span class="st">&quot;alpha_df_mean.RData&quot;</span>)</span>
 <span id="cb34-25"><a href="09-Alpha_diversity.html#cb34-25" tabindex="-1"></a><span class="co">#Remove unneeded objects</span></span>
-<span id="cb34-26"><a href="09-Alpha_diversity.html#cb34-26" tabindex="-1"></a><span class="fu">rm</span>(pseq_rarefy, alpha_df_sum, alpha_df)</span></code></pre></div>
-<p>You can check the structure and contents of our aalpha diveristy data fraem with <code>head()</code>.</p>
+<span id="cb34-26"><a href="09-Alpha_diversity.html#cb34-26" tabindex="-1"></a><span class="fu">rm</span>(pseq,alpha_df_sum, alpha_df)</span></code></pre></div>
+<p>You can check the structure and contents of our alpha diversity data frame with <code>head()</code>.</p>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb35-1"><a href="09-Alpha_diversity.html#cb35-1" tabindex="-1"></a><span class="fu">head</span>(alpha_df_mean)</span></code></pre></div>
+<p>There are a lot of diversity metrics.
+We are only interested in a few of them here but we will remove the other ones later on.</p>
+</div>
+<div id="alpha-metric-and-metadata-data-frame" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> <span class="math inline">\(\alpha\)</span>: Metric and metadata data frame<a href="09-Alpha_diversity.html#alpha-metric-and-metadata-data-frame" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now that we have our <strong>alpha diversity</strong> values we will create a data frame that contains these values and metadata.</p>
+<p>In the below code we extract the metadata from the rarefied phyloseq object created in the last loop iteration above.
+This ensures we only acquire metadata from samples that are retained after <strong>rarefaction</strong>.
+The samples that are retained are always the same across our <strong>rarefaction iterations</strong> as samples are retained based on the <strong>rarefaction size/depth</strong> which is kept consistent across our <strong>rarefactions</strong>.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb36-1"><a href="09-Alpha_diversity.html#cb36-1" tabindex="-1"></a><span class="co">#Combine metadata and alpha diversity mean values into one data frame</span></span>
+<span id="cb36-2"><a href="09-Alpha_diversity.html#cb36-2" tabindex="-1"></a><span class="co">#Extract metadata from rarefied phyloseq object</span></span>
+<span id="cb36-3"><a href="09-Alpha_diversity.html#cb36-3" tabindex="-1"></a>metadf <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">sample_data</span>(pseq)</span>
+<span id="cb36-4"><a href="09-Alpha_diversity.html#cb36-4" tabindex="-1"></a><span class="co">#Ensure row names are identical</span></span>
+<span id="cb36-5"><a href="09-Alpha_diversity.html#cb36-5" tabindex="-1"></a><span class="co">#if not sort alpha data frame rows by metadata row names</span></span>
+<span id="cb36-6"><a href="09-Alpha_diversity.html#cb36-6" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">identical</span>(<span class="fu">row.names</span>(metadf), <span class="fu">row.names</span>(alpha_df_mean)) <span class="sc">==</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb36-7"><a href="09-Alpha_diversity.html#cb36-7" tabindex="-1"></a>  alpha_df_mean <span class="ot">&lt;-</span> alpha_df_mean[<span class="fu">row.names</span>(metadf),]</span>
+<span id="cb36-8"><a href="09-Alpha_diversity.html#cb36-8" tabindex="-1"></a>}</span>
+<span id="cb36-9"><a href="09-Alpha_diversity.html#cb36-9" tabindex="-1"></a><span class="co">#Combine with cbind (column bind)</span></span>
+<span id="cb36-10"><a href="09-Alpha_diversity.html#cb36-10" tabindex="-1"></a>meta_alpha_mean_df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(metadf,alpha_df_mean)</span>
+<span id="cb36-11"><a href="09-Alpha_diversity.html#cb36-11" tabindex="-1"></a><span class="fu">head</span>(meta_alpha_mean_df)</span>
+<span id="cb36-12"><a href="09-Alpha_diversity.html#cb36-12" tabindex="-1"></a><span class="co">#Remove rarefied phyloseq object that we do not need any more in this notebook</span></span>
+<span id="cb36-13"><a href="09-Alpha_diversity.html#cb36-13" tabindex="-1"></a><span class="fu">rm</span>(pseq_rarefy) </span></code></pre></div>
+<p>From the output of <code>head()</code> you should see a table with the first set of columns being the metadata columns. The next set of columns is the alpha diversity metrics.</p>
+</div>
+<div id="alpha_long_df" class="section level2 hasAnchor" number="9.5">
+<h2><span class="header-section-number">9.5</span> <span class="math inline">\(\alpha\)</span>: Long data frame<a href="09-Alpha_diversity.html#alpha_long_df" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We will plot our <strong>alpha diversity</strong> values with <code>ggplot2</code> functions.
+Before we carry this out we need to convert our wide data frame to a long data frame.
+We'll carry this out with <code>tidyr::pivot_longer()</code>.</p>
+<p>For this we want our metric values to become long.
+This means that instead of the <strong>alpha diversity</strong> values being spread across multiple rows and columns their will only be one value per row.</p>
+<p>Two columns will represent these values in the long format:</p>
+<ul>
+<li><strong>metric:</strong> The name of the alpha diversity metric</li>
+<li><strong>value:</strong> The value of the alpha diversity metric</li>
+</ul>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb37-1"><a href="09-Alpha_diversity.html#cb37-1" tabindex="-1"></a><span class="co">#Create long version for plotting</span></span>
+<span id="cb37-2"><a href="09-Alpha_diversity.html#cb37-2" tabindex="-1"></a><span class="co">#alpha_df_mean (no metadata) column names to be used for long conversion</span></span>
+<span id="cb37-3"><a href="09-Alpha_diversity.html#cb37-3" tabindex="-1"></a>alpha_div_colnames <span class="ot">&lt;-</span> <span class="fu">colnames</span>(alpha_df_mean)</span>
+<span id="cb37-4"><a href="09-Alpha_diversity.html#cb37-4" tabindex="-1"></a><span class="co">#Wide to long</span></span>
+<span id="cb37-5"><a href="09-Alpha_diversity.html#cb37-5" tabindex="-1"></a>meta_alpha_mean_long_df <span class="ot">&lt;-</span> </span>
+<span id="cb37-6"><a href="09-Alpha_diversity.html#cb37-6" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">data =</span> meta_alpha_mean_df,</span>
+<span id="cb37-7"><a href="09-Alpha_diversity.html#cb37-7" tabindex="-1"></a>                      <span class="co">#Change the alpha diversity names to long format</span></span>
+<span id="cb37-8"><a href="09-Alpha_diversity.html#cb37-8" tabindex="-1"></a>                      <span class="co">#I.e. keep our metadata columns as separate columns</span></span>
+<span id="cb37-9"><a href="09-Alpha_diversity.html#cb37-9" tabindex="-1"></a>                      <span class="co">#all_of() used to silence warning message</span></span>
+<span id="cb37-10"><a href="09-Alpha_diversity.html#cb37-10" tabindex="-1"></a>                      <span class="at">cols =</span> <span class="fu">all_of</span>(alpha_div_colnames)</span>
+<span id="cb37-11"><a href="09-Alpha_diversity.html#cb37-11" tabindex="-1"></a>                      <span class="co">#Set column name to column called metric</span></span>
+<span id="cb37-12"><a href="09-Alpha_diversity.html#cb37-12" tabindex="-1"></a>                      <span class="co">#Set values to column called value</span></span>
+<span id="cb37-13"><a href="09-Alpha_diversity.html#cb37-13" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="st">&quot;metric&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span></span>
+<span id="cb37-14"><a href="09-Alpha_diversity.html#cb37-14" tabindex="-1"></a>                      )</span>
+<span id="cb37-15"><a href="09-Alpha_diversity.html#cb37-15" tabindex="-1"></a><span class="co">#Change our metric column to a factor</span></span>
+<span id="cb37-16"><a href="09-Alpha_diversity.html#cb37-16" tabindex="-1"></a><span class="co">#Useful for plotting</span></span>
+<span id="cb37-17"><a href="09-Alpha_diversity.html#cb37-17" tabindex="-1"></a>meta_alpha_mean_long_df<span class="sc">$</span>metric <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(meta_alpha_mean_long_df<span class="sc">$</span>metric)</span>
+<span id="cb37-18"><a href="09-Alpha_diversity.html#cb37-18" tabindex="-1"></a><span class="co">#Check head and dimensions of long data frame</span></span>
+<span id="cb37-19"><a href="09-Alpha_diversity.html#cb37-19" tabindex="-1"></a><span class="fu">head</span>(meta_alpha_mean_long_df)</span>
+<span id="cb37-20"><a href="09-Alpha_diversity.html#cb37-20" tabindex="-1"></a><span class="fu">dim</span>(meta_alpha_mean_long_df)</span>
+<span id="cb37-21"><a href="09-Alpha_diversity.html#cb37-21" tabindex="-1"></a><span class="co">#Remove unneeded objects</span></span>
+<span id="cb37-22"><a href="09-Alpha_diversity.html#cb37-22" tabindex="-1"></a><span class="fu">rm</span>(alpha_df_mean, metadf)</span></code></pre></div>
+</div>
+<div id="alpha-subset-metrics" class="section level2 hasAnchor" number="9.6">
+<h2><span class="header-section-number">9.6</span> <span class="math inline">\(\alpha\)</span>: Subset metrics<a href="09-Alpha_diversity.html#alpha-subset-metrics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are a lot of diversity values created by <code>microbiome::alpha()</code>.
+For this tutorial we are only interested in:</p>
+<ul>
+<li><strong>observed:</strong> The number of observed features (ASVs, Phlya, Species, etc.)</li>
+<li><strong>chao1:</strong> The estimated real total number of features</li>
+<li><strong>diversity_shannon:</strong> The Shannon diversity metric
+<ul>
+<li>An estimate of feature diversity based on richness (presence/absence) and abundance</li>
+<li>The higher the value the higher the diversity</li>
+</ul></li>
+</ul>
+<p>We'll subset our long data frame to only retain rows with these metrics.
+We'll also use the utility of factors to order the metrics so they are plotted in our preferred order further down.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb38-1"><a href="09-Alpha_diversity.html#cb38-1" tabindex="-1"></a><span class="co">#Process our long data frame</span></span>
+<span id="cb38-2"><a href="09-Alpha_diversity.html#cb38-2" tabindex="-1"></a><span class="co">#Subset our long alpha diversity data frame to only contain our metrics of choice</span></span>
+<span id="cb38-3"><a href="09-Alpha_diversity.html#cb38-3" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;observed&quot;</span>, <span class="st">&quot;chao1&quot;</span>,<span class="st">&quot;diversity_shannon&quot;</span>)</span>
+<span id="cb38-4"><a href="09-Alpha_diversity.html#cb38-4" tabindex="-1"></a>basic_alpha_metrics_long_df <span class="ot">&lt;-</span> meta_alpha_mean_long_df[</span>
+<span id="cb38-5"><a href="09-Alpha_diversity.html#cb38-5" tabindex="-1"></a>  meta_alpha_mean_long_df<span class="sc">$</span>metric <span class="sc">%in%</span> metrics,</span>
+<span id="cb38-6"><a href="09-Alpha_diversity.html#cb38-6" tabindex="-1"></a>]</span>
+<span id="cb38-7"><a href="09-Alpha_diversity.html#cb38-7" tabindex="-1"></a><span class="co">#Change instances of diversity_shannon to shannon</span></span>
+<span id="cb38-8"><a href="09-Alpha_diversity.html#cb38-8" tabindex="-1"></a>basic_alpha_metrics_long_df<span class="sc">$</span>metric <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;diversity_shannon&quot;</span>,</span>
+<span id="cb38-9"><a href="09-Alpha_diversity.html#cb38-9" tabindex="-1"></a>                                           <span class="at">replacement =</span> <span class="st">&quot;shannon&quot;</span>,</span>
+<span id="cb38-10"><a href="09-Alpha_diversity.html#cb38-10" tabindex="-1"></a>                                           <span class="at">x =</span> basic_alpha_metrics_long_df<span class="sc">$</span>metric)</span>
+<span id="cb38-11"><a href="09-Alpha_diversity.html#cb38-11" tabindex="-1"></a><span class="co">#The gsub() function changes our factor to a character vector</span></span>
+<span id="cb38-12"><a href="09-Alpha_diversity.html#cb38-12" tabindex="-1"></a><span class="co">#Therefore change back to factor</span></span>
+<span id="cb38-13"><a href="09-Alpha_diversity.html#cb38-13" tabindex="-1"></a><span class="co">#We will also choose our order of the metric names for plotting</span></span>
+<span id="cb38-14"><a href="09-Alpha_diversity.html#cb38-14" tabindex="-1"></a>basic_alpha_metrics_long_df<span class="sc">$</span>metric <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="at">x =</span> basic_alpha_metrics_long_df<span class="sc">$</span>metric,</span>
+<span id="cb38-15"><a href="09-Alpha_diversity.html#cb38-15" tabindex="-1"></a>                                             <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;observed&quot;</span>,<span class="st">&quot;chao1&quot;</span>,<span class="st">&quot;shannon&quot;</span>))</span>
+<span id="cb38-16"><a href="09-Alpha_diversity.html#cb38-16" tabindex="-1"></a><span class="co">#Check level order of metric factor column</span></span>
+<span id="cb38-17"><a href="09-Alpha_diversity.html#cb38-17" tabindex="-1"></a><span class="fu">levels</span>(basic_alpha_metrics_long_df<span class="sc">$</span>metric)</span>
+<span id="cb38-18"><a href="09-Alpha_diversity.html#cb38-18" tabindex="-1"></a><span class="co">#Check head of subsetted long data frame</span></span>
+<span id="cb38-19"><a href="09-Alpha_diversity.html#cb38-19" tabindex="-1"></a><span class="fu">head</span>(basic_alpha_metrics_long_df)</span></code></pre></div>
+<p>With this data frame we can move onto visualisation.</p>
+</div>
+<div id="alpha-violin-plot" class="section level2 hasAnchor" number="9.7">
+<h2><span class="header-section-number">9.7</span> <span class="math inline">\(\alpha\)</span>: Violin plot<a href="09-Alpha_diversity.html#alpha-violin-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>To visualise the differences of the alpha diversity values between the four different media we'll use violin plots.
+We can use the function <code>ggplot2::geom_violin()</code> to carry this out.</p>
+<p>Additionally, we'll add a point for each value and colour it based on the site it canme from (UD, MD, or LD).
+The function <code>ggforce::geom_sina()</code> can be used for this.
+We'll use its parameter <code>alpha()</code> to make the points 50% (<code>0.5</code>) transparent.</p>
+<p>As we are plotting values from three different metrics we will split the plot into three separate plots.
+<code>ggplot2::facet_wrap()</code> can be used for this tasked with <code>~metric</code> used to split the plot by the metrics.
+We also specify <code>scales = "free"</code> so each of the three plots has their own x and y scales.
+This is important when the values are drastically different such is the case between the observed and chao1 (&gt;100) compared to the shannon values (&lt;10).</p>
+<div class="webex-solution">
+<button>
+scales options
+</button>
+<p>The four <code>scales</code> are:</p>
+<ul>
+<li><strong><code>"fixed"</code> (default):</strong> All the scales are the same (fixed), based on the largest and smallest x and y values across all the plots. Useful where you want direct comparisons such as looking at teh overall pattern in ordination plots.</li>
+<li><strong><code>"free"</code>:</strong> All the scales are free. Each plot's x and y values limits are based on the data within it.</li>
+<li><strong><code>"free_x"</code>:</strong> The x axis is free and the y axis is fixed.</li>
+<li><strong><code>"free_y"</code>:</strong> The y axis is free and the x axis is fixed.</li>
+</ul>
+<p>Which you wnat to use depends on your data and how you are facetting it.</p>
+</div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb39-1"><a href="09-Alpha_diversity.html#cb39-1" tabindex="-1"></a><span class="co">#Produce ggplot object of violin plot</span></span>
+<span id="cb39-2"><a href="09-Alpha_diversity.html#cb39-2" tabindex="-1"></a>alpha_violinplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(basic_alpha_metrics_long_df, <span class="fu">aes</span>(<span class="at">x =</span> media, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb39-3"><a href="09-Alpha_diversity.html#cb39-3" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb39-4"><a href="09-Alpha_diversity.html#cb39-4" tabindex="-1"></a>                            ggforce<span class="sc">::</span><span class="fu">geom_sina</span>(<span class="at">alpha=</span><span class="fl">0.5</span>, <span class="fu">aes</span>(<span class="at">color=</span>site)) <span class="sc">+</span></span>
+<span id="cb39-5"><a href="09-Alpha_diversity.html#cb39-5" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;Site&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Media&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Value&quot;</span>) <span class="sc">+</span></span>
+<span id="cb39-6"><a href="09-Alpha_diversity.html#cb39-6" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">facet_wrap</span>(<span class="sc">~</span>metric, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span>
+<span id="cb39-7"><a href="09-Alpha_diversity.html#cb39-7" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave()</span></span>
+<span id="cb39-8"><a href="09-Alpha_diversity.html#cb39-8" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_media_violinplot.png&quot;</span>, <span class="at">plot =</span> alpha_violinplot,</span>
+<span id="cb39-9"><a href="09-Alpha_diversity.html#cb39-9" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">&quot;png&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">&quot;mm&quot;</span>, <span class="at">height =</span> <span class="dv">150</span>, <span class="at">width =</span> <span class="dv">250</span>)</span>
+<span id="cb39-10"><a href="09-Alpha_diversity.html#cb39-10" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb39-11"><a href="09-Alpha_diversity.html#cb39-11" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_media_violinplot.png&quot;</span>)</span></code></pre></div>
+</div>
+<div id="alpha-stats" class="section level2 hasAnchor" number="9.8">
+<h2><span class="header-section-number">9.8</span> <span class="math inline">\(\alpha\)</span>: Stats<a href="09-Alpha_diversity.html#alpha-stats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We can carry out statistics to compare the alpha diversity values between sample groups.</p>
+<div id="kruskal-wallis-test" class="section level3 hasAnchor" number="9.8.1">
+<h3><span class="header-section-number">9.8.1</span> Kruskal Wallis test<a href="09-Alpha_diversity.html#kruskal-wallis-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To determine if there is an overall difference in our data we'll use the Kruskal Wallis test.
+We'll carry this out using the media grouping for our three alpha diversity values.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb40-1"><a href="09-Alpha_diversity.html#cb40-1" tabindex="-1"></a><span class="co">#Kruskal Wallis test</span></span>
+<span id="cb40-2"><a href="09-Alpha_diversity.html#cb40-2" tabindex="-1"></a><span class="co">#Observed ASVs</span></span>
+<span id="cb40-3"><a href="09-Alpha_diversity.html#cb40-3" tabindex="-1"></a><span class="fu">kruskal.test</span>(observed <span class="sc">~</span> media, <span class="at">data =</span> meta_alpha_mean_df)</span>
+<span id="cb40-4"><a href="09-Alpha_diversity.html#cb40-4" tabindex="-1"></a><span class="co">#Chao1 estimator</span></span>
+<span id="cb40-5"><a href="09-Alpha_diversity.html#cb40-5" tabindex="-1"></a><span class="fu">kruskal.test</span>(chao1 <span class="sc">~</span> media, <span class="at">data =</span> meta_alpha_mean_df)</span>
+<span id="cb40-6"><a href="09-Alpha_diversity.html#cb40-6" tabindex="-1"></a><span class="co">#Shannon diversity</span></span>
+<span id="cb40-7"><a href="09-Alpha_diversity.html#cb40-7" tabindex="-1"></a><span class="fu">kruskal.test</span>(shannon <span class="sc">~</span> media, <span class="at">data =</span> meta_alpha_mean_df)</span></code></pre></div>
+<p>All the p-values are less than 0.05 indicating statistical significance.
+That means we can move onto pairwise comparisons.</p>
+</div>
+<div id="paired-wilcoxon-test" class="section level3 hasAnchor" number="9.8.2">
+<h3><span class="header-section-number">9.8.2</span> Paired wilcoxon test<a href="09-Alpha_diversity.html#paired-wilcoxon-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To determine what groups are significantly different from each other we can carry out paired Wilcoxon test.
+This tests</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb41-1"><a href="09-Alpha_diversity.html#cb41-1" tabindex="-1"></a><span class="co">#Paired wilcoxon test</span></span>
+<span id="cb41-2"><a href="09-Alpha_diversity.html#cb41-2" tabindex="-1"></a><span class="co">#Observed ASVs</span></span>
+<span id="cb41-3"><a href="09-Alpha_diversity.html#cb41-3" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(meta_alpha_mean_df<span class="sc">$</span>observed, meta_alpha_mean_df, <span class="at">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>)</span>
+<span id="cb41-4"><a href="09-Alpha_diversity.html#cb41-4" tabindex="-1"></a><span class="co">#Chao1 estimator</span></span>
+<span id="cb41-5"><a href="09-Alpha_diversity.html#cb41-5" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(meta_alpha_mean_df<span class="sc">$</span>chao1, meta_alpha_mean_df, <span class="at">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>)</span>
+<span id="cb41-6"><a href="09-Alpha_diversity.html#cb41-6" tabindex="-1"></a><span class="co">#Shannon diversity</span></span>
+<span id="cb41-7"><a href="09-Alpha_diversity.html#cb41-7" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(meta_alpha_mean_df<span class="sc">$</span>shannon, meta_alpha_mean_df, <span class="at">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>)</span></code></pre></div>
+<p>You'll see three p-value adjusted tables with all the values (except Shannon: ENV against TSA) being significant (&lt;0.05).</p>
+</div>
+</div>
+<div id="alpha-plot-with-stats" class="section level2 hasAnchor" number="9.9">
+<h2><span class="header-section-number">9.9</span> <span class="math inline">\(\alpha\)</span>: Plot with stats<a href="09-Alpha_diversity.html#alpha-plot-with-stats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Rather than having the plot and stats separate, we can add stats onto our plot.
+This can be carried out with the function <code>stat_compare_means()</code> from the `<code>ggpubr</code> package.</p>
+<div id="list-of-comparisons" class="section level3 hasAnchor" number="9.9.1">
+<h3><span class="header-section-number">9.9.1</span> List of comparisons<a href="09-Alpha_diversity.html#list-of-comparisons" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To produce pairwise comparisons with <code>ggpubr::stat_compare_means()</code> we need a <strong>list</strong> of the comparisons we want to carry out.</p>
+<p>We can create this with the function <code>combn()</code>, short for combination.
+We provide it with three parameters:</p>
+<ul>
+<li><strong>Input data:</strong> This is a <strong>vector</strong> of the unique metadata categories to create the combinations from
+<ul>
+<li>We are using our created <code>uniq_media_values_chr_vec</code> in this case</li>
+<li>We ensure that this is a <strong>vector</strong> of <strong>characters</strong> so the created combination <strong>list</strong> contains <strong>character vectors</strong></li>
+<li>A <strong>list</strong> of <strong>character vectors</strong> is required for <code>ggpubr::stat_compare_means()</code></li>
+</ul></li>
+<li><strong><code>m =</code>:</strong> The number of elements to choose when creating combinations.
+<ul>
+<li>We choose <code>2</code> so we get all pair combinations</li>
+</ul></li>
+<li><strong><code>simplify =</code>:</strong> Indicates if the result should be simple (<code>TRUE</code>) or not (<code>FALSE</code>)
+<ul>
+<li><code>TRUE</code> returns a simplified array such as a <strong>matrix</strong> or a <strong>data frame</strong></li>
+<li><code>FALSE</code> returns a <strong>list</strong>. This is what we want as <code>ggpubr::stat_compare_means()</code> requires a <strong>list</strong></li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb42-1"><a href="09-Alpha_diversity.html#cb42-1" tabindex="-1"></a><span class="co">#To compare mean we need to create a list of comparisons</span></span>
+<span id="cb42-2"><a href="09-Alpha_diversity.html#cb42-2" tabindex="-1"></a><span class="co">#Create character vector of unique metadata values (media in this case)</span></span>
+<span id="cb42-3"><a href="09-Alpha_diversity.html#cb42-3" tabindex="-1"></a>uniq_media_values_chr_vec <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">as.character</span>(basic_alpha_metrics_long_df<span class="sc">$</span>media))</span>
+<span id="cb42-4"><a href="09-Alpha_diversity.html#cb42-4" tabindex="-1"></a>uniq_media_values_chr_vec</span>
+<span id="cb42-5"><a href="09-Alpha_diversity.html#cb42-5" tabindex="-1"></a><span class="co">#Can use combn() to get comparisons</span></span>
+<span id="cb42-6"><a href="09-Alpha_diversity.html#cb42-6" tabindex="-1"></a>my_comparisons <span class="ot">&lt;-</span> <span class="fu">combn</span>(uniq_media_values_chr_vec, <span class="at">m =</span> <span class="dv">2</span>, <span class="at">simplify =</span> <span class="cn">FALSE</span>)<span class="er">)</span></span>
+<span id="cb42-7"><a href="09-Alpha_diversity.html#cb42-7" tabindex="-1"></a><span class="co">#Check contents and structure</span></span>
+<span id="cb42-8"><a href="09-Alpha_diversity.html#cb42-8" tabindex="-1"></a>my_comparisons</span>
+<span id="cb42-9"><a href="09-Alpha_diversity.html#cb42-9" tabindex="-1"></a><span class="fu">str</span>(my_comparisons)</span></code></pre></div>
+</div>
+<div id="violin-plot-with-stats" class="section level3 hasAnchor" number="9.9.2">
+<h3><span class="header-section-number">9.9.2</span> Violin plot with stats<a href="09-Alpha_diversity.html#violin-plot-with-stats" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>With our <strong>list</strong> of comparisons we can add <code>ggpubr::stat_compare_means()</code> to our <code>ggplot2</code> code.
+This function will both calculate the Wilcoxon tests and add them to the plot.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb43-1"><a href="09-Alpha_diversity.html#cb43-1" tabindex="-1"></a><span class="co">#Produce ggplot object of violin plot</span></span>
+<span id="cb43-2"><a href="09-Alpha_diversity.html#cb43-2" tabindex="-1"></a>alpha_violinplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(basic_alpha_metrics_long_df, <span class="fu">aes</span>(<span class="at">x =</span> media, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb43-3"><a href="09-Alpha_diversity.html#cb43-3" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb43-4"><a href="09-Alpha_diversity.html#cb43-4" tabindex="-1"></a>                            ggforce<span class="sc">::</span><span class="fu">geom_sina</span>(<span class="at">alpha=</span><span class="fl">0.5</span>, <span class="fu">aes</span>(<span class="at">color=</span>site)) <span class="sc">+</span></span>
+<span id="cb43-5"><a href="09-Alpha_diversity.html#cb43-5" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;Site&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Media&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Value&quot;</span>) <span class="sc">+</span></span>
+<span id="cb43-6"><a href="09-Alpha_diversity.html#cb43-6" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">facet_wrap</span>(<span class="sc">~</span>metric, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb43-7"><a href="09-Alpha_diversity.html#cb43-7" tabindex="-1"></a>                            <span class="co">#Add comparisons</span></span>
+<span id="cb43-8"><a href="09-Alpha_diversity.html#cb43-8" tabindex="-1"></a>                            ggpubr<span class="sc">::</span><span class="fu">stat_compare_means</span>(<span class="at">comparisons =</span> my_comparisons)</span>
+<span id="cb43-9"><a href="09-Alpha_diversity.html#cb43-9" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave()</span></span>
+<span id="cb43-10"><a href="09-Alpha_diversity.html#cb43-10" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_media_violinplot_pairwise_wilcox.png&quot;</span>, </span>
+<span id="cb43-11"><a href="09-Alpha_diversity.html#cb43-11" tabindex="-1"></a>       <span class="at">plot =</span> alpha_violinplot,</span>
+<span id="cb43-12"><a href="09-Alpha_diversity.html#cb43-12" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">&quot;png&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">&quot;mm&quot;</span>, <span class="at">height =</span> <span class="dv">150</span>, <span class="at">width =</span> <span class="dv">250</span>)</span>
+<span id="cb43-13"><a href="09-Alpha_diversity.html#cb43-13" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb43-14"><a href="09-Alpha_diversity.html#cb43-14" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_media_violinplot_pairwise_wilcox.png&quot;</span>)</span></code></pre></div>
+</div>
+<div id="reorder-x-axis-and-stats" class="section level3 hasAnchor" number="9.9.3">
+<h3><span class="header-section-number">9.9.3</span> Reorder x-axis and stats<a href="09-Alpha_diversity.html#reorder-x-axis-and-stats" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><code>ggplot</code> orders the x-axis by alphabetical order.
+This is not normally wanted so we will convert our media column to a <strong>factor</strong> and order the levels how we want them.
+As the environmental samples can be seen as the baseline we will have them first.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb44-1"><a href="09-Alpha_diversity.html#cb44-1" tabindex="-1"></a><span class="co">#Set order of media</span></span>
+<span id="cb44-2"><a href="09-Alpha_diversity.html#cb44-2" tabindex="-1"></a>basic_alpha_metrics_long_df<span class="sc">$</span>media <span class="ot">&lt;-</span> <span class="fu">factor</span>(basic_alpha_metrics_long_df<span class="sc">$</span>media,</span>
+<span id="cb44-3"><a href="09-Alpha_diversity.html#cb44-3" tabindex="-1"></a>                                            <span class="co">#Set order of levels</span></span>
+<span id="cb44-4"><a href="09-Alpha_diversity.html#cb44-4" tabindex="-1"></a>                                            <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;ENV&quot;</span>, <span class="st">&quot;CVP&quot;</span>, <span class="st">&quot;KBC&quot;</span>, <span class="st">&quot;TSA&quot;</span>))</span></code></pre></div>
+<p>The stats in our previous plot were also not in a good order.
+We'll therefore reorder them.
+When doing this it is important to note that the first comparison in the <strong>lists</strong> is the bottom most stat in the plot.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb45-1"><a href="09-Alpha_diversity.html#cb45-1" tabindex="-1"></a><span class="co">#Order comparisons</span></span>
+<span id="cb45-2"><a href="09-Alpha_diversity.html#cb45-2" tabindex="-1"></a>my_ordered_comparisons <span class="ot">&lt;-</span> my_comparisons[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">5</span>)]</span>
+<span id="cb45-3"><a href="09-Alpha_diversity.html#cb45-3" tabindex="-1"></a>my_ordered_comparisons</span></code></pre></div>
+<p>You'll notice this can be quite manual.
+It can be made easier when doing this yourself to roughly reorder, run the below code for your plot, then fix the stats reorder.</p>
+<p>With our media categories and comparisons reordered we can create the final plot.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb46-1"><a href="09-Alpha_diversity.html#cb46-1" tabindex="-1"></a><span class="co">#Produce ggplot object of violin plot</span></span>
+<span id="cb46-2"><a href="09-Alpha_diversity.html#cb46-2" tabindex="-1"></a>alpha_violinplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(basic_alpha_metrics_long_df, <span class="fu">aes</span>(<span class="at">x =</span> media, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb46-3"><a href="09-Alpha_diversity.html#cb46-3" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb46-4"><a href="09-Alpha_diversity.html#cb46-4" tabindex="-1"></a>                            ggforce<span class="sc">::</span><span class="fu">geom_sina</span>(<span class="at">alpha=</span><span class="fl">0.5</span>, <span class="fu">aes</span>(<span class="at">color=</span>site)) <span class="sc">+</span></span>
+<span id="cb46-5"><a href="09-Alpha_diversity.html#cb46-5" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;Site&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Media&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Value&quot;</span>) <span class="sc">+</span></span>
+<span id="cb46-6"><a href="09-Alpha_diversity.html#cb46-6" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">facet_wrap</span>(<span class="sc">~</span>metric, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb46-7"><a href="09-Alpha_diversity.html#cb46-7" tabindex="-1"></a>                            <span class="co">#Add comparisons</span></span>
+<span id="cb46-8"><a href="09-Alpha_diversity.html#cb46-8" tabindex="-1"></a>                            ggpubr<span class="sc">::</span><span class="fu">stat_compare_means</span>(<span class="at">comparisons =</span> my_ordered_comparisons)</span>
+<span id="cb46-9"><a href="09-Alpha_diversity.html#cb46-9" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave()</span></span>
+<span id="cb46-10"><a href="09-Alpha_diversity.html#cb46-10" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_media_violinplot_pairwise_wilcox.png&quot;</span>, </span>
+<span id="cb46-11"><a href="09-Alpha_diversity.html#cb46-11" tabindex="-1"></a>       <span class="at">plot =</span> alpha_violinplot,</span>
+<span id="cb46-12"><a href="09-Alpha_diversity.html#cb46-12" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">&quot;png&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">&quot;mm&quot;</span>, <span class="at">height =</span> <span class="dv">150</span>, <span class="at">width =</span> <span class="dv">250</span>)</span>
+<span id="cb46-13"><a href="09-Alpha_diversity.html#cb46-13" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb46-14"><a href="09-Alpha_diversity.html#cb46-14" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_media_violinplot_pairwise_wilcox.png&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="alpha-task" class="section level2 hasAnchor" number="9.10">
+<h2><span class="header-section-number">9.10</span> <span class="math inline">\(\alpha\)</span>: Task<a href="09-Alpha_diversity.html#alpha-task" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As an optional task if you want more practice create a new violin plot that includes the following:</p>
+<ul>
+<li>Plots the metrics:
+<ul>
+<li>"chao1"</li>
+<li>"evenness_pielou" renaming it as "pielou"</li>
+<li>"diversity_fisher" renaming it as "fisher"</li>
+<li>Ensure they are in the order "chao1", "pielou", then "fisher"</li>
+</ul></li>
+<li>The x-axis is separated by Site (UD, MD, LD) rather than media.
+<ul>
+<li>Ensure the order is UD, MD, then LD</li>
+</ul></li>
+<li>Points are coloured by Media (ENV, CVP, KBC, and TSA)
+<ul>
+<li>Ensure the order is ENV, CVP, KBC, then TSA</li>
+</ul></li>
+<li>Include Wilcoxon paired stats comparing the Sites</li>
+</ul>
+<div class="webex-solution">
+<button>
+Solution code
+</button>
+<p>Subset <a href="09-Alpha_diversity.html#alpha_long_df">long alpha diversity table created earlier in this chapter</a> to contain metrics of choice.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb47-1"><a href="09-Alpha_diversity.html#cb47-1" tabindex="-1"></a><span class="co">#Process our long data frame</span></span>
+<span id="cb47-2"><a href="09-Alpha_diversity.html#cb47-2" tabindex="-1"></a><span class="co">#Subset our long alpha diversity data frame to only contain our metrics of choice</span></span>
+<span id="cb47-3"><a href="09-Alpha_diversity.html#cb47-3" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;chao1&quot;</span>, <span class="st">&quot;evenness_pielou&quot;</span>,<span class="st">&quot;diversity_fisher&quot;</span>)</span>
+<span id="cb47-4"><a href="09-Alpha_diversity.html#cb47-4" tabindex="-1"></a>subset_alpha_metrics_long_df <span class="ot">&lt;-</span> meta_alpha_mean_long_df[</span>
+<span id="cb47-5"><a href="09-Alpha_diversity.html#cb47-5" tabindex="-1"></a>  meta_alpha_mean_long_df<span class="sc">$</span>metric <span class="sc">%in%</span> metrics,</span>
+<span id="cb47-6"><a href="09-Alpha_diversity.html#cb47-6" tabindex="-1"></a>]</span>
+<span id="cb47-7"><a href="09-Alpha_diversity.html#cb47-7" tabindex="-1"></a><span class="co">#Change instances of evenness_pielou to pielou</span></span>
+<span id="cb47-8"><a href="09-Alpha_diversity.html#cb47-8" tabindex="-1"></a>subset_alpha_metrics_long_df<span class="sc">$</span>metric <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;evenness_pieloue&quot;</span>,</span>
+<span id="cb47-9"><a href="09-Alpha_diversity.html#cb47-9" tabindex="-1"></a>                                           <span class="at">replacement =</span> <span class="st">&quot;pielou&quot;</span>,</span>
+<span id="cb47-10"><a href="09-Alpha_diversity.html#cb47-10" tabindex="-1"></a>                                           <span class="at">x =</span> subset_alpha_metrics_long_df<span class="sc">$</span>metric)</span>
+<span id="cb47-11"><a href="09-Alpha_diversity.html#cb47-11" tabindex="-1"></a><span class="co">#Change instances of diversity_fisher to fisher</span></span>
+<span id="cb47-12"><a href="09-Alpha_diversity.html#cb47-12" tabindex="-1"></a>subset_alpha_metrics_long_df<span class="sc">$</span>metric <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;diversity_fisher&quot;</span>,</span>
+<span id="cb47-13"><a href="09-Alpha_diversity.html#cb47-13" tabindex="-1"></a>                                           <span class="at">replacement =</span> <span class="st">&quot;fisher&quot;</span>,</span>
+<span id="cb47-14"><a href="09-Alpha_diversity.html#cb47-14" tabindex="-1"></a>                                           <span class="at">x =</span> subset_alpha_metrics_long_df<span class="sc">$</span>metric)</span>
+<span id="cb47-15"><a href="09-Alpha_diversity.html#cb47-15" tabindex="-1"></a><span class="co">#The gsub() function changes our factor to a character vector</span></span>
+<span id="cb47-16"><a href="09-Alpha_diversity.html#cb47-16" tabindex="-1"></a><span class="co">#Therefore change back to factor</span></span>
+<span id="cb47-17"><a href="09-Alpha_diversity.html#cb47-17" tabindex="-1"></a><span class="co">#We will also choose our order of the metric names for plotting</span></span>
+<span id="cb47-18"><a href="09-Alpha_diversity.html#cb47-18" tabindex="-1"></a>subset_alpha_metrics_long_df<span class="sc">$</span>metric <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="at">x =</span> subset_alpha_metrics_long_df<span class="sc">$</span>metric,</span>
+<span id="cb47-19"><a href="09-Alpha_diversity.html#cb47-19" tabindex="-1"></a>                                             <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;chao1&quot;</span>,<span class="st">&quot;pielou&quot;</span>,<span class="st">&quot;fisher&quot;</span>))</span>
+<span id="cb47-20"><a href="09-Alpha_diversity.html#cb47-20" tabindex="-1"></a><span class="co">#Check level order of metric factor column</span></span>
+<span id="cb47-21"><a href="09-Alpha_diversity.html#cb47-21" tabindex="-1"></a><span class="fu">levels</span>(subset_alpha_metrics_long_df<span class="sc">$</span>metric)</span>
+<span id="cb47-22"><a href="09-Alpha_diversity.html#cb47-22" tabindex="-1"></a><span class="co">#Check head of subsetted long data frame</span></span>
+<span id="cb47-23"><a href="09-Alpha_diversity.html#cb47-23" tabindex="-1"></a><span class="fu">head</span>(subset_alpha_metrics_long_df)</span></code></pre></div>
+<p>Create metadata combination list for plot stats</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb48-1"><a href="09-Alpha_diversity.html#cb48-1" tabindex="-1"></a><span class="co">#To compare mean we need to create a list of comparisons</span></span>
+<span id="cb48-2"><a href="09-Alpha_diversity.html#cb48-2" tabindex="-1"></a><span class="co">#Create character vector of unique metadata values (site in this case)</span></span>
+<span id="cb48-3"><a href="09-Alpha_diversity.html#cb48-3" tabindex="-1"></a>uniq_site_values_chr_vec <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">as.character</span>(subset_alpha_metrics_long_df<span class="sc">$</span>site))</span>
+<span id="cb48-4"><a href="09-Alpha_diversity.html#cb48-4" tabindex="-1"></a>uniq_site_values_chr_vec</span>
+<span id="cb48-5"><a href="09-Alpha_diversity.html#cb48-5" tabindex="-1"></a><span class="co">#Can use combn() to get comparisons</span></span>
+<span id="cb48-6"><a href="09-Alpha_diversity.html#cb48-6" tabindex="-1"></a>my_comparisons <span class="ot">&lt;-</span> <span class="fu">combn</span>(uniq_site_values_chr_vec, <span class="at">m =</span> <span class="dv">2</span>, <span class="at">simplify =</span> <span class="cn">FALSE</span>)<span class="er">)</span></span>
+<span id="cb48-7"><a href="09-Alpha_diversity.html#cb48-7" tabindex="-1"></a><span class="co">#Check contents and structure</span></span>
+<span id="cb48-8"><a href="09-Alpha_diversity.html#cb48-8" tabindex="-1"></a>my_comparisons</span>
+<span id="cb48-9"><a href="09-Alpha_diversity.html#cb48-9" tabindex="-1"></a><span class="fu">str</span>(my_comparisons)</span></code></pre></div>
+<p>Reorder factors and comparisons</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb49-1"><a href="09-Alpha_diversity.html#cb49-1" tabindex="-1"></a><span class="co">#Reorder sites, media and comparisons</span></span>
+<span id="cb49-2"><a href="09-Alpha_diversity.html#cb49-2" tabindex="-1"></a><span class="co">#Set order of sites</span></span>
+<span id="cb49-3"><a href="09-Alpha_diversity.html#cb49-3" tabindex="-1"></a>subset_alpha_metrics_long_df<span class="sc">$</span>site <span class="ot">&lt;-</span> <span class="fu">factor</span>(subset_alpha_metrics_long_df<span class="sc">$</span>site,</span>
+<span id="cb49-4"><a href="09-Alpha_diversity.html#cb49-4" tabindex="-1"></a>                                            <span class="co">#Set order of levels</span></span>
+<span id="cb49-5"><a href="09-Alpha_diversity.html#cb49-5" tabindex="-1"></a>                                            <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;UD&quot;</span>, <span class="st">&quot;MD&quot;</span>, <span class="st">&quot;LD&quot;</span>))</span>
+<span id="cb49-6"><a href="09-Alpha_diversity.html#cb49-6" tabindex="-1"></a><span class="co">#Set order of media</span></span>
+<span id="cb49-7"><a href="09-Alpha_diversity.html#cb49-7" tabindex="-1"></a>subset_alpha_metrics_long_df<span class="sc">$</span>media <span class="ot">&lt;-</span> <span class="fu">factor</span>(subset_alpha_metrics_long_df<span class="sc">$</span>media,</span>
+<span id="cb49-8"><a href="09-Alpha_diversity.html#cb49-8" tabindex="-1"></a>                                            <span class="co">#Set order of levels</span></span>
+<span id="cb49-9"><a href="09-Alpha_diversity.html#cb49-9" tabindex="-1"></a>                                            <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;ENV&quot;</span>, <span class="st">&quot;CVP&quot;</span>, <span class="st">&quot;KBC&quot;</span>, <span class="st">&quot;TSA&quot;</span>))</span>
+<span id="cb49-10"><a href="09-Alpha_diversity.html#cb49-10" tabindex="-1"></a><span class="co">#Order comparisons</span></span>
+<span id="cb49-11"><a href="09-Alpha_diversity.html#cb49-11" tabindex="-1"></a>my_ordered_comparisons <span class="ot">&lt;-</span> my_comparisons[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>)]</span>
+<span id="cb49-12"><a href="09-Alpha_diversity.html#cb49-12" tabindex="-1"></a>my_ordered_comparisons</span></code></pre></div>
+<p>Plot with stats</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb50-1"><a href="09-Alpha_diversity.html#cb50-1" tabindex="-1"></a><span class="co">#Produce ggplot object of violin plot</span></span>
+<span id="cb50-2"><a href="09-Alpha_diversity.html#cb50-2" tabindex="-1"></a>alpha_violinplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(subset_alpha_metrics_long_df, <span class="fu">aes</span>(<span class="at">x =</span> site, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb50-3"><a href="09-Alpha_diversity.html#cb50-3" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb50-4"><a href="09-Alpha_diversity.html#cb50-4" tabindex="-1"></a>                            ggforce<span class="sc">::</span><span class="fu">geom_sina</span>(<span class="at">alpha=</span><span class="fl">0.5</span>, <span class="fu">aes</span>(<span class="at">color=</span>site)) <span class="sc">+</span></span>
+<span id="cb50-5"><a href="09-Alpha_diversity.html#cb50-5" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;Media&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Site&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Value&quot;</span>) <span class="sc">+</span></span>
+<span id="cb50-6"><a href="09-Alpha_diversity.html#cb50-6" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">facet_wrap</span>(<span class="sc">~</span>metric, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb50-7"><a href="09-Alpha_diversity.html#cb50-7" tabindex="-1"></a>                            <span class="co">#Add comparisons</span></span>
+<span id="cb50-8"><a href="09-Alpha_diversity.html#cb50-8" tabindex="-1"></a>                            ggpubr<span class="sc">::</span><span class="fu">stat_compare_means</span>(<span class="at">comparisons =</span> my_ordered_comparisons)</span>
+<span id="cb50-9"><a href="09-Alpha_diversity.html#cb50-9" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave()</span></span>
+<span id="cb50-10"><a href="09-Alpha_diversity.html#cb50-10" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_site_violinplot_pairwise_wilcox.png&quot;</span>, </span>
+<span id="cb50-11"><a href="09-Alpha_diversity.html#cb50-11" tabindex="-1"></a>       <span class="at">plot =</span> alpha_violinplot,</span>
+<span id="cb50-12"><a href="09-Alpha_diversity.html#cb50-12" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">&quot;png&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">&quot;mm&quot;</span>, <span class="at">height =</span> <span class="dv">150</span>, <span class="at">width =</span> <span class="dv">250</span>)</span>
+<span id="cb50-13"><a href="09-Alpha_diversity.html#cb50-13" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb50-14"><a href="09-Alpha_diversity.html#cb50-14" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_site_violinplot_pairwise_wilcox.png&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="alpha-recap" class="section level2 hasAnchor" number="9.11">
+<h2><span class="header-section-number">9.11</span> <span class="math inline">\(\alpha\)</span>: Recap<a href="09-Alpha_diversity.html#alpha-recap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>MG TO DO: Add info on all alpha diversity metrics in appendix</p>
 
 </div>
 </div>
@@ -607,6 +968,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

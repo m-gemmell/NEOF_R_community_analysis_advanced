@@ -1222,13 +1222,13 @@ library(webexercises)
 ![](figures/alpha_iterative_rarefaction.png){style="width:300px"}
 </center>
 
-In this chapter we'll carry out alpha diversity analysis using the __iterative rarefaction__ approach.
+In this chapter we'll carry out __alpha diversity__ analysis using the __iterative rarefaction__ approach.
 We will carry this out on the ASV counts rather than at a taxonomy level such as phyla.
 
 These materials are mostly a combination of the __iterative rarefaction__ in this book and the __alpha diversity__ analysis in the R community workshop.
 Due to this we won't go into great detail, instead focussing on giving you the code to be able to carry this out.
 
-## Alpha diversity setup
+## 	$\alpha$: Setup
 <center>
 ![](figures/setup_6.png){style="width:200px; background-color:white; border-radius:15px"}
 </center>
@@ -1248,7 +1248,7 @@ library("ggpubr")
 load("phyloseq.RData")
 ```
 
-## Alpha diversity iterative rarefaction values
+## $\alpha$: Iterative rarefaction values
 <center>
 ![](figures/ten_rng_seeds.png){style="width:200px"}
 </center>
@@ -1256,8 +1256,9 @@ load("phyloseq.RData")
 Before carrying out __iterative rarefaction__ we need to decide on a few values
 
 - __Rarefaction size:__ The sequence depth to normalise samples to
-  - We are using the minimum sample depth here.
-  - The size you choose will be based on your data and what you feel is appropriate. More info in the R community workshop.
+  - We are using the minimum sample depth here
+  - The size you choose will be based on your data and what you feel is appropriate
+  - More info in the R community workshop
 - __RNG seeds:__ The rng seeds we will use for all the rarefactions
   - We created these in the previous [chapter](#rng_vec_creation)
 - __Rarefaction iterations:__ The number of rarefaction iterations we will use
@@ -1272,11 +1273,11 @@ rarefaction_size <- min(microbiome::readcount(pseq))
 #Load the vector of 10 rngseeds created in the previous chapter
 load("rngseeds.RData")
 #Number of rarefaction iterations to be carried out
-#Based on length of rn seed vector
+#Based on length of rng seed vector
 rarefaction_iters <- length(rngseed_vec)
 ```
 
-## Alpha diversity iterative rarefaction loop
+## $\alpha$: Iterative rarefaction loop
 <center>
 ![](figures/iterative_loops.png){style="width:300px"}
 </center>
@@ -1308,7 +1309,7 @@ for (i in 2:rarefaction_iters){
                                            rngseed = rngseed_vec[i], verbose = FALSE)
   #Alpha diversity
   alpha_df <- microbiome::alpha(pseq_rarefy, index = "all")
-  #Add/sum the new data frame values to sum data frame
+  #Add/sum the new data frame values to the sum data frame
   alpha_df_sum <- alpha_df_sum + alpha_df
 }
 #Divide by number of rarefaction iterations to get average
@@ -1316,14 +1317,394 @@ alpha_df_mean <- alpha_df_sum / rarefaction_iters
 #Save alpha mean data frame
 save(alpha_df_mean, file = "alpha_df_mean.RData")
 #Remove unneeded objects
-rm(pseq_rarefy, alpha_df_sum, alpha_df)
+rm(pseq,alpha_df_sum, alpha_df)
 ```
 
-You can check the structure and contents of our aalpha diveristy data fraem with `head()`.
+You can check the structure and contents of our alpha diversity data frame with `head()`.
 
 ```{r, eval=FALSE}
 head(alpha_df_mean)
 ```
+
+There are a lot of diversity metrics.
+We are only interested in a few of them here but we will remove the other ones later on.
+
+## $\alpha$: Metric and metadata data frame
+
+Now that we have our __alpha diversity__ values we will create a data frame that contains these values and metadata.
+
+In the below code we extract the metadata from the rarefied phyloseq object created in the last loop iteration above.
+This ensures we only acquire metadata from samples that are retained after __rarefaction__.
+The samples that are retained are always the same across our __rarefaction iterations__ as samples are retained based on the __rarefaction size/depth__ which is kept consistent across our __rarefactions__.
+
+```{r, eval=FALSE}
+#Combine metadata and alpha diversity mean values into one data frame
+#Extract metadata from rarefied phyloseq object
+metadf <- phyloseq::sample_data(pseq)
+#Ensure row names are identical
+#if not sort alpha data frame rows by metadata row names
+if (identical(row.names(metadf), row.names(alpha_df_mean)) == FALSE) {
+  alpha_df_mean <- alpha_df_mean[row.names(metadf),]
+}
+#Combine with cbind (column bind)
+meta_alpha_mean_df <- cbind(metadf,alpha_df_mean)
+head(meta_alpha_mean_df)
+#Remove rarefied phyloseq object that we do not need any more in this notebook
+rm(pseq_rarefy) 
+```
+
+From the output of `head()` you should see a table with the first set of columns being the metadata columns. The next set of columns is the alpha diversity metrics.
+
+## $\alpha$: Long data frame {#alpha_long_df}
+
+We will plot our __alpha diversity__ values with `ggplot2` functions.
+Before we carry this out we need to convert our wide data frame to a long data frame.
+We'll carry this out with `tidyr::pivot_longer()`.
+
+For this we want our metric values to become long.
+This means that instead of the __alpha diversity__ values being spread across multiple rows and columns their will only be one value per row.
+
+Two columns will represent these values in the long format:
+
+- __metric:__ The name of the alpha diversity metric
+- __value:__ The value of the alpha diversity metric
+
+```{r,eval=FALSE}
+#Create long version for plotting
+#alpha_df_mean (no metadata) column names to be used for long conversion
+alpha_div_colnames <- colnames(alpha_df_mean)
+#Wide to long
+meta_alpha_mean_long_df <- 
+  tidyr::pivot_longer(data = meta_alpha_mean_df,
+                      #Change the alpha diversity names to long format
+                      #I.e. keep our metadata columns as separate columns
+                      #all_of() used to silence warning message
+                      cols = all_of(alpha_div_colnames)
+                      #Set column name to column called metric
+                      #Set values to column called value
+                      names_to = "metric", values_to = "value"
+                      )
+#Change our metric column to a factor
+#Useful for plotting
+meta_alpha_mean_long_df$metric <- as.factor(meta_alpha_mean_long_df$metric)
+#Check head and dimensions of long data frame
+head(meta_alpha_mean_long_df)
+dim(meta_alpha_mean_long_df)
+#Remove unneeded objects
+rm(alpha_df_mean, metadf)
+```
+
+## $\alpha$: Subset metrics
+
+There are a lot of diversity values created by `microbiome::alpha()`.
+For this tutorial we are only interested in:
+
+- __observed:__ The number of observed features (ASVs, Phlya, Species, etc.)
+- __chao1:__ The estimated real total number of features
+- __diversity_shannon:__ The Shannon diversity metric
+  - An estimate of feature diversity based on richness (presence/absence) and abundance
+  - The higher the value the higher the diversity
+  
+We'll subset our long data frame to only retain rows with these metrics.
+We'll also use the utility of factors to order the metrics so they are plotted in our preferred order further down.
+
+```{R, eval=FALSE}
+#Process our long data frame
+#Subset our long alpha diversity data frame to only contain our metrics of choice
+metrics <- c("observed", "chao1","diversity_shannon")
+basic_alpha_metrics_long_df <- meta_alpha_mean_long_df[
+  meta_alpha_mean_long_df$metric %in% metrics,
+]
+#Change instances of diversity_shannon to shannon
+basic_alpha_metrics_long_df$metric <- gsub(pattern = "diversity_shannon",
+                                           replacement = "shannon",
+                                           x = basic_alpha_metrics_long_df$metric)
+#The gsub() function changes our factor to a character vector
+#Therefore change back to factor
+#We will also choose our order of the metric names for plotting
+basic_alpha_metrics_long_df$metric <- factor(x = basic_alpha_metrics_long_df$metric,
+                                             levels = c("observed","chao1","shannon"))
+#Check level order of metric factor column
+levels(basic_alpha_metrics_long_df$metric)
+#Check head of subsetted long data frame
+head(basic_alpha_metrics_long_df)
+```
+
+With this data frame we can move onto visualisation.
+
+## $\alpha$: Violin plot
+
+To visualise the differences of the alpha diversity values between the four different media we'll use violin plots.
+We can use the function `ggplot2::geom_violin()` to carry this out.
+
+Additionally, we'll add a point for each value and colour it based on the site it canme from (UD, MD, or LD).
+The function `ggforce::geom_sina()` can be used for this.
+We'll use its parameter `alpha()` to make the points 50% (`0.5`) transparent.
+
+As we are plotting values from three different metrics we will split the plot into three separate plots.
+`ggplot2::facet_wrap()` can be used for this tasked with `~metric` used to split the plot by the metrics.
+We also specify `scales = "free"` so each of the three plots has their own x and y scales.
+This is important when the values are drastically different such is the case between the observed and chao1 (>100) compared to the shannon values (<10).
+
+`r hide("scales options")`
+The four `scales` are:
+
+- __`"fixed"` (default):__ All the scales are the same (fixed), based on the largest and smallest x and y values across all the plots. Useful where you want direct comparisons such as looking at teh overall pattern in ordination plots.
+- __`"free"`:__ All the scales are free. Each plot's x and y values limits are based on the data within it.
+- __`"free_x"`:__ The x axis is free and the y axis is fixed.
+- __`"free_y"`:__ The y axis is free and the x axis is fixed.
+
+Which you wnat to use depends on your data and how you are facetting it.
+`r unhide()`
+
+```{R, eval = FALSE}
+#Produce ggplot object of violin plot
+alpha_violinplot <- ggplot(basic_alpha_metrics_long_df, aes(x = media, y = value)) +
+                            ggplot2::geom_violin() +
+                            ggforce::geom_sina(alpha=0.5, aes(color=site)) +
+                            ggplot2::labs(color = "Site", x = "Media", y = "Value") +
+                            ggplot2::facet_wrap(~metric, scales = "free")
+#Save ggplot2 object with ggsave()
+ggsave(filename = "./Alpha_diversity_rarefy_iters_media_violinplot.png", plot = alpha_violinplot,
+       device = "png", dpi = 300, units = "mm", height = 150, width = 250)
+#Display plot
+IRdisplay::display_png(file = "./Alpha_diversity_rarefy_iters_media_violinplot.png")
+```
+
+## $\alpha$: Stats
+
+We can carry out statistics to compare the alpha diversity values between sample groups.
+
+### Kruskal Wallis test
+
+To determine if there is an overall difference in our data we'll use the Kruskal Wallis test.
+We'll carry this out using the media grouping for our three alpha diversity values.
+
+```{R, eval =FALSE}
+#Kruskal Wallis test
+#Observed ASVs
+kruskal.test(observed ~ media, data = meta_alpha_mean_df)
+#Chao1 estimator
+kruskal.test(chao1 ~ media, data = meta_alpha_mean_df)
+#Shannon diversity
+kruskal.test(shannon ~ media, data = meta_alpha_mean_df)
+```
+
+All the p-values are less than 0.05 indicating statistical significance.
+That means we can move onto pairwise comparisons.
+
+### Paired wilcoxon test
+
+To determine what groups are significantly different from each other we can carry out paired Wilcoxon test.
+This tests 
+
+```{R, eval=FALSE}
+#Paired wilcoxon test
+#Observed ASVs
+pairwise.wilcox.test(meta_alpha_mean_df$observed, meta_alpha_mean_df, p.adjust.method = "holm")
+#Chao1 estimator
+pairwise.wilcox.test(meta_alpha_mean_df$chao1, meta_alpha_mean_df, p.adjust.method = "holm")
+#Shannon diversity
+pairwise.wilcox.test(meta_alpha_mean_df$shannon, meta_alpha_mean_df, p.adjust.method = "holm")
+```
+
+You'll see three p-value adjusted tables with all the values (except Shannon: ENV against TSA) being significant (<0.05).
+
+## $\alpha$: Plot with stats
+
+Rather than having the plot and stats separate, we can add stats onto our plot.
+This can be carried out with the function `stat_compare_means()` from the ``ggpubr` package.
+
+### List of comparisons
+
+To produce pairwise comparisons with `ggpubr::stat_compare_means()` we need a __list__ of the comparisons we want to carry out.
+
+We can create this with the function `combn()`, short for combination.
+We provide it with three parameters:
+
+- __Input data:__ This is a __vector__ of the unique metadata categories to create the combinations from
+  - We are using our created `uniq_media_values_chr_vec` in this case
+  - We ensure that this is a __vector__ of __characters__ so the created combination __list__ contains __character vectors__
+  - A __list__ of __character vectors__ is required for `ggpubr::stat_compare_means()`
+- __`m = `:__ The number of elements to choose when creating combinations.
+  - We choose `2` so we get all pair combinations
+- __`simplify = `:__ Indicates if the result should be simple (`TRUE`) or not (`FALSE`)
+  - `TRUE` returns a simplified array such as a __matrix__ or a __data frame__
+  - `FALSE` returns a __list__. This is what we want as `ggpubr::stat_compare_means()` requires a __list__
+
+```{R,eval = FALSE}
+#To compare mean we need to create a list of comparisons
+#Create character vector of unique metadata values (media in this case)
+uniq_media_values_chr_vec <- unique(as.character(basic_alpha_metrics_long_df$media))
+uniq_media_values_chr_vec
+#Can use combn() to get comparisons
+my_comparisons <- combn(uniq_media_values_chr_vec, m = 2, simplify = FALSE))
+#Check contents and structure
+my_comparisons
+str(my_comparisons)
+```
+
+### Violin plot with stats
+
+With our __list__ of comparisons we can add `ggpubr::stat_compare_means()` to our `ggplot2` code.
+This function will both calculate the Wilcoxon tests and add them to the plot.
+
+```{R, eval = FALSE}
+#Produce ggplot object of violin plot
+alpha_violinplot <- ggplot(basic_alpha_metrics_long_df, aes(x = media, y = value)) +
+                            ggplot2::geom_violin() +
+                            ggforce::geom_sina(alpha=0.5, aes(color=site)) +
+                            ggplot2::labs(color = "Site", x = "Media", y = "Value") +
+                            ggplot2::facet_wrap(~metric, scales = "free") +
+                            #Add comparisons
+                            ggpubr::stat_compare_means(comparisons = my_comparisons)
+#Save ggplot2 object with ggsave()
+ggsave(filename = "./Alpha_diversity_rarefy_iters_media_violinplot_pairwise_wilcox.png", 
+       plot = alpha_violinplot,
+       device = "png", dpi = 300, units = "mm", height = 150, width = 250)
+#Display plot
+IRdisplay::display_png(file = "./Alpha_diversity_rarefy_iters_media_violinplot_pairwise_wilcox.png")
+```
+
+### Reorder x-axis and stats
+
+`ggplot` orders the x-axis by alphabetical order.
+This is not normally wanted so we will convert our media column to a __factor__ and order the levels how we want them.
+As the environmental samples can be seen as the baseline we will have them first.
+
+```{r,eval = FALSE}
+#Set order of media
+basic_alpha_metrics_long_df$media <- factor(basic_alpha_metrics_long_df$media,
+                                            #Set order of levels
+                                            levels = c("ENV", "CVP", "KBC", "TSA"))
+```
+
+The stats in our previous plot were also not in a good order.
+We'll therefore reorder them.
+When doing this it is important to note that the first comparison in the __lists__ is the bottom most stat in the plot.
+
+```{R, eval = FALSE}
+#Order comparisons
+my_ordered_comparisons <- my_comparisons[c(1,2,6,4,3,5)]
+my_ordered_comparisons
+```
+
+You'll notice this can be quite manual.
+It can be made easier when doing this yourself to roughly reorder, run the below code for your plot, then fix the stats reorder.
+
+With our media categories and comparisons reordered we can create the final plot.
+
+```{R, eval = FALSE}
+#Produce ggplot object of violin plot
+alpha_violinplot <- ggplot(basic_alpha_metrics_long_df, aes(x = media, y = value)) +
+                            ggplot2::geom_violin() +
+                            ggforce::geom_sina(alpha=0.5, aes(color=site)) +
+                            ggplot2::labs(color = "Site", x = "Media", y = "Value") +
+                            ggplot2::facet_wrap(~metric, scales = "free") +
+                            #Add comparisons
+                            ggpubr::stat_compare_means(comparisons = my_ordered_comparisons)
+#Save ggplot2 object with ggsave()
+ggsave(filename = "./Alpha_diversity_rarefy_iters_media_violinplot_pairwise_wilcox.png", 
+       plot = alpha_violinplot,
+       device = "png", dpi = 300, units = "mm", height = 150, width = 250)
+#Display plot
+IRdisplay::display_png(file = "./Alpha_diversity_rarefy_iters_media_violinplot_pairwise_wilcox.png")
+```
+
+## $\alpha$: Task
+
+As an optional task if you want more practice create a new violin plot that includes the following:
+
+- Plots the metrics:
+  - "chao1"
+  - "evenness_pielou" renaming it as "pielou"
+  - "diversity_fisher" renaming it as "fisher"
+  - Ensure they are in the order "chao1", "pielou", then "fisher"
+- The x-axis is separated by Site (UD, MD, LD) rather than media.
+  - Ensure the order is UD, MD, then LD
+- Points are coloured by Media (ENV, CVP, KBC, and TSA)
+  - Ensure the order is ENV, CVP, KBC, then TSA
+- Include Wilcoxon paired stats comparing the Sites
+
+`r hide("Solution code")`
+Subset [long alpha diversity table created earlier in this chapter](#alpha_long_df) to contain metrics of choice.
+```{R, eval=FALSE}
+#Process our long data frame
+#Subset our long alpha diversity data frame to only contain our metrics of choice
+metrics <- c("chao1", "evenness_pielou","diversity_fisher")
+subset_alpha_metrics_long_df <- meta_alpha_mean_long_df[
+  meta_alpha_mean_long_df$metric %in% metrics,
+]
+#Change instances of evenness_pielou to pielou
+subset_alpha_metrics_long_df$metric <- gsub(pattern = "evenness_pieloue",
+                                           replacement = "pielou",
+                                           x = subset_alpha_metrics_long_df$metric)
+#Change instances of diversity_fisher to fisher
+subset_alpha_metrics_long_df$metric <- gsub(pattern = "diversity_fisher",
+                                           replacement = "fisher",
+                                           x = subset_alpha_metrics_long_df$metric)
+#The gsub() function changes our factor to a character vector
+#Therefore change back to factor
+#We will also choose our order of the metric names for plotting
+subset_alpha_metrics_long_df$metric <- factor(x = subset_alpha_metrics_long_df$metric,
+                                             levels = c("chao1","pielou","fisher"))
+#Check level order of metric factor column
+levels(subset_alpha_metrics_long_df$metric)
+#Check head of subsetted long data frame
+head(subset_alpha_metrics_long_df)
+```
+
+Create metadata combination list for plot stats
+```{R,eval = FALSE}
+#To compare mean we need to create a list of comparisons
+#Create character vector of unique metadata values (site in this case)
+uniq_site_values_chr_vec <- unique(as.character(subset_alpha_metrics_long_df$site))
+uniq_site_values_chr_vec
+#Can use combn() to get comparisons
+my_comparisons <- combn(uniq_site_values_chr_vec, m = 2, simplify = FALSE))
+#Check contents and structure
+my_comparisons
+str(my_comparisons)
+```
+
+Reorder factors and comparisons
+```{r,eval = FALSE}
+#Reorder sites, media and comparisons
+#Set order of sites
+subset_alpha_metrics_long_df$site <- factor(subset_alpha_metrics_long_df$site,
+                                            #Set order of levels
+                                            levels = c("UD", "MD", "LD"))
+#Set order of media
+subset_alpha_metrics_long_df$media <- factor(subset_alpha_metrics_long_df$media,
+                                            #Set order of levels
+                                            levels = c("ENV", "CVP", "KBC", "TSA"))
+#Order comparisons
+my_ordered_comparisons <- my_comparisons[c(1,3,2)]
+my_ordered_comparisons
+```
+
+Plot with stats
+```{R, eval = FALSE}
+#Produce ggplot object of violin plot
+alpha_violinplot <- ggplot(subset_alpha_metrics_long_df, aes(x = site, y = value)) +
+                            ggplot2::geom_violin() +
+                            ggforce::geom_sina(alpha=0.5, aes(color=site)) +
+                            ggplot2::labs(color = "Media", x = "Site", y = "Value") +
+                            ggplot2::facet_wrap(~metric, scales = "free") +
+                            #Add comparisons
+                            ggpubr::stat_compare_means(comparisons = my_ordered_comparisons)
+#Save ggplot2 object with ggsave()
+ggsave(filename = "./Alpha_diversity_rarefy_iters_site_violinplot_pairwise_wilcox.png", 
+       plot = alpha_violinplot,
+       device = "png", dpi = 300, units = "mm", height = 150, width = 250)
+#Display plot
+IRdisplay::display_png(file = "./Alpha_diversity_rarefy_iters_site_violinplot_pairwise_wilcox.png")
+```
+`r unhide()`
+
+## $\alpha$: Recap
+
+MG TO DO: Add info on all alpha diversity metrics in appendix
 
 <!--chapter:end:09-Alpha_diversity.Rmd-->
 

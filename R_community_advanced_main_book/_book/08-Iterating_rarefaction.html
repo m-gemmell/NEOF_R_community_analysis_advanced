@@ -23,7 +23,7 @@
 <meta name="author" content="Matthew R. Gemmell" />
 
 
-<meta name="date" content="2024-07-03" />
+<meta name="date" content="2024-07-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -228,9 +228,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html"><i class="fa fa-check"></i><b>9</b> Alpha Diversity</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-diversity-setup"><i class="fa fa-check"></i><b>9.1</b> Alpha diversity setup</a></li>
-<li class="chapter" data-level="9.2" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-diversity-iterative-rarefaction-values"><i class="fa fa-check"></i><b>9.2</b> Alpha diversity iterative rarefaction values</a></li>
-<li class="chapter" data-level="9.3" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-diversity-iterative-rarefaction-loop"><i class="fa fa-check"></i><b>9.3</b> Alpha diversity iterative rarefaction loop</a></li>
+<li class="chapter" data-level="9.1" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-setup"><i class="fa fa-check"></i><b>9.1</b> <span class="math inline">\(\alpha\)</span>: Setup</a></li>
+<li class="chapter" data-level="9.2" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-iterative-rarefaction-values"><i class="fa fa-check"></i><b>9.2</b> <span class="math inline">\(\alpha\)</span>: Iterative rarefaction values</a></li>
+<li class="chapter" data-level="9.3" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-iterative-rarefaction-loop"><i class="fa fa-check"></i><b>9.3</b> <span class="math inline">\(\alpha\)</span>: Iterative rarefaction loop</a></li>
+<li class="chapter" data-level="9.4" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-metric-and-metadata-data-frame"><i class="fa fa-check"></i><b>9.4</b> <span class="math inline">\(\alpha\)</span>: Metric and metadata data frame</a></li>
+<li class="chapter" data-level="9.5" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha_long_df"><i class="fa fa-check"></i><b>9.5</b> <span class="math inline">\(\alpha\)</span>: Long data frame</a></li>
+<li class="chapter" data-level="9.6" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-subset-metrics"><i class="fa fa-check"></i><b>9.6</b> <span class="math inline">\(\alpha\)</span>: Subset metrics</a></li>
+<li class="chapter" data-level="9.7" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-violin-plot"><i class="fa fa-check"></i><b>9.7</b> <span class="math inline">\(\alpha\)</span>: Violin plot</a></li>
+<li class="chapter" data-level="9.8" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-stats"><i class="fa fa-check"></i><b>9.8</b> <span class="math inline">\(\alpha\)</span>: Stats</a>
+<ul>
+<li class="chapter" data-level="9.8.1" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#kruskal-wallis-test"><i class="fa fa-check"></i><b>9.8.1</b> Kruskal Wallis test</a></li>
+<li class="chapter" data-level="9.8.2" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#paired-wilcoxon-test"><i class="fa fa-check"></i><b>9.8.2</b> Paired wilcoxon test</a></li>
+</ul></li>
+<li class="chapter" data-level="9.9" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-plot-with-stats"><i class="fa fa-check"></i><b>9.9</b> <span class="math inline">\(\alpha\)</span>: Plot with stats</a>
+<ul>
+<li class="chapter" data-level="9.9.1" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#list-of-comparisons"><i class="fa fa-check"></i><b>9.9.1</b> List of comparisons</a></li>
+<li class="chapter" data-level="9.9.2" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#violin-plot-with-stats"><i class="fa fa-check"></i><b>9.9.2</b> Violin plot with stats</a></li>
+<li class="chapter" data-level="9.9.3" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#reorder-x-axis-and-stats"><i class="fa fa-check"></i><b>9.9.3</b> Reorder x-axis and stats</a></li>
+</ul></li>
+<li class="chapter" data-level="9.10" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-task"><i class="fa fa-check"></i><b>9.10</b> <span class="math inline">\(\alpha\)</span>: Task</a></li>
+<li class="chapter" data-level="9.11" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-recap"><i class="fa fa-check"></i><b>9.11</b> <span class="math inline">\(\alpha\)</span>: Recap</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html"><i class="fa fa-check"></i><b>10</b> Beta Diversity</a></li>
 <li class="divider"></li>
@@ -455,8 +472,8 @@ To make these differences even clearer let's make a histogram.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb26-1"><a href="08-Iterating_rarefaction.html#cb26-1" tabindex="-1"></a><span class="co">#Histogram of differences</span></span>
 <span id="cb26-2"><a href="08-Iterating_rarefaction.html#cb26-2" tabindex="-1"></a><span class="fu">hist</span>(single_rarefaction_diff, <span class="at">main =</span> <span class="st">&quot;Single rarefaction&quot;</span>)</span></code></pre></div>
 What is the range of the differences compared to the non rarefied relative abundance values?
-<div id="radio_MLZCAENSSP" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_MLZCAENSSP" value=""></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_MLZCAENSSP" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_MLZCAENSSP" value="answer"></input> <span><strong>-0.015 to 0.015</strong></span></label>
+<div id="radio_UZBVODPLTN" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_UZBVODPLTN" value=""></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_UZBVODPLTN" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_UZBVODPLTN" value="answer"></input> <span><strong>-0.015 to 0.015</strong></span></label>
 </div>
 <p>Although these values appear quite small keep in mind we are working with relative abundance values.
 Each sample has a total relative abundance of 1.00 so a relative abundance value of 0.01 is 1%.</p>
@@ -525,8 +542,8 @@ Then run the code.</p>
 <span id="cb28-5"><a href="08-Iterating_rarefaction.html#cb28-5" tabindex="-1"></a><span class="co">#Histogram</span></span>
 <span id="cb28-6"><a href="08-Iterating_rarefaction.html#cb28-6" tabindex="-1"></a><span class="fu">hist</span>(iterative_rarefaction_diff)</span></code></pre></div>
 What is the range of the differences compared to the non rarefied relative abundance values?
-<div id="radio_IICYGAVHMV" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_IICYGAVHMV" value=""></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_IICYGAVHMV" value="answer"></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_IICYGAVHMV" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
+<div id="radio_PHOEZRQJRW" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_PHOEZRQJRW" value=""></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_PHOEZRQJRW" value="answer"></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_PHOEZRQJRW" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
 </div>
 <p>You should notice that the differences are much smaller.
 This indicates that the structure of the <strong>iterative rarefied</strong> data is much closer to the non-rarefied data than the one <strong>rarefied</strong> data.
@@ -545,8 +562,8 @@ Save this vector of rngseeds to a file called "rngseeds_1000.RData".</p>
 <p><strong>Note:</strong> The iterative rarefaction step may take a few minutes.</p>
 <p>After creating the relative abundance matrix determine how different the values are compared to the non-rarefied relative abundance with a histogram.</p>
 What is the range of the differences compared to the non rarefied relative abundance values?
-<div id="radio_XDVYESARMJ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_XDVYESARMJ" value="answer"></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_XDVYESARMJ" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_XDVYESARMJ" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
+<div id="radio_FUDMUXTEZY" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_FUDMUXTEZY" value="answer"></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_FUDMUXTEZY" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_FUDMUXTEZY" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
 </div>
 <p>Please attempt the task yourself before looking at the solution code in the below expandable box.</p>
 <div class="webex-solution">
@@ -875,6 +892,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
