@@ -111,6 +111,9 @@ There are a lot of diversity metrics.
 We are only interested in a few of them here but we will remove the other ones later on.
 
 ## $\alpha$: Metric and metadata data frame
+<center>
+![](figures/wide_data_frame.png){style="width:200px"}
+</center>
 
 Now that we have our __alpha diversity__ values we will create a data frame that contains these values and metadata.
 
@@ -137,6 +140,9 @@ rm(pseq_rarefy)
 From the output of `head()` you should see a table with the first set of columns being the metadata columns. The next set of columns is the alpha diversity metrics.
 
 ## $\alpha$: Long data frame {#alpha_long_df}
+<center>
+![](figures/long_data_frame.png){style="width:100px"}
+</center>
 
 We will plot our __alpha diversity__ values with `ggplot2` functions.
 Before we carry this out we need to convert our wide data frame to a long data frame.
@@ -176,6 +182,9 @@ rm(alpha_df_mean, metadf)
 ```
 
 ## $\alpha$: Subset metrics
+<center>
+![](figures/observe.png){style="width:200px; background-color:white; border-radius:15px"}
+</center>
 
 There are a lot of diversity values created by `microbiome::alpha()`.
 For this tutorial we are only interested in:
@@ -214,6 +223,9 @@ head(basic_alpha_metrics_long_df)
 With this data frame we can move onto visualisation.
 
 ## $\alpha$: Violin plot
+<center>
+![](figures/violin_2.png){style="width:100px"}
+</center>
 
 To visualise the differences of the alpha diversity values between the four different media we'll use violin plots.
 We can use the function `ggplot2::geom_violin()` to carry this out.
@@ -235,7 +247,7 @@ The four `scales` are:
 - __`"free_x"`:__ The x axis is free and the y axis is fixed.
 - __`"free_y"`:__ The y axis is free and the x axis is fixed.
 
-Which you wnat to use depends on your data and how you are facetting it.
+Which you want to use depends on your data and how you are facetting it.
 `r unhide()`
 
 ```{R, eval = FALSE}
@@ -253,6 +265,9 @@ IRdisplay::display_png(file = "./Alpha_diversity_rarefy_iters_media_violinplot.p
 ```
 
 ## $\alpha$: Stats
+<center>
+![](figures/stats.png){style="width:200px"}
+</center>
 
 We can carry out statistics to compare the alpha diversity values between sample groups.
 
@@ -292,11 +307,17 @@ pairwise.wilcox.test(meta_alpha_mean_df$shannon, meta_alpha_mean_df, p.adjust.me
 You'll see three p-value adjusted tables with all the values (except Shannon: ENV against TSA) being significant (<0.05).
 
 ## $\alpha$: Plot with stats
+<center>
+![](figures/violin_plot_w_stats.png){style="width:200px; background-color:white; border-radius:15px"}
+</center>
 
 Rather than having the plot and stats separate, we can add stats onto our plot.
 This can be carried out with the function `stat_compare_means()` from the ``ggpubr` package.
 
 ### List of comparisons
+<center>
+![](figures/venn_pairwise.png){style="width:200px; background-color:white; border-radius:15px"}
+</center>
 
 To produce pairwise comparisons with `ggpubr::stat_compare_means()` we need a __list__ of the comparisons we want to carry out.
 
@@ -326,6 +347,9 @@ str(my_comparisons)
 ```
 
 ### Violin plot with stats
+<center>
+![](figures/eye_2.png){style="width:200px"}
+</center>
 
 With our __list__ of comparisons we can add `ggpubr::stat_compare_means()` to our `ggplot2` code.
 This function will both calculate the Wilcoxon tests and add them to the plot.
@@ -348,6 +372,9 @@ IRdisplay::display_png(file = "./Alpha_diversity_rarefy_iters_media_violinplot_p
 ```
 
 ### Reorder x-axis and stats
+<center>
+![](figures/reorder.png){style="width:200px; background-color:white; border-radius:15px"}
+</center>
 
 `ggplot` orders the x-axis by alphabetical order.
 This is not normally wanted so we will convert our media column to a __factor__ and order the levels how we want them.
@@ -393,6 +420,9 @@ IRdisplay::display_png(file = "./Alpha_diversity_rarefy_iters_media_violinplot_p
 ```
 
 ## $\alpha$: Task
+<center>
+![](figures/tasks.png){style="width:200px; background-color:white; border-radius:15px"}
+</center>
 
 As an optional task if you want more practice create a new violin plot that includes the following:
 
@@ -484,6 +514,9 @@ IRdisplay::display_png(file = "./Alpha_diversity_rarefy_iters_site_violinplot_pa
 `r unhide()`
 
 ## $\alpha$: Recap
+<center>
+![](figures/recap.png){style="width:200px; background-color:white; border-radius:15px"}
+</center>
 
 In this chapter you have:
 
@@ -493,4 +526,3 @@ In this chapter you have:
 - Embedded paired Wilcoxon p-values in our violin plots
 
 With these skills and knowledge you will be able to carry out thorough investigations of __alpha diversity__ in your future research.
-

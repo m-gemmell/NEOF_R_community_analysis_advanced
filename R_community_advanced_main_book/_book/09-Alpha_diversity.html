@@ -374,6 +374,9 @@ We are only interested in a few of them here but we will remove the other ones l
 </div>
 <div id="alpha-metric-and-metadata-data-frame" class="section level2 hasAnchor" number="9.4">
 <h2><span class="header-section-number">9.4</span> <span class="math inline">\(\alpha\)</span>: Metric and metadata data frame<a href="09-Alpha_diversity.html#alpha-metric-and-metadata-data-frame" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/wide_data_frame.png" style="width:200px" />
+</center>
 <p>Now that we have our <strong>alpha diversity</strong> values we will create a data frame that contains these values and metadata.</p>
 <p>In the below code we extract the metadata from the rarefied phyloseq object created in the last loop iteration above.
 This ensures we only acquire metadata from samples that are retained after <strong>rarefaction</strong>.
@@ -395,6 +398,9 @@ The samples that are retained are always the same across our <strong>rarefaction
 </div>
 <div id="alpha_long_df" class="section level2 hasAnchor" number="9.5">
 <h2><span class="header-section-number">9.5</span> <span class="math inline">\(\alpha\)</span>: Long data frame<a href="09-Alpha_diversity.html#alpha_long_df" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/long_data_frame.png" style="width:100px" />
+</center>
 <p>We will plot our <strong>alpha diversity</strong> values with <code>ggplot2</code> functions.
 Before we carry this out we need to convert our wide data frame to a long data frame.
 We'll carry this out with <code>tidyr::pivot_longer()</code>.</p>
@@ -430,6 +436,9 @@ This means that instead of the <strong>alpha diversity</strong> values being spr
 </div>
 <div id="alpha-subset-metrics" class="section level2 hasAnchor" number="9.6">
 <h2><span class="header-section-number">9.6</span> <span class="math inline">\(\alpha\)</span>: Subset metrics<a href="09-Alpha_diversity.html#alpha-subset-metrics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/observe.png" style="width:200px; background-color:white; border-radius:15px" />
+</center>
 <p>There are a lot of diversity values created by <code>microbiome::alpha()</code>.
 For this tutorial we are only interested in:</p>
 <ul>
@@ -466,6 +475,9 @@ We'll also use the utility of factors to order the metrics so they are plotted i
 </div>
 <div id="alpha-violin-plot" class="section level2 hasAnchor" number="9.7">
 <h2><span class="header-section-number">9.7</span> <span class="math inline">\(\alpha\)</span>: Violin plot<a href="09-Alpha_diversity.html#alpha-violin-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/violin_2.png" style="width:100px" />
+</center>
 <p>To visualise the differences of the alpha diversity values between the four different media we'll use violin plots.
 We can use the function <code>ggplot2::geom_violin()</code> to carry this out.</p>
 <p>Additionally, we'll add a point for each value and colour it based on the site it canme from (UD, MD, or LD).
@@ -486,7 +498,7 @@ scales options
 <li><strong><code>"free_x"</code>:</strong> The x axis is free and the y axis is fixed.</li>
 <li><strong><code>"free_y"</code>:</strong> The y axis is free and the x axis is fixed.</li>
 </ul>
-<p>Which you wnat to use depends on your data and how you are facetting it.</p>
+<p>Which you want to use depends on your data and how you are facetting it.</p>
 </div>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb39-1"><a href="09-Alpha_diversity.html#cb39-1" tabindex="-1"></a><span class="co">#Produce ggplot object of violin plot</span></span>
 <span id="cb39-2"><a href="09-Alpha_diversity.html#cb39-2" tabindex="-1"></a>alpha_violinplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(basic_alpha_metrics_long_df, <span class="fu">aes</span>(<span class="at">x =</span> media, <span class="at">y =</span> value)) <span class="sc">+</span></span>
@@ -502,6 +514,9 @@ scales options
 </div>
 <div id="alpha-stats" class="section level2 hasAnchor" number="9.8">
 <h2><span class="header-section-number">9.8</span> <span class="math inline">\(\alpha\)</span>: Stats<a href="09-Alpha_diversity.html#alpha-stats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/stats.png" style="width:200px" />
+</center>
 <p>We can carry out statistics to compare the alpha diversity values between sample groups.</p>
 <div id="kruskal-wallis-test" class="section level3 hasAnchor" number="9.8.1">
 <h3><span class="header-section-number">9.8.1</span> Kruskal Wallis test<a href="09-Alpha_diversity.html#kruskal-wallis-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -533,10 +548,16 @@ This tests</p>
 </div>
 <div id="alpha-plot-with-stats" class="section level2 hasAnchor" number="9.9">
 <h2><span class="header-section-number">9.9</span> <span class="math inline">\(\alpha\)</span>: Plot with stats<a href="09-Alpha_diversity.html#alpha-plot-with-stats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/violin_plot_w_stats.png" style="width:200px; background-color:white; border-radius:15px" />
+</center>
 <p>Rather than having the plot and stats separate, we can add stats onto our plot.
 This can be carried out with the function <code>stat_compare_means()</code> from the `<code>ggpubr</code> package.</p>
 <div id="list-of-comparisons" class="section level3 hasAnchor" number="9.9.1">
 <h3><span class="header-section-number">9.9.1</span> List of comparisons<a href="09-Alpha_diversity.html#list-of-comparisons" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<center>
+<img src="figures/venn_pairwise.png" style="width:200px; background-color:white; border-radius:15px" />
+</center>
 <p>To produce pairwise comparisons with <code>ggpubr::stat_compare_means()</code> we need a <strong>list</strong> of the comparisons we want to carry out.</p>
 <p>We can create this with the function <code>combn()</code>, short for combination.
 We provide it with three parameters:</p>
@@ -569,6 +590,9 @@ We provide it with three parameters:</p>
 </div>
 <div id="violin-plot-with-stats" class="section level3 hasAnchor" number="9.9.2">
 <h3><span class="header-section-number">9.9.2</span> Violin plot with stats<a href="09-Alpha_diversity.html#violin-plot-with-stats" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<center>
+<img src="figures/eye_2.png" style="width:200px" />
+</center>
 <p>With our <strong>list</strong> of comparisons we can add <code>ggpubr::stat_compare_means()</code> to our <code>ggplot2</code> code.
 This function will both calculate the Wilcoxon tests and add them to the plot.</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb43-1"><a href="09-Alpha_diversity.html#cb43-1" tabindex="-1"></a><span class="co">#Produce ggplot object of violin plot</span></span>
@@ -588,6 +612,9 @@ This function will both calculate the Wilcoxon tests and add them to the plot.</
 </div>
 <div id="reorder-x-axis-and-stats" class="section level3 hasAnchor" number="9.9.3">
 <h3><span class="header-section-number">9.9.3</span> Reorder x-axis and stats<a href="09-Alpha_diversity.html#reorder-x-axis-and-stats" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<center>
+<img src="figures/reorder.png" style="width:200px; background-color:white; border-radius:15px" />
+</center>
 <p><code>ggplot</code> orders the x-axis by alphabetical order.
 This is not normally wanted so we will convert our media column to a <strong>factor</strong> and order the levels how we want them.
 As the environmental samples can be seen as the baseline we will have them first.</p>
@@ -622,6 +649,9 @@ It can be made easier when doing this yourself to roughly reorder, run the below
 </div>
 <div id="alpha-task" class="section level2 hasAnchor" number="9.10">
 <h2><span class="header-section-number">9.10</span> <span class="math inline">\(\alpha\)</span>: Task<a href="09-Alpha_diversity.html#alpha-task" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/tasks.png" style="width:200px; background-color:white; border-radius:15px" />
+</center>
 <p>As an optional task if you want more practice create a new violin plot that includes the following:</p>
 <ul>
 <li>Plots the metrics:
@@ -711,6 +741,9 @@ Solution code
 </div>
 <div id="alpha-recap" class="section level2 hasAnchor" number="9.11">
 <h2><span class="header-section-number">9.11</span> <span class="math inline">\(\alpha\)</span>: Recap<a href="09-Alpha_diversity.html#alpha-recap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/recap.png" style="width:200px; background-color:white; border-radius:15px" />
+</center>
 <p>In this chapter you have:</p>
 <ul>
 <li>Produced <strong>alpha diversity</strong> values through <strong>iterative rarefaction</strong></li>
