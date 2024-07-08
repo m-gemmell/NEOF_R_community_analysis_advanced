@@ -485,4 +485,12 @@ IRdisplay::display_png(file = "./Alpha_diversity_rarefy_iters_site_violinplot_pa
 
 ## $\alpha$: Recap
 
-MG TO DO: Add info on all alpha diversity metrics in appendix
+In this chapter you have:
+
+- Produced __alpha diversity__ values through __iterative rarefaction__
+- Created a long data frame containing metadata and specified __alpha diversity__ metrics
+- Visualised the group differences of __alpha diversity__ metrics with violin plots
+- Embedded paired Wilcoxon p-values in our violin plots
+
+With these skills and knowledge you will be able to carry out thorough investigations of __alpha diversity__ in your future research.
+
