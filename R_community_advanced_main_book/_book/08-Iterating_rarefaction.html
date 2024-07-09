@@ -23,7 +23,7 @@
 <meta name="author" content="Matthew R. Gemmell" />
 
 
-<meta name="date" content="2024-07-08" />
+<meta name="date" content="2024-07-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -249,7 +249,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.10" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-task"><i class="fa fa-check"></i><b>9.10</b> <span class="math inline">\(\alpha\)</span>: Task</a></li>
 <li class="chapter" data-level="9.11" data-path="09-Alpha_diversity.html"><a href="09-Alpha_diversity.html#alpha-recap"><i class="fa fa-check"></i><b>9.11</b> <span class="math inline">\(\alpha\)</span>: Recap</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html"><i class="fa fa-check"></i><b>10</b> Beta Diversity</a></li>
+<li class="chapter" data-level="10" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html"><i class="fa fa-check"></i><b>10</b> Beta Diversity</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#beta-setup"><i class="fa fa-check"></i><b>10.1</b> <span class="math inline">\(\beta\)</span>: Setup</a></li>
+<li class="chapter" data-level="10.2" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#beta-distance-matrices"><i class="fa fa-check"></i><b>10.2</b> <span class="math inline">\(\beta\)</span>: Distance matrices</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#unifrac-distances"><i class="fa fa-check"></i><b>10.2.1</b> Unifrac distances</a></li>
+<li class="chapter" data-level="10.2.2" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#vegan-distances"><i class="fa fa-check"></i><b>10.2.2</b> Vegan distances</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#beta-iterative-rarefaction"><i class="fa fa-check"></i><b>10.3</b> <span class="math inline">\(\beta\)</span>: Iterative rarefaction</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#iterative-rarefaction-values"><i class="fa fa-check"></i><b>10.3.1</b> Iterative rarefaction values</a></li>
+<li class="chapter" data-level="10.3.2" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#iterative-beta-diversity-calculation"><i class="fa fa-check"></i><b>10.3.2</b> Iterative beta diversity calculation</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#beta-ordination"><i class="fa fa-check"></i><b>10.4</b> <span class="math inline">\(\beta\)</span>: Ordination</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#load-weighted-unifrac-matrix"><i class="fa fa-check"></i><b>10.4.1</b> Load weighted unifrac matrix</a></li>
+<li class="chapter" data-level="10.4.2" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#nmds"><i class="fa fa-check"></i><b>10.4.2</b> NMDS</a></li>
+<li class="chapter" data-level="10.4.3" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#which-ordination-method-to-use"><i class="fa fa-check"></i><b>10.4.3</b> Which ordination method to use?</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -385,15 +404,17 @@ In your real analysis I would recommend using <strong>1000 iterations</strong>.<
 <span id="cb21-4"><a href="08-Iterating_rarefaction.html#cb21-4" tabindex="-1"></a>physeq_env <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">subset_samples</span>(pseq, media <span class="sc">==</span> <span class="st">&quot;ENV&quot;</span>)</span>
 <span id="cb21-5"><a href="08-Iterating_rarefaction.html#cb21-5" tabindex="-1"></a></span>
 <span id="cb21-6"><a href="08-Iterating_rarefaction.html#cb21-6" tabindex="-1"></a><span class="co">#Aggregate to phyla level whilst aggregating rare phyla</span></span>
-<span id="cb21-7"><a href="08-Iterating_rarefaction.html#cb21-7" tabindex="-1"></a>pseq_env_phyla <span class="ot">&lt;-</span> microbiome<span class="sc">::</span><span class="fu">aggregate_rare</span>(pseq_env, <span class="at">level =</span> <span class="st">&quot;Phylum&quot;</span>,</span>
-<span id="cb21-8"><a href="08-Iterating_rarefaction.html#cb21-8" tabindex="-1"></a>                                             <span class="at">detection =</span> <span class="fl">0.1</span>, <span class="at">prevalence =</span> <span class="fl">0.5</span>,</span>
-<span id="cb21-9"><a href="08-Iterating_rarefaction.html#cb21-9" tabindex="-1"></a>                                             <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb21-10"><a href="08-Iterating_rarefaction.html#cb21-10" tabindex="-1"></a><span class="co">#View count table</span></span>
-<span id="cb21-11"><a href="08-Iterating_rarefaction.html#cb21-11" tabindex="-1"></a><span class="fu">otu_table</span>(pseq_env_phyla)</span>
-<span id="cb21-12"><a href="08-Iterating_rarefaction.html#cb21-12" tabindex="-1"></a><span class="co">#Sum count of samples</span></span>
-<span id="cb21-13"><a href="08-Iterating_rarefaction.html#cb21-13" tabindex="-1"></a>microbiome<span class="sc">::</span><span class="fu">readcount</span>(pseq_env_phyla)</span>
-<span id="cb21-14"><a href="08-Iterating_rarefaction.html#cb21-14" tabindex="-1"></a><span class="co">#Remove unwanted objects</span></span>
-<span id="cb21-15"><a href="08-Iterating_rarefaction.html#cb21-15" tabindex="-1"></a><span class="fu">rm</span>(pseq, pseq_env)</span></code></pre></div>
+<span id="cb21-7"><a href="08-Iterating_rarefaction.html#cb21-7" tabindex="-1"></a>pseq_env_phyla <span class="ot">&lt;-</span> microbiome<span class="sc">::</span><span class="fu">aggregate_rare</span>(</span>
+<span id="cb21-8"><a href="08-Iterating_rarefaction.html#cb21-8" tabindex="-1"></a>  pseq_env, <span class="at">level =</span> <span class="st">&quot;Phylum&quot;</span>,</span>
+<span id="cb21-9"><a href="08-Iterating_rarefaction.html#cb21-9" tabindex="-1"></a>  <span class="at">detection =</span> <span class="fl">0.1</span>, <span class="at">prevalence =</span> <span class="fl">0.5</span>,</span>
+<span id="cb21-10"><a href="08-Iterating_rarefaction.html#cb21-10" tabindex="-1"></a>  <span class="co">#Prevent info on aggregation to be printed out</span></span>
+<span id="cb21-11"><a href="08-Iterating_rarefaction.html#cb21-11" tabindex="-1"></a>  <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb21-12"><a href="08-Iterating_rarefaction.html#cb21-12" tabindex="-1"></a><span class="co">#View count table</span></span>
+<span id="cb21-13"><a href="08-Iterating_rarefaction.html#cb21-13" tabindex="-1"></a><span class="fu">otu_table</span>(pseq_env_phyla)</span>
+<span id="cb21-14"><a href="08-Iterating_rarefaction.html#cb21-14" tabindex="-1"></a><span class="co">#Sum count of samples</span></span>
+<span id="cb21-15"><a href="08-Iterating_rarefaction.html#cb21-15" tabindex="-1"></a>microbiome<span class="sc">::</span><span class="fu">readcount</span>(pseq_env_phyla)</span>
+<span id="cb21-16"><a href="08-Iterating_rarefaction.html#cb21-16" tabindex="-1"></a><span class="co">#Remove unwanted objects</span></span>
+<span id="cb21-17"><a href="08-Iterating_rarefaction.html#cb21-17" tabindex="-1"></a><span class="fu">rm</span>(pseq, pseq_env)</span></code></pre></div>
 </div>
 <div id="phyla-relative-abundance-bar-chart" class="section level3 hasAnchor" number="8.5.2">
 <h3><span class="header-section-number">8.5.2</span> Phyla relative abundance bar chart<a href="08-Iterating_rarefaction.html#phyla-relative-abundance-bar-chart" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -472,8 +493,8 @@ To make these differences even clearer let's make a histogram.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb26-1"><a href="08-Iterating_rarefaction.html#cb26-1" tabindex="-1"></a><span class="co">#Histogram of differences</span></span>
 <span id="cb26-2"><a href="08-Iterating_rarefaction.html#cb26-2" tabindex="-1"></a><span class="fu">hist</span>(single_rarefaction_diff, <span class="at">main =</span> <span class="st">&quot;Single rarefaction&quot;</span>)</span></code></pre></div>
 What is the range of the differences compared to the non rarefied relative abundance values?
-<div id="radio_CELZPIELEN" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_CELZPIELEN" value=""></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_CELZPIELEN" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_CELZPIELEN" value="answer"></input> <span><strong>-0.015 to 0.015</strong></span></label>
+<div id="radio_TDNSEVOCBA" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_TDNSEVOCBA" value=""></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_TDNSEVOCBA" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_TDNSEVOCBA" value="answer"></input> <span><strong>-0.015 to 0.015</strong></span></label>
 </div>
 <p>Although these values appear quite small keep in mind we are working with relative abundance values.
 Each sample has a total relative abundance of 1.00 so a relative abundance value of 0.01 is 1%.</p>
@@ -542,8 +563,8 @@ Then run the code.</p>
 <span id="cb28-5"><a href="08-Iterating_rarefaction.html#cb28-5" tabindex="-1"></a><span class="co">#Histogram</span></span>
 <span id="cb28-6"><a href="08-Iterating_rarefaction.html#cb28-6" tabindex="-1"></a><span class="fu">hist</span>(iterative_rarefaction_diff)</span></code></pre></div>
 What is the range of the differences compared to the non rarefied relative abundance values?
-<div id="radio_LXUTKAKJPC" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_LXUTKAKJPC" value=""></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_LXUTKAKJPC" value="answer"></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_LXUTKAKJPC" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
+<div id="radio_HIBVWBNLJV" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_HIBVWBNLJV" value=""></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_HIBVWBNLJV" value="answer"></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_HIBVWBNLJV" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
 </div>
 <p>You should notice that the differences are much smaller.
 This indicates that the structure of the <strong>iterative rarefied</strong> data is much closer to the non-rarefied data than the one <strong>rarefied</strong> data.
@@ -562,8 +583,8 @@ Save this vector of rngseeds to a file called "rngseeds_1000.RData".</p>
 <p><strong>Note:</strong> The iterative rarefaction step may take a few minutes.</p>
 <p>After creating the relative abundance matrix determine how different the values are compared to the non-rarefied relative abundance with a histogram.</p>
 What is the range of the differences compared to the non rarefied relative abundance values?
-<div id="radio_GRBGLOHMDW" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_GRBGLOHMDW" value="answer"></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_GRBGLOHMDW" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_GRBGLOHMDW" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
+<div id="radio_XSBECELWEE" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XSBECELWEE" value="answer"></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_XSBECELWEE" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_XSBECELWEE" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
 </div>
 <p>Please attempt the task yourself before looking at the solution code in the below expandable box.</p>
 <div class="webex-solution">

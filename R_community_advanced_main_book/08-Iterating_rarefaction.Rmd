@@ -123,9 +123,11 @@ For demonstrative purposes we will reduce the amount of samples and features in 
 physeq_env <- phyloseq::subset_samples(pseq, media == "ENV")
 
 #Aggregate to phyla level whilst aggregating rare phyla
-pseq_env_phyla <- microbiome::aggregate_rare(pseq_env, level = "Phylum",
-                                             detection = 0.1, prevalence = 0.5,
-                                             verbose = FALSE)
+pseq_env_phyla <- microbiome::aggregate_rare(
+  pseq_env, level = "Phylum",
+  detection = 0.1, prevalence = 0.5,
+  #Prevent info on aggregation to be printed out
+  verbose = FALSE)
 #View count table
 otu_table(pseq_env_phyla)
 #Sum count of samples

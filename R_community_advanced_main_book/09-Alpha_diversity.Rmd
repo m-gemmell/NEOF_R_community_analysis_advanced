@@ -77,17 +77,21 @@ For this we will use the function `microbiome::alpha()` to calculate our alpha d
 
 #Create data frame to contain final summed alpha diversity values
 #In this case we'll run the first rarefied alpha diversity analysis
-pseq_rarefy <- phyloseq::rarefy_even_depth(pseq,
-                                           sample.size = rarefaction_size,
-                                           rngseed = rngseed_vec[1], verbose = FALSE)
+pseq_rarefy <- phyloseq::rarefy_even_depth(
+  pseq,
+  sample.size = rarefaction_size,
+  rngseed = rngseed_vec[1],
+  verbose = FALSE)
 #Alpha diversity
 alpha_df_sum <- microbiome::alpha(pseq_rarefy, index = "all")
 
 #Loop through 2 to the number of iterations
 for (i in 2:rarefaction_iters){
-  pseq_rarefy <- phyloseq::rarefy_even_depth(pseq,
-                                           sample.size = rarefaction_size,
-                                           rngseed = rngseed_vec[i], verbose = FALSE)
+  pseq_rarefy <- phyloseq::rarefy_even_depth(
+    pseq,
+    sample.size = rarefaction_size,
+    rngseed = rngseed_vec[i],
+    verbose = FALSE)
   #Alpha diversity
   alpha_df <- microbiome::alpha(pseq_rarefy, index = "all")
   #Add/sum the new data frame values to the sum data frame
@@ -100,6 +104,12 @@ save(alpha_df_mean, file = "alpha_df_mean.RData")
 #Remove unneeded objects
 rm(pseq,alpha_df_sum, alpha_df)
 ```
+
+`r hide("verbose = FALSE option")`
+We include the option `verbose = FALSE` in the `phyloseq::rarefy_even_depth()` to prevent a lot of text to be displayed.
+This text says which rngseed was used in the rarefaction.
+We don't need this message as we already have a record of the rngseeds we used in `rngseed_vec`.
+`r unhide()`
 
 You can check the structure and contents of our alpha diversity data frame with `head()`.
 

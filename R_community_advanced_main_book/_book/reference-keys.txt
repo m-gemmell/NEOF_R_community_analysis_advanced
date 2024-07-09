@@ -71,3 +71,14 @@ reorder-x-axis-and-stats
 alpha-task
 alpha-recap
 beta_chap
+beta-setup
+beta-distance-matrices
+unifrac-distances
+vegan-distances
+beta-iterative-rarefaction
+iterative-rarefaction-values
+iterative-beta-diversity-calculation
+beta-ordination
+load-weighted-unifrac-matrix
+nmds
+which-ordination-method-to-use
