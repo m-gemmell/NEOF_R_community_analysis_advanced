@@ -1,0 +1,3 @@
+# Setup {#setupchap}
+
+Include info on directory, copying data, and environment setup

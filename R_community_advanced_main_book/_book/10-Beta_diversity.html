@@ -23,7 +23,7 @@
 <meta name="author" content="Matthew R. Gemmell" />
 
 
-<meta name="date" content="2024-07-09" />
+<meta name="date" content="2024-07-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -266,7 +266,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="10.4.1" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#load-weighted-unifrac-matrix"><i class="fa fa-check"></i><b>10.4.1</b> Load weighted unifrac matrix</a></li>
 <li class="chapter" data-level="10.4.2" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#nmds"><i class="fa fa-check"></i><b>10.4.2</b> NMDS</a></li>
-<li class="chapter" data-level="10.4.3" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#which-ordination-method-to-use"><i class="fa fa-check"></i><b>10.4.3</b> Which ordination method to use?</a></li>
+<li class="chapter" data-level="10.4.3" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#pcoa"><i class="fa fa-check"></i><b>10.4.3</b> PCoA</a></li>
+<li class="chapter" data-level="10.4.4" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#which-ordination-method-to-use"><i class="fa fa-check"></i><b>10.4.4</b> Which ordination method to use?</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -481,9 +482,64 @@ This is a useful cell to have as we don't need to rerun the <strong>iterative ra
 </div>
 <div id="nmds" class="section level3 hasAnchor" number="10.4.2">
 <h3><span class="header-section-number">10.4.2</span> NMDS<a href="10-Beta_diversity.html#nmds" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The first ordination technique we will use is <strong>NMDS</strong> (Non-metric MultiDimensional Scaling).
+To carry this out we can use the function <code>vegan::monoMDS()</code>.</p>
+<p>We provide the function with our <strong>beta diversity dissimilarity matrix</strong>.
+Additionally, we provide it with the parameter <code>k = 2</code>.
+This is the number of dimensions we want, we want 2 as we will only be plotting an x and y axis i.e. 2 dimensions.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb57-1"><a href="10-Beta_diversity.html#cb57-1" tabindex="-1"></a><span class="co">#NMDS ordinate</span></span>
+<span id="cb57-2"><a href="10-Beta_diversity.html#cb57-2" tabindex="-1"></a>nmds_res <span class="ot">&lt;-</span> vegan<span class="sc">::</span><span class="fu">monoMDS</span>(beta_df_mean, <span class="at">k =</span> <span class="dv">2</span>)</span>
+<span id="cb57-3"><a href="10-Beta_diversity.html#cb57-3" tabindex="-1"></a><span class="co">#Structure of nmds_res</span></span>
+<span id="cb57-4"><a href="10-Beta_diversity.html#cb57-4" tabindex="-1"></a><span class="fu">str</span>(nmds_res)</span></code></pre></div>
+<p>The function produces a <strong>list</strong> containing 28 different objects.
+Here we are only interested in the <code>points</code> data frame.
+This contains the points we will be plotting in our NMDS plot.
+Lets extract this data frame.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb58-1"><a href="10-Beta_diversity.html#cb58-1" tabindex="-1"></a><span class="co">#Extract plot points</span></span>
+<span id="cb58-2"><a href="10-Beta_diversity.html#cb58-2" tabindex="-1"></a>nmds_points <span class="ot">&lt;-</span> nmds_res<span class="sc">$</span>points</span>
+<span id="cb58-3"><a href="10-Beta_diversity.html#cb58-3" tabindex="-1"></a><span class="co">#Check head</span></span>
+<span id="cb58-4"><a href="10-Beta_diversity.html#cb58-4" tabindex="-1"></a><span class="fu">head</span>(nmds_points)</span></code></pre></div>
+<p>Before plotting with <code>ggplot2</code> we need to combine the metadata and points into a long data frame.
+There is no need to "longify" our data frame as it will start in the long format we require.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb59-1"><a href="10-Beta_diversity.html#cb59-1" tabindex="-1"></a><span class="co">#Create long data frame with metadata and points</span></span>
+<span id="cb59-2"><a href="10-Beta_diversity.html#cb59-2" tabindex="-1"></a><span class="co">#Extract metadata and ensure row names order matches</span></span>
+<span id="cb59-3"><a href="10-Beta_diversity.html#cb59-3" tabindex="-1"></a>metadf <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">sample_data</span>(pseq)</span>
+<span id="cb59-4"><a href="10-Beta_diversity.html#cb59-4" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">identicial</span>(<span class="fu">row.names</span>(metadf), <span class="fu">row.names</span>(nmds_points)) <span class="sc">==</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb59-5"><a href="10-Beta_diversity.html#cb59-5" tabindex="-1"></a>  metadf <span class="ot">&lt;-</span> metadf[<span class="fu">row.names</span>(nmds_points),]</span>
+<span id="cb59-6"><a href="10-Beta_diversity.html#cb59-6" tabindex="-1"></a>}</span>
+<span id="cb59-7"><a href="10-Beta_diversity.html#cb59-7" tabindex="-1"></a><span class="co">#Make points with metadata data frame</span></span>
+<span id="cb59-8"><a href="10-Beta_diversity.html#cb59-8" tabindex="-1"></a>nmds_points_metadata <span class="ot">&lt;-</span> <span class="fu">cbind</span>(nmds_points, metadf)</span>
+<span id="cb59-9"><a href="10-Beta_diversity.html#cb59-9" tabindex="-1"></a><span class="co">#Change colnames MDS1 and MDS2 to NMDS1 and NMDS2</span></span>
+<span id="cb59-10"><a href="10-Beta_diversity.html#cb59-10" tabindex="-1"></a><span class="fu">colnames</span>(nmds_points_metadata)[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;NMDS1&quot;</span>,<span class="st">&quot;NMDS2&quot;</span>)</span>
+<span id="cb59-11"><a href="10-Beta_diversity.html#cb59-11" tabindex="-1"></a><span class="co">#Check head of data frame</span></span>
+<span id="cb59-12"><a href="10-Beta_diversity.html#cb59-12" tabindex="-1"></a><span class="fu">head</span>(nmds_points_metadata)</span>
+<span id="cb59-13"><a href="10-Beta_diversity.html#cb59-13" tabindex="-1"></a><span class="co">#Save object we want, remove ones we don&#39;t</span></span>
+<span id="cb59-14"><a href="10-Beta_diversity.html#cb59-14" tabindex="-1"></a><span class="fu">save</span>(nmds_points_metadata, <span class="at">file =</span> <span class="st">&quot;wunifrac_NMDS.RData&quot;</span>)</span>
+<span id="cb59-15"><a href="10-Beta_diversity.html#cb59-15" tabindex="-1"></a><span class="fu">rm</span>(metadf, nmds_res, nmds_points)</span></code></pre></div>
+<p>Now we can produce a NMDS scatter plot.
+We will colour the points by site and the point shapes will be determined by the media.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb60-1"><a href="10-Beta_diversity.html#cb60-1" tabindex="-1"></a><span class="co">#Produce NMDS scatter plot</span></span>
+<span id="cb60-2"><a href="10-Beta_diversity.html#cb60-2" tabindex="-1"></a><span class="co">#Plot ordination</span></span>
+<span id="cb60-3"><a href="10-Beta_diversity.html#cb60-3" tabindex="-1"></a>nmds.wunifrac <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> nmds_points_metadata,</span>
+<span id="cb60-4"><a href="10-Beta_diversity.html#cb60-4" tabindex="-1"></a>                        <span class="fu">aes</span>(<span class="at">x =</span> NMDS1, <span class="at">y =</span> NMDS2, <span class="at">color =</span> site, <span class="at">shape =</span> media)) <span class="sc">+</span></span>
+<span id="cb60-5"><a href="10-Beta_diversity.html#cb60-5" tabindex="-1"></a>                ggplot2<span class="sc">::</span><span class="fu">geom_point</span>()</span>
+<span id="cb60-6"><a href="10-Beta_diversity.html#cb60-6" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave</span></span>
+<span id="cb60-7"><a href="10-Beta_diversity.html#cb60-7" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;./Beta_diversity_NMDS_wunifrac_media_site.png&quot;</span>,</span>
+<span id="cb60-8"><a href="10-Beta_diversity.html#cb60-8" tabindex="-1"></a>       <span class="at">plot =</span> nmds.wunifrac,</span>
+<span id="cb60-9"><a href="10-Beta_diversity.html#cb60-9" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">&quot;png&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">&quot;mm&quot;</span>, <span class="at">height =</span> <span class="dv">125</span>, <span class="at">width =</span> <span class="dv">150</span>)</span>
+<span id="cb60-10"><a href="10-Beta_diversity.html#cb60-10" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb60-11"><a href="10-Beta_diversity.html#cb60-11" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">&quot;./Beta_diversity_NMDS_wunifrac_media_site.png&quot;</span>)</span></code></pre></div>
+<p>Super!
+You should see that the plot is mainly separated by NMDS1 splitting the ENV samples compared to the media samples.
+The next major difference is in NMDS2 which separates the TSA samples compared to the CVP and KBC samples.
+The CVP and KBC samples also appear to form distinct clusters.</p>
 </div>
-<div id="which-ordination-method-to-use" class="section level3 hasAnchor" number="10.4.3">
-<h3><span class="header-section-number">10.4.3</span> Which ordination method to use?<a href="10-Beta_diversity.html#which-ordination-method-to-use" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="pcoa" class="section level3 hasAnchor" number="10.4.3">
+<h3><span class="header-section-number">10.4.3</span> PCoA<a href="10-Beta_diversity.html#pcoa" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The second, and last, ordination method we will look at is <strong>PCoA</strong> (Principal Correspondence Analysis).</p>
+</div>
+<div id="which-ordination-method-to-use" class="section level3 hasAnchor" number="10.4.4">
+<h3><span class="header-section-number">10.4.4</span> Which ordination method to use?<a href="10-Beta_diversity.html#which-ordination-method-to-use" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 
 </div>
 </div>

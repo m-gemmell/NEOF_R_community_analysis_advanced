@@ -23,7 +23,7 @@
 <meta name="author" content="Matthew R. Gemmell" />
 
 
-<meta name="date" content="2024-07-09" />
+<meta name="date" content="2024-07-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -266,7 +266,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="10.4.1" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#load-weighted-unifrac-matrix"><i class="fa fa-check"></i><b>10.4.1</b> Load weighted unifrac matrix</a></li>
 <li class="chapter" data-level="10.4.2" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#nmds"><i class="fa fa-check"></i><b>10.4.2</b> NMDS</a></li>
-<li class="chapter" data-level="10.4.3" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#which-ordination-method-to-use"><i class="fa fa-check"></i><b>10.4.3</b> Which ordination method to use?</a></li>
+<li class="chapter" data-level="10.4.3" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#pcoa"><i class="fa fa-check"></i><b>10.4.3</b> PCoA</a></li>
+<li class="chapter" data-level="10.4.4" data-path="10-Beta_diversity.html"><a href="10-Beta_diversity.html#which-ordination-method-to-use"><i class="fa fa-check"></i><b>10.4.4</b> Which ordination method to use?</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -493,8 +494,8 @@ To make these differences even clearer let's make a histogram.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb26-1"><a href="08-Iterating_rarefaction.html#cb26-1" tabindex="-1"></a><span class="co">#Histogram of differences</span></span>
 <span id="cb26-2"><a href="08-Iterating_rarefaction.html#cb26-2" tabindex="-1"></a><span class="fu">hist</span>(single_rarefaction_diff, <span class="at">main =</span> <span class="st">&quot;Single rarefaction&quot;</span>)</span></code></pre></div>
 What is the range of the differences compared to the non rarefied relative abundance values?
-<div id="radio_TDNSEVOCBA" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_TDNSEVOCBA" value=""></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_TDNSEVOCBA" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_TDNSEVOCBA" value="answer"></input> <span><strong>-0.015 to 0.015</strong></span></label>
+<div id="radio_SANAUOTRJP" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_SANAUOTRJP" value=""></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_SANAUOTRJP" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_SANAUOTRJP" value="answer"></input> <span><strong>-0.015 to 0.015</strong></span></label>
 </div>
 <p>Although these values appear quite small keep in mind we are working with relative abundance values.
 Each sample has a total relative abundance of 1.00 so a relative abundance value of 0.01 is 1%.</p>
@@ -563,8 +564,8 @@ Then run the code.</p>
 <span id="cb28-5"><a href="08-Iterating_rarefaction.html#cb28-5" tabindex="-1"></a><span class="co">#Histogram</span></span>
 <span id="cb28-6"><a href="08-Iterating_rarefaction.html#cb28-6" tabindex="-1"></a><span class="fu">hist</span>(iterative_rarefaction_diff)</span></code></pre></div>
 What is the range of the differences compared to the non rarefied relative abundance values?
-<div id="radio_HIBVWBNLJV" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_HIBVWBNLJV" value=""></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_HIBVWBNLJV" value="answer"></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_HIBVWBNLJV" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
+<div id="radio_EIGECGBOGM" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_EIGECGBOGM" value=""></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_EIGECGBOGM" value="answer"></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_EIGECGBOGM" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
 </div>
 <p>You should notice that the differences are much smaller.
 This indicates that the structure of the <strong>iterative rarefied</strong> data is much closer to the non-rarefied data than the one <strong>rarefied</strong> data.
@@ -583,8 +584,8 @@ Save this vector of rngseeds to a file called "rngseeds_1000.RData".</p>
 <p><strong>Note:</strong> The iterative rarefaction step may take a few minutes.</p>
 <p>After creating the relative abundance matrix determine how different the values are compared to the non-rarefied relative abundance with a histogram.</p>
 What is the range of the differences compared to the non rarefied relative abundance values?
-<div id="radio_XSBECELWEE" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_XSBECELWEE" value="answer"></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_XSBECELWEE" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_XSBECELWEE" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
+<div id="radio_ZQYPQAYPIM" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ZQYPQAYPIM" value="answer"></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_ZQYPQAYPIM" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_ZQYPQAYPIM" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
 </div>
 <p>Please attempt the task yourself before looking at the solution code in the below expandable box.</p>
 <div class="webex-solution">

@@ -81,4 +81,5 @@ iterative-beta-diversity-calculation
 beta-ordination
 load-weighted-unifrac-matrix
 nmds
+pcoa
 which-ordination-method-to-use

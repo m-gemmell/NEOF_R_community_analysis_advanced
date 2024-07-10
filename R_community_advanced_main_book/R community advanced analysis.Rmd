@@ -1982,6 +1982,79 @@ load("wunifrac_df_mean.RData")
 
 ### NMDS
 
+The first ordination technique we will use is __NMDS__ (Non-metric MultiDimensional Scaling).
+To carry this out we can use the function `vegan::monoMDS()`.
+
+We provide the function with our __beta diversity dissimilarity matrix__.
+Additionally, we provide it with the parameter `k = 2`.
+This is the number of dimensions we want, we want 2 as we will only be plotting an x and y axis i.e. 2 dimensions.
+
+```{R, eval=FALSE}
+#NMDS ordinate
+nmds_res <- vegan::monoMDS(beta_df_mean, k = 2)
+#Structure of nmds_res
+str(nmds_res)
+```
+
+The function produces a __list__ containing 28 different objects.
+Here we are only interested in the `points` data frame.
+This contains the points we will be plotting in our NMDS plot.
+Lets extract this data frame.
+
+```{R, eval = FALSE}
+#Extract plot points
+nmds_points <- nmds_res$points
+#Check head
+head(nmds_points)
+```
+
+Before plotting with `ggplot2` we need to combine the metadata and points into a long data frame.
+There is no need to "longify" our data frame as it will start in the long format we require.
+
+```{R, eval=FALSE}
+#Create long data frame with metadata and points
+#Extract metadata and ensure row names order matches
+metadf <- phyloseq::sample_data(pseq)
+if (identicial(row.names(metadf), row.names(nmds_points)) == FALSE) {
+  metadf <- metadf[row.names(nmds_points),]
+}
+#Make points with metadata data frame
+nmds_points_metadata <- cbind(nmds_points, metadf)
+#Change colnames MDS1 and MDS2 to NMDS1 and NMDS2
+colnames(nmds_points_metadata)[1:2] <- c("NMDS1","NMDS2")
+#Check head of data frame
+head(nmds_points_metadata)
+#Save object we want, remove ones we don't
+save(nmds_points_metadata, file = "wunifrac_NMDS.RData")
+rm(metadf, nmds_res, nmds_points)
+```
+
+Now we can produce a NMDS scatter plot.
+We will colour the points by site and the point shapes will be determined by the media.
+
+```{R, eval = FALSE}
+#Produce NMDS scatter plot
+#Plot ordination
+nmds.wunifrac <- ggplot(data = nmds_points_metadata,
+                        aes(x = NMDS1, y = NMDS2, color = site, shape = media)) +
+                ggplot2::geom_point()
+#Save ggplot2 object with ggsave
+ggsave(filename = "./Beta_diversity_NMDS_wunifrac_media_site.png",
+       plot = nmds.wunifrac,
+       device = "png", dpi = 300, units = "mm", height = 125, width = 150)
+#Display plot
+IRdisplay::display_png(file = "./Beta_diversity_NMDS_wunifrac_media_site.png")
+```
+
+Super!
+You should see that the plot is mainly separated by NMDS1 splitting the ENV samples compared to the media samples.
+The next major difference is in NMDS2 which separates the TSA samples compared to the CVP and KBC samples.
+The CVP and KBC samples also appear to form distinct clusters.
+
+### PCoA
+
+The second, and last, ordination method we will look at is __PCoA__ (Principal Correspondence Analysis).
+
 
 
 
