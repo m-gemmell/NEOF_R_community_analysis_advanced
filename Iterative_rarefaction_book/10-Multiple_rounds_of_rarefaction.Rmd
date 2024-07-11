@@ -1,4 +1,4 @@
-# Multiple Rarefaction (MR) iterations
+# Multiple Rarefaction iterations
 <center>
 ![](figures/ten_rounds.png){style="width:200px"}
 </center>

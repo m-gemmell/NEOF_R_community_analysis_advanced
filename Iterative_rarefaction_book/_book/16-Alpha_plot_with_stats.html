@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 R and random seeds | Iterative rarefaction</title>
+  <title>Chapter 16 \(\alpha\): Plot with stats | Iterative rarefaction</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 R and random seeds | Iterative rarefaction" />
+  <meta property="og:title" content="Chapter 16 \(\alpha\): Plot with stats | Iterative rarefaction" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/figures/NEOF.png" />
   <meta property="og:description" content="NEOF book for the R community advanced analysis course" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 R and random seeds | Iterative rarefaction" />
+  <meta name="twitter:title" content="Chapter 16 \(\alpha\): Plot with stats | Iterative rarefaction" />
   
   <meta name="twitter:description" content="NEOF book for the R community advanced analysis course" />
   <meta name="twitter:image" content="/figures/NEOF.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
-<link rel="prev" href="04-Random_seeds.html"/>
-<link rel="next" href="06-Random_seeds_practice.html"/>
+<link rel="prev" href="15-Alpha_violin_plot_and_stats.html"/>
+<link rel="next" href="17-Alpha_diversity_practice.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -255,73 +255,105 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="r-and-random-seeds" class="section level1 hasAnchor" number="5">
-<h1><span class="header-section-number">Chapter 5</span> R and random seeds<a href="05-R_and_random_seeds.html#r-and-random-seeds" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="alpha-plot-with-stats" class="section level1 hasAnchor" number="16">
+<h1><span class="header-section-number">Chapter 16</span> <span class="math inline">\(\alpha\)</span>: Plot with stats<a href="16-Alpha_plot_with_stats.html#alpha-plot-with-stats" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <center>
-<img src="figures/braille_r.png" style="width:200px; border-radius:15px; border:#FFFFFF 6px solid" />
+<img src="figures/violin_plot_w_stats.png" style="width:200px; background-color:white; border-radius:15px" />
 </center>
-<p>Sampling is meant to be random but true randomness is pretty much impossible, especially in computing.
-Therefore, many programs use <strong>seeds</strong> to determine how random tasks will be carried out.
-Various programs that use <strong>random seeds</strong> include:</p>
-<ul>
-<li>Sampling tools such as <code>sample()</code> and rarefaction</li>
-<li>Creating bootstrapped phylogenies</li>
-<li>Creating procedural content such as building Minecraft worlds</li>
-</ul>
-<div id="setting-the-r-seed" class="section level2 hasAnchor" number="5.1">
-<h2><span class="header-section-number">5.1</span> Setting the R seed<a href="05-R_and_random_seeds.html#setting-the-r-seed" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Rather than having the plot and stats separate, we can add stats onto our plot.
+This can be carried out with the function <code>stat_compare_means()</code> from the `<code>ggpubr</code> package.</p>
+<div id="list-of-comparisons" class="section level2 hasAnchor" number="16.1">
+<h2><span class="header-section-number">16.1</span> List of comparisons<a href="16-Alpha_plot_with_stats.html#list-of-comparisons" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
-<img src="figures/set_a_seed.png" style="width:300px; border-radius:15px; background:white; border:#FFFFFF 6px solid" />
+<img src="figures/venn_pairwise.png" style="width:200px; background-color:white; border-radius:15px" />
 </center>
-<p>To carry out random processes <code>R</code> uses a global variable called <code>seed</code>.
-The <code>seed</code> is normally random and changed every time it is used.
-This is useful for everyday analysis but what if you want replicable results?</p>
-<p>In R we can set the <code>seed</code> with the function <code>seet.seed()</code>.
-Carry this out followed by sampling.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb4-1"><a href="05-R_and_random_seeds.html#cb4-1" tabindex="-1"></a><span class="co">#Set random seed</span></span>
-<span id="cb4-2"><a href="05-R_and_random_seeds.html#cb4-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb4-3"><a href="05-R_and_random_seeds.html#cb4-3" tabindex="-1"></a><span class="co">#Randomly sample 12 of these numbers without replacement</span></span>
-<span id="cb4-4"><a href="05-R_and_random_seeds.html#cb4-4" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">12</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb4-5"><a href="05-R_and_random_seeds.html#cb4-5" tabindex="-1"></a><span class="co">#Reset random seed (covered later)</span></span>
-<span id="cb4-6"><a href="05-R_and_random_seeds.html#cb4-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div>
-<p>You will get a result of "9, 5, 4, 3, &amp; 6".
-You can try to run the code multiple times and you will always get the same results.</p>
-<p>If you run a tool that uses random sampling you will always get the same results if:</p>
+<p>To produce pairwise comparisons with <code>ggpubr::stat_compare_means()</code> we need a <strong>list</strong> of the comparisons we want to carry out.</p>
+<p>We can create this with the function <code>combn()</code>, short for combination.
+We provide it with three parameters:</p>
 <ul>
-<li>You use the same random seed (<code>seed</code> for R)</li>
-<li>You use the same data</li>
-<li>You use the same parameters including the replacement method (with or without)</li>
+<li><strong>Input data:</strong> This is a <strong>vector</strong> of the unique metadata categories to create the combinations from
+<ul>
+<li>We are using our created <code>uniq_media_values_chr_vec</code> in this case</li>
+<li>We ensure that this is a <strong>vector</strong> of <strong>characters</strong> so the created combination <strong>list</strong> contains <strong>character vectors</strong></li>
+<li>A <strong>list</strong> of <strong>character vectors</strong> is required for <code>ggpubr::stat_compare_means()</code></li>
+</ul></li>
+<li><strong><code>m =</code>:</strong> The number of elements to choose when creating combinations.
+<ul>
+<li>We choose <code>2</code> so we get all pair combinations</li>
+</ul></li>
+<li><strong><code>simplify =</code>:</strong> Indicates if the result should be simple (<code>TRUE</code>) or not (<code>FALSE</code>)
+<ul>
+<li><code>TRUE</code> returns a simplified array such as a <strong>matrix</strong> or a <strong>data frame</strong></li>
+<li><code>FALSE</code> returns a <strong>list</strong>. This is what we want as <code>ggpubr::stat_compare_means()</code> requires a <strong>list</strong></li>
+</ul></li>
 </ul>
-<p>In fact, run the below code in a new code cell and you may notice a similarity with your previous output.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb5-1"><a href="05-R_and_random_seeds.html#cb5-1" tabindex="-1"></a><span class="co">#Set random seed</span></span>
-<span id="cb5-2"><a href="05-R_and_random_seeds.html#cb5-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb5-3"><a href="05-R_and_random_seeds.html#cb5-3" tabindex="-1"></a><span class="co">#Create a vector containing the numbers 0 to 10</span></span>
-<span id="cb5-4"><a href="05-R_and_random_seeds.html#cb5-4" tabindex="-1"></a>larger_num_vec <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">19</span></span>
-<span id="cb5-5"><a href="05-R_and_random_seeds.html#cb5-5" tabindex="-1"></a><span class="co">#Randomly sample 5 of these numbers</span></span>
-<span id="cb5-6"><a href="05-R_and_random_seeds.html#cb5-6" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">5</span>)</span>
-<span id="cb5-7"><a href="05-R_and_random_seeds.html#cb5-7" tabindex="-1"></a><span class="co">#Reset random seed (covered later)</span></span>
-<span id="cb5-8"><a href="05-R_and_random_seeds.html#cb5-8" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div>
-<p>That's right, <code>sample()</code> will always take the 10th (9/19), 6th (5/15), 5th (4/14), 4th (3/13), and 7th (6/16) values if it is given the <strong>random seed</strong> of <strong>1234</strong>, provided with an 11 length vector, and asked to sample 5 values.</p>
-<p>Setting our randomness is incredible beneficial for reproducibility in research.</p>
-<p>When you carry out analysis you may need to redo some work.
-This could be due to reviewer comments or you want to incorporate some new methods.
-As long as you saved the random seeds you used you can get the same results where you need to.
-It also means others can replicate your results.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb42-1"><a href="16-Alpha_plot_with_stats.html#cb42-1" tabindex="-1"></a><span class="co">#To compare mean we need to create a list of comparisons</span></span>
+<span id="cb42-2"><a href="16-Alpha_plot_with_stats.html#cb42-2" tabindex="-1"></a><span class="co">#Create character vector of unique metadata values (media in this case)</span></span>
+<span id="cb42-3"><a href="16-Alpha_plot_with_stats.html#cb42-3" tabindex="-1"></a>uniq_media_values_chr_vec <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">as.character</span>(basic_alpha_metrics_long_df<span class="sc">$</span>media))</span>
+<span id="cb42-4"><a href="16-Alpha_plot_with_stats.html#cb42-4" tabindex="-1"></a>uniq_media_values_chr_vec</span>
+<span id="cb42-5"><a href="16-Alpha_plot_with_stats.html#cb42-5" tabindex="-1"></a><span class="co">#Can use combn() to get comparisons</span></span>
+<span id="cb42-6"><a href="16-Alpha_plot_with_stats.html#cb42-6" tabindex="-1"></a>my_comparisons <span class="ot">&lt;-</span> <span class="fu">combn</span>(uniq_media_values_chr_vec, <span class="at">m =</span> <span class="dv">2</span>, <span class="at">simplify =</span> <span class="cn">FALSE</span>)<span class="er">)</span></span>
+<span id="cb42-7"><a href="16-Alpha_plot_with_stats.html#cb42-7" tabindex="-1"></a><span class="co">#Check contents and structure</span></span>
+<span id="cb42-8"><a href="16-Alpha_plot_with_stats.html#cb42-8" tabindex="-1"></a>my_comparisons</span>
+<span id="cb42-9"><a href="16-Alpha_plot_with_stats.html#cb42-9" tabindex="-1"></a><span class="fu">str</span>(my_comparisons)</span></code></pre></div>
 </div>
-<div id="reset-seed" class="section level2 hasAnchor" number="5.2">
-<h2><span class="header-section-number">5.2</span> Reset seed<a href="05-R_and_random_seeds.html#reset-seed" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="violin-plot-with-stats" class="section level2 hasAnchor" number="16.2">
+<h2><span class="header-section-number">16.2</span> Violin plot with stats<a href="16-Alpha_plot_with_stats.html#violin-plot-with-stats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
-<img src="figures/reset_seed.png" style="width:300px" />
+<img src="figures/eye_2.png" style="width:200px" />
 </center>
-<p>We set a <strong>random seed</strong> at the start of the cell for reproducibility and control, but why do we then run the line <code>set.seed(NULL)</code>?</p>
-<p>The normal operation of R means that, in effect, its <strong>random seed</strong> changes every time it is used.
-This means R normally randomly determines randomness.
-This is how it should be until we want to set the randomness.
-It is therefore good practice to set the seed to <code>NULL</code> after you have utilised your set <strong>seeds</strong>.
-This will revert the <strong>seed</strong> to its normal random operations.</p>
-<p>One last point to note is R versions.
-Version 3.6 changed R's sampling methods, therefore if you use Version 3.5 or below you will get different results than we have got.
-Hopefully the R developers will not change this in a later version again.</p>
+<p>With our <strong>list</strong> of comparisons we can add <code>ggpubr::stat_compare_means()</code> to our <code>ggplot2</code> code.
+This function will both calculate the Wilcoxon tests and add them to the plot.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb43-1"><a href="16-Alpha_plot_with_stats.html#cb43-1" tabindex="-1"></a><span class="co">#Produce ggplot object of violin plot</span></span>
+<span id="cb43-2"><a href="16-Alpha_plot_with_stats.html#cb43-2" tabindex="-1"></a>alpha_violinplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(basic_alpha_metrics_long_df, <span class="fu">aes</span>(<span class="at">x =</span> media, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb43-3"><a href="16-Alpha_plot_with_stats.html#cb43-3" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb43-4"><a href="16-Alpha_plot_with_stats.html#cb43-4" tabindex="-1"></a>                            ggforce<span class="sc">::</span><span class="fu">geom_sina</span>(<span class="at">alpha=</span><span class="fl">0.5</span>, <span class="fu">aes</span>(<span class="at">color=</span>site)) <span class="sc">+</span></span>
+<span id="cb43-5"><a href="16-Alpha_plot_with_stats.html#cb43-5" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;Site&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Media&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Value&quot;</span>) <span class="sc">+</span></span>
+<span id="cb43-6"><a href="16-Alpha_plot_with_stats.html#cb43-6" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">facet_wrap</span>(<span class="sc">~</span>metric, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb43-7"><a href="16-Alpha_plot_with_stats.html#cb43-7" tabindex="-1"></a>                            <span class="co">#Add comparisons</span></span>
+<span id="cb43-8"><a href="16-Alpha_plot_with_stats.html#cb43-8" tabindex="-1"></a>                            ggpubr<span class="sc">::</span><span class="fu">stat_compare_means</span>(<span class="at">comparisons =</span> my_comparisons)</span>
+<span id="cb43-9"><a href="16-Alpha_plot_with_stats.html#cb43-9" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave()</span></span>
+<span id="cb43-10"><a href="16-Alpha_plot_with_stats.html#cb43-10" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_media_violinplot_pairwise_wilcox.png&quot;</span>, </span>
+<span id="cb43-11"><a href="16-Alpha_plot_with_stats.html#cb43-11" tabindex="-1"></a>       <span class="at">plot =</span> alpha_violinplot,</span>
+<span id="cb43-12"><a href="16-Alpha_plot_with_stats.html#cb43-12" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">&quot;png&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">&quot;mm&quot;</span>, <span class="at">height =</span> <span class="dv">150</span>, <span class="at">width =</span> <span class="dv">250</span>)</span>
+<span id="cb43-13"><a href="16-Alpha_plot_with_stats.html#cb43-13" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb43-14"><a href="16-Alpha_plot_with_stats.html#cb43-14" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_media_violinplot_pairwise_wilcox.png&quot;</span>)</span></code></pre></div>
+</div>
+<div id="reorder-x-axis-and-stats" class="section level2 hasAnchor" number="16.3">
+<h2><span class="header-section-number">16.3</span> Reorder x-axis and stats<a href="16-Alpha_plot_with_stats.html#reorder-x-axis-and-stats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/reorder.png" style="width:200px; background-color:white; border-radius:15px" />
+</center>
+<p><code>ggplot</code> orders the x-axis by alphabetical order.
+This is not normally wanted so we will convert our media column to a <strong>factor</strong> and order the levels how we want them.
+As the environmental samples can be seen as the baseline we will have them first.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb44-1"><a href="16-Alpha_plot_with_stats.html#cb44-1" tabindex="-1"></a><span class="co">#Set order of media</span></span>
+<span id="cb44-2"><a href="16-Alpha_plot_with_stats.html#cb44-2" tabindex="-1"></a>basic_alpha_metrics_long_df<span class="sc">$</span>media <span class="ot">&lt;-</span> <span class="fu">factor</span>(basic_alpha_metrics_long_df<span class="sc">$</span>media,</span>
+<span id="cb44-3"><a href="16-Alpha_plot_with_stats.html#cb44-3" tabindex="-1"></a>                                            <span class="co">#Set order of levels</span></span>
+<span id="cb44-4"><a href="16-Alpha_plot_with_stats.html#cb44-4" tabindex="-1"></a>                                            <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;ENV&quot;</span>, <span class="st">&quot;CVP&quot;</span>, <span class="st">&quot;KBC&quot;</span>, <span class="st">&quot;TSA&quot;</span>))</span></code></pre></div>
+<p>The stats in our previous plot were also not in a good order.
+We'll therefore reorder them.
+When doing this it is important to note that the first comparison in the <strong>lists</strong> is the bottom most stat in the plot.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb45-1"><a href="16-Alpha_plot_with_stats.html#cb45-1" tabindex="-1"></a><span class="co">#Order comparisons</span></span>
+<span id="cb45-2"><a href="16-Alpha_plot_with_stats.html#cb45-2" tabindex="-1"></a>my_ordered_comparisons <span class="ot">&lt;-</span> my_comparisons[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">3</span>,<span class="dv">5</span>)]</span>
+<span id="cb45-3"><a href="16-Alpha_plot_with_stats.html#cb45-3" tabindex="-1"></a>my_ordered_comparisons</span></code></pre></div>
+<p>You'll notice this can be quite manual.
+It can be made easier when doing this yourself to roughly reorder, run the below code for your plot, then fix the stats reorder.</p>
+<p>With our media categories and comparisons reordered we can create the final plot.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb46-1"><a href="16-Alpha_plot_with_stats.html#cb46-1" tabindex="-1"></a><span class="co">#Produce ggplot object of violin plot</span></span>
+<span id="cb46-2"><a href="16-Alpha_plot_with_stats.html#cb46-2" tabindex="-1"></a>alpha_violinplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(basic_alpha_metrics_long_df, <span class="fu">aes</span>(<span class="at">x =</span> media, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb46-3"><a href="16-Alpha_plot_with_stats.html#cb46-3" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb46-4"><a href="16-Alpha_plot_with_stats.html#cb46-4" tabindex="-1"></a>                            ggforce<span class="sc">::</span><span class="fu">geom_sina</span>(<span class="at">alpha=</span><span class="fl">0.5</span>, <span class="fu">aes</span>(<span class="at">color=</span>site)) <span class="sc">+</span></span>
+<span id="cb46-5"><a href="16-Alpha_plot_with_stats.html#cb46-5" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;Site&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Media&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Value&quot;</span>) <span class="sc">+</span></span>
+<span id="cb46-6"><a href="16-Alpha_plot_with_stats.html#cb46-6" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">facet_wrap</span>(<span class="sc">~</span>metric, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb46-7"><a href="16-Alpha_plot_with_stats.html#cb46-7" tabindex="-1"></a>                            <span class="co">#Add comparisons</span></span>
+<span id="cb46-8"><a href="16-Alpha_plot_with_stats.html#cb46-8" tabindex="-1"></a>                            ggpubr<span class="sc">::</span><span class="fu">stat_compare_means</span>(<span class="at">comparisons =</span> my_ordered_comparisons)</span>
+<span id="cb46-9"><a href="16-Alpha_plot_with_stats.html#cb46-9" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave()</span></span>
+<span id="cb46-10"><a href="16-Alpha_plot_with_stats.html#cb46-10" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_media_violinplot_pairwise_wilcox.png&quot;</span>, </span>
+<span id="cb46-11"><a href="16-Alpha_plot_with_stats.html#cb46-11" tabindex="-1"></a>       <span class="at">plot =</span> alpha_violinplot,</span>
+<span id="cb46-12"><a href="16-Alpha_plot_with_stats.html#cb46-12" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">&quot;png&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">&quot;mm&quot;</span>, <span class="at">height =</span> <span class="dv">150</span>, <span class="at">width =</span> <span class="dv">250</span>)</span>
+<span id="cb46-13"><a href="16-Alpha_plot_with_stats.html#cb46-13" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb46-14"><a href="16-Alpha_plot_with_stats.html#cb46-14" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_media_violinplot_pairwise_wilcox.png&quot;</span>)</span></code></pre></div>
 
 </div>
 </div>
@@ -536,8 +568,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="04-Random_seeds.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="06-Random_seeds_practice.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="15-Alpha_violin_plot_and_stats.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="17-Alpha_diversity_practice.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -1,4 +1,4 @@
-# One Round (1R) of rarefaction
+# One Round of rarefaction
 <center>
 ![](figures/one_round.png){style="width:200px"}
 </center>

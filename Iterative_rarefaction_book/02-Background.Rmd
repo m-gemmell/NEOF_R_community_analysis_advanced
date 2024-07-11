@@ -1,7 +1,7 @@
 # Iterative rarefaction background {#iter_rarefaction_background_chap}
 
 <center>
-![](figures/iteration.png){style="width:200px"}
+![](figures/iteration.png){style="width:200px; background-color:white; border-radius:15px"}
 </center>
 
 __Rarefaction__ is the process of randomly subsetting samples so the total count values are identical across all samples.

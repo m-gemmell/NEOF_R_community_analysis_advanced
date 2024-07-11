@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 R and random seeds | Iterative rarefaction</title>
+  <title>Chapter 12 \(\alpha\) Diversity intro | Iterative rarefaction</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 R and random seeds | Iterative rarefaction" />
+  <meta property="og:title" content="Chapter 12 \(\alpha\) Diversity intro | Iterative rarefaction" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/figures/NEOF.png" />
   <meta property="og:description" content="NEOF book for the R community advanced analysis course" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 R and random seeds | Iterative rarefaction" />
+  <meta name="twitter:title" content="Chapter 12 \(\alpha\) Diversity intro | Iterative rarefaction" />
   
   <meta name="twitter:description" content="NEOF book for the R community advanced analysis course" />
   <meta name="twitter:image" content="/figures/NEOF.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
-<link rel="prev" href="04-Random_seeds.html"/>
-<link rel="next" href="06-Random_seeds_practice.html"/>
+<link rel="prev" href="11-Iterating_rarefaction_practice.html"/>
+<link rel="next" href="13-Alpha_diversity_rarefaction.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -255,73 +255,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="r-and-random-seeds" class="section level1 hasAnchor" number="5">
-<h1><span class="header-section-number">Chapter 5</span> R and random seeds<a href="05-R_and_random_seeds.html#r-and-random-seeds" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="alpha_chap" class="section level1 hasAnchor" number="12">
+<h1><span class="header-section-number">Chapter 12</span> <span class="math inline">\(\alpha\)</span> Diversity intro<a href="12-Alpha_diversity_intro.html#alpha_chap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <center>
-<img src="figures/braille_r.png" style="width:200px; border-radius:15px; border:#FFFFFF 6px solid" />
+<img src="figures/alpha_iterative_rarefaction.png" style="width:300px" />
 </center>
-<p>Sampling is meant to be random but true randomness is pretty much impossible, especially in computing.
-Therefore, many programs use <strong>seeds</strong> to determine how random tasks will be carried out.
-Various programs that use <strong>random seeds</strong> include:</p>
-<ul>
-<li>Sampling tools such as <code>sample()</code> and rarefaction</li>
-<li>Creating bootstrapped phylogenies</li>
-<li>Creating procedural content such as building Minecraft worlds</li>
-</ul>
-<div id="setting-the-r-seed" class="section level2 hasAnchor" number="5.1">
-<h2><span class="header-section-number">5.1</span> Setting the R seed<a href="05-R_and_random_seeds.html#setting-the-r-seed" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this section we'll carry out <strong>alpha diversity</strong> analysis using the <strong>iterative rarefaction</strong> approach.
+We will carry this out on the ASV counts rather than at a taxonomy level such as phyla.</p>
+<p>These materials are mostly a combination of the <strong>iterative rarefaction</strong> in this book and the <strong>alpha diversity</strong> analysis in the R community workshop.
+Due to this we won't go into great detail, instead focussing on giving you the code to be able to carry this out.</p>
+<div id="alpha-setup" class="section level2 hasAnchor" number="12.1">
+<h2><span class="header-section-number">12.1</span> <span class="math inline">\(\alpha\)</span>: Setup<a href="12-Alpha_diversity_intro.html#alpha-setup" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
-<img src="figures/set_a_seed.png" style="width:300px; border-radius:15px; background:white; border:#FFFFFF 6px solid" />
+<img src="figures/setup_6.png" style="width:200px; background-color:white; border-radius:15px" />
 </center>
-<p>To carry out random processes <code>R</code> uses a global variable called <code>seed</code>.
-The <code>seed</code> is normally random and changed every time it is used.
-This is useful for everyday analysis but what if you want replicable results?</p>
-<p>In R we can set the <code>seed</code> with the function <code>seet.seed()</code>.
-Carry this out followed by sampling.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb4-1"><a href="05-R_and_random_seeds.html#cb4-1" tabindex="-1"></a><span class="co">#Set random seed</span></span>
-<span id="cb4-2"><a href="05-R_and_random_seeds.html#cb4-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb4-3"><a href="05-R_and_random_seeds.html#cb4-3" tabindex="-1"></a><span class="co">#Randomly sample 12 of these numbers without replacement</span></span>
-<span id="cb4-4"><a href="05-R_and_random_seeds.html#cb4-4" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">12</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb4-5"><a href="05-R_and_random_seeds.html#cb4-5" tabindex="-1"></a><span class="co">#Reset random seed (covered later)</span></span>
-<span id="cb4-6"><a href="05-R_and_random_seeds.html#cb4-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div>
-<p>You will get a result of "9, 5, 4, 3, &amp; 6".
-You can try to run the code multiple times and you will always get the same results.</p>
-<p>If you run a tool that uses random sampling you will always get the same results if:</p>
-<ul>
-<li>You use the same random seed (<code>seed</code> for R)</li>
-<li>You use the same data</li>
-<li>You use the same parameters including the replacement method (with or without)</li>
-</ul>
-<p>In fact, run the below code in a new code cell and you may notice a similarity with your previous output.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb5-1"><a href="05-R_and_random_seeds.html#cb5-1" tabindex="-1"></a><span class="co">#Set random seed</span></span>
-<span id="cb5-2"><a href="05-R_and_random_seeds.html#cb5-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb5-3"><a href="05-R_and_random_seeds.html#cb5-3" tabindex="-1"></a><span class="co">#Create a vector containing the numbers 0 to 10</span></span>
-<span id="cb5-4"><a href="05-R_and_random_seeds.html#cb5-4" tabindex="-1"></a>larger_num_vec <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">19</span></span>
-<span id="cb5-5"><a href="05-R_and_random_seeds.html#cb5-5" tabindex="-1"></a><span class="co">#Randomly sample 5 of these numbers</span></span>
-<span id="cb5-6"><a href="05-R_and_random_seeds.html#cb5-6" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">5</span>)</span>
-<span id="cb5-7"><a href="05-R_and_random_seeds.html#cb5-7" tabindex="-1"></a><span class="co">#Reset random seed (covered later)</span></span>
-<span id="cb5-8"><a href="05-R_and_random_seeds.html#cb5-8" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div>
-<p>That's right, <code>sample()</code> will always take the 10th (9/19), 6th (5/15), 5th (4/14), 4th (3/13), and 7th (6/16) values if it is given the <strong>random seed</strong> of <strong>1234</strong>, provided with an 11 length vector, and asked to sample 5 values.</p>
-<p>Setting our randomness is incredible beneficial for reproducibility in research.</p>
-<p>When you carry out analysis you may need to redo some work.
-This could be due to reviewer comments or you want to incorporate some new methods.
-As long as you saved the random seeds you used you can get the same results where you need to.
-It also means others can replicate your results.</p>
+<p>Create a new R jupyter notebook called "Alpha_diversity.ipynb".</p>
+<p>Load the required data and libraries.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb32-1"><a href="12-Alpha_diversity_intro.html#cb32-1" tabindex="-1"></a><span class="co">#Libraries</span></span>
+<span id="cb32-2"><a href="12-Alpha_diversity_intro.html#cb32-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;phyloseq&quot;</span>)</span>
+<span id="cb32-3"><a href="12-Alpha_diversity_intro.html#cb32-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;microbiome&quot;</span>)</span>
+<span id="cb32-4"><a href="12-Alpha_diversity_intro.html#cb32-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</span>
+<span id="cb32-5"><a href="12-Alpha_diversity_intro.html#cb32-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;IRdisplay&quot;</span>)</span>
+<span id="cb32-6"><a href="12-Alpha_diversity_intro.html#cb32-6" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ggpubr&quot;</span>)</span>
+<span id="cb32-7"><a href="12-Alpha_diversity_intro.html#cb32-7" tabindex="-1"></a><span class="co">#Load processed but unrarefied ASV data from main R community workshop</span></span>
+<span id="cb32-8"><a href="12-Alpha_diversity_intro.html#cb32-8" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;phyloseq.RData&quot;</span>)</span></code></pre></div>
 </div>
-<div id="reset-seed" class="section level2 hasAnchor" number="5.2">
-<h2><span class="header-section-number">5.2</span> Reset seed<a href="05-R_and_random_seeds.html#reset-seed" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="alpha-iterative-rarefaction-values" class="section level2 hasAnchor" number="12.2">
+<h2><span class="header-section-number">12.2</span> <span class="math inline">\(\alpha\)</span>: Iterative rarefaction values<a href="12-Alpha_diversity_intro.html#alpha-iterative-rarefaction-values" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
-<img src="figures/reset_seed.png" style="width:300px" />
+<img src="figures/ten_rng_seeds.png" style="width:200px" />
 </center>
-<p>We set a <strong>random seed</strong> at the start of the cell for reproducibility and control, but why do we then run the line <code>set.seed(NULL)</code>?</p>
-<p>The normal operation of R means that, in effect, its <strong>random seed</strong> changes every time it is used.
-This means R normally randomly determines randomness.
-This is how it should be until we want to set the randomness.
-It is therefore good practice to set the seed to <code>NULL</code> after you have utilised your set <strong>seeds</strong>.
-This will revert the <strong>seed</strong> to its normal random operations.</p>
-<p>One last point to note is R versions.
-Version 3.6 changed R's sampling methods, therefore if you use Version 3.5 or below you will get different results than we have got.
-Hopefully the R developers will not change this in a later version again.</p>
+<p>Before carrying out <strong>iterative rarefaction</strong> we need to decide on a few values</p>
+<ul>
+<li><strong>Rarefaction size:</strong> The sequence depth to normalise samples to
+<ul>
+<li>We are using the minimum sample depth here</li>
+<li>The size you choose will be based on your data and what you feel is appropriate</li>
+<li>More info in the R community workshop</li>
+</ul></li>
+<li><strong>RNG seeds:</strong> The rng seeds we will use for all the rarefactions
+<ul>
+<li>We created these in the previous <a href="07-Iterating_rarefaction_intro.html#rng_vec_creation">chapter</a></li>
+</ul></li>
+<li><strong>Rarefaction iterations:</strong> The number of rarefaction iterations we will use
+<ul>
+<li>We are using 10 here based on the length of our rng seed vector</li>
+<li>We recommend you use 1000 in your real analysis</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb33-1"><a href="12-Alpha_diversity_intro.html#cb33-1" tabindex="-1"></a><span class="co">#Rarefaction values</span></span>
+<span id="cb33-2"><a href="12-Alpha_diversity_intro.html#cb33-2" tabindex="-1"></a><span class="co">#Rarefaction size</span></span>
+<span id="cb33-3"><a href="12-Alpha_diversity_intro.html#cb33-3" tabindex="-1"></a><span class="co">#Minimum sample depth in this case</span></span>
+<span id="cb33-4"><a href="12-Alpha_diversity_intro.html#cb33-4" tabindex="-1"></a>rarefaction_size <span class="ot">&lt;-</span> <span class="fu">min</span>(microbiome<span class="sc">::</span><span class="fu">readcount</span>(pseq))</span>
+<span id="cb33-5"><a href="12-Alpha_diversity_intro.html#cb33-5" tabindex="-1"></a><span class="co">#Load the vector of 10 rngseeds created in the previous chapter</span></span>
+<span id="cb33-6"><a href="12-Alpha_diversity_intro.html#cb33-6" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;rngseeds.RData&quot;</span>)</span>
+<span id="cb33-7"><a href="12-Alpha_diversity_intro.html#cb33-7" tabindex="-1"></a><span class="co">#Number of rarefaction iterations to be carried out</span></span>
+<span id="cb33-8"><a href="12-Alpha_diversity_intro.html#cb33-8" tabindex="-1"></a><span class="co">#Based on length of rng seed vector</span></span>
+<span id="cb33-9"><a href="12-Alpha_diversity_intro.html#cb33-9" tabindex="-1"></a>rarefaction_iters <span class="ot">&lt;-</span> <span class="fu">length</span>(rngseed_vec)</span></code></pre></div>
 
 </div>
 </div>
@@ -536,8 +526,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="04-Random_seeds.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="06-Random_seeds_practice.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="11-Iterating_rarefaction_practice.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="13-Alpha_diversity_rarefaction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

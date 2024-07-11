@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 R and random seeds | Iterative rarefaction</title>
+  <title>Chapter 17 \(\alpha\): Practice | Iterative rarefaction</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 R and random seeds | Iterative rarefaction" />
+  <meta property="og:title" content="Chapter 17 \(\alpha\): Practice | Iterative rarefaction" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/figures/NEOF.png" />
   <meta property="og:description" content="NEOF book for the R community advanced analysis course" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 R and random seeds | Iterative rarefaction" />
+  <meta name="twitter:title" content="Chapter 17 \(\alpha\): Practice | Iterative rarefaction" />
   
   <meta name="twitter:description" content="NEOF book for the R community advanced analysis course" />
   <meta name="twitter:image" content="/figures/NEOF.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
-<link rel="prev" href="04-Random_seeds.html"/>
-<link rel="next" href="06-Random_seeds_practice.html"/>
+<link rel="prev" href="16-Alpha_plot_with_stats.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -255,73 +255,113 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="r-and-random-seeds" class="section level1 hasAnchor" number="5">
-<h1><span class="header-section-number">Chapter 5</span> R and random seeds<a href="05-R_and_random_seeds.html#r-and-random-seeds" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="alpha-practice" class="section level1 hasAnchor" number="17">
+<h1><span class="header-section-number">Chapter 17</span> <span class="math inline">\(\alpha\)</span>: Practice<a href="17-Alpha_diversity_practice.html#alpha-practice" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="alpha-task" class="section level2 hasAnchor" number="17.1">
+<h2><span class="header-section-number">17.1</span> <span class="math inline">\(\alpha\)</span>: Task<a href="17-Alpha_diversity_practice.html#alpha-task" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
-<img src="figures/braille_r.png" style="width:200px; border-radius:15px; border:#FFFFFF 6px solid" />
+<img src="figures/tasks.png" style="width:200px; background-color:white; border-radius:15px" />
 </center>
-<p>Sampling is meant to be random but true randomness is pretty much impossible, especially in computing.
-Therefore, many programs use <strong>seeds</strong> to determine how random tasks will be carried out.
-Various programs that use <strong>random seeds</strong> include:</p>
+<p>As an optional task create a new violin plot that includes the following:</p>
 <ul>
-<li>Sampling tools such as <code>sample()</code> and rarefaction</li>
-<li>Creating bootstrapped phylogenies</li>
-<li>Creating procedural content such as building Minecraft worlds</li>
-</ul>
-<div id="setting-the-r-seed" class="section level2 hasAnchor" number="5.1">
-<h2><span class="header-section-number">5.1</span> Setting the R seed<a href="05-R_and_random_seeds.html#setting-the-r-seed" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<center>
-<img src="figures/set_a_seed.png" style="width:300px; border-radius:15px; background:white; border:#FFFFFF 6px solid" />
-</center>
-<p>To carry out random processes <code>R</code> uses a global variable called <code>seed</code>.
-The <code>seed</code> is normally random and changed every time it is used.
-This is useful for everyday analysis but what if you want replicable results?</p>
-<p>In R we can set the <code>seed</code> with the function <code>seet.seed()</code>.
-Carry this out followed by sampling.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb4-1"><a href="05-R_and_random_seeds.html#cb4-1" tabindex="-1"></a><span class="co">#Set random seed</span></span>
-<span id="cb4-2"><a href="05-R_and_random_seeds.html#cb4-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb4-3"><a href="05-R_and_random_seeds.html#cb4-3" tabindex="-1"></a><span class="co">#Randomly sample 12 of these numbers without replacement</span></span>
-<span id="cb4-4"><a href="05-R_and_random_seeds.html#cb4-4" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">12</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb4-5"><a href="05-R_and_random_seeds.html#cb4-5" tabindex="-1"></a><span class="co">#Reset random seed (covered later)</span></span>
-<span id="cb4-6"><a href="05-R_and_random_seeds.html#cb4-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div>
-<p>You will get a result of "9, 5, 4, 3, &amp; 6".
-You can try to run the code multiple times and you will always get the same results.</p>
-<p>If you run a tool that uses random sampling you will always get the same results if:</p>
+<li>Plots the metrics:
 <ul>
-<li>You use the same random seed (<code>seed</code> for R)</li>
-<li>You use the same data</li>
-<li>You use the same parameters including the replacement method (with or without)</li>
+<li>"chao1"</li>
+<li>"evenness_pielou" renaming it as "pielou"</li>
+<li>"diversity_fisher" renaming it as "fisher"</li>
+<li>Ensure they are in the order "chao1", "pielou", then "fisher"</li>
+</ul></li>
+<li>The x-axis is separated by Site (UD, MD, LD) rather than media.
+<ul>
+<li>Ensure the order is UD, MD, then LD</li>
+</ul></li>
+<li>Points are coloured by Media (ENV, CVP, KBC, and TSA)
+<ul>
+<li>Ensure the order is ENV, CVP, KBC, then TSA</li>
+</ul></li>
+<li>Include Wilcoxon paired stats comparing the Sites</li>
 </ul>
-<p>In fact, run the below code in a new code cell and you may notice a similarity with your previous output.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb5-1"><a href="05-R_and_random_seeds.html#cb5-1" tabindex="-1"></a><span class="co">#Set random seed</span></span>
-<span id="cb5-2"><a href="05-R_and_random_seeds.html#cb5-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb5-3"><a href="05-R_and_random_seeds.html#cb5-3" tabindex="-1"></a><span class="co">#Create a vector containing the numbers 0 to 10</span></span>
-<span id="cb5-4"><a href="05-R_and_random_seeds.html#cb5-4" tabindex="-1"></a>larger_num_vec <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">19</span></span>
-<span id="cb5-5"><a href="05-R_and_random_seeds.html#cb5-5" tabindex="-1"></a><span class="co">#Randomly sample 5 of these numbers</span></span>
-<span id="cb5-6"><a href="05-R_and_random_seeds.html#cb5-6" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">5</span>)</span>
-<span id="cb5-7"><a href="05-R_and_random_seeds.html#cb5-7" tabindex="-1"></a><span class="co">#Reset random seed (covered later)</span></span>
-<span id="cb5-8"><a href="05-R_and_random_seeds.html#cb5-8" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div>
-<p>That's right, <code>sample()</code> will always take the 10th (9/19), 6th (5/15), 5th (4/14), 4th (3/13), and 7th (6/16) values if it is given the <strong>random seed</strong> of <strong>1234</strong>, provided with an 11 length vector, and asked to sample 5 values.</p>
-<p>Setting our randomness is incredible beneficial for reproducibility in research.</p>
-<p>When you carry out analysis you may need to redo some work.
-This could be due to reviewer comments or you want to incorporate some new methods.
-As long as you saved the random seeds you used you can get the same results where you need to.
-It also means others can replicate your results.</p>
+<div class="webex-solution">
+<button>
+Solution code
+</button>
+<p>Subset <a href="14-Alpha_data_frame_tidy.html#alpha_long_df">long alpha diversity table created earlier in this chapter</a> to contain metrics of choice.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb47-1"><a href="17-Alpha_diversity_practice.html#cb47-1" tabindex="-1"></a><span class="co">#Process our long data frame</span></span>
+<span id="cb47-2"><a href="17-Alpha_diversity_practice.html#cb47-2" tabindex="-1"></a><span class="co">#Subset our long alpha diversity data frame to only contain our metrics of choice</span></span>
+<span id="cb47-3"><a href="17-Alpha_diversity_practice.html#cb47-3" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;chao1&quot;</span>, <span class="st">&quot;evenness_pielou&quot;</span>,<span class="st">&quot;diversity_fisher&quot;</span>)</span>
+<span id="cb47-4"><a href="17-Alpha_diversity_practice.html#cb47-4" tabindex="-1"></a>subset_alpha_metrics_long_df <span class="ot">&lt;-</span> meta_alpha_mean_long_df[</span>
+<span id="cb47-5"><a href="17-Alpha_diversity_practice.html#cb47-5" tabindex="-1"></a>  meta_alpha_mean_long_df<span class="sc">$</span>metric <span class="sc">%in%</span> metrics,</span>
+<span id="cb47-6"><a href="17-Alpha_diversity_practice.html#cb47-6" tabindex="-1"></a>]</span>
+<span id="cb47-7"><a href="17-Alpha_diversity_practice.html#cb47-7" tabindex="-1"></a><span class="co">#Change instances of evenness_pielou to pielou</span></span>
+<span id="cb47-8"><a href="17-Alpha_diversity_practice.html#cb47-8" tabindex="-1"></a>subset_alpha_metrics_long_df<span class="sc">$</span>metric <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;evenness_pieloue&quot;</span>,</span>
+<span id="cb47-9"><a href="17-Alpha_diversity_practice.html#cb47-9" tabindex="-1"></a>                                           <span class="at">replacement =</span> <span class="st">&quot;pielou&quot;</span>,</span>
+<span id="cb47-10"><a href="17-Alpha_diversity_practice.html#cb47-10" tabindex="-1"></a>                                           <span class="at">x =</span> subset_alpha_metrics_long_df<span class="sc">$</span>metric)</span>
+<span id="cb47-11"><a href="17-Alpha_diversity_practice.html#cb47-11" tabindex="-1"></a><span class="co">#Change instances of diversity_fisher to fisher</span></span>
+<span id="cb47-12"><a href="17-Alpha_diversity_practice.html#cb47-12" tabindex="-1"></a>subset_alpha_metrics_long_df<span class="sc">$</span>metric <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;diversity_fisher&quot;</span>,</span>
+<span id="cb47-13"><a href="17-Alpha_diversity_practice.html#cb47-13" tabindex="-1"></a>                                           <span class="at">replacement =</span> <span class="st">&quot;fisher&quot;</span>,</span>
+<span id="cb47-14"><a href="17-Alpha_diversity_practice.html#cb47-14" tabindex="-1"></a>                                           <span class="at">x =</span> subset_alpha_metrics_long_df<span class="sc">$</span>metric)</span>
+<span id="cb47-15"><a href="17-Alpha_diversity_practice.html#cb47-15" tabindex="-1"></a><span class="co">#The gsub() function changes our factor to a character vector</span></span>
+<span id="cb47-16"><a href="17-Alpha_diversity_practice.html#cb47-16" tabindex="-1"></a><span class="co">#Therefore change back to factor</span></span>
+<span id="cb47-17"><a href="17-Alpha_diversity_practice.html#cb47-17" tabindex="-1"></a><span class="co">#We will also choose our order of the metric names for plotting</span></span>
+<span id="cb47-18"><a href="17-Alpha_diversity_practice.html#cb47-18" tabindex="-1"></a>subset_alpha_metrics_long_df<span class="sc">$</span>metric <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="at">x =</span> subset_alpha_metrics_long_df<span class="sc">$</span>metric,</span>
+<span id="cb47-19"><a href="17-Alpha_diversity_practice.html#cb47-19" tabindex="-1"></a>                                             <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;chao1&quot;</span>,<span class="st">&quot;pielou&quot;</span>,<span class="st">&quot;fisher&quot;</span>))</span>
+<span id="cb47-20"><a href="17-Alpha_diversity_practice.html#cb47-20" tabindex="-1"></a><span class="co">#Check level order of metric factor column</span></span>
+<span id="cb47-21"><a href="17-Alpha_diversity_practice.html#cb47-21" tabindex="-1"></a><span class="fu">levels</span>(subset_alpha_metrics_long_df<span class="sc">$</span>metric)</span>
+<span id="cb47-22"><a href="17-Alpha_diversity_practice.html#cb47-22" tabindex="-1"></a><span class="co">#Check head of subsetted long data frame</span></span>
+<span id="cb47-23"><a href="17-Alpha_diversity_practice.html#cb47-23" tabindex="-1"></a><span class="fu">head</span>(subset_alpha_metrics_long_df)</span></code></pre></div>
+<p>Create metadata combination list for plot stats</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb48-1"><a href="17-Alpha_diversity_practice.html#cb48-1" tabindex="-1"></a><span class="co">#To compare mean we need to create a list of comparisons</span></span>
+<span id="cb48-2"><a href="17-Alpha_diversity_practice.html#cb48-2" tabindex="-1"></a><span class="co">#Create character vector of unique metadata values (site in this case)</span></span>
+<span id="cb48-3"><a href="17-Alpha_diversity_practice.html#cb48-3" tabindex="-1"></a>uniq_site_values_chr_vec <span class="ot">&lt;-</span> <span class="fu">unique</span>(<span class="fu">as.character</span>(subset_alpha_metrics_long_df<span class="sc">$</span>site))</span>
+<span id="cb48-4"><a href="17-Alpha_diversity_practice.html#cb48-4" tabindex="-1"></a>uniq_site_values_chr_vec</span>
+<span id="cb48-5"><a href="17-Alpha_diversity_practice.html#cb48-5" tabindex="-1"></a><span class="co">#Can use combn() to get comparisons</span></span>
+<span id="cb48-6"><a href="17-Alpha_diversity_practice.html#cb48-6" tabindex="-1"></a>my_comparisons <span class="ot">&lt;-</span> <span class="fu">combn</span>(uniq_site_values_chr_vec, <span class="at">m =</span> <span class="dv">2</span>, <span class="at">simplify =</span> <span class="cn">FALSE</span>)<span class="er">)</span></span>
+<span id="cb48-7"><a href="17-Alpha_diversity_practice.html#cb48-7" tabindex="-1"></a><span class="co">#Check contents and structure</span></span>
+<span id="cb48-8"><a href="17-Alpha_diversity_practice.html#cb48-8" tabindex="-1"></a>my_comparisons</span>
+<span id="cb48-9"><a href="17-Alpha_diversity_practice.html#cb48-9" tabindex="-1"></a><span class="fu">str</span>(my_comparisons)</span></code></pre></div>
+<p>Reorder factors and comparisons</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb49-1"><a href="17-Alpha_diversity_practice.html#cb49-1" tabindex="-1"></a><span class="co">#Reorder sites, media and comparisons</span></span>
+<span id="cb49-2"><a href="17-Alpha_diversity_practice.html#cb49-2" tabindex="-1"></a><span class="co">#Set order of sites</span></span>
+<span id="cb49-3"><a href="17-Alpha_diversity_practice.html#cb49-3" tabindex="-1"></a>subset_alpha_metrics_long_df<span class="sc">$</span>site <span class="ot">&lt;-</span> <span class="fu">factor</span>(subset_alpha_metrics_long_df<span class="sc">$</span>site,</span>
+<span id="cb49-4"><a href="17-Alpha_diversity_practice.html#cb49-4" tabindex="-1"></a>                                            <span class="co">#Set order of levels</span></span>
+<span id="cb49-5"><a href="17-Alpha_diversity_practice.html#cb49-5" tabindex="-1"></a>                                            <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;UD&quot;</span>, <span class="st">&quot;MD&quot;</span>, <span class="st">&quot;LD&quot;</span>))</span>
+<span id="cb49-6"><a href="17-Alpha_diversity_practice.html#cb49-6" tabindex="-1"></a><span class="co">#Set order of media</span></span>
+<span id="cb49-7"><a href="17-Alpha_diversity_practice.html#cb49-7" tabindex="-1"></a>subset_alpha_metrics_long_df<span class="sc">$</span>media <span class="ot">&lt;-</span> <span class="fu">factor</span>(subset_alpha_metrics_long_df<span class="sc">$</span>media,</span>
+<span id="cb49-8"><a href="17-Alpha_diversity_practice.html#cb49-8" tabindex="-1"></a>                                            <span class="co">#Set order of levels</span></span>
+<span id="cb49-9"><a href="17-Alpha_diversity_practice.html#cb49-9" tabindex="-1"></a>                                            <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;ENV&quot;</span>, <span class="st">&quot;CVP&quot;</span>, <span class="st">&quot;KBC&quot;</span>, <span class="st">&quot;TSA&quot;</span>))</span>
+<span id="cb49-10"><a href="17-Alpha_diversity_practice.html#cb49-10" tabindex="-1"></a><span class="co">#Order comparisons</span></span>
+<span id="cb49-11"><a href="17-Alpha_diversity_practice.html#cb49-11" tabindex="-1"></a>my_ordered_comparisons <span class="ot">&lt;-</span> my_comparisons[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">2</span>)]</span>
+<span id="cb49-12"><a href="17-Alpha_diversity_practice.html#cb49-12" tabindex="-1"></a>my_ordered_comparisons</span></code></pre></div>
+<p>Plot with stats</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb50-1"><a href="17-Alpha_diversity_practice.html#cb50-1" tabindex="-1"></a><span class="co">#Produce ggplot object of violin plot</span></span>
+<span id="cb50-2"><a href="17-Alpha_diversity_practice.html#cb50-2" tabindex="-1"></a>alpha_violinplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(subset_alpha_metrics_long_df, <span class="fu">aes</span>(<span class="at">x =</span> site, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb50-3"><a href="17-Alpha_diversity_practice.html#cb50-3" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb50-4"><a href="17-Alpha_diversity_practice.html#cb50-4" tabindex="-1"></a>                            ggforce<span class="sc">::</span><span class="fu">geom_sina</span>(<span class="at">alpha=</span><span class="fl">0.5</span>, <span class="fu">aes</span>(<span class="at">color=</span>site)) <span class="sc">+</span></span>
+<span id="cb50-5"><a href="17-Alpha_diversity_practice.html#cb50-5" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;Media&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Site&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Value&quot;</span>) <span class="sc">+</span></span>
+<span id="cb50-6"><a href="17-Alpha_diversity_practice.html#cb50-6" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">facet_wrap</span>(<span class="sc">~</span>metric, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>) <span class="sc">+</span></span>
+<span id="cb50-7"><a href="17-Alpha_diversity_practice.html#cb50-7" tabindex="-1"></a>                            <span class="co">#Add comparisons</span></span>
+<span id="cb50-8"><a href="17-Alpha_diversity_practice.html#cb50-8" tabindex="-1"></a>                            ggpubr<span class="sc">::</span><span class="fu">stat_compare_means</span>(<span class="at">comparisons =</span> my_ordered_comparisons)</span>
+<span id="cb50-9"><a href="17-Alpha_diversity_practice.html#cb50-9" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave()</span></span>
+<span id="cb50-10"><a href="17-Alpha_diversity_practice.html#cb50-10" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_site_violinplot_pairwise_wilcox.png&quot;</span>, </span>
+<span id="cb50-11"><a href="17-Alpha_diversity_practice.html#cb50-11" tabindex="-1"></a>       <span class="at">plot =</span> alpha_violinplot,</span>
+<span id="cb50-12"><a href="17-Alpha_diversity_practice.html#cb50-12" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">&quot;png&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">&quot;mm&quot;</span>, <span class="at">height =</span> <span class="dv">150</span>, <span class="at">width =</span> <span class="dv">250</span>)</span>
+<span id="cb50-13"><a href="17-Alpha_diversity_practice.html#cb50-13" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb50-14"><a href="17-Alpha_diversity_practice.html#cb50-14" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_site_violinplot_pairwise_wilcox.png&quot;</span>)</span></code></pre></div>
 </div>
-<div id="reset-seed" class="section level2 hasAnchor" number="5.2">
-<h2><span class="header-section-number">5.2</span> Reset seed<a href="05-R_and_random_seeds.html#reset-seed" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="alpha-recap" class="section level2 hasAnchor" number="17.2">
+<h2><span class="header-section-number">17.2</span> <span class="math inline">\(\alpha\)</span>: Recap<a href="17-Alpha_diversity_practice.html#alpha-recap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
-<img src="figures/reset_seed.png" style="width:300px" />
+<img src="figures/recap.png" style="width:200px; background-color:white; border-radius:15px" />
 </center>
-<p>We set a <strong>random seed</strong> at the start of the cell for reproducibility and control, but why do we then run the line <code>set.seed(NULL)</code>?</p>
-<p>The normal operation of R means that, in effect, its <strong>random seed</strong> changes every time it is used.
-This means R normally randomly determines randomness.
-This is how it should be until we want to set the randomness.
-It is therefore good practice to set the seed to <code>NULL</code> after you have utilised your set <strong>seeds</strong>.
-This will revert the <strong>seed</strong> to its normal random operations.</p>
-<p>One last point to note is R versions.
-Version 3.6 changed R's sampling methods, therefore if you use Version 3.5 or below you will get different results than we have got.
-Hopefully the R developers will not change this in a later version again.</p>
+<p>In this chapter you have:</p>
+<ul>
+<li>Produced <strong>alpha diversity</strong> values through <strong>iterative rarefaction</strong></li>
+<li>Created a long data frame containing metadata and specified <strong>alpha diversity</strong> metrics</li>
+<li>Visualised the group differences of <strong>alpha diversity</strong> metrics with violin plots</li>
+<li>Embedded paired Wilcoxon p-values in our violin plots</li>
+</ul>
+<p>With these skills and knowledge you will be able to carry out thorough investigations of <strong>alpha diversity</strong> in your future research.</p>
 
 </div>
 </div>
@@ -536,8 +576,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="04-Random_seeds.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="06-Random_seeds_practice.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="16-Alpha_plot_with_stats.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

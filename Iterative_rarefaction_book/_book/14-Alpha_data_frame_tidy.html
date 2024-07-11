@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 5 R and random seeds | Iterative rarefaction</title>
+  <title>Chapter 14 \(\alpha\) data frame tidying | Iterative rarefaction</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 5 R and random seeds | Iterative rarefaction" />
+  <meta property="og:title" content="Chapter 14 \(\alpha\) data frame tidying | Iterative rarefaction" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/figures/NEOF.png" />
   <meta property="og:description" content="NEOF book for the R community advanced analysis course" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 R and random seeds | Iterative rarefaction" />
+  <meta name="twitter:title" content="Chapter 14 \(\alpha\) data frame tidying | Iterative rarefaction" />
   
   <meta name="twitter:description" content="NEOF book for the R community advanced analysis course" />
   <meta name="twitter:image" content="/figures/NEOF.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
-<link rel="prev" href="04-Random_seeds.html"/>
-<link rel="next" href="06-Random_seeds_practice.html"/>
+<link rel="prev" href="13-Alpha_diversity_rarefaction.html"/>
+<link rel="next" href="15-Alpha_violin_plot_and_stats.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -255,73 +255,117 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="r-and-random-seeds" class="section level1 hasAnchor" number="5">
-<h1><span class="header-section-number">Chapter 5</span> R and random seeds<a href="05-R_and_random_seeds.html#r-and-random-seeds" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="alpha-data-frame-tidying" class="section level1 hasAnchor" number="14">
+<h1><span class="header-section-number">Chapter 14</span> <span class="math inline">\(\alpha\)</span> data frame tidying<a href="14-Alpha_data_frame_tidy.html#alpha-data-frame-tidying" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <center>
-<img src="figures/braille_r.png" style="width:200px; border-radius:15px; border:#FFFFFF 6px solid" />
+<img src="figures/clean_2.png" style="width:200px; background-color:white; border-radius:15px" />
 </center>
-<p>Sampling is meant to be random but true randomness is pretty much impossible, especially in computing.
-Therefore, many programs use <strong>seeds</strong> to determine how random tasks will be carried out.
-Various programs that use <strong>random seeds</strong> include:</p>
+<p>In this section we will tidy up our data frame to make it ready for plotting by:</p>
 <ul>
-<li>Sampling tools such as <code>sample()</code> and rarefaction</li>
-<li>Creating bootstrapped phylogenies</li>
-<li>Creating procedural content such as building Minecraft worlds</li>
+<li>Combining our <strong>alpha diversity</strong> values and metadata</li>
+<li>Converting our wide data frame to a long data frame</li>
+<li>Subsetting our data frame so it only contains the <strong>alpha diversity</strong> metrics we want to plot</li>
 </ul>
-<div id="setting-the-r-seed" class="section level2 hasAnchor" number="5.1">
-<h2><span class="header-section-number">5.1</span> Setting the R seed<a href="05-R_and_random_seeds.html#setting-the-r-seed" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="alpha-metric-and-metadata-data-frame" class="section level2 hasAnchor" number="14.1">
+<h2><span class="header-section-number">14.1</span> <span class="math inline">\(\alpha\)</span>: Metric and metadata data frame<a href="14-Alpha_data_frame_tidy.html#alpha-metric-and-metadata-data-frame" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
-<img src="figures/set_a_seed.png" style="width:300px; border-radius:15px; background:white; border:#FFFFFF 6px solid" />
+<img src="figures/wide_data_frame.png" style="width:200px" />
 </center>
-<p>To carry out random processes <code>R</code> uses a global variable called <code>seed</code>.
-The <code>seed</code> is normally random and changed every time it is used.
-This is useful for everyday analysis but what if you want replicable results?</p>
-<p>In R we can set the <code>seed</code> with the function <code>seet.seed()</code>.
-Carry this out followed by sampling.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb4-1"><a href="05-R_and_random_seeds.html#cb4-1" tabindex="-1"></a><span class="co">#Set random seed</span></span>
-<span id="cb4-2"><a href="05-R_and_random_seeds.html#cb4-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb4-3"><a href="05-R_and_random_seeds.html#cb4-3" tabindex="-1"></a><span class="co">#Randomly sample 12 of these numbers without replacement</span></span>
-<span id="cb4-4"><a href="05-R_and_random_seeds.html#cb4-4" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">12</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb4-5"><a href="05-R_and_random_seeds.html#cb4-5" tabindex="-1"></a><span class="co">#Reset random seed (covered later)</span></span>
-<span id="cb4-6"><a href="05-R_and_random_seeds.html#cb4-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div>
-<p>You will get a result of "9, 5, 4, 3, &amp; 6".
-You can try to run the code multiple times and you will always get the same results.</p>
-<p>If you run a tool that uses random sampling you will always get the same results if:</p>
-<ul>
-<li>You use the same random seed (<code>seed</code> for R)</li>
-<li>You use the same data</li>
-<li>You use the same parameters including the replacement method (with or without)</li>
-</ul>
-<p>In fact, run the below code in a new code cell and you may notice a similarity with your previous output.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb5-1"><a href="05-R_and_random_seeds.html#cb5-1" tabindex="-1"></a><span class="co">#Set random seed</span></span>
-<span id="cb5-2"><a href="05-R_and_random_seeds.html#cb5-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
-<span id="cb5-3"><a href="05-R_and_random_seeds.html#cb5-3" tabindex="-1"></a><span class="co">#Create a vector containing the numbers 0 to 10</span></span>
-<span id="cb5-4"><a href="05-R_and_random_seeds.html#cb5-4" tabindex="-1"></a>larger_num_vec <span class="ot">&lt;-</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">19</span></span>
-<span id="cb5-5"><a href="05-R_and_random_seeds.html#cb5-5" tabindex="-1"></a><span class="co">#Randomly sample 5 of these numbers</span></span>
-<span id="cb5-6"><a href="05-R_and_random_seeds.html#cb5-6" tabindex="-1"></a><span class="fu">sample</span>(<span class="at">x =</span> num_vec, <span class="at">size =</span> <span class="dv">5</span>)</span>
-<span id="cb5-7"><a href="05-R_and_random_seeds.html#cb5-7" tabindex="-1"></a><span class="co">#Reset random seed (covered later)</span></span>
-<span id="cb5-8"><a href="05-R_and_random_seeds.html#cb5-8" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div>
-<p>That's right, <code>sample()</code> will always take the 10th (9/19), 6th (5/15), 5th (4/14), 4th (3/13), and 7th (6/16) values if it is given the <strong>random seed</strong> of <strong>1234</strong>, provided with an 11 length vector, and asked to sample 5 values.</p>
-<p>Setting our randomness is incredible beneficial for reproducibility in research.</p>
-<p>When you carry out analysis you may need to redo some work.
-This could be due to reviewer comments or you want to incorporate some new methods.
-As long as you saved the random seeds you used you can get the same results where you need to.
-It also means others can replicate your results.</p>
+<p>Now that we have our <strong>alpha diversity</strong> values we will create a data frame that contains these values and metadata.</p>
+<p>In the below code we extract the metadata from the rarefied phyloseq object created in the last loop iteration above.
+This ensures we only acquire metadata from samples that are retained after <strong>rarefaction</strong>.
+The samples that are retained are always the same across our <strong>rarefaction iterations</strong> as samples are retained based on the <strong>rarefaction size/depth</strong> which is kept consistent across our <strong>rarefactions</strong>.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb36-1"><a href="14-Alpha_data_frame_tidy.html#cb36-1" tabindex="-1"></a><span class="co">#Combine metadata and alpha diversity mean values into one data frame</span></span>
+<span id="cb36-2"><a href="14-Alpha_data_frame_tidy.html#cb36-2" tabindex="-1"></a><span class="co">#Extract metadata from rarefied phyloseq object</span></span>
+<span id="cb36-3"><a href="14-Alpha_data_frame_tidy.html#cb36-3" tabindex="-1"></a>metadf <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">sample_data</span>(pseq)</span>
+<span id="cb36-4"><a href="14-Alpha_data_frame_tidy.html#cb36-4" tabindex="-1"></a><span class="co">#Ensure row names are identical</span></span>
+<span id="cb36-5"><a href="14-Alpha_data_frame_tidy.html#cb36-5" tabindex="-1"></a><span class="co">#if not sort alpha data frame rows by metadata row names</span></span>
+<span id="cb36-6"><a href="14-Alpha_data_frame_tidy.html#cb36-6" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">identical</span>(<span class="fu">row.names</span>(metadf), <span class="fu">row.names</span>(alpha_df_mean)) <span class="sc">==</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb36-7"><a href="14-Alpha_data_frame_tidy.html#cb36-7" tabindex="-1"></a>  alpha_df_mean <span class="ot">&lt;-</span> alpha_df_mean[<span class="fu">row.names</span>(metadf),]</span>
+<span id="cb36-8"><a href="14-Alpha_data_frame_tidy.html#cb36-8" tabindex="-1"></a>}</span>
+<span id="cb36-9"><a href="14-Alpha_data_frame_tidy.html#cb36-9" tabindex="-1"></a><span class="co">#Combine with cbind (column bind)</span></span>
+<span id="cb36-10"><a href="14-Alpha_data_frame_tidy.html#cb36-10" tabindex="-1"></a>meta_alpha_mean_df <span class="ot">&lt;-</span> <span class="fu">cbind</span>(metadf,alpha_df_mean)</span>
+<span id="cb36-11"><a href="14-Alpha_data_frame_tidy.html#cb36-11" tabindex="-1"></a><span class="fu">head</span>(meta_alpha_mean_df)</span>
+<span id="cb36-12"><a href="14-Alpha_data_frame_tidy.html#cb36-12" tabindex="-1"></a><span class="co">#Remove rarefied phyloseq object that we do not need any more in this notebook</span></span>
+<span id="cb36-13"><a href="14-Alpha_data_frame_tidy.html#cb36-13" tabindex="-1"></a><span class="fu">rm</span>(pseq_rarefy) </span></code></pre></div>
+<p>From the output of <code>head()</code> you should see a table with the first set of columns being the metadata columns. The next set of columns is the alpha diversity metrics.</p>
 </div>
-<div id="reset-seed" class="section level2 hasAnchor" number="5.2">
-<h2><span class="header-section-number">5.2</span> Reset seed<a href="05-R_and_random_seeds.html#reset-seed" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="alpha_long_df" class="section level2 hasAnchor" number="14.2">
+<h2><span class="header-section-number">14.2</span> <span class="math inline">\(\alpha\)</span>: Long data frame<a href="14-Alpha_data_frame_tidy.html#alpha_long_df" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
-<img src="figures/reset_seed.png" style="width:300px" />
+<img src="figures/long_data_frame.png" style="width:100px" />
 </center>
-<p>We set a <strong>random seed</strong> at the start of the cell for reproducibility and control, but why do we then run the line <code>set.seed(NULL)</code>?</p>
-<p>The normal operation of R means that, in effect, its <strong>random seed</strong> changes every time it is used.
-This means R normally randomly determines randomness.
-This is how it should be until we want to set the randomness.
-It is therefore good practice to set the seed to <code>NULL</code> after you have utilised your set <strong>seeds</strong>.
-This will revert the <strong>seed</strong> to its normal random operations.</p>
-<p>One last point to note is R versions.
-Version 3.6 changed R's sampling methods, therefore if you use Version 3.5 or below you will get different results than we have got.
-Hopefully the R developers will not change this in a later version again.</p>
+<p>We will plot our <strong>alpha diversity</strong> values with <code>ggplot2</code> functions.
+Before we carry this out we need to convert our wide data frame to a long data frame.
+We'll carry this out with <code>tidyr::pivot_longer()</code>.</p>
+<p>For this we want our metric values to become long.
+This means that instead of the <strong>alpha diversity</strong> values being spread across multiple rows and columns their will only be one value per row.</p>
+<p>Two columns will represent these values in the long format:</p>
+<ul>
+<li><strong>metric:</strong> The name of the alpha diversity metric</li>
+<li><strong>value:</strong> The value of the alpha diversity metric</li>
+</ul>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb37-1"><a href="14-Alpha_data_frame_tidy.html#cb37-1" tabindex="-1"></a><span class="co">#Create long version for plotting</span></span>
+<span id="cb37-2"><a href="14-Alpha_data_frame_tidy.html#cb37-2" tabindex="-1"></a><span class="co">#alpha_df_mean (no metadata) column names to be used for long conversion</span></span>
+<span id="cb37-3"><a href="14-Alpha_data_frame_tidy.html#cb37-3" tabindex="-1"></a>alpha_div_colnames <span class="ot">&lt;-</span> <span class="fu">colnames</span>(alpha_df_mean)</span>
+<span id="cb37-4"><a href="14-Alpha_data_frame_tidy.html#cb37-4" tabindex="-1"></a><span class="co">#Wide to long</span></span>
+<span id="cb37-5"><a href="14-Alpha_data_frame_tidy.html#cb37-5" tabindex="-1"></a>meta_alpha_mean_long_df <span class="ot">&lt;-</span> </span>
+<span id="cb37-6"><a href="14-Alpha_data_frame_tidy.html#cb37-6" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">data =</span> meta_alpha_mean_df,</span>
+<span id="cb37-7"><a href="14-Alpha_data_frame_tidy.html#cb37-7" tabindex="-1"></a>                      <span class="co">#Change the alpha diversity names to long format</span></span>
+<span id="cb37-8"><a href="14-Alpha_data_frame_tidy.html#cb37-8" tabindex="-1"></a>                      <span class="co">#I.e. keep our metadata columns as separate columns</span></span>
+<span id="cb37-9"><a href="14-Alpha_data_frame_tidy.html#cb37-9" tabindex="-1"></a>                      <span class="co">#all_of() used to silence warning message</span></span>
+<span id="cb37-10"><a href="14-Alpha_data_frame_tidy.html#cb37-10" tabindex="-1"></a>                      <span class="at">cols =</span> <span class="fu">all_of</span>(alpha_div_colnames)</span>
+<span id="cb37-11"><a href="14-Alpha_data_frame_tidy.html#cb37-11" tabindex="-1"></a>                      <span class="co">#Set column name to column called metric</span></span>
+<span id="cb37-12"><a href="14-Alpha_data_frame_tidy.html#cb37-12" tabindex="-1"></a>                      <span class="co">#Set values to column called value</span></span>
+<span id="cb37-13"><a href="14-Alpha_data_frame_tidy.html#cb37-13" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="st">&quot;metric&quot;</span>, <span class="at">values_to =</span> <span class="st">&quot;value&quot;</span></span>
+<span id="cb37-14"><a href="14-Alpha_data_frame_tidy.html#cb37-14" tabindex="-1"></a>                      )</span>
+<span id="cb37-15"><a href="14-Alpha_data_frame_tidy.html#cb37-15" tabindex="-1"></a><span class="co">#Change our metric column to a factor</span></span>
+<span id="cb37-16"><a href="14-Alpha_data_frame_tidy.html#cb37-16" tabindex="-1"></a><span class="co">#Useful for plotting</span></span>
+<span id="cb37-17"><a href="14-Alpha_data_frame_tidy.html#cb37-17" tabindex="-1"></a>meta_alpha_mean_long_df<span class="sc">$</span>metric <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(meta_alpha_mean_long_df<span class="sc">$</span>metric)</span>
+<span id="cb37-18"><a href="14-Alpha_data_frame_tidy.html#cb37-18" tabindex="-1"></a><span class="co">#Check head and dimensions of long data frame</span></span>
+<span id="cb37-19"><a href="14-Alpha_data_frame_tidy.html#cb37-19" tabindex="-1"></a><span class="fu">head</span>(meta_alpha_mean_long_df)</span>
+<span id="cb37-20"><a href="14-Alpha_data_frame_tidy.html#cb37-20" tabindex="-1"></a><span class="fu">dim</span>(meta_alpha_mean_long_df)</span>
+<span id="cb37-21"><a href="14-Alpha_data_frame_tidy.html#cb37-21" tabindex="-1"></a><span class="co">#Remove unneeded objects</span></span>
+<span id="cb37-22"><a href="14-Alpha_data_frame_tidy.html#cb37-22" tabindex="-1"></a><span class="fu">rm</span>(alpha_df_mean, metadf)</span></code></pre></div>
+</div>
+<div id="alpha-subset-metrics" class="section level2 hasAnchor" number="14.3">
+<h2><span class="header-section-number">14.3</span> <span class="math inline">\(\alpha\)</span>: Subset metrics<a href="14-Alpha_data_frame_tidy.html#alpha-subset-metrics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/observe.png" style="width:200px; background-color:white; border-radius:15px" />
+</center>
+<p>There are a lot of diversity values created by <code>microbiome::alpha()</code>.
+For this tutorial we are only interested in:</p>
+<ul>
+<li><strong>observed:</strong> The number of observed features (ASVs, Phlya, Species, etc.)</li>
+<li><strong>chao1:</strong> The estimated real total number of features</li>
+<li><strong>diversity_shannon:</strong> The Shannon diversity metric
+<ul>
+<li>An estimate of feature diversity based on richness (presence/absence) and abundance</li>
+<li>The higher the value the higher the diversity</li>
+</ul></li>
+</ul>
+<p>We'll subset our long data frame to only retain rows with these metrics.
+We'll also use the utility of factors to order the metrics so they are plotted in our preferred order further down.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb38-1"><a href="14-Alpha_data_frame_tidy.html#cb38-1" tabindex="-1"></a><span class="co">#Process our long data frame</span></span>
+<span id="cb38-2"><a href="14-Alpha_data_frame_tidy.html#cb38-2" tabindex="-1"></a><span class="co">#Subset our long alpha diversity data frame to only contain our metrics of choice</span></span>
+<span id="cb38-3"><a href="14-Alpha_data_frame_tidy.html#cb38-3" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;observed&quot;</span>, <span class="st">&quot;chao1&quot;</span>,<span class="st">&quot;diversity_shannon&quot;</span>)</span>
+<span id="cb38-4"><a href="14-Alpha_data_frame_tidy.html#cb38-4" tabindex="-1"></a>basic_alpha_metrics_long_df <span class="ot">&lt;-</span> meta_alpha_mean_long_df[</span>
+<span id="cb38-5"><a href="14-Alpha_data_frame_tidy.html#cb38-5" tabindex="-1"></a>  meta_alpha_mean_long_df<span class="sc">$</span>metric <span class="sc">%in%</span> metrics,</span>
+<span id="cb38-6"><a href="14-Alpha_data_frame_tidy.html#cb38-6" tabindex="-1"></a>]</span>
+<span id="cb38-7"><a href="14-Alpha_data_frame_tidy.html#cb38-7" tabindex="-1"></a><span class="co">#Change instances of diversity_shannon to shannon</span></span>
+<span id="cb38-8"><a href="14-Alpha_data_frame_tidy.html#cb38-8" tabindex="-1"></a>basic_alpha_metrics_long_df<span class="sc">$</span>metric <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;diversity_shannon&quot;</span>,</span>
+<span id="cb38-9"><a href="14-Alpha_data_frame_tidy.html#cb38-9" tabindex="-1"></a>                                           <span class="at">replacement =</span> <span class="st">&quot;shannon&quot;</span>,</span>
+<span id="cb38-10"><a href="14-Alpha_data_frame_tidy.html#cb38-10" tabindex="-1"></a>                                           <span class="at">x =</span> basic_alpha_metrics_long_df<span class="sc">$</span>metric)</span>
+<span id="cb38-11"><a href="14-Alpha_data_frame_tidy.html#cb38-11" tabindex="-1"></a><span class="co">#The gsub() function changes our factor to a character vector</span></span>
+<span id="cb38-12"><a href="14-Alpha_data_frame_tidy.html#cb38-12" tabindex="-1"></a><span class="co">#Therefore change back to factor</span></span>
+<span id="cb38-13"><a href="14-Alpha_data_frame_tidy.html#cb38-13" tabindex="-1"></a><span class="co">#We will also choose our order of the metric names for plotting</span></span>
+<span id="cb38-14"><a href="14-Alpha_data_frame_tidy.html#cb38-14" tabindex="-1"></a>basic_alpha_metrics_long_df<span class="sc">$</span>metric <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="at">x =</span> basic_alpha_metrics_long_df<span class="sc">$</span>metric,</span>
+<span id="cb38-15"><a href="14-Alpha_data_frame_tidy.html#cb38-15" tabindex="-1"></a>                                             <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;observed&quot;</span>,<span class="st">&quot;chao1&quot;</span>,<span class="st">&quot;shannon&quot;</span>))</span>
+<span id="cb38-16"><a href="14-Alpha_data_frame_tidy.html#cb38-16" tabindex="-1"></a><span class="co">#Check level order of metric factor column</span></span>
+<span id="cb38-17"><a href="14-Alpha_data_frame_tidy.html#cb38-17" tabindex="-1"></a><span class="fu">levels</span>(basic_alpha_metrics_long_df<span class="sc">$</span>metric)</span>
+<span id="cb38-18"><a href="14-Alpha_data_frame_tidy.html#cb38-18" tabindex="-1"></a><span class="co">#Check head of subsetted long data frame</span></span>
+<span id="cb38-19"><a href="14-Alpha_data_frame_tidy.html#cb38-19" tabindex="-1"></a><span class="fu">head</span>(basic_alpha_metrics_long_df)</span></code></pre></div>
+<p>With this data frame we can move onto visualisation and statistics.</p>
 
 </div>
 </div>
@@ -536,8 +580,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="04-Random_seeds.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="06-Random_seeds_practice.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="13-Alpha_diversity_rarefaction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="15-Alpha_violin_plot_and_stats.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
