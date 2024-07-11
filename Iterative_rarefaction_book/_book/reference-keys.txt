@@ -30,6 +30,8 @@ r-relative-abundance-bar-chart
 r-difference-from-non-rarefied
 multiple-rarefaction-mr-iterations
 mr-rarefaction
+mathematical-operators-data-frames
 mr-difference-from-non-rarefied
-iterating-rarefaction-task
+iterating-rarefaction-practice
+one-thousand-iteration
 iterating-rarefaction-recap

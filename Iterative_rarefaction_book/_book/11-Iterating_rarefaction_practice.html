@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Setup | Iterative rarefaction</title>
+  <title>Chapter 11 Iterating rarefaction practice | Iterative rarefaction</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Setup | Iterative rarefaction" />
+  <meta property="og:title" content="Chapter 11 Iterating rarefaction practice | Iterative rarefaction" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/figures/NEOF.png" />
   <meta property="og:description" content="NEOF book for the R community advanced analysis course" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Setup | Iterative rarefaction" />
+  <meta name="twitter:title" content="Chapter 11 Iterating rarefaction practice | Iterative rarefaction" />
   
   <meta name="twitter:description" content="NEOF book for the R community advanced analysis course" />
   <meta name="twitter:image" content="/figures/NEOF.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
-<link rel="prev" href="02-Background.html"/>
-<link rel="next" href="04-Random_seeds.html"/>
+<link rel="prev" href="10-Multiple_rounds_of_rarefaction.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -223,14 +223,97 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="setupchap" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Setup<a href="03-Setup.html#setupchap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Include info on directory, copying data, and environment setup</p>
+<div id="iterating-rarefaction-practice" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">Chapter 11</span> Iterating rarefaction practice<a href="11-Iterating_rarefaction_practice.html#iterating-rarefaction-practice" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Superlative! Now that you know how to carry out <strong>iterative rarefaction</strong> I'll ask you to do it once more for the phyla data.</p>
+<div id="one-thousand-iteration" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">11.1</span> One thousand iteration<a href="11-Iterating_rarefaction_practice.html#one-thousand-iteration" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/per_thousand.png" style="width:200px; background:white; border-radius:15px" />
+</center>
+<p>Create a rarefaction averaged phyla relative abundance as we have done above but with 1000 <strong>rarefaction iterations</strong>.
+For this task use <strong>153478</strong> as the <strong>seed</strong> when creating your vector of 1000 <strong>rng seeds</strong>.
+Save this vector of rngseeds to a file called "rngseeds_1000.RData".</p>
+<p><strong>Note:</strong> The iterative rarefaction step may take a few minutes.</p>
+<p>After creating the relative abundance matrix determine how different the values are compared to the non-rarefied relative abundance with a histogram.</p>
+What is the range of the differences compared to the non rarefied relative abundance values?
+<div id="radio_FFWXDFFUYO" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_FFWXDFFUYO" value="answer"></input> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_FFWXDFFUYO" value=""></input> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_FFWXDFFUYO" value=""></input> <span><strong>-0.015 to 0.015</strong></span></label>
+</div>
+<p>Please attempt the task yourself before looking at the solution code in the below expandable box.</p>
+<div class="webex-solution">
+<button>
+Task solution code
+</button>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb29-1"><a href="11-Iterating_rarefaction_practice.html#cb29-1" tabindex="-1"></a><span class="co">#Number of rarefaction iterations to be carried out</span></span>
+<span id="cb29-2"><a href="11-Iterating_rarefaction_practice.html#cb29-2" tabindex="-1"></a>rarefaction_iters <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb29-3"><a href="11-Iterating_rarefaction_practice.html#cb29-3" tabindex="-1"></a><span class="co">#Create rngseed vector</span></span>
+<span id="cb29-4"><a href="11-Iterating_rarefaction_practice.html#cb29-4" tabindex="-1"></a><span class="co">#Set seed for reproducibility</span></span>
+<span id="cb29-5"><a href="11-Iterating_rarefaction_practice.html#cb29-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">153478</span>)</span>
+<span id="cb29-6"><a href="11-Iterating_rarefaction_practice.html#cb29-6" tabindex="-1"></a><span class="co">#Create the rngseed vector</span></span>
+<span id="cb29-7"><a href="11-Iterating_rarefaction_practice.html#cb29-7" tabindex="-1"></a><span class="co">#Sample 1000 (number of iters) values from the number range 1-100,000</span></span>
+<span id="cb29-8"><a href="11-Iterating_rarefaction_practice.html#cb29-8" tabindex="-1"></a>rngseed_vec <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">100000</span>, <span class="at">size =</span> rarefaction_iters, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb29-9"><a href="11-Iterating_rarefaction_practice.html#cb29-9" tabindex="-1"></a><span class="co">#Save our rngseed vector</span></span>
+<span id="cb29-10"><a href="11-Iterating_rarefaction_practice.html#cb29-10" tabindex="-1"></a><span class="fu">save</span>(rngseed_vec, <span class="at">file=</span><span class="st">&quot;rngseeds_1000.RData&quot;</span>)</span>
+<span id="cb29-11"><a href="11-Iterating_rarefaction_practice.html#cb29-11" tabindex="-1"></a><span class="co">#Reset seed</span></span>
+<span id="cb29-12"><a href="11-Iterating_rarefaction_practice.html#cb29-12" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb30-1"><a href="11-Iterating_rarefaction_practice.html#cb30-1" tabindex="-1"></a><span class="co">#Iterative rarefaction to produce an average rarefied relative abundance table</span></span>
+<span id="cb30-2"><a href="11-Iterating_rarefaction_practice.html#cb30-2" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="11-Iterating_rarefaction_practice.html#cb30-3" tabindex="-1"></a><span class="co">#Assign rarefaction size</span></span>
+<span id="cb30-4"><a href="11-Iterating_rarefaction_practice.html#cb30-4" tabindex="-1"></a>rarefaction_size <span class="ot">&lt;-</span> <span class="fu">min</span>(microbiome<span class="sc">::</span><span class="fu">readcount</span>(pseq_env_phyla))</span>
+<span id="cb30-5"><a href="11-Iterating_rarefaction_practice.html#cb30-5" tabindex="-1"></a><span class="co">#Read in our rng seed vector</span></span>
+<span id="cb30-6"><a href="11-Iterating_rarefaction_practice.html#cb30-6" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;rngseeds_1000.RData&quot;</span>)</span>
+<span id="cb30-7"><a href="11-Iterating_rarefaction_practice.html#cb30-7" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="11-Iterating_rarefaction_practice.html#cb30-8" tabindex="-1"></a><span class="co">#Initalise where we will store the output</span></span>
+<span id="cb30-9"><a href="11-Iterating_rarefaction_practice.html#cb30-9" tabindex="-1"></a><span class="co">#In this case we create the first iteration</span></span>
+<span id="cb30-10"><a href="11-Iterating_rarefaction_practice.html#cb30-10" tabindex="-1"></a><span class="co">#Carry out first rarefaction</span></span>
+<span id="cb30-11"><a href="11-Iterating_rarefaction_practice.html#cb30-11" tabindex="-1"></a>pseq_rarefy <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">rarefy_even_depth</span>(pseq_env_phyla,</span>
+<span id="cb30-12"><a href="11-Iterating_rarefaction_practice.html#cb30-12" tabindex="-1"></a>                                           <span class="at">sample.size =</span> rarefaction_size</span>
+<span id="cb30-13"><a href="11-Iterating_rarefaction_practice.html#cb30-13" tabindex="-1"></a>                                           <span class="at">rngseed =</span> rngseed_vec[<span class="dv">1</span>])</span>
+<span id="cb30-14"><a href="11-Iterating_rarefaction_practice.html#cb30-14" tabindex="-1"></a><span class="co">#Calculate relative abundance</span></span>
+<span id="cb30-15"><a href="11-Iterating_rarefaction_practice.html#cb30-15" tabindex="-1"></a>pseq_rarefy_relabund <span class="ot">&lt;-</span> microbiome<span class="sc">::</span><span class="fu">transform</span>(pseq_rarefy, <span class="st">&quot;compositional&quot;</span>)</span>
+<span id="cb30-16"><a href="11-Iterating_rarefaction_practice.html#cb30-16" tabindex="-1"></a><span class="co">#Relabund phyla table object</span></span>
+<span id="cb30-17"><a href="11-Iterating_rarefaction_practice.html#cb30-17" tabindex="-1"></a>relabund_phyla_table <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(phyloseq<span class="sc">::</span><span class="fu">otu_table</span>(pseq_rarefy_relabund))</span>
+<span id="cb30-18"><a href="11-Iterating_rarefaction_practice.html#cb30-18" tabindex="-1"></a></span>
+<span id="cb30-19"><a href="11-Iterating_rarefaction_practice.html#cb30-19" tabindex="-1"></a><span class="co">#Loop through the next 999 iterations</span></span>
+<span id="cb30-20"><a href="11-Iterating_rarefaction_practice.html#cb30-20" tabindex="-1"></a><span class="co">#Add the relabund rarefied values to phyla_table</span></span>
+<span id="cb30-21"><a href="11-Iterating_rarefaction_practice.html#cb30-21" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(rngseed_vec)){</span>
+<span id="cb30-22"><a href="11-Iterating_rarefaction_practice.html#cb30-22" tabindex="-1"></a>  <span class="co">#Rarefy</span></span>
+<span id="cb30-23"><a href="11-Iterating_rarefaction_practice.html#cb30-23" tabindex="-1"></a>  pseq_rarefy <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">rarefy_even_depth</span>(pseq_env_phyla,</span>
+<span id="cb30-24"><a href="11-Iterating_rarefaction_practice.html#cb30-24" tabindex="-1"></a>                                           <span class="at">sample.size =</span> rarefaction_size</span>
+<span id="cb30-25"><a href="11-Iterating_rarefaction_practice.html#cb30-25" tabindex="-1"></a>                                           <span class="at">rngseed =</span> rngseed_vec[i])</span>
+<span id="cb30-26"><a href="11-Iterating_rarefaction_practice.html#cb30-26" tabindex="-1"></a>  <span class="co">#Calculate relative abundance</span></span>
+<span id="cb30-27"><a href="11-Iterating_rarefaction_practice.html#cb30-27" tabindex="-1"></a>  pseq_rarefy_relabund <span class="ot">&lt;-</span> microbiome<span class="sc">::</span><span class="fu">transform</span>(pseq_rarefy, <span class="st">&quot;compositional&quot;</span>)</span>
+<span id="cb30-28"><a href="11-Iterating_rarefaction_practice.html#cb30-28" tabindex="-1"></a>  <span class="co">#Sum values to phyla_table</span></span>
+<span id="cb30-29"><a href="11-Iterating_rarefaction_practice.html#cb30-29" tabindex="-1"></a>  relabund_phyla_table <span class="ot">&lt;-</span> </span>
+<span id="cb30-30"><a href="11-Iterating_rarefaction_practice.html#cb30-30" tabindex="-1"></a>    relabund_phyla_table <span class="sc">+</span> <span class="fu">as.data.frame</span>(phyloseq<span class="sc">::</span><span class="fu">otu_table</span>(pseq_rarefy_relabund))</span>
+<span id="cb30-31"><a href="11-Iterating_rarefaction_practice.html#cb30-31" tabindex="-1"></a>}</span>
+<span id="cb30-32"><a href="11-Iterating_rarefaction_practice.html#cb30-32" tabindex="-1"></a><span class="co">#Average the values of the summed relabund phyla_table</span></span>
+<span id="cb30-33"><a href="11-Iterating_rarefaction_practice.html#cb30-33" tabindex="-1"></a>relabund_phyla_table <span class="ot">&lt;-</span> relabund_phyla_table <span class="sc">/</span> <span class="fu">length</span>(rngseed_vec)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb31-1"><a href="11-Iterating_rarefaction_practice.html#cb31-1" tabindex="-1"></a><span class="co">#Value difference matrix</span></span>
+<span id="cb31-2"><a href="11-Iterating_rarefaction_practice.html#cb31-2" tabindex="-1"></a>iterative_rarefaction_1000_diff <span class="ot">&lt;-</span> </span>
+<span id="cb31-3"><a href="11-Iterating_rarefaction_practice.html#cb31-3" tabindex="-1"></a>  <span class="fu">as.matrix</span>(phyloseq<span class="sc">::</span><span class="fu">otu_table</span>(pseq_env_phyla_relabund) <span class="sc">-</span> relabund_phyla_table)</span>
+<span id="cb31-4"><a href="11-Iterating_rarefaction_practice.html#cb31-4" tabindex="-1"></a>iterative_rarefaction_diff</span>
+<span id="cb31-5"><a href="11-Iterating_rarefaction_practice.html#cb31-5" tabindex="-1"></a><span class="co">#Histogram</span></span>
+<span id="cb31-6"><a href="11-Iterating_rarefaction_practice.html#cb31-6" tabindex="-1"></a><span class="fu">hist</span>(iterative_rarefaction_diff)</span></code></pre></div>
+</div>
+</div>
+<div id="iterating-rarefaction-recap" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">11.2</span> Iterating rarefaction recap<a href="11-Iterating_rarefaction_practice.html#iterating-rarefaction-recap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/recap.png" style="width:200px; background:white; border-radius:15px" />
+</center>
+<p>With this section you have learnt:</p>
+<ul>
+<li>How to create a vector of rngseeds</li>
+<li>How to use rng seeds to carry out <strong>iterative rarefaction</strong></li>
+</ul>
+<p>In you real life analysis you would not use this method to create relative abundance taxonomy bar charts, you would use the non-rarefied relative abundance.
+However, this hopefully gave you a good idea of how <strong>iterative rarefaction</strong> works so we can utilise it the next 2 chapters for alpha and beta diversity analysis.</p>
+<p>Feel free to save then close and halt your "Iterating_rarefaction.ipynb" notebook.</p>
 
 </div>
-
-
-
+</div>
 <script>
 
 /* update total correct if #webex-total_correct exists */
@@ -442,8 +525,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="02-Background.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="04-Random_seeds.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="10-Multiple_rounds_of_rarefaction.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

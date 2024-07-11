@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 3 Setup | Iterative rarefaction</title>
+  <title>Chapter 7 Iterating rarefaction intro &amp; setup | Iterative rarefaction</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 3 Setup | Iterative rarefaction" />
+  <meta property="og:title" content="Chapter 7 Iterating rarefaction intro &amp; setup | Iterative rarefaction" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/figures/NEOF.png" />
   <meta property="og:description" content="NEOF book for the R community advanced analysis course" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Setup | Iterative rarefaction" />
+  <meta name="twitter:title" content="Chapter 7 Iterating rarefaction intro &amp; setup | Iterative rarefaction" />
   
   <meta name="twitter:description" content="NEOF book for the R community advanced analysis course" />
   <meta name="twitter:image" content="/figures/NEOF.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
-<link rel="prev" href="02-Background.html"/>
-<link rel="next" href="04-Random_seeds.html"/>
+<link rel="prev" href="06-Random_seeds_practice.html"/>
+<link rel="next" href="08-Phyla_relative_abundance.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -223,14 +223,101 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="setupchap" class="section level1 hasAnchor" number="3">
-<h1><span class="header-section-number">Chapter 3</span> Setup<a href="03-Setup.html#setupchap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Include info on directory, copying data, and environment setup</p>
+<div id="iterating_rarefaction_chap" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Iterating rarefaction intro &amp; setup<a href="07-Iterating_rarefaction_intro.html#iterating_rarefaction_chap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<center>
+<img src="figures/france.png" style="width:200px" />
+</center>
+<p>In this section we will create code to carry out <strong>iterative rarefaction</strong>.
+We'll create a vector of <strong>random seeds</strong>, each used for a different <strong>iteration</strong> of <strong>rarefaction</strong>.
+We use this vector to loop through, using each <strong>random seed</strong> to carry out one <strong>iteration</strong> of <strong>rarefaction</strong>.
+In the next sections we will utilise this code to produce alpha and beta diversity values that we will analyse.</p>
+<div id="iterating-rarefaction-dataset" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Iterating rarefaction dataset<a href="07-Iterating_rarefaction_intro.html#iterating-rarefaction-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/river.png" style="width:200px" />
+</center>
+<p>The data set we will use is the same as that used in the <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/02-Dataset_and_workflow.html#dataset">R community analysis workshop</a>.</p>
+<p>Below are brief bullet points about the data:</p>
+<ul>
+<li>It is a 16S dataset of ASV counts with taxonomy and phylogeny produced by QIIME2</li>
+<li>The samples come from surface water from the Durance River in the south-east of France</li>
+<li>There are three sampling sites on an anthropisation gradient (low to high agriculture)
+<ul>
+<li>Upper Durance (UD)</li>
+<li>Middle Durance (MD)</li>
+<li>Lower Durance (LD)</li>
+</ul></li>
+<li>Four different media approaches were used to produce bacterial lawns that were sequenced
+<ul>
+<li>Environmental sample (ENV): No media used, frozen at -20°C.</li>
+<li>TSA 10% incubated at 28°C for 2 days.</li>
+<li>KBC incubated at 28°C for 2 days.</li>
+<li>CVP incubated at 28°C for 3 days.</li>
+</ul></li>
+<li>There are three replicates for each sampling site and media combination (36 samples total)</li>
+</ul>
+</div>
+<div id="iterating-rarefaction-setup" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Iterating rarefaction setup<a href="07-Iterating_rarefaction_intro.html#iterating-rarefaction-setup" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/setup_5.png" style="width:200px" />
+</center>
+<p>First, create a new R jupyter-notebook called "Iterating_rarefaction.ipynb".</p>
+<p>At the top of this notebook create a code cell to load in the various packages and data we need. The code is below:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb10-1"><a href="07-Iterating_rarefaction_intro.html#cb10-1" tabindex="-1"></a><span class="co">#Libraries</span></span>
+<span id="cb10-2"><a href="07-Iterating_rarefaction_intro.html#cb10-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;phyloseq&quot;</span>)</span>
+<span id="cb10-3"><a href="07-Iterating_rarefaction_intro.html#cb10-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;microbiome&quot;</span>)</span>
+<span id="cb10-4"><a href="07-Iterating_rarefaction_intro.html#cb10-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;IRdisplay&quot;</span>)</span>
+<span id="cb10-5"><a href="07-Iterating_rarefaction_intro.html#cb10-5" tabindex="-1"></a><span class="co">#Load processed but unrarefied data from R community analysis workshop</span></span>
+<span id="cb10-6"><a href="07-Iterating_rarefaction_intro.html#cb10-6" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;phyloseq.RData&quot;</span>)</span></code></pre></div>
+</div>
+<div id="rarefaction-iterations" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Rarefaction iterations<a href="07-Iterating_rarefaction_intro.html#rarefaction-iterations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/number_pad.png" style="width:200px" />
+</center>
+<p>We need to choose the number of <strong>iterations</strong> we are going to carry out.</p>
+<p>For our <strong>practice</strong> we will use <strong>10 iterations</strong> for speed.
+In your real analysis I would recommend using <strong>1000 iterations</strong>.</p>
+<p>Let's create a variable for our number of <strong>iterations</strong>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb11-1"><a href="07-Iterating_rarefaction_intro.html#cb11-1" tabindex="-1"></a><span class="co">#Number of rarefaction iterations to be carried out</span></span>
+<span id="cb11-2"><a href="07-Iterating_rarefaction_intro.html#cb11-2" tabindex="-1"></a><span class="co">#Using 10 here for speed, real analysis should use 1000</span></span>
+<span id="cb11-3"><a href="07-Iterating_rarefaction_intro.html#cb11-3" tabindex="-1"></a>rarefaction_iters <span class="ot">&lt;-</span> <span class="dv">10</span></span></code></pre></div>
+</div>
+<div id="rng_vec_creation" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> RNG vector creation<a href="07-Iterating_rarefaction_intro.html#rng_vec_creation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/list.png" style="width:200px; background-color:white; border-radius:15px" />
+</center>
+<p>We can now carry out <strong>Random Number Generation (RNG)</strong> to create a number of <strong>random seeds</strong> equal to the number of iterations planned.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb12-1"><a href="07-Iterating_rarefaction_intro.html#cb12-1" tabindex="-1"></a><span class="co">#Create rngseed vector</span></span>
+<span id="cb12-2"><a href="07-Iterating_rarefaction_intro.html#cb12-2" tabindex="-1"></a><span class="co">#Set seed for reproducibility</span></span>
+<span id="cb12-3"><a href="07-Iterating_rarefaction_intro.html#cb12-3" tabindex="-1"></a><span class="co">#This number was chosen randomly</span></span>
+<span id="cb12-4"><a href="07-Iterating_rarefaction_intro.html#cb12-4" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2605</span>)</span>
+<span id="cb12-5"><a href="07-Iterating_rarefaction_intro.html#cb12-5" tabindex="-1"></a><span class="co">#Sample 10 (number of iters) values from the number range 1-100,000</span></span>
+<span id="cb12-6"><a href="07-Iterating_rarefaction_intro.html#cb12-6" tabindex="-1"></a>rngseed_vec <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">100000</span>, <span class="at">size =</span> rarefaction_iters, <span class="at">replace =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-7"><a href="07-Iterating_rarefaction_intro.html#cb12-7" tabindex="-1"></a><span class="co">#Print out vector</span></span>
+<span id="cb12-8"><a href="07-Iterating_rarefaction_intro.html#cb12-8" tabindex="-1"></a>rngseed_vec</span>
+<span id="cb12-9"><a href="07-Iterating_rarefaction_intro.html#cb12-9" tabindex="-1"></a><span class="co">#Save our rngseed vector</span></span>
+<span id="cb12-10"><a href="07-Iterating_rarefaction_intro.html#cb12-10" tabindex="-1"></a><span class="fu">save</span>(rngseed_vec, <span class="at">file=</span><span class="st">&quot;rngseeds.RData&quot;</span>)</span>
+<span id="cb12-11"><a href="07-Iterating_rarefaction_intro.html#cb12-11" tabindex="-1"></a><span class="co">#Reset seed</span></span>
+<span id="cb12-12"><a href="07-Iterating_rarefaction_intro.html#cb12-12" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div>
+<p>There are a lot of steps above. These are:</p>
+<ul>
+<li><strong>Setting the random seed:</strong> We carry this out so we will always get the same rngseed vector that will be used for the rarefaction iterations. This is important so you will always get the same results if you need to rework some analysis, stats, or plots. Also useful here so you get the same results as the instructor and other attendees.</li>
+<li><strong>Creating the rngseed vector:</strong> We use our old friend <code>sample()</code> to create a random number for each <strong>iteration</strong> we will carry out.
+<ul>
+<li>We arbitrarily sample from the numbers 1-100,000, you could change this to a larger range in your future research.</li>
+<li>We use our previous object <code>rarefaction_iters</code> as <code>size=</code> to produce a random number for each of our <strong>iterations</strong>.</li>
+<li>We carry this out <strong>without replacement</strong> so none of our <strong>rarefaction iterations</strong> are identical.</li>
+</ul></li>
+<li><strong>Save the rngseed vector:</strong> We save the vector as a file. We will load this in our alpha and beta diversity notebooks to be used for iterative rarefaction. This is also useful so you have a backup file of the rngseed vectors.</li>
+<li><strong>Reset seed:</strong> Always good to reset the seed at the end of a Jupyter notebook cell or after it has been used in a Rscript.</li>
+</ul>
 
 </div>
-
-
-
+</div>
 <script>
 
 /* update total correct if #webex-total_correct exists */
@@ -442,8 +529,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="02-Background.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="04-Random_seeds.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="06-Random_seeds_practice.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="08-Phyla_relative_abundance.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

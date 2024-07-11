@@ -23,7 +23,7 @@
 <meta name="author" content="Matthew R. Gemmell" />
 
 
-<meta name="date" content="2024-07-10" />
+<meta name="date" content="2024-07-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
 <link rel="prev" href="05-R_and_random_seeds.html"/>
-<link rel="next" href="07-Iterating_rarefaction.html"/>
+<link rel="next" href="07-Iterating_rarefaction_intro.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -174,30 +174,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.4" data-path="06-Random_seeds_practice.html"><a href="06-Random_seeds_practice.html#random-seed-recap"><i class="fa fa-check"></i><b>6.4</b> Random seed recap</a></li>
 </ul></li>
 <li class="part"><span><b>Iterating rarefaction</b></span></li>
-<li class="chapter" data-level="7" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html"><i class="fa fa-check"></i><b>7</b> Iterating rarefaction</a>
+<li class="chapter" data-level="7" data-path="07-Iterating_rarefaction_intro.html"><a href="07-Iterating_rarefaction_intro.html"><i class="fa fa-check"></i><b>7</b> Iterating rarefaction intro &amp; setup</a>
 <ul>
-<li class="chapter" data-level="7.1" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html#iterating-rarefaction-dataset"><i class="fa fa-check"></i><b>7.1</b> Iterating rarefaction dataset</a></li>
-<li class="chapter" data-level="7.2" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html#iterating-rarefaction-setup"><i class="fa fa-check"></i><b>7.2</b> Iterating rarefaction setup</a></li>
-<li class="chapter" data-level="7.3" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html#rarefaction-iterations"><i class="fa fa-check"></i><b>7.3</b> Rarefaction iterations</a></li>
-<li class="chapter" data-level="7.4" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html#rng_vec_creation"><i class="fa fa-check"></i><b>7.4</b> RNG vector creation</a></li>
-<li class="chapter" data-level="7.5" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html#phyla-relative-abundance"><i class="fa fa-check"></i><b>7.5</b> Phyla relative abundance</a>
-<ul>
-<li class="chapter" data-level="7.5.1" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html#subset-and-phyla-aggregation"><i class="fa fa-check"></i><b>7.5.1</b> Subset and phyla aggregation</a></li>
-<li class="chapter" data-level="7.5.2" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html#phyla-relative-abundance-bar-chart"><i class="fa fa-check"></i><b>7.5.2</b> Phyla relative abundance bar chart</a></li>
+<li class="chapter" data-level="7.1" data-path="07-Iterating_rarefaction_intro.html"><a href="07-Iterating_rarefaction_intro.html#iterating-rarefaction-dataset"><i class="fa fa-check"></i><b>7.1</b> Iterating rarefaction dataset</a></li>
+<li class="chapter" data-level="7.2" data-path="07-Iterating_rarefaction_intro.html"><a href="07-Iterating_rarefaction_intro.html#iterating-rarefaction-setup"><i class="fa fa-check"></i><b>7.2</b> Iterating rarefaction setup</a></li>
+<li class="chapter" data-level="7.3" data-path="07-Iterating_rarefaction_intro.html"><a href="07-Iterating_rarefaction_intro.html#rarefaction-iterations"><i class="fa fa-check"></i><b>7.3</b> Rarefaction iterations</a></li>
+<li class="chapter" data-level="7.4" data-path="07-Iterating_rarefaction_intro.html"><a href="07-Iterating_rarefaction_intro.html#rng_vec_creation"><i class="fa fa-check"></i><b>7.4</b> RNG vector creation</a></li>
 </ul></li>
-<li class="chapter" data-level="7.6" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html#one-round-1r-of-rarefaction"><i class="fa fa-check"></i><b>7.6</b> One Round (1R) of rarefaction</a>
+<li class="chapter" data-level="8" data-path="08-Phyla_relative_abundance.html"><a href="08-Phyla_relative_abundance.html"><i class="fa fa-check"></i><b>8</b> Phyla relative abundance</a>
 <ul>
-<li class="chapter" data-level="7.6.1" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html#r-rarefaction"><i class="fa fa-check"></i><b>7.6.1</b> 1R: Rarefaction</a></li>
-<li class="chapter" data-level="7.6.2" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html#r-relative-abundance-bar-chart"><i class="fa fa-check"></i><b>7.6.2</b> 1R: Relative abundance bar chart</a></li>
-<li class="chapter" data-level="7.6.3" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html#r-difference-from-non-rarefied"><i class="fa fa-check"></i><b>7.6.3</b> 1R: Difference from non-rarefied</a></li>
+<li class="chapter" data-level="8.1" data-path="08-Phyla_relative_abundance.html"><a href="08-Phyla_relative_abundance.html#subset-and-phyla-aggregation"><i class="fa fa-check"></i><b>8.1</b> Subset and phyla aggregation</a></li>
+<li class="chapter" data-level="8.2" data-path="08-Phyla_relative_abundance.html"><a href="08-Phyla_relative_abundance.html#phyla-relative-abundance-bar-chart"><i class="fa fa-check"></i><b>8.2</b> Phyla relative abundance bar chart</a></li>
 </ul></li>
-<li class="chapter" data-level="7.7" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html#multiple-rarefaction-mr-iterations"><i class="fa fa-check"></i><b>7.7</b> Multiple Rarefaction (MR) iterations</a>
+<li class="chapter" data-level="9" data-path="09-One_round_of_rarefaction.html"><a href="09-One_round_of_rarefaction.html"><i class="fa fa-check"></i><b>9</b> One Round (1R) of rarefaction</a>
 <ul>
-<li class="chapter" data-level="7.7.1" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html#mr-rarefaction"><i class="fa fa-check"></i><b>7.7.1</b> MR: Rarefaction</a></li>
-<li class="chapter" data-level="7.7.2" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html#mr-difference-from-non-rarefied"><i class="fa fa-check"></i><b>7.7.2</b> MR: Difference from non-rarefied</a></li>
+<li class="chapter" data-level="9.1" data-path="09-One_round_of_rarefaction.html"><a href="09-One_round_of_rarefaction.html#r-rarefaction"><i class="fa fa-check"></i><b>9.1</b> 1R: Rarefaction</a></li>
+<li class="chapter" data-level="9.2" data-path="09-One_round_of_rarefaction.html"><a href="09-One_round_of_rarefaction.html#r-relative-abundance-bar-chart"><i class="fa fa-check"></i><b>9.2</b> 1R: Relative abundance bar chart</a></li>
+<li class="chapter" data-level="9.3" data-path="09-One_round_of_rarefaction.html"><a href="09-One_round_of_rarefaction.html#r-difference-from-non-rarefied"><i class="fa fa-check"></i><b>9.3</b> 1R: Difference from non-rarefied</a></li>
 </ul></li>
-<li class="chapter" data-level="7.8" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html#iterating-rarefaction-task"><i class="fa fa-check"></i><b>7.8</b> Iterating rarefaction task</a></li>
-<li class="chapter" data-level="7.9" data-path="07-Iterating_rarefaction.html"><a href="07-Iterating_rarefaction.html#iterating-rarefaction-recap"><i class="fa fa-check"></i><b>7.9</b> Iterating rarefaction recap</a></li>
+<li class="chapter" data-level="10" data-path="10-Multiple_rounds_of_rarefaction.html"><a href="10-Multiple_rounds_of_rarefaction.html"><i class="fa fa-check"></i><b>10</b> Multiple Rarefaction (MR) iterations</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="10-Multiple_rounds_of_rarefaction.html"><a href="10-Multiple_rounds_of_rarefaction.html#mr-rarefaction"><i class="fa fa-check"></i><b>10.1</b> MR: Rarefaction</a></li>
+<li class="chapter" data-level="10.2" data-path="10-Multiple_rounds_of_rarefaction.html"><a href="10-Multiple_rounds_of_rarefaction.html#mathematical-operators-data-frames"><i class="fa fa-check"></i><b>10.2</b> Mathematical operators &amp; data frames</a></li>
+<li class="chapter" data-level="10.3" data-path="10-Multiple_rounds_of_rarefaction.html"><a href="10-Multiple_rounds_of_rarefaction.html#mr-difference-from-non-rarefied"><i class="fa fa-check"></i><b>10.3</b> MR: Difference from non-rarefied</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="11-Iterating_rarefaction_practice.html"><a href="11-Iterating_rarefaction_practice.html"><i class="fa fa-check"></i><b>11</b> Iterating rarefaction practice</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="11-Iterating_rarefaction_practice.html"><a href="11-Iterating_rarefaction_practice.html#one-thousand-iteration"><i class="fa fa-check"></i><b>11.1</b> One thousand iteration</a></li>
+<li class="chapter" data-level="11.2" data-path="11-Iterating_rarefaction_practice.html"><a href="11-Iterating_rarefaction_practice.html#iterating-rarefaction-recap"><i class="fa fa-check"></i><b>11.2</b> Iterating rarefaction recap</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -240,8 +244,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Use the <strong>random seed</strong> <code>489</code></li>
 </ul>
 What is the fourth number in the produced vector?
-<div id="radio_KZAINDWYQH" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_KZAINDWYQH" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_KZAINDWYQH" value="answer"></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_KZAINDWYQH" value=""></input> <span><strong>1744</strong></span></label>
+<div id="radio_NXBXXQUXIC" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_NXBXXQUXIC" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_NXBXXQUXIC" value="answer"></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_NXBXXQUXIC" value=""></input> <span><strong>1744</strong></span></label>
 </div>
 <div class="webex-solution">
 <button>
@@ -269,8 +273,8 @@ RSQ1 code solution
 <li>Use the answer to the first question as the <strong>random seed</strong></li>
 </ul>
 What is the 16th number in the produced vector?
-<div id="radio_CYBDHMDVXH" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_CYBDHMDVXH" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_CYBDHMDVXH" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_CYBDHMDVXH" value="answer"></input> <span><strong>1744</strong></span></label>
+<div id="radio_OOPGRTHGQJ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_OOPGRTHGQJ" value=""></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_OOPGRTHGQJ" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_OOPGRTHGQJ" value="answer"></input> <span><strong>1744</strong></span></label>
 </div>
 <div class="webex-solution">
 <button>
@@ -298,8 +302,8 @@ RSQ1 code solution
 <li>Use the answer to the first question as the <strong>random seed</strong></li>
 </ul>
 What is the 999th number in the produced vector?
-<div id="radio_XHBWMRQCCY" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_XHBWMRQCCY" value="answer"></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_XHBWMRQCCY" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_XHBWMRQCCY" value=""></input> <span><strong>1744</strong></span></label>
+<div id="radio_ZGSQNTZBWZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ZGSQNTZBWZ" value="answer"></input> <span><strong>1120</strong></span></label><label><input type="radio" autocomplete="off" name="radio_ZGSQNTZBWZ" value=""></input> <span><strong>1369</strong></span></label><label><input type="radio" autocomplete="off" name="radio_ZGSQNTZBWZ" value=""></input> <span><strong>1744</strong></span></label>
 </div>
 <div class="webex-solution">
 <button>
@@ -545,7 +549,7 @@ window.onload = function() {
         </div>
       </div>
 <a href="05-R_and_random_seeds.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="07-Iterating_rarefaction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="07-Iterating_rarefaction_intro.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
