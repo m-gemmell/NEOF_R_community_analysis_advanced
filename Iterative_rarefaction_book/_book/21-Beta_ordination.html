@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 15 \(\alpha\): Plot and stats | Iterative rarefaction</title>
+  <title>Chapter 21 \(\beta\): Ordination | Iterative rarefaction</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 15 \(\alpha\): Plot and stats | Iterative rarefaction" />
+  <meta property="og:title" content="Chapter 21 \(\beta\): Ordination | Iterative rarefaction" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/figures/NEOF.png" />
   <meta property="og:description" content="NEOF book for the R community advanced analysis course" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 15 \(\alpha\): Plot and stats | Iterative rarefaction" />
+  <meta name="twitter:title" content="Chapter 21 \(\beta\): Ordination | Iterative rarefaction" />
   
   <meta name="twitter:description" content="NEOF book for the R community advanced analysis course" />
   <meta name="twitter:image" content="/figures/NEOF.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
-<link rel="prev" href="14-Alpha_data_frame_tidy.html"/>
-<link rel="next" href="16-Alpha_plot_with_stats.html"/>
+<link rel="prev" href="20-Beta_rarefaction.html"/>
+<link rel="next" href="22-Beta_stats.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -303,82 +303,240 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="alpha-plot-and-stats" class="section level1 hasAnchor" number="15">
-<h1><span class="header-section-number">Chapter 15</span> <span class="math inline">\(\alpha\)</span>: Plot and stats<a href="15-Alpha_violin_plot_and_stats.html#alpha-plot-and-stats" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>In this chapter we will create a violin plot, similar to a box plot, to visullaise our metrics.
-To detmeine if differences are significant we will then carry out Kruskal Wallis test and Paired Wilcoxon tests.</p>
-<div id="alpha-violin-plot" class="section level2 hasAnchor" number="15.1">
-<h2><span class="header-section-number">15.1</span> <span class="math inline">\(\alpha\)</span>: Violin plot<a href="15-Alpha_violin_plot_and_stats.html#alpha-violin-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="beta-ordination" class="section level1 hasAnchor" number="21">
+<h1><span class="header-section-number">Chapter 21</span> <span class="math inline">\(\beta\)</span>: Ordination<a href="21-Beta_ordination.html#beta-ordination" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <center>
-<img src="figures/violin_2.png" style="width:100px" />
+<img src="figures/navigation.png" style="width:200px" />
 </center>
-<p>To visualise the differences of the alpha diversity values between the four different media we'll use violin plots.
-We can use the function <code>ggplot2::geom_violin()</code> to carry this out.</p>
-<p>Additionally, we'll add a point for each value and colour it based on the site it canme from (UD, MD, or LD).
-The function <code>ggforce::geom_sina()</code> can be used for this.
-We'll use its parameter <code>alpha()</code> to make the points 50% (<code>0.5</code>) transparent.</p>
-<p>As we are plotting values from three different metrics we will split the plot into three separate plots.
-<code>ggplot2::facet_wrap()</code> can be used for this tasked with <code>~metric</code> used to split the plot by the metrics.
-We also specify <code>scales = "free"</code> so each of the three plots has their own x and y scales.
-This is important when the values are drastically different such is the case between the observed and chao1 (&gt;100) compared to the shannon values (&lt;10).</p>
-<div class="webex-solution">
-<button>
-scales options
-</button>
-<p>The four <code>scales</code> are:</p>
+<p>There are various ways to ordinate paired dissimilarity distances.
+We are going to use two of the most popular for community based data: <strong>NMDS</strong> and <strong>PCoA</strong>.</p>
+<div id="load-weighted-unifrac-matrix" class="section level2 hasAnchor" number="21.1">
+<h2><span class="header-section-number">21.1</span> Load weighted unifrac matrix<a href="21-Beta_ordination.html#load-weighted-unifrac-matrix" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/loading.png" style="width:300px" />
+</center>
+<p>Prior to ordination we need to load the weighted unifrac matrix.
+This is a useful cell to have as we don't need to rerun the <strong>iterative rarefaction</strong> to reacquire this object if we save, close + halt, and then reopen this notebook.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb56-1"><a href="21-Beta_ordination.html#cb56-1" tabindex="-1"></a><span class="co">#Load wunifrac matrix</span></span>
+<span id="cb56-2"><a href="21-Beta_ordination.html#cb56-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;wunifrac_df_mean.RData&quot;</span>)</span></code></pre></div>
+</div>
+<div id="nmds" class="section level2 hasAnchor" number="21.2">
+<h2><span class="header-section-number">21.2</span> NMDS<a href="21-Beta_ordination.html#nmds" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/kettle_bell_pounds.png" style="width:200px" />
+</center>
+<p>The first ordination technique we will use is <strong>NMDS</strong> (Non-metric MultiDimensional Scaling).
+To carry this out we can use the function <code>vegan::monoMDS()</code>.</p>
+<div id="nmds-ordinate" class="section level3 hasAnchor" number="21.2.1">
+<h3><span class="header-section-number">21.2.1</span> NMDS ordinate<a href="21-Beta_ordination.html#nmds-ordinate" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<center>
+<img src="figures/speedometer_miles_per_hour.png" style="width:200px" />
+</center>
+<p>We provide the function with our <strong>beta diversity dissimilarity matrix</strong> and the parameter <code>k = 2</code>.
+The parameter<code>k</code> specifies the number of dimensions to calculate, we want 2 as we will only be plotting an x and y axis i.e. 2 dimensions.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb57-1"><a href="21-Beta_ordination.html#cb57-1" tabindex="-1"></a><span class="co">#NMDS ordinate</span></span>
+<span id="cb57-2"><a href="21-Beta_ordination.html#cb57-2" tabindex="-1"></a>nmds_res <span class="ot">&lt;-</span> vegan<span class="sc">::</span><span class="fu">monoMDS</span>(beta_df_mean, <span class="at">k =</span> <span class="dv">2</span>)</span>
+<span id="cb57-3"><a href="21-Beta_ordination.html#cb57-3" tabindex="-1"></a><span class="co">#Structure of nmds_res</span></span>
+<span id="cb57-4"><a href="21-Beta_ordination.html#cb57-4" tabindex="-1"></a><span class="fu">str</span>(nmds_res)</span></code></pre></div>
+</div>
+<div id="nmds-points" class="section level3 hasAnchor" number="21.2.2">
+<h3><span class="header-section-number">21.2.2</span> NMDS points<a href="21-Beta_ordination.html#nmds-points" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<center>
+<img src="figures/barrel.png" style="width:150px" />
+</center>
+<p>The function produces a <strong>list</strong> containing 28 different objects.
+Here we are only interested in the <code>points</code> data frame.
+This contains the points we will be plotting in our NMDS plot.
+Lets extract this data frame.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb58-1"><a href="21-Beta_ordination.html#cb58-1" tabindex="-1"></a><span class="co">#Extract plot points</span></span>
+<span id="cb58-2"><a href="21-Beta_ordination.html#cb58-2" tabindex="-1"></a>nmds_points <span class="ot">&lt;-</span> nmds_res<span class="sc">$</span>points</span>
+<span id="cb58-3"><a href="21-Beta_ordination.html#cb58-3" tabindex="-1"></a><span class="co">#Check head</span></span>
+<span id="cb58-4"><a href="21-Beta_ordination.html#cb58-4" tabindex="-1"></a><span class="fu">head</span>(nmds_points)</span></code></pre></div>
+</div>
+<div id="nmds-data-frame-with-metadata" class="section level3 hasAnchor" number="21.2.3">
+<h3><span class="header-section-number">21.2.3</span> NMDS data frame with metadata<a href="21-Beta_ordination.html#nmds-data-frame-with-metadata" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<center>
+<img src="figures/milk_carton.png" style="width:200px" />
+</center>
+<p>Before plotting with <code>ggplot2</code> we need to combine the metadata and points into a long data frame.
+There is no need to "longify" our data frame as it will start in the long format we require.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb59-1"><a href="21-Beta_ordination.html#cb59-1" tabindex="-1"></a><span class="co">#Create long data frame with metadata and points</span></span>
+<span id="cb59-2"><a href="21-Beta_ordination.html#cb59-2" tabindex="-1"></a><span class="co">#Extract metadata and ensure row names order matches</span></span>
+<span id="cb59-3"><a href="21-Beta_ordination.html#cb59-3" tabindex="-1"></a>metadf <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">sample_data</span>(pseq)</span>
+<span id="cb59-4"><a href="21-Beta_ordination.html#cb59-4" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">identicial</span>(<span class="fu">row.names</span>(metadf), <span class="fu">row.names</span>(nmds_points)) <span class="sc">==</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb59-5"><a href="21-Beta_ordination.html#cb59-5" tabindex="-1"></a>  metadf <span class="ot">&lt;-</span> metadf[<span class="fu">row.names</span>(nmds_points),]</span>
+<span id="cb59-6"><a href="21-Beta_ordination.html#cb59-6" tabindex="-1"></a>}</span>
+<span id="cb59-7"><a href="21-Beta_ordination.html#cb59-7" tabindex="-1"></a><span class="co">#Make points with metadata data frame</span></span>
+<span id="cb59-8"><a href="21-Beta_ordination.html#cb59-8" tabindex="-1"></a>nmds_points_metadata <span class="ot">&lt;-</span> <span class="fu">cbind</span>(nmds_points, metadf)</span>
+<span id="cb59-9"><a href="21-Beta_ordination.html#cb59-9" tabindex="-1"></a><span class="co">#Check head of data frame</span></span>
+<span id="cb59-10"><a href="21-Beta_ordination.html#cb59-10" tabindex="-1"></a><span class="fu">head</span>(nmds_points_metadata)</span>
+<span id="cb59-11"><a href="21-Beta_ordination.html#cb59-11" tabindex="-1"></a><span class="co">#Save object we want, remove ones we don&#39;t</span></span>
+<span id="cb59-12"><a href="21-Beta_ordination.html#cb59-12" tabindex="-1"></a><span class="fu">save</span>(nmds_points_metadata, <span class="at">file =</span> <span class="st">&quot;wunifrac_NMDS.RData&quot;</span>)</span>
+<span id="cb59-13"><a href="21-Beta_ordination.html#cb59-13" tabindex="-1"></a><span class="fu">rm</span>(metadf, nmds_res, nmds_points)</span></code></pre></div>
+</div>
+<div id="nmds-scatter-plot" class="section level3 hasAnchor" number="21.2.4">
+<h3><span class="header-section-number">21.2.4</span> NMDS scatter plot<a href="21-Beta_ordination.html#nmds-scatter-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<center>
+<img src="figures/hide.png" style="width:150px" />
+</center>
+<p>Now we can produce a NMDS scatter plot.
+We will colour the points by site and the point shapes will be determined by the media.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb60-1"><a href="21-Beta_ordination.html#cb60-1" tabindex="-1"></a><span class="co">#Produce NMDS scatter plot</span></span>
+<span id="cb60-2"><a href="21-Beta_ordination.html#cb60-2" tabindex="-1"></a><span class="co">#Plot ordination</span></span>
+<span id="cb60-3"><a href="21-Beta_ordination.html#cb60-3" tabindex="-1"></a>nmds.wunifrac <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> nmds_points_metadata,</span>
+<span id="cb60-4"><a href="21-Beta_ordination.html#cb60-4" tabindex="-1"></a>                        <span class="fu">aes</span>(<span class="at">x =</span> NMDS1, <span class="at">y =</span> NMDS2, <span class="at">color =</span> site, <span class="at">shape =</span> media)) <span class="sc">+</span></span>
+<span id="cb60-5"><a href="21-Beta_ordination.html#cb60-5" tabindex="-1"></a>                ggplot2<span class="sc">::</span><span class="fu">geom_point</span>()</span>
+<span id="cb60-6"><a href="21-Beta_ordination.html#cb60-6" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave</span></span>
+<span id="cb60-7"><a href="21-Beta_ordination.html#cb60-7" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;./Beta_diversity_NMDS_wunifrac_media_site.png&quot;</span>,</span>
+<span id="cb60-8"><a href="21-Beta_ordination.html#cb60-8" tabindex="-1"></a>       <span class="at">plot =</span> nmds.wunifrac,</span>
+<span id="cb60-9"><a href="21-Beta_ordination.html#cb60-9" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">&quot;png&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">&quot;mm&quot;</span>, <span class="at">height =</span> <span class="dv">125</span>, <span class="at">width =</span> <span class="dv">150</span>)</span>
+<span id="cb60-10"><a href="21-Beta_ordination.html#cb60-10" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb60-11"><a href="21-Beta_ordination.html#cb60-11" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">&quot;./Beta_diversity_NMDS_wunifrac_media_site.png&quot;</span>)</span></code></pre></div>
+<p>Super!
+You should see that the plot is mainly separated by NMDS1 splitting the ENV samples compared to the media samples.
+The next major difference is in NMDS2 which separates the TSA samples compared to the CVP and KBC samples.
+The CVP and KBC samples also appear to form distinct clusters.</p>
+</div>
+</div>
+<div id="pcoa" class="section level2 hasAnchor" number="21.3">
+<h2><span class="header-section-number">21.3</span> PCoA<a href="21-Beta_ordination.html#pcoa" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/coordinate.png" style="width:200px; background-color:white; border-radius:15px" />
+</center>
+<p>The second, and last, ordination method we will look at is <strong>PCoA</strong> (Principal Correspondence Analysis).</p>
+<div id="pcoa-ordinate" class="section level3 hasAnchor" number="21.3.1">
+<h3><span class="header-section-number">21.3.1</span> PCoA ordinate<a href="21-Beta_ordination.html#pcoa-ordinate" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<center>
+<img src="figures/bonobo.png" style="width:200px; background-color:white; border-radius:15px" />
+</center>
+<p>The <code>vegan</code> package cannot carry out <strong>PCoA</strong> ordination.
+Therefore, we will use the function <code>pcoa()</code> from the <code>ape</code> package.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb61-1"><a href="21-Beta_ordination.html#cb61-1" tabindex="-1"></a><span class="co">#PCoA ordinate</span></span>
+<span id="cb61-2"><a href="21-Beta_ordination.html#cb61-2" tabindex="-1"></a>pcoa_res <span class="ot">&lt;-</span> ape<span class="sc">::</span><span class="fu">pcoa</span>(beta_df_mean)</span>
+<span id="cb61-3"><a href="21-Beta_ordination.html#cb61-3" tabindex="-1"></a><span class="co">#Structure of pcoa_res</span></span>
+<span id="cb61-4"><a href="21-Beta_ordination.html#cb61-4" tabindex="-1"></a><span class="fu">str</span>(pcoa_res)</span></code></pre></div>
+<p>The function creates a <strong>list</strong> containing 5 objects.</p>
+<p>We are interested in 2 of these objects, <code>vectors</code> and <code>values</code>.</p>
+</div>
+<div id="pcoa-points" class="section level3 hasAnchor" number="21.3.2">
+<h3><span class="header-section-number">21.3.2</span> PCoA points<a href="21-Beta_ordination.html#pcoa-points" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<center>
+<img src="figures/map_points.png" style="width:150px" />
+</center>
+<p>Whereas we can specify the number of dimensions we want for NMDS, PCoA will create a certain number of dimensions based on the provided data.
+The <code>vectors</code> object contains the axes points for all these dimensions.
+We will only plot the first 2 axes.</p>
+<p>Extract these points:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb62-1"><a href="21-Beta_ordination.html#cb62-1" tabindex="-1"></a><span class="co">#Extract first 2 axes</span></span>
+<span id="cb62-2"><a href="21-Beta_ordination.html#cb62-2" tabindex="-1"></a>pcoa_points <span class="ot">&lt;-</span> pcoa_res<span class="sc">$</span>vectors[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb62-3"><a href="21-Beta_ordination.html#cb62-3" tabindex="-1"></a><span class="fu">head</span>(pcoa_points)</span></code></pre></div>
+</div>
+<div id="pcoa-variance" class="section level3 hasAnchor" number="21.3.3">
+<h3><span class="header-section-number">21.3.3</span> PCoA variance<a href="21-Beta_ordination.html#pcoa-variance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<center>
+<img src="figures/variance.png" style="width:200px; background-color:white; border-radius:15px; border: white solid 5px" />
+</center>
+<p>As there are multiple axes created we need to know the strength of each axis.
+This is known as the <strong>"Percentage/proportion of variance explained"</strong>, this tells us how much of the total variance is explained by each axis.
+The axes are always ordered from highest to lowest <strong>% variance explained</strong>.
+Therefore axis one explains the most variance, followed by axis 2.</p>
+<p>The higher the <strong>% variance explained</strong> of axis 1 and axis 2, the better our subsequent plot represents our data.
+General guidelines to how good our plot are based on the sum of these 2 values:</p>
 <ul>
-<li><strong><code>"fixed"</code> (default):</strong> All the scales are the same (fixed), based on the largest and smallest x and y values across all the plots. Useful where you want direct comparisons such as looking at teh overall pattern in ordination plots.</li>
-<li><strong><code>"free"</code>:</strong> All the scales are free. Each plot's x and y values limits are based on the data within it.</li>
-<li><strong><code>"free_x"</code>:</strong> The x axis is free and the y axis is fixed.</li>
-<li><strong><code>"free_y"</code>:</strong> The y axis is free and the x axis is fixed.</li>
+<li>&lt;50%: Poor</li>
+<li>50-69%: Decent</li>
+<li>70-89%: Good</li>
+<li>90-100%: Great</li>
 </ul>
-<p>Which you want to use depends on your data and how you are facetting it.</p>
-<div id="alpha-stats" class="section level2 hasAnchor" number="15.2">
-<h2><span class="header-section-number">15.2</span> <span class="math inline">\(\alpha\)</span>: Stats<a href="15-Alpha_violin_plot_and_stats.html#alpha-stats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <strong>% variance explained</strong> is contained in the <code>values</code> <strong>data frame</strong> within the <code>Relative_eig</code> column.
+These are proportion values (0-1) so we will times them by 100 to make them percentages and round these digits to 2 decimal places (<code>round(,digits=2)</code>.</p>
+<p>Let's extract the <strong>% variance explained</strong> values.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb63-1"><a href="21-Beta_ordination.html#cb63-1" tabindex="-1"></a><span class="co">#Variation explained values </span></span>
+<span id="cb63-2"><a href="21-Beta_ordination.html#cb63-2" tabindex="-1"></a>pcoa_axis_var_explained <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="at">x=</span>pcoa_res<span class="sc">$</span>values[,<span class="st">&quot;Relative_eig&quot;</span>] <span class="sc">*</span> <span class="dv">100</span>, <span class="at">digits=</span><span class="dv">2</span>)</span></code></pre></div>
+</div>
+<div id="pcoa-data-frame-with-metadata" class="section level3 hasAnchor" number="21.3.4">
+<h3><span class="header-section-number">21.3.4</span> PCoA data frame with metadata<a href="21-Beta_ordination.html#pcoa-data-frame-with-metadata" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <center>
-<img src="figures/stats.png" style="width:200px" />
+<img src="figures/wayfinding.png" style="width:150px; background-color:white; border-radius:15px" />
 </center>
-<p>We can carry out statistics to compare the alpha diversity values between sample groups.</p>
-<div id="kruskal-wallis-test" class="section level3 hasAnchor" number="15.2.1">
-<h3><span class="header-section-number">15.2.1</span> Kruskal Wallis test<a href="15-Alpha_violin_plot_and_stats.html#kruskal-wallis-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>To determine if there is an overall difference in our data we'll use the Kruskal Wallis test.
-We'll carry this out using the media grouping for our three alpha diversity values.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb39-1"><a href="15-Alpha_violin_plot_and_stats.html#cb39-1" tabindex="-1"></a><span class="co">#Kruskal Wallis test</span></span>
-<span id="cb39-2"><a href="15-Alpha_violin_plot_and_stats.html#cb39-2" tabindex="-1"></a><span class="co">#Observed ASVs</span></span>
-<span id="cb39-3"><a href="15-Alpha_violin_plot_and_stats.html#cb39-3" tabindex="-1"></a><span class="fu">kruskal.test</span>(observed <span class="sc">~</span> media, <span class="at">data =</span> meta_alpha_mean_df)</span>
-<span id="cb39-4"><a href="15-Alpha_violin_plot_and_stats.html#cb39-4" tabindex="-1"></a><span class="co">#Chao1 estimator</span></span>
-<span id="cb39-5"><a href="15-Alpha_violin_plot_and_stats.html#cb39-5" tabindex="-1"></a><span class="fu">kruskal.test</span>(chao1 <span class="sc">~</span> media, <span class="at">data =</span> meta_alpha_mean_df)</span>
-<span id="cb39-6"><a href="15-Alpha_violin_plot_and_stats.html#cb39-6" tabindex="-1"></a><span class="co">#Shannon diversity</span></span>
-<span id="cb39-7"><a href="15-Alpha_violin_plot_and_stats.html#cb39-7" tabindex="-1"></a><span class="fu">kruskal.test</span>(shannon <span class="sc">~</span> media, <span class="at">data =</span> meta_alpha_mean_df)</span></code></pre></div>
-<p>All the p-values are less than 0.05 indicating statistical significance.
-That means we can move onto pairwise comparisons.</p>
+<p>As with the NMDS data we will create a <strong>long data frame</strong> containing our points and metadata.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb64-1"><a href="21-Beta_ordination.html#cb64-1" tabindex="-1"></a><span class="co">#Create point long data frame with metadata</span></span>
+<span id="cb64-2"><a href="21-Beta_ordination.html#cb64-2" tabindex="-1"></a><span class="co">#Extract metadata and ensure row names order matches</span></span>
+<span id="cb64-3"><a href="21-Beta_ordination.html#cb64-3" tabindex="-1"></a>metadf <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">sample_data</span>(pseq)</span>
+<span id="cb64-4"><a href="21-Beta_ordination.html#cb64-4" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">identicial</span>(<span class="fu">row.names</span>(metadf), <span class="fu">row.names</span>(pcoa_points)) <span class="sc">==</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb64-5"><a href="21-Beta_ordination.html#cb64-5" tabindex="-1"></a>  metadf <span class="ot">&lt;-</span> metadf[<span class="fu">row.names</span>(pcoa_points),]</span>
+<span id="cb64-6"><a href="21-Beta_ordination.html#cb64-6" tabindex="-1"></a>}</span>
+<span id="cb64-7"><a href="21-Beta_ordination.html#cb64-7" tabindex="-1"></a><span class="co">#Make points with metadata data frame</span></span>
+<span id="cb64-8"><a href="21-Beta_ordination.html#cb64-8" tabindex="-1"></a>pcoa_points_metadata <span class="ot">&lt;-</span> <span class="fu">cbind</span>(pcoa_points, metadf)</span>
+<span id="cb64-9"><a href="21-Beta_ordination.html#cb64-9" tabindex="-1"></a><span class="fu">head</span>(nmds_points_metadata)</span>
+<span id="cb64-10"><a href="21-Beta_ordination.html#cb64-10" tabindex="-1"></a><span class="co">#Save object we want, remove ones we don&#39;t</span></span>
+<span id="cb64-11"><a href="21-Beta_ordination.html#cb64-11" tabindex="-1"></a><span class="fu">save</span>(pcoa_points_metadata, <span class="at">file =</span> <span class="st">&quot;wunifrac_PCoA.RData&quot;</span>)</span>
+<span id="cb64-12"><a href="21-Beta_ordination.html#cb64-12" tabindex="-1"></a><span class="fu">rm</span>(metadf, nmds_res, pcoa_points)</span></code></pre></div>
 </div>
-<div id="paired-wilcoxon-test" class="section level3 hasAnchor" number="15.2.2">
-<h3><span class="header-section-number">15.2.2</span> Paired Wilcoxon test<a href="15-Alpha_violin_plot_and_stats.html#paired-wilcoxon-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>To determine what groups are significantly different from each other we can carry out paired Wilcoxon test.
-This tests</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb40-1"><a href="15-Alpha_violin_plot_and_stats.html#cb40-1" tabindex="-1"></a><span class="co">#Paired wilcoxon test</span></span>
-<span id="cb40-2"><a href="15-Alpha_violin_plot_and_stats.html#cb40-2" tabindex="-1"></a><span class="co">#Observed ASVs</span></span>
-<span id="cb40-3"><a href="15-Alpha_violin_plot_and_stats.html#cb40-3" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(meta_alpha_mean_df<span class="sc">$</span>observed, meta_alpha_mean_df, <span class="at">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>)</span>
-<span id="cb40-4"><a href="15-Alpha_violin_plot_and_stats.html#cb40-4" tabindex="-1"></a><span class="co">#Chao1 estimator</span></span>
-<span id="cb40-5"><a href="15-Alpha_violin_plot_and_stats.html#cb40-5" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(meta_alpha_mean_df<span class="sc">$</span>chao1, meta_alpha_mean_df, <span class="at">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>)</span>
-<span id="cb40-6"><a href="15-Alpha_violin_plot_and_stats.html#cb40-6" tabindex="-1"></a><span class="co">#Shannon diversity</span></span>
-<span id="cb40-7"><a href="15-Alpha_violin_plot_and_stats.html#cb40-7" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(meta_alpha_mean_df<span class="sc">$</span>shannon, meta_alpha_mean_df, <span class="at">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>)</span></code></pre></div>
-<p>You'll see three p-value adjusted tables with all the values (except Shannon: ENV against TSA) being significant (&lt;0.05).</p>
+<div id="pcoa-scatter-plot" class="section level3 hasAnchor" number="21.3.5">
+<h3><span class="header-section-number">21.3.5</span> PCoA scatter plot<a href="21-Beta_ordination.html#pcoa-scatter-plot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<center>
+<img src="figures/scatter.png" style="width:150px; background-color:white; border-radius:15px" />
+</center>
+<p>When plotting a PCoA scatter plot it is important to include the <strong>% variance</strong> on the axes labels.
+We will carry this out using the <code>pcoa_axis_var_explained</code> <strong>vector</strong> we created earlier.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb65-1"><a href="21-Beta_ordination.html#cb65-1" tabindex="-1"></a><span class="co">#Produce PCoA scatter plot</span></span>
+<span id="cb65-2"><a href="21-Beta_ordination.html#cb65-2" tabindex="-1"></a><span class="co">#Plot ordination</span></span>
+<span id="cb65-3"><a href="21-Beta_ordination.html#cb65-3" tabindex="-1"></a>pcoa.wunifrac <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> pcoa_points_metadata, </span>
+<span id="cb65-4"><a href="21-Beta_ordination.html#cb65-4" tabindex="-1"></a>                        <span class="fu">aes</span>(<span class="at">x =</span> Axis<span class="fl">.1</span>, <span class="at">y =</span> Axis<span class="fl">.2</span>, <span class="at">color =</span> site, <span class="at">shape =</span> media)) <span class="sc">+</span></span>
+<span id="cb65-5"><a href="21-Beta_ordination.html#cb65-5" tabindex="-1"></a>                ggplot2<span class="sc">::</span><span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb65-6"><a href="21-Beta_ordination.html#cb65-6" tabindex="-1"></a>                <span class="co">#Add x and y labels to include % variance explained</span></span>
+<span id="cb65-7"><a href="21-Beta_ordination.html#cb65-7" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">&quot;Axis.1 {&quot;</span>, pcoa_axis_var_explained[<span class="dv">1</span>], <span class="st">&quot;%]&quot;</span>),</span>
+<span id="cb65-8"><a href="21-Beta_ordination.html#cb65-8" tabindex="-1"></a>                     <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">&quot;Axis.2 {&quot;</span>, pcoa_axis_var_explained[<span class="dv">2</span>], <span class="st">&quot;%]&quot;</span>))</span>
+<span id="cb65-9"><a href="21-Beta_ordination.html#cb65-9" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave</span></span>
+<span id="cb65-10"><a href="21-Beta_ordination.html#cb65-10" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;./Beta_diversity_pcoa_wunifrac_media_site.png&quot;</span>, <span class="at">plot =</span> pcoa.wunifrac</span>
+<span id="cb65-11"><a href="21-Beta_ordination.html#cb65-11" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">&quot;png&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">&quot;mm&quot;</span>, <span class="at">height =</span> <span class="dv">125</span>, <span class="at">width =</span> <span class="dv">150</span>)</span>
+<span id="cb65-12"><a href="21-Beta_ordination.html#cb65-12" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb65-13"><a href="21-Beta_ordination.html#cb65-13" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">&quot;./Beta_diversity_pcoa_wunifrac_media_site.png&quot;</span>)</span></code></pre></div>
+<p>We have a PCoA plot which represents 82.1% (67.46+14.64) of the variance of our data.
+It is quite similar to our NMDS plot.</p>
 </div>
 </div>
+<div id="which-ordination-method-to-use" class="section level2 hasAnchor" number="21.4">
+<h2><span class="header-section-number">21.4</span> Which ordination method to use?<a href="21-Beta_ordination.html#which-ordination-method-to-use" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A common question is "Which ordination method should I use?"
+There are many ordination methods with <strong>NMDS</strong> and <strong>PCoA</strong> being popular for ordination distance based values (dissimilarity matrices).</p>
+<p>A general guide to which to use for your data is by choosing the most informative one.
+Choose the one that shows the best picture and that explains the data the best.</p>
+<p>In this case the PCoA plot looks better than the NMDS plot as the PCoA plot has a high _% variance explained__ and it shows more separation of the samples.</p>
+<p>If the PCoA plot had a low <strong>% variance explained</strong> it may be better to choose the NMDS plot.
+NMDS attempts to explain the data in the number of dimensions chosen by the user.
+We chose 2 as we want to plot the data in 2 dimensions.</p>
 </div>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb41-1"><a href="15-Alpha_violin_plot_and_stats.html#cb41-1" tabindex="-1"></a><span class="co">#Produce ggplot object of violin plot</span></span>
-<span id="cb41-2"><a href="15-Alpha_violin_plot_and_stats.html#cb41-2" tabindex="-1"></a>alpha_violinplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(basic_alpha_metrics_long_df, <span class="fu">aes</span>(<span class="at">x =</span> media, <span class="at">y =</span> value)) <span class="sc">+</span></span>
-<span id="cb41-3"><a href="15-Alpha_violin_plot_and_stats.html#cb41-3" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">geom_violin</span>() <span class="sc">+</span></span>
-<span id="cb41-4"><a href="15-Alpha_violin_plot_and_stats.html#cb41-4" tabindex="-1"></a>                            ggforce<span class="sc">::</span><span class="fu">geom_sina</span>(<span class="at">alpha=</span><span class="fl">0.5</span>, <span class="fu">aes</span>(<span class="at">color=</span>site)) <span class="sc">+</span></span>
-<span id="cb41-5"><a href="15-Alpha_violin_plot_and_stats.html#cb41-5" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;Site&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Media&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Value&quot;</span>) <span class="sc">+</span></span>
-<span id="cb41-6"><a href="15-Alpha_violin_plot_and_stats.html#cb41-6" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">facet_wrap</span>(<span class="sc">~</span>metric, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span>
-<span id="cb41-7"><a href="15-Alpha_violin_plot_and_stats.html#cb41-7" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave()</span></span>
-<span id="cb41-8"><a href="15-Alpha_violin_plot_and_stats.html#cb41-8" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_media_violinplot.png&quot;</span>, <span class="at">plot =</span> alpha_violinplot,</span>
-<span id="cb41-9"><a href="15-Alpha_violin_plot_and_stats.html#cb41-9" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">&quot;png&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">&quot;mm&quot;</span>, <span class="at">height =</span> <span class="dv">150</span>, <span class="at">width =</span> <span class="dv">250</span>)</span>
-<span id="cb41-10"><a href="15-Alpha_violin_plot_and_stats.html#cb41-10" tabindex="-1"></a><span class="co">#Display plot</span></span>
-<span id="cb41-11"><a href="15-Alpha_violin_plot_and_stats.html#cb41-11" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_media_violinplot.png&quot;</span>)</span></code></pre></div>
+<div id="more-dimensions" class="section level2 hasAnchor" number="21.5">
+<h2><span class="header-section-number">21.5</span> More dimensions<a href="21-Beta_ordination.html#more-dimensions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Your data may be very complex and two dimensions would not be sufficient to plot the data.
+There are two main ways to plot multiple dimensions.</p>
+<div id="produce-multiple-plots" class="section level3 unnumbered hasAnchor">
+<h3>Produce multiple plots<a href="21-Beta_ordination.html#produce-multiple-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Create multiple 2D plots to compare pairs of axes.
+If you wanted to plot the first three axes this way you would produce the following scatter plots:</p>
+<ul>
+<li>Axis 1 against Axis 2</li>
+<li>Axis 1 against Axis 3</li>
+<li>Axis 2 against Axis 3</li>
+</ul>
+<p>You can use this method to easily visualise as many axes as possible.
+The drawback is that you can only directly compare two axes in each plot.</p>
+</div>
+<div id="d-scatterplot" class="section level3 unnumbered hasAnchor">
+<h3>3D scatterplot<a href="21-Beta_ordination.html#d-scatterplot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You can create an interactive 3D scatter plot with the package <code>plotly</code> using the <code>plot_ly()</code> function (<a href="https://plotly.com/r/3d-scatter-plots/">guide</a>).</p>
+<p>This allows you to directly compare 3 axes at once.
+It is interactive, allowing you to change the perspective of the plot.
+This allows you to choose the best angle to save the image to use in publication.
+However, you would generally not use this method to compare more than 3 axes.</p>
+</div>
+</div>
+<div id="ordination-recap" class="section level2 hasAnchor" number="21.6">
+<h2><span class="header-section-number">21.6</span> Ordination recap<a href="21-Beta_ordination.html#ordination-recap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this chapter you have created ordination values (NMDS &amp; PCOA) with iterative rarefaction and created scatter plots with these.
+In this next chapter we will use the ordination values to carry out statistics.</p>
 
 </div>
 </div>
@@ -593,8 +751,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="14-Alpha_data_frame_tidy.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="16-Alpha_plot_with_stats.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="20-Beta_rarefaction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="22-Beta_stats.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

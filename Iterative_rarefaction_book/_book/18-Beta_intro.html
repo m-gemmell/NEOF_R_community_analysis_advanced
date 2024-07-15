@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 15 \(\alpha\): Plot and stats | Iterative rarefaction</title>
+  <title>Chapter 18 Beta Diversity | Iterative rarefaction</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 15 \(\alpha\): Plot and stats | Iterative rarefaction" />
+  <meta property="og:title" content="Chapter 18 Beta Diversity | Iterative rarefaction" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/figures/NEOF.png" />
   <meta property="og:description" content="NEOF book for the R community advanced analysis course" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 15 \(\alpha\): Plot and stats | Iterative rarefaction" />
+  <meta name="twitter:title" content="Chapter 18 Beta Diversity | Iterative rarefaction" />
   
   <meta name="twitter:description" content="NEOF book for the R community advanced analysis course" />
   <meta name="twitter:image" content="/figures/NEOF.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
-<link rel="prev" href="14-Alpha_data_frame_tidy.html"/>
-<link rel="next" href="16-Alpha_plot_with_stats.html"/>
+<link rel="prev" href="17-Alpha_diversity_practice.html"/>
+<link rel="next" href="19-Beta_distances_metrics.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -303,82 +303,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="alpha-plot-and-stats" class="section level1 hasAnchor" number="15">
-<h1><span class="header-section-number">Chapter 15</span> <span class="math inline">\(\alpha\)</span>: Plot and stats<a href="15-Alpha_violin_plot_and_stats.html#alpha-plot-and-stats" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>In this chapter we will create a violin plot, similar to a box plot, to visullaise our metrics.
-To detmeine if differences are significant we will then carry out Kruskal Wallis test and Paired Wilcoxon tests.</p>
-<div id="alpha-violin-plot" class="section level2 hasAnchor" number="15.1">
-<h2><span class="header-section-number">15.1</span> <span class="math inline">\(\alpha\)</span>: Violin plot<a href="15-Alpha_violin_plot_and_stats.html#alpha-violin-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="beta_chap" class="section level1 hasAnchor" number="18">
+<h1><span class="header-section-number">Chapter 18</span> Beta Diversity<a href="18-Beta_intro.html#beta_chap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <center>
-<img src="figures/violin_2.png" style="width:100px" />
+<img src="figures/beta_iterative_rarefaction.png" style="width:300px" />
 </center>
-<p>To visualise the differences of the alpha diversity values between the four different media we'll use violin plots.
-We can use the function <code>ggplot2::geom_violin()</code> to carry this out.</p>
-<p>Additionally, we'll add a point for each value and colour it based on the site it canme from (UD, MD, or LD).
-The function <code>ggforce::geom_sina()</code> can be used for this.
-We'll use its parameter <code>alpha()</code> to make the points 50% (<code>0.5</code>) transparent.</p>
-<p>As we are plotting values from three different metrics we will split the plot into three separate plots.
-<code>ggplot2::facet_wrap()</code> can be used for this tasked with <code>~metric</code> used to split the plot by the metrics.
-We also specify <code>scales = "free"</code> so each of the three plots has their own x and y scales.
-This is important when the values are drastically different such is the case between the observed and chao1 (&gt;100) compared to the shannon values (&lt;10).</p>
-<div class="webex-solution">
-<button>
-scales options
-</button>
-<p>The four <code>scales</code> are:</p>
+<p>This section will teach you how to carry out <strong>beta diversity</strong> analysis.
+The steps will include:</p>
 <ul>
-<li><strong><code>"fixed"</code> (default):</strong> All the scales are the same (fixed), based on the largest and smallest x and y values across all the plots. Useful where you want direct comparisons such as looking at teh overall pattern in ordination plots.</li>
-<li><strong><code>"free"</code>:</strong> All the scales are free. Each plot's x and y values limits are based on the data within it.</li>
-<li><strong><code>"free_x"</code>:</strong> The x axis is free and the y axis is fixed.</li>
-<li><strong><code>"free_y"</code>:</strong> The y axis is free and the x axis is fixed.</li>
+<li>Calculating <strong>beta diversity</strong> distances</li>
+<li>Using <strong>iterative rarefaction</strong> to create averaged distance values</li>
+<li>Carrying various ordination techniques to visualise the distances between samples</li>
 </ul>
-<p>Which you want to use depends on your data and how you are facetting it.</p>
-<div id="alpha-stats" class="section level2 hasAnchor" number="15.2">
-<h2><span class="header-section-number">15.2</span> <span class="math inline">\(\alpha\)</span>: Stats<a href="15-Alpha_violin_plot_and_stats.html#alpha-stats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="beta-setup" class="section level2 hasAnchor" number="18.1">
+<h2><span class="header-section-number">18.1</span> <span class="math inline">\(\beta\)</span>: Setup<a href="18-Beta_intro.html#beta-setup" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
-<img src="figures/stats.png" style="width:200px" />
+<img src="figures/setup_7.png" style="width:200px" />
 </center>
-<p>We can carry out statistics to compare the alpha diversity values between sample groups.</p>
-<div id="kruskal-wallis-test" class="section level3 hasAnchor" number="15.2.1">
-<h3><span class="header-section-number">15.2.1</span> Kruskal Wallis test<a href="15-Alpha_violin_plot_and_stats.html#kruskal-wallis-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>To determine if there is an overall difference in our data we'll use the Kruskal Wallis test.
-We'll carry this out using the media grouping for our three alpha diversity values.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb39-1"><a href="15-Alpha_violin_plot_and_stats.html#cb39-1" tabindex="-1"></a><span class="co">#Kruskal Wallis test</span></span>
-<span id="cb39-2"><a href="15-Alpha_violin_plot_and_stats.html#cb39-2" tabindex="-1"></a><span class="co">#Observed ASVs</span></span>
-<span id="cb39-3"><a href="15-Alpha_violin_plot_and_stats.html#cb39-3" tabindex="-1"></a><span class="fu">kruskal.test</span>(observed <span class="sc">~</span> media, <span class="at">data =</span> meta_alpha_mean_df)</span>
-<span id="cb39-4"><a href="15-Alpha_violin_plot_and_stats.html#cb39-4" tabindex="-1"></a><span class="co">#Chao1 estimator</span></span>
-<span id="cb39-5"><a href="15-Alpha_violin_plot_and_stats.html#cb39-5" tabindex="-1"></a><span class="fu">kruskal.test</span>(chao1 <span class="sc">~</span> media, <span class="at">data =</span> meta_alpha_mean_df)</span>
-<span id="cb39-6"><a href="15-Alpha_violin_plot_and_stats.html#cb39-6" tabindex="-1"></a><span class="co">#Shannon diversity</span></span>
-<span id="cb39-7"><a href="15-Alpha_violin_plot_and_stats.html#cb39-7" tabindex="-1"></a><span class="fu">kruskal.test</span>(shannon <span class="sc">~</span> media, <span class="at">data =</span> meta_alpha_mean_df)</span></code></pre></div>
-<p>All the p-values are less than 0.05 indicating statistical significance.
-That means we can move onto pairwise comparisons.</p>
-</div>
-<div id="paired-wilcoxon-test" class="section level3 hasAnchor" number="15.2.2">
-<h3><span class="header-section-number">15.2.2</span> Paired Wilcoxon test<a href="15-Alpha_violin_plot_and_stats.html#paired-wilcoxon-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>To determine what groups are significantly different from each other we can carry out paired Wilcoxon test.
-This tests</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb40-1"><a href="15-Alpha_violin_plot_and_stats.html#cb40-1" tabindex="-1"></a><span class="co">#Paired wilcoxon test</span></span>
-<span id="cb40-2"><a href="15-Alpha_violin_plot_and_stats.html#cb40-2" tabindex="-1"></a><span class="co">#Observed ASVs</span></span>
-<span id="cb40-3"><a href="15-Alpha_violin_plot_and_stats.html#cb40-3" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(meta_alpha_mean_df<span class="sc">$</span>observed, meta_alpha_mean_df, <span class="at">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>)</span>
-<span id="cb40-4"><a href="15-Alpha_violin_plot_and_stats.html#cb40-4" tabindex="-1"></a><span class="co">#Chao1 estimator</span></span>
-<span id="cb40-5"><a href="15-Alpha_violin_plot_and_stats.html#cb40-5" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(meta_alpha_mean_df<span class="sc">$</span>chao1, meta_alpha_mean_df, <span class="at">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>)</span>
-<span id="cb40-6"><a href="15-Alpha_violin_plot_and_stats.html#cb40-6" tabindex="-1"></a><span class="co">#Shannon diversity</span></span>
-<span id="cb40-7"><a href="15-Alpha_violin_plot_and_stats.html#cb40-7" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(meta_alpha_mean_df<span class="sc">$</span>shannon, meta_alpha_mean_df, <span class="at">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>)</span></code></pre></div>
-<p>You'll see three p-value adjusted tables with all the values (except Shannon: ENV against TSA) being significant (&lt;0.05).</p>
-</div>
-</div>
-</div>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb41-1"><a href="15-Alpha_violin_plot_and_stats.html#cb41-1" tabindex="-1"></a><span class="co">#Produce ggplot object of violin plot</span></span>
-<span id="cb41-2"><a href="15-Alpha_violin_plot_and_stats.html#cb41-2" tabindex="-1"></a>alpha_violinplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(basic_alpha_metrics_long_df, <span class="fu">aes</span>(<span class="at">x =</span> media, <span class="at">y =</span> value)) <span class="sc">+</span></span>
-<span id="cb41-3"><a href="15-Alpha_violin_plot_and_stats.html#cb41-3" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">geom_violin</span>() <span class="sc">+</span></span>
-<span id="cb41-4"><a href="15-Alpha_violin_plot_and_stats.html#cb41-4" tabindex="-1"></a>                            ggforce<span class="sc">::</span><span class="fu">geom_sina</span>(<span class="at">alpha=</span><span class="fl">0.5</span>, <span class="fu">aes</span>(<span class="at">color=</span>site)) <span class="sc">+</span></span>
-<span id="cb41-5"><a href="15-Alpha_violin_plot_and_stats.html#cb41-5" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;Site&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Media&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Value&quot;</span>) <span class="sc">+</span></span>
-<span id="cb41-6"><a href="15-Alpha_violin_plot_and_stats.html#cb41-6" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">facet_wrap</span>(<span class="sc">~</span>metric, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span>
-<span id="cb41-7"><a href="15-Alpha_violin_plot_and_stats.html#cb41-7" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave()</span></span>
-<span id="cb41-8"><a href="15-Alpha_violin_plot_and_stats.html#cb41-8" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_media_violinplot.png&quot;</span>, <span class="at">plot =</span> alpha_violinplot,</span>
-<span id="cb41-9"><a href="15-Alpha_violin_plot_and_stats.html#cb41-9" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">&quot;png&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">&quot;mm&quot;</span>, <span class="at">height =</span> <span class="dv">150</span>, <span class="at">width =</span> <span class="dv">250</span>)</span>
-<span id="cb41-10"><a href="15-Alpha_violin_plot_and_stats.html#cb41-10" tabindex="-1"></a><span class="co">#Display plot</span></span>
-<span id="cb41-11"><a href="15-Alpha_violin_plot_and_stats.html#cb41-11" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_media_violinplot.png&quot;</span>)</span></code></pre></div>
+<p>Create a new R jupyter notebook called "Beta_diversity.ipynb".</p>
+<p>Load the required data and libraries.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb51-1"><a href="18-Beta_intro.html#cb51-1" tabindex="-1"></a><span class="co">#Libraries</span></span>
+<span id="cb51-2"><a href="18-Beta_intro.html#cb51-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;phyloseq&quot;</span>)</span>
+<span id="cb51-3"><a href="18-Beta_intro.html#cb51-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;microbiome&quot;</span>)</span>
+<span id="cb51-4"><a href="18-Beta_intro.html#cb51-4" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;IRdisplay&quot;</span>)</span>
+<span id="cb51-5"><a href="18-Beta_intro.html#cb51-5" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;vegan&quot;</span>)</span>
+<span id="cb51-6"><a href="18-Beta_intro.html#cb51-6" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;rbiom&quot;</span>)</span>
+<span id="cb51-7"><a href="18-Beta_intro.html#cb51-7" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;ape&quot;</span>)</span>
+<span id="cb51-8"><a href="18-Beta_intro.html#cb51-8" tabindex="-1"></a><span class="co">#Load processed but unrarefied ASV data from main R community workshop</span></span>
+<span id="cb51-9"><a href="18-Beta_intro.html#cb51-9" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;phyloseq.RData&quot;</span>)</span></code></pre></div>
 
 </div>
 </div>
@@ -593,8 +545,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="14-Alpha_data_frame_tidy.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="16-Alpha_plot_with_stats.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="17-Alpha_diversity_practice.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="19-Beta_distances_metrics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

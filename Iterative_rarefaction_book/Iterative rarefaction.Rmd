@@ -1074,11 +1074,12 @@ In this section we will tidy up our data frame to make it ready for plotting by:
 ![](figures/wide_data_frame.png){style="width:200px"}
 </center>
 
-Now that we have our __alpha diversity__ values we will create a data frame that contains these values and metadata.
+Now that we have our __alpha diversity__ values we can create a data frame that contains these values and the metadata.
 
-In the below code we extract the metadata from the rarefied phyloseq object created in the last loop iteration above.
+In the below code we extract the metadata from the rarefied phyloseq object created in the last rarefaction iteration loop.
 This ensures we only acquire metadata from samples that are retained after __rarefaction__.
-The samples that are retained are always the same across our __rarefaction iterations__ as samples are retained based on the __rarefaction size/depth__ which is kept consistent across our __rarefactions__.
+The samples that are retained are always the same across our __rarefaction iterations__.
+This is because samples are retained based on the __rarefaction size/depth__ which is kept consistent across our __rarefactions iterations__.
 
 ```{r, eval=FALSE}
 #Combine metadata and alpha diversity mean values into one data frame
@@ -1107,8 +1108,8 @@ We will plot our __alpha diversity__ values with `ggplot2` functions.
 Before we carry this out we need to convert our wide data frame to a long data frame.
 We'll carry this out with `tidyr::pivot_longer()`.
 
-For this we want our metric values to become long.
-This means that instead of the __alpha diversity__ values being spread across multiple rows and columns their will only be one value per row.
+We want our metric values to become long.
+This means that instead of the __alpha diversity__ values being spread across multiple rows and columns, there will only be one value per row.
 
 Two columns will represent these values in the long format:
 
@@ -1126,7 +1127,7 @@ meta_alpha_mean_long_df <-
                       #I.e. keep our metadata columns as separate columns
                       #all_of() used to silence warning message
                       cols = all_of(alpha_div_colnames)
-                      #Set column name to column called metric
+                      #Set metric names to column called metric
                       #Set values to column called value
                       names_to = "metric", values_to = "value"
                       )
@@ -1155,7 +1156,7 @@ For this tutorial we are only interested in:
   - The higher the value the higher the diversity
   
 We'll subset our long data frame to only retain rows with these metrics.
-We'll also use the utility of factors to order the metrics so they are plotted in our preferred order further down.
+We'll also use the utility of factors to order the metrics so they will be plotted in our preferred order.
 
 ```{R, eval=FALSE}
 #Process our long data frame
@@ -1186,7 +1187,7 @@ With this data frame we can move onto visualisation and statistics.
 ```{r include=FALSE, cache=FALSE}
 library(webexercises)
 ```
-# $\alpha$: Violin plot and stats
+# $\alpha$: Plot and stats
 
 In this chapter we will create a violin plot, similar to a box plot, to visullaise our metrics.
 To detmeine if differences are significant we will then carry out Kruskal Wallis test and Paired Wilcoxon tests. 
@@ -1509,4 +1510,598 @@ In this chapter you have:
 With these skills and knowledge you will be able to carry out thorough investigations of __alpha diversity__ in your future research.
 
 <!--chapter:end:17-Alpha_diversity_practice.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(webexercises)
+```
+# (PART\*) Beta diversity {-}
+
+# Beta Diversity {#beta_chap}
+<center>
+![](figures/beta_iterative_rarefaction.png){style="width:300px"}
+</center>
+
+This section will teach you how to carry out __beta diversity__ analysis.
+The steps will include:
+
+- Calculating __beta diversity__ distances
+- Using __iterative rarefaction__ to create averaged distance values
+- Carrying various ordination techniques to visualise the distances between samples
+
+## $\beta$: Setup
+<center>
+![](figures/setup_7.png){style="width:200px"}
+</center>
+
+Create a new R jupyter notebook called "Beta_diversity.ipynb".
+
+Load the required data and libraries.
+
+```{R, eval = FALSE}
+#Libraries
+library("phyloseq")
+library("microbiome")
+library("IRdisplay")
+library("vegan")
+library("rbiom")
+library("ape")
+#Load processed but unrarefied ASV data from main R community workshop
+load("phyloseq.RData")
+```
+
+<!--chapter:end:18-Beta_intro.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(webexercises)
+```
+# $\beta$: Distance matrices
+<center>
+![](figures/measuring_tape_2.png){style="width:300px"}
+</center>
+
+Here we'll find out how to produce a paired distance matrix with our __beta diversity__ metric of choice.
+Unfortunately there is not one function that can calculate all the metrics we may want.
+
+## Unifrac distances
+<center>
+![](figures/weighted_blanket.png){style="width:200px"}
+</center>
+
+Unifrac distances are preferred by many when a phylogenetic tree is available for your data.
+We are working with 16S data so a phylogenetic tree was created.
+Other barcodes or types of data may not have a phylogenetic such as ITS data or complex shotgun metagenomic data.
+
+To produce a Unifrac distance matrix we will use the function `unifrac()` from the package `rbiom`.
+
+The function `rbiom::unifrac()` was created to work with biom files and not __phyloseq__ objects.
+Thankfully we don't need to convert our objects to a biom object, instead only needing to extract our count/abundance data and phylogenetic tree.
+We can carry this out with the following 2 functions:
+
+- `phyloseq::otu_table()`: Extracts the feature count/abundances table
+- `phyloseq::phy_tree()`: Extract the phylogenetic tree
+
+There are 2 types of Unifrac distances:
+
+- Weighted: Incorporate relative abundances
+- Unweighted: Does not incorporate relative abundances
+
+We'll calculate weighted Unifrac distances by specifying the parameter `weighted = TRUE`.
+
+So our output works with subsequent ordination step we'll convert the output of `rbiom::unifrac()` into a matrix with `as.matrix()`.
+
+Carry out the matrix production with the below script:
+
+```{R, eval=FALSE}
+#Calculate weighted unifrac values
+unifrac_rbiom_microbiome <- as.matrix(
+  rbiom::unifrac(biom = phyloseq::otu_table(pseq),
+                 tree = phyloseq::phy_tree(pseq),
+                 weighted = TRUE))
+#Check the first 6 rows and columns of the resulting distance matrix
+head(unifrac_rbiom_microbiome)
+```
+
+## Vegan distances
+<center>
+![](figures/vegan_fork.png){style="width:200px"}
+</center>
+
+To calculate non-unifrac __beta diversity__ distances we can use the `vegan` package and its function `vegdist()`.
+
+The function `rbiom::unifrac()` calculates paired distances, this is the samples in the `otu_table` of a phyloseq object.
+Unfortunately, `vegan::vegdist()` calculates paired distances by rows (features), this being the features in the `otu_table` of a phyloseq object.
+We do not want this but thankfully all we need to add is the function `t()` to our abundance object to transpose the data.
+
+Create a __Bray-Curtis__ distance matrix with the below code:
+
+```{R, eval=FALSE}
+#Calculate Bray-Curtis distance matrix
+bray_curtis_mat <- as.matrix(
+  vegan::vegdist(x = t(phyloseq::otu_table(pseq)),
+                 method = "bray"))
+#Check first 6 rows and columns of matrix
+bray_curtis_mat[1:6,1:6]
+```
+
+The function can calculate a plethora of metrics with the full list available at the following [webpage](https://rdrr.io/cran/vegan/man/vegdist.html).
+
+<!--chapter:end:19-Beta_distances_metrics.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(webexercises)
+```
+# $\beta$: Iterative rarefaction
+<center>
+![](figures/iterative_distances.png){style="width:400px"}
+</center>
+
+Now that we know how to create a __beta diveristy__ paired distance matrix, we can create one with averaged values created by __iterative rarefaction__.
+
+## Iterative rarefaction values
+<center>
+![](figures/ten_rng_seeds.png){style="width:200px"}
+</center>
+
+We need to set our __rarefaction__ values and rngseeds.
+We can use the same code as we used in the __alpha_diversity__ analysis.
+
+```{R, eval = FALSE}
+#Rarefaction values
+#Rarefaction size
+#Minimum sample depth in this case
+rarefaction_size <- min(microbiome::readcount(pseq))
+#Load the vector of 10 rngseeds created in the previous chapter
+load("rngseeds.RData")
+#Number of rarefaction iterations to be carried out
+#Based on length of rng seed vector
+rarefaction_iters <- length(rngseed_vec)
+```
+
+## Iterative beta diversity calculation
+<center>
+![](figures/mean.png){style="width:200px"}
+</center>
+
+The below code carries out __itertaive rarefaction__ and produces an averaged __weighted unifrac__ paired distance matrix.
+
+```{R, eval = FALSE}
+#Loop to create iteration based rarefied weighted unifrac values
+
+#Create matrix to contain summed wunifrac beta diversity values
+#In this case we'll run the first rarefied beta diversity analysis
+pseq_rarefy <- phyloseq::rarefy_even_depth(
+  pseq,
+  sample.size = rarefaction_size,
+  rngseed = rngseed_vec[1],
+  verbose = FALSE)
+#wunifrac beta diversity
+beta_df_sum <- as.matrix(
+  rbiom::unifrac(
+    biom = phyloseq::otu_table(pseq_rarefy),
+    tree = phyloseq::phy_tree(pseq_rarefy),
+    weighted = TRUE))
+
+#Loop through 2 to the number of iterations
+for (i in 2:rarefaction_iters){
+  #Rarefaction
+  pseq_rarefy <- phyloseq::rarefy_even_depth(
+    pseq,
+    sample.size = rarefaction_size,
+    rngseed = rngseed_vec[i],
+    verbose = FALSE)
+  #Beta diversity
+  beta_df <- as.matrix(
+    rbiom::unifrac(
+      biom = phyloseq::otu_table(pseq_rarefy),
+      tree = phyloseq::phy_tree(pseq_rarefy),
+      weighted = TRUE))
+  #Add/sum the new data frame values to the sum data frame
+  beta_df_sum <- beta_df_sum + beta_df
+}
+#Divide by number of rarefaction iterations to get average
+beta_df_mean <- beta_df_sum / rarefaction_iters
+#Save alpha mean data frame
+save(beta_df_mean, file = "wunifrac_df_mean.RData")
+#View first 6 rows and columns of matrix
+beta_df_mean[1:6,1:6]
+#Remove unneeded objects
+rm(beta_df_sum, beta_df_mean, pseq_rarefy)
+```
+
+`r hide("verbose = FALSE option")`
+We include the option `verbose = FALSE` in the `phyloseq::rarefy_even_depth()` to prevent a lot of text to be displayed.
+This text says which rngseed was used in the rarefaction.
+We don't need this message as we already have a record of the rngseeds we used in `rngseed_vec`.
+`r unhide()`
+
+You'll notice that each value is duplicated, once in the bottom left triangle and once in the top right triangle.
+This is fine as the subsequent functions in this chapter will work with this in the same manner as if the matrix was de-duplicated.
+
+In the above case we saved our final distance matrix and removed it.
+We will then load the object in the next section.
+This is convenient as it means we only need to run this code cell once. 
+With higher numbers of rarefaction iterations it can take a while.
+
+<!--chapter:end:20-Beta_rarefaction.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(webexercises)
+```
+# $\beta$: Ordination
+<center>
+![](figures/navigation.png){style="width:200px"}
+</center>
+
+There are various ways to ordinate paired dissimilarity distances.
+We are going to use two of the most popular for community based data: __NMDS__ and __PCoA__.
+
+## Load weighted unifrac matrix
+<center>
+![](figures/loading.png){style="width:300px"}
+</center>
+
+Prior to ordination we need to load the weighted unifrac matrix.
+This is a useful cell to have as we don't need to rerun the __iterative rarefaction__ to reacquire this object if we save, close + halt, and then reopen this notebook.
+
+```{R, eval=FALSE}
+#Load wunifrac matrix
+load("wunifrac_df_mean.RData")
+```
+
+## NMDS
+<center>
+![](figures/kettle_bell_pounds.png){style="width:200px"}
+</center>
+
+The first ordination technique we will use is __NMDS__ (Non-metric MultiDimensional Scaling).
+To carry this out we can use the function `vegan::monoMDS()`.
+
+### NMDS ordinate
+<center>
+![](figures/speedometer_miles_per_hour.png){style="width:200px"}
+</center>
+
+We provide the function with our __beta diversity dissimilarity matrix__ and the parameter `k = 2`.
+The parameter`k` specifies the number of dimensions to calculate, we want 2 as we will only be plotting an x and y axis i.e. 2 dimensions.
+
+```{R, eval=FALSE}
+#NMDS ordinate
+nmds_res <- vegan::monoMDS(beta_df_mean, k = 2)
+#Structure of nmds_res
+str(nmds_res)
+```
+
+### NMDS points
+<center>
+![](figures/barrel.png){style="width:150px"}
+</center>
+
+The function produces a __list__ containing 28 different objects.
+Here we are only interested in the `points` data frame.
+This contains the points we will be plotting in our NMDS plot.
+Lets extract this data frame.
+
+```{R, eval = FALSE}
+#Extract plot points
+nmds_points <- nmds_res$points
+#Check head
+head(nmds_points)
+```
+
+### NMDS data frame with metadata
+<center>
+![](figures/milk_carton.png){style="width:200px"}
+</center>
+
+Before plotting with `ggplot2` we need to combine the metadata and points into a long data frame.
+There is no need to "longify" our data frame as it will start in the long format we require.
+
+```{R, eval=FALSE}
+#Create long data frame with metadata and points
+#Extract metadata and ensure row names order matches
+metadf <- phyloseq::sample_data(pseq)
+if (identicial(row.names(metadf), row.names(nmds_points)) == FALSE) {
+  metadf <- metadf[row.names(nmds_points),]
+}
+#Make points with metadata data frame
+nmds_points_metadata <- cbind(nmds_points, metadf)
+#Check head of data frame
+head(nmds_points_metadata)
+#Save object we want, remove ones we don't
+save(nmds_points_metadata, file = "wunifrac_NMDS.RData")
+rm(metadf, nmds_res, nmds_points)
+```
+
+### NMDS scatter plot
+<center>
+![](figures/hide.png){style="width:150px"}
+</center>
+
+Now we can produce a NMDS scatter plot.
+We will colour the points by site and the point shapes will be determined by the media.
+
+```{R, eval = FALSE}
+#Produce NMDS scatter plot
+#Plot ordination
+nmds.wunifrac <- ggplot(data = nmds_points_metadata,
+                        aes(x = NMDS1, y = NMDS2, color = site, shape = media)) +
+                ggplot2::geom_point()
+#Save ggplot2 object with ggsave
+ggsave(filename = "./Beta_diversity_NMDS_wunifrac_media_site.png",
+       plot = nmds.wunifrac,
+       device = "png", dpi = 300, units = "mm", height = 125, width = 150)
+#Display plot
+IRdisplay::display_png(file = "./Beta_diversity_NMDS_wunifrac_media_site.png")
+```
+
+Super!
+You should see that the plot is mainly separated by NMDS1 splitting the ENV samples compared to the media samples.
+The next major difference is in NMDS2 which separates the TSA samples compared to the CVP and KBC samples.
+The CVP and KBC samples also appear to form distinct clusters.
+
+## PCoA
+<center>
+![](figures/coordinate.png){style="width:200px; background-color:white; border-radius:15px"}
+</center>
+
+The second, and last, ordination method we will look at is __PCoA__ (Principal Correspondence Analysis).
+
+### PCoA ordinate
+<center>
+![](figures/bonobo.png){style="width:200px; background-color:white; border-radius:15px"}
+</center>
+
+The `vegan` package cannot carry out __PCoA__ ordination. 
+Therefore, we will use the function `pcoa()` from the `ape` package.
+
+```{R, eval = FALSE}
+#PCoA ordinate
+pcoa_res <- ape::pcoa(beta_df_mean)
+#Structure of pcoa_res
+str(pcoa_res)
+```
+
+The function creates a __list__ containing 5 objects.
+
+We are interested in 2 of these objects, `vectors` and `values`.
+
+### PCoA points
+<center>
+![](figures/map_points.png){style="width:150px"}
+</center>
+
+Whereas we can specify the number of dimensions we want for NMDS, PCoA will create a certain number of dimensions based on the provided data.
+The `vectors` object contains the axes points for all these dimensions.
+We will only plot the first 2 axes.
+
+Extract these points:
+
+```{R, eval = FALSE}
+#Extract first 2 axes
+pcoa_points <- pcoa_res$vectors[,1:2]
+head(pcoa_points)
+```
+
+### PCoA variance
+<center>
+![](figures/variance.png){style="width:200px; background-color:white; border-radius:15px; border: white solid 5px"}
+</center>
+
+As there are multiple axes created we need to know the strength of each axis.
+This is known as the __"Percentage/proportion of variance explained"__, this tells us how much of the total variance is explained by each axis.
+The axes are always ordered from highest to lowest __% variance explained__.
+Therefore axis one explains the most variance, followed by axis 2.
+
+The higher the __% variance explained__ of axis 1 and axis 2, the better our subsequent plot represents our data.
+General guidelines to how good our plot are based on the sum of these 2 values:
+
+- <50%: Poor
+- 50-69%: Decent
+- 70-89%: Good
+- 90-100%: Great
+
+The __% variance explained__ is contained in the `values` __data frame__ within the `Relative_eig` column.
+These are proportion values (0-1) so we will times them by 100 to make them percentages and round these digits to 2 decimal places (`round(,digits=2)`.
+
+Let's extract the __% variance explained__ values.
+
+```{R, eval = FALSE}
+#Variation explained values 
+pcoa_axis_var_explained <- round(x=pcoa_res$values[,"Relative_eig"] * 100, digits=2)
+```
+
+### PCoA data frame with metadata
+<center>
+![](figures/wayfinding.png){style="width:150px; background-color:white; border-radius:15px"}
+</center>
+
+As with the NMDS data we will create a __long data frame__ containing our points and metadata.
+
+```{R, eval=FALSE}
+#Create point long data frame with metadata
+#Extract metadata and ensure row names order matches
+metadf <- phyloseq::sample_data(pseq)
+if (identicial(row.names(metadf), row.names(pcoa_points)) == FALSE) {
+  metadf <- metadf[row.names(pcoa_points),]
+}
+#Make points with metadata data frame
+pcoa_points_metadata <- cbind(pcoa_points, metadf)
+head(nmds_points_metadata)
+#Save object we want, remove ones we don't
+save(pcoa_points_metadata, file = "wunifrac_PCoA.RData")
+rm(metadf, nmds_res, pcoa_points)
+```
+
+### PCoA scatter plot
+<center>
+![](figures/scatter.png){style="width:150px; background-color:white; border-radius:15px"}
+</center>
+
+When plotting a PCoA scatter plot it is important to include the __% variance__ on the axes labels.
+We will carry this out using the `pcoa_axis_var_explained` __vector__ we created earlier.
+
+```{R, eval = FALSE}
+#Produce PCoA scatter plot
+#Plot ordination
+pcoa.wunifrac <- ggplot(data = pcoa_points_metadata, 
+                        aes(x = Axis.1, y = Axis.2, color = site, shape = media)) +
+                ggplot2::geom_point() +
+                #Add x and y labels to include % variance explained
+                labs(x = paste0("Axis.1 {", pcoa_axis_var_explained[1], "%]"),
+                     y = paste0("Axis.2 {", pcoa_axis_var_explained[2], "%]"))
+#Save ggplot2 object with ggsave
+ggsave(filename = "./Beta_diversity_pcoa_wunifrac_media_site.png", plot = pcoa.wunifrac
+       device = "png", dpi = 300, units = "mm", height = 125, width = 150)
+#Display plot
+IRdisplay::display_png(file = "./Beta_diversity_pcoa_wunifrac_media_site.png")
+```
+
+We have a PCoA plot which represents 82.1% (67.46+14.64) of the variance of our data.
+It is quite similar to our NMDS plot.
+
+## Which ordination method to use?
+
+A common question is "Which ordination method should I use?"
+There are many ordination methods with __NMDS__ and __PCoA__ being popular for ordination distance based values (dissimilarity matrices).
+
+A general guide to which to use for your data is by choosing the most informative one.
+Choose the one that shows the best picture and that explains the data the best.
+
+In this case the PCoA plot looks better than the NMDS plot as the PCoA plot has a high _% variance explained__ and it shows more separation of the samples.
+
+If the PCoA plot had a low __% variance explained__ it may be better to choose the NMDS plot.
+NMDS attempts to explain the data in the number of dimensions chosen by the user.
+We chose 2 as we want to plot the data in 2 dimensions.
+
+## More dimensions
+
+Your data may be very complex and two dimensions would not be sufficient to plot the data.
+There are two main ways to plot multiple dimensions.
+
+### Produce multiple plots {-}
+
+Create multiple 2D plots to compare pairs of axes.
+If you wanted to plot the first three axes this way you would produce the following scatter plots:
+
+- Axis 1 against Axis 2
+- Axis 1 against Axis 3
+- Axis 2 against Axis 3
+
+You can use this method to easily visualise as many axes as possible.
+The drawback is that you can only directly compare two axes in each plot.
+
+### 3D scatterplot {-}
+
+You can create an interactive 3D scatter plot with the package `plotly` using the `plot_ly()` function ([guide](https://plotly.com/r/3d-scatter-plots/)).
+
+This allows you to directly compare 3 axes at once.
+It is interactive, allowing you to change the perspective of the plot.
+This allows you to choose the best angle to save the image to use in publication.
+However, you would generally not use this method to compare more than 3 axes.
+
+## Ordination recap
+
+In this chapter you have created ordination values (NMDS & PCOA) with iterative rarefaction and created scatter plots with these.
+In this next chapter we will use the ordination values to carry out statistics. 
+
+
+
+
+
+
+<!--chapter:end:21-Beta_ordination.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(webexercises)
+```
+# $\beta$: Stats
+<center>
+![](figures/navigation.png){style="width:200px"}
+</center>
+
+Now to carry out some statistics on our ordinations.
+These are the same methods as covered in the [R community analysis workshop](https://neof-workshops.github.io/R_community_whqkt8/Course/16-Beta.html#permanova).
+However, the code is slightly different.
+
+## Stats setup
+
+Load the required data.
+
+```{R, eval = FALSE}
+#Load wunifrac
+load("wunifrac_df_mean.RData")
+#Extract metadata
+#need data.frame() for vegan::adonis2() used later
+metadf <- data.frame(phyloseq::sample_data(pseq))
+```
+
+## PERMANOVA
+<center>
+![](figures/permanova.png){style="width:200px"}
+</center>
+
+To determine if their is a significant overall difference between the media & site groups we can carry out a PERMANOVA.
+We'll use the package `vegan` with its function `adonis2()`.
+
+__Note:__ The original `vegan::adonis()` function is deprecated and should not be used.
+
+```{R, eval = FALSE}
+#PERMANOVA of media+site
+wunifrac_adonis <- vegan::adonis2(beta_df_mean ~ media+site,
+                                  data = metadf, by = "margin")
+```
+
+## Pairwise PERMANOVA
+<center>
+![](figures/pear.png){style="width:100px"}
+</center>
+
+We can use a pairwise PERMANOVA to determine if their are significant differences between groups in a metadata category.
+The below code carries this out for the media groupings.
+
+```{R, eval = FALSE}
+#Pairwise PERMANOVA for media
+#Get combinations of unique media values
+cbn <- combn(x = unique(metadf$media), m = 2)
+#Create empty final data frame with 4 columns
+# and a number of rows equal to the the number of combinations
+pairwise_permanova_df <- as.data.frame(matrix(data = NA, nrow = ncol(cbn), ncol = 4))
+#Add column names
+colnames(pairwise_permanova_df) <- c("1","2","p","p.adj")
+
+#Loop through the combinations
+for(i in 1:ncol(cbn)){
+  #Subset metadata
+  metadata_subset <- metadf[metadf$media %in% cbn[,i],]
+  #Extract sample names
+  samples_subset <- row.names(metadf_subset)
+  #Subset distance matrix
+  wunifrac_dist_mat_subset <- beta_df_mean[samples_subset,samples_subset]
+  #PERMANOVA/ADONIS of media
+  #Ensure to change group name if using different group (media)
+  pairwise_adonis <- vegan::adonis2(
+    wunifrac_dist_mat_subset ~ media, data = metadf_subset, by = "margin")
+  #Add the group names and p-value to the main data frame
+  pairwise_permanova_df[i,1:2] <- cbn[,i]
+  pairwise_permanova_df[i,3] <- wunifrac_pairwise_adonis[1,"Pr(>F)"]
+}
+#View data frame
+pairwise_permanova_df
+#Add adjusted P-values
+pairwise_permanova_df$p.adj <- p.adjust(pairwise_permanova_df$p, method = "BH")
+#View data frame
+pairwise_permanova_df
+#Write to a file
+write.table(x = pairwise_permanova_df, file = "pairwise_permanova_media_wunifrac.tsv",
+            quote = FALSE, row.names = FALSE)
+```
+
+<!--chapter:end:22-Beta_stats.Rmd-->
+
+```{r include=FALSE, cache=FALSE}
+library(webexercises)
+```
+# $\beta$: Subset ordinations
+
+<!--chapter:end:23-Beta_subset_ordination.Rmd-->
 

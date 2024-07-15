@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 15 \(\alpha\): Plot and stats | Iterative rarefaction</title>
+  <title>Chapter 22 \(\beta\): Stats | Iterative rarefaction</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 15 \(\alpha\): Plot and stats | Iterative rarefaction" />
+  <meta property="og:title" content="Chapter 22 \(\beta\): Stats | Iterative rarefaction" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/figures/NEOF.png" />
   <meta property="og:description" content="NEOF book for the R community advanced analysis course" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 15 \(\alpha\): Plot and stats | Iterative rarefaction" />
+  <meta name="twitter:title" content="Chapter 22 \(\beta\): Stats | Iterative rarefaction" />
   
   <meta name="twitter:description" content="NEOF book for the R community advanced analysis course" />
   <meta name="twitter:image" content="/figures/NEOF.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
-<link rel="prev" href="14-Alpha_data_frame_tidy.html"/>
-<link rel="next" href="16-Alpha_plot_with_stats.html"/>
+<link rel="prev" href="21-Beta_ordination.html"/>
+<link rel="next" href="23-Beta_subset_ordination.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -303,82 +303,76 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="alpha-plot-and-stats" class="section level1 hasAnchor" number="15">
-<h1><span class="header-section-number">Chapter 15</span> <span class="math inline">\(\alpha\)</span>: Plot and stats<a href="15-Alpha_violin_plot_and_stats.html#alpha-plot-and-stats" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>In this chapter we will create a violin plot, similar to a box plot, to visullaise our metrics.
-To detmeine if differences are significant we will then carry out Kruskal Wallis test and Paired Wilcoxon tests.</p>
-<div id="alpha-violin-plot" class="section level2 hasAnchor" number="15.1">
-<h2><span class="header-section-number">15.1</span> <span class="math inline">\(\alpha\)</span>: Violin plot<a href="15-Alpha_violin_plot_and_stats.html#alpha-violin-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="beta-stats" class="section level1 hasAnchor" number="22">
+<h1><span class="header-section-number">Chapter 22</span> <span class="math inline">\(\beta\)</span>: Stats<a href="22-Beta_stats.html#beta-stats" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <center>
-<img src="figures/violin_2.png" style="width:100px" />
+<img src="figures/navigation.png" style="width:200px" />
 </center>
-<p>To visualise the differences of the alpha diversity values between the four different media we'll use violin plots.
-We can use the function <code>ggplot2::geom_violin()</code> to carry this out.</p>
-<p>Additionally, we'll add a point for each value and colour it based on the site it canme from (UD, MD, or LD).
-The function <code>ggforce::geom_sina()</code> can be used for this.
-We'll use its parameter <code>alpha()</code> to make the points 50% (<code>0.5</code>) transparent.</p>
-<p>As we are plotting values from three different metrics we will split the plot into three separate plots.
-<code>ggplot2::facet_wrap()</code> can be used for this tasked with <code>~metric</code> used to split the plot by the metrics.
-We also specify <code>scales = "free"</code> so each of the three plots has their own x and y scales.
-This is important when the values are drastically different such is the case between the observed and chao1 (&gt;100) compared to the shannon values (&lt;10).</p>
-<div class="webex-solution">
-<button>
-scales options
-</button>
-<p>The four <code>scales</code> are:</p>
-<ul>
-<li><strong><code>"fixed"</code> (default):</strong> All the scales are the same (fixed), based on the largest and smallest x and y values across all the plots. Useful where you want direct comparisons such as looking at teh overall pattern in ordination plots.</li>
-<li><strong><code>"free"</code>:</strong> All the scales are free. Each plot's x and y values limits are based on the data within it.</li>
-<li><strong><code>"free_x"</code>:</strong> The x axis is free and the y axis is fixed.</li>
-<li><strong><code>"free_y"</code>:</strong> The y axis is free and the x axis is fixed.</li>
-</ul>
-<p>Which you want to use depends on your data and how you are facetting it.</p>
-<div id="alpha-stats" class="section level2 hasAnchor" number="15.2">
-<h2><span class="header-section-number">15.2</span> <span class="math inline">\(\alpha\)</span>: Stats<a href="15-Alpha_violin_plot_and_stats.html#alpha-stats" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now to carry out some statistics on our ordinations.
+These are the same methods as covered in the <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/16-Beta.html#permanova">R community analysis workshop</a>.
+However, the code is slightly different.</p>
+<div id="stats-setup" class="section level2 hasAnchor" number="22.1">
+<h2><span class="header-section-number">22.1</span> Stats setup<a href="22-Beta_stats.html#stats-setup" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Load the required data.</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb66-1"><a href="22-Beta_stats.html#cb66-1" tabindex="-1"></a><span class="co">#Load wunifrac</span></span>
+<span id="cb66-2"><a href="22-Beta_stats.html#cb66-2" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;wunifrac_df_mean.RData&quot;</span>)</span>
+<span id="cb66-3"><a href="22-Beta_stats.html#cb66-3" tabindex="-1"></a><span class="co">#Extract metadata</span></span>
+<span id="cb66-4"><a href="22-Beta_stats.html#cb66-4" tabindex="-1"></a><span class="co">#need data.frame() for vegan::adonis2() used later</span></span>
+<span id="cb66-5"><a href="22-Beta_stats.html#cb66-5" tabindex="-1"></a>metadf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(phyloseq<span class="sc">::</span><span class="fu">sample_data</span>(pseq))</span></code></pre></div>
+</div>
+<div id="permanova" class="section level2 hasAnchor" number="22.2">
+<h2><span class="header-section-number">22.2</span> PERMANOVA<a href="22-Beta_stats.html#permanova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
-<img src="figures/stats.png" style="width:200px" />
+<img src="figures/permanova.png" style="width:200px" />
 </center>
-<p>We can carry out statistics to compare the alpha diversity values between sample groups.</p>
-<div id="kruskal-wallis-test" class="section level3 hasAnchor" number="15.2.1">
-<h3><span class="header-section-number">15.2.1</span> Kruskal Wallis test<a href="15-Alpha_violin_plot_and_stats.html#kruskal-wallis-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>To determine if there is an overall difference in our data we'll use the Kruskal Wallis test.
-We'll carry this out using the media grouping for our three alpha diversity values.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb39-1"><a href="15-Alpha_violin_plot_and_stats.html#cb39-1" tabindex="-1"></a><span class="co">#Kruskal Wallis test</span></span>
-<span id="cb39-2"><a href="15-Alpha_violin_plot_and_stats.html#cb39-2" tabindex="-1"></a><span class="co">#Observed ASVs</span></span>
-<span id="cb39-3"><a href="15-Alpha_violin_plot_and_stats.html#cb39-3" tabindex="-1"></a><span class="fu">kruskal.test</span>(observed <span class="sc">~</span> media, <span class="at">data =</span> meta_alpha_mean_df)</span>
-<span id="cb39-4"><a href="15-Alpha_violin_plot_and_stats.html#cb39-4" tabindex="-1"></a><span class="co">#Chao1 estimator</span></span>
-<span id="cb39-5"><a href="15-Alpha_violin_plot_and_stats.html#cb39-5" tabindex="-1"></a><span class="fu">kruskal.test</span>(chao1 <span class="sc">~</span> media, <span class="at">data =</span> meta_alpha_mean_df)</span>
-<span id="cb39-6"><a href="15-Alpha_violin_plot_and_stats.html#cb39-6" tabindex="-1"></a><span class="co">#Shannon diversity</span></span>
-<span id="cb39-7"><a href="15-Alpha_violin_plot_and_stats.html#cb39-7" tabindex="-1"></a><span class="fu">kruskal.test</span>(shannon <span class="sc">~</span> media, <span class="at">data =</span> meta_alpha_mean_df)</span></code></pre></div>
-<p>All the p-values are less than 0.05 indicating statistical significance.
-That means we can move onto pairwise comparisons.</p>
+<p>To determine if their is a significant overall difference between the media &amp; site groups we can carry out a PERMANOVA.
+We'll use the package <code>vegan</code> with its function <code>adonis2()</code>.</p>
+<p><strong>Note:</strong> The original <code>vegan::adonis()</code> function is deprecated and should not be used.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb67-1"><a href="22-Beta_stats.html#cb67-1" tabindex="-1"></a><span class="co">#PERMANOVA of media+site</span></span>
+<span id="cb67-2"><a href="22-Beta_stats.html#cb67-2" tabindex="-1"></a>wunifrac_adonis <span class="ot">&lt;-</span> vegan<span class="sc">::</span><span class="fu">adonis2</span>(beta_df_mean <span class="sc">~</span> media<span class="sc">+</span>site,</span>
+<span id="cb67-3"><a href="22-Beta_stats.html#cb67-3" tabindex="-1"></a>                                  <span class="at">data =</span> metadf, <span class="at">by =</span> <span class="st">&quot;margin&quot;</span>)</span></code></pre></div>
 </div>
-<div id="paired-wilcoxon-test" class="section level3 hasAnchor" number="15.2.2">
-<h3><span class="header-section-number">15.2.2</span> Paired Wilcoxon test<a href="15-Alpha_violin_plot_and_stats.html#paired-wilcoxon-test" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>To determine what groups are significantly different from each other we can carry out paired Wilcoxon test.
-This tests</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb40-1"><a href="15-Alpha_violin_plot_and_stats.html#cb40-1" tabindex="-1"></a><span class="co">#Paired wilcoxon test</span></span>
-<span id="cb40-2"><a href="15-Alpha_violin_plot_and_stats.html#cb40-2" tabindex="-1"></a><span class="co">#Observed ASVs</span></span>
-<span id="cb40-3"><a href="15-Alpha_violin_plot_and_stats.html#cb40-3" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(meta_alpha_mean_df<span class="sc">$</span>observed, meta_alpha_mean_df, <span class="at">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>)</span>
-<span id="cb40-4"><a href="15-Alpha_violin_plot_and_stats.html#cb40-4" tabindex="-1"></a><span class="co">#Chao1 estimator</span></span>
-<span id="cb40-5"><a href="15-Alpha_violin_plot_and_stats.html#cb40-5" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(meta_alpha_mean_df<span class="sc">$</span>chao1, meta_alpha_mean_df, <span class="at">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>)</span>
-<span id="cb40-6"><a href="15-Alpha_violin_plot_and_stats.html#cb40-6" tabindex="-1"></a><span class="co">#Shannon diversity</span></span>
-<span id="cb40-7"><a href="15-Alpha_violin_plot_and_stats.html#cb40-7" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(meta_alpha_mean_df<span class="sc">$</span>shannon, meta_alpha_mean_df, <span class="at">p.adjust.method =</span> <span class="st">&quot;holm&quot;</span>)</span></code></pre></div>
-<p>You'll see three p-value adjusted tables with all the values (except Shannon: ENV against TSA) being significant (&lt;0.05).</p>
-</div>
-</div>
-</div>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb41-1"><a href="15-Alpha_violin_plot_and_stats.html#cb41-1" tabindex="-1"></a><span class="co">#Produce ggplot object of violin plot</span></span>
-<span id="cb41-2"><a href="15-Alpha_violin_plot_and_stats.html#cb41-2" tabindex="-1"></a>alpha_violinplot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(basic_alpha_metrics_long_df, <span class="fu">aes</span>(<span class="at">x =</span> media, <span class="at">y =</span> value)) <span class="sc">+</span></span>
-<span id="cb41-3"><a href="15-Alpha_violin_plot_and_stats.html#cb41-3" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">geom_violin</span>() <span class="sc">+</span></span>
-<span id="cb41-4"><a href="15-Alpha_violin_plot_and_stats.html#cb41-4" tabindex="-1"></a>                            ggforce<span class="sc">::</span><span class="fu">geom_sina</span>(<span class="at">alpha=</span><span class="fl">0.5</span>, <span class="fu">aes</span>(<span class="at">color=</span>site)) <span class="sc">+</span></span>
-<span id="cb41-5"><a href="15-Alpha_violin_plot_and_stats.html#cb41-5" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">color =</span> <span class="st">&quot;Site&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Media&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Value&quot;</span>) <span class="sc">+</span></span>
-<span id="cb41-6"><a href="15-Alpha_violin_plot_and_stats.html#cb41-6" tabindex="-1"></a>                            ggplot2<span class="sc">::</span><span class="fu">facet_wrap</span>(<span class="sc">~</span>metric, <span class="at">scales =</span> <span class="st">&quot;free&quot;</span>)</span>
-<span id="cb41-7"><a href="15-Alpha_violin_plot_and_stats.html#cb41-7" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave()</span></span>
-<span id="cb41-8"><a href="15-Alpha_violin_plot_and_stats.html#cb41-8" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_media_violinplot.png&quot;</span>, <span class="at">plot =</span> alpha_violinplot,</span>
-<span id="cb41-9"><a href="15-Alpha_violin_plot_and_stats.html#cb41-9" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">&quot;png&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">&quot;mm&quot;</span>, <span class="at">height =</span> <span class="dv">150</span>, <span class="at">width =</span> <span class="dv">250</span>)</span>
-<span id="cb41-10"><a href="15-Alpha_violin_plot_and_stats.html#cb41-10" tabindex="-1"></a><span class="co">#Display plot</span></span>
-<span id="cb41-11"><a href="15-Alpha_violin_plot_and_stats.html#cb41-11" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">&quot;./Alpha_diversity_rarefy_iters_media_violinplot.png&quot;</span>)</span></code></pre></div>
+<div id="pairwise-permanova" class="section level2 hasAnchor" number="22.3">
+<h2><span class="header-section-number">22.3</span> Pairwise PERMANOVA<a href="22-Beta_stats.html#pairwise-permanova" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<center>
+<img src="figures/pear.png" style="width:100px" />
+</center>
+<p>We can use a pairwise PERMANOVA to determine if their are significant differences between groups in a metadata category.
+The below code carries this out for the media groupings.</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb68-1"><a href="22-Beta_stats.html#cb68-1" tabindex="-1"></a><span class="co">#Pairwise PERMANOVA for media</span></span>
+<span id="cb68-2"><a href="22-Beta_stats.html#cb68-2" tabindex="-1"></a><span class="co">#Get combinations of unique media values</span></span>
+<span id="cb68-3"><a href="22-Beta_stats.html#cb68-3" tabindex="-1"></a>cbn <span class="ot">&lt;-</span> <span class="fu">combn</span>(<span class="at">x =</span> <span class="fu">unique</span>(metadf<span class="sc">$</span>media), <span class="at">m =</span> <span class="dv">2</span>)</span>
+<span id="cb68-4"><a href="22-Beta_stats.html#cb68-4" tabindex="-1"></a><span class="co">#Create empty final data frame with 4 columns</span></span>
+<span id="cb68-5"><a href="22-Beta_stats.html#cb68-5" tabindex="-1"></a><span class="co"># and a number of rows equal to the the number of combinations</span></span>
+<span id="cb68-6"><a href="22-Beta_stats.html#cb68-6" tabindex="-1"></a>pairwise_permanova_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">matrix</span>(<span class="at">data =</span> <span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">ncol</span>(cbn), <span class="at">ncol =</span> <span class="dv">4</span>))</span>
+<span id="cb68-7"><a href="22-Beta_stats.html#cb68-7" tabindex="-1"></a><span class="co">#Add column names</span></span>
+<span id="cb68-8"><a href="22-Beta_stats.html#cb68-8" tabindex="-1"></a><span class="fu">colnames</span>(pairwise_permanova_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;1&quot;</span>,<span class="st">&quot;2&quot;</span>,<span class="st">&quot;p&quot;</span>,<span class="st">&quot;p.adj&quot;</span>)</span>
+<span id="cb68-9"><a href="22-Beta_stats.html#cb68-9" tabindex="-1"></a></span>
+<span id="cb68-10"><a href="22-Beta_stats.html#cb68-10" tabindex="-1"></a><span class="co">#Loop through the combinations</span></span>
+<span id="cb68-11"><a href="22-Beta_stats.html#cb68-11" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(cbn)){</span>
+<span id="cb68-12"><a href="22-Beta_stats.html#cb68-12" tabindex="-1"></a>  <span class="co">#Subset metadata</span></span>
+<span id="cb68-13"><a href="22-Beta_stats.html#cb68-13" tabindex="-1"></a>  metadata_subset <span class="ot">&lt;-</span> metadf[metadf<span class="sc">$</span>media <span class="sc">%in%</span> cbn[,i],]</span>
+<span id="cb68-14"><a href="22-Beta_stats.html#cb68-14" tabindex="-1"></a>  <span class="co">#Extract sample names</span></span>
+<span id="cb68-15"><a href="22-Beta_stats.html#cb68-15" tabindex="-1"></a>  samples_subset <span class="ot">&lt;-</span> <span class="fu">row.names</span>(metadf_subset)</span>
+<span id="cb68-16"><a href="22-Beta_stats.html#cb68-16" tabindex="-1"></a>  <span class="co">#Subset distance matrix</span></span>
+<span id="cb68-17"><a href="22-Beta_stats.html#cb68-17" tabindex="-1"></a>  wunifrac_dist_mat_subset <span class="ot">&lt;-</span> beta_df_mean[samples_subset,samples_subset]</span>
+<span id="cb68-18"><a href="22-Beta_stats.html#cb68-18" tabindex="-1"></a>  <span class="co">#PERMANOVA/ADONIS of media</span></span>
+<span id="cb68-19"><a href="22-Beta_stats.html#cb68-19" tabindex="-1"></a>  <span class="co">#Ensure to change group name if using different group (media)</span></span>
+<span id="cb68-20"><a href="22-Beta_stats.html#cb68-20" tabindex="-1"></a>  pairwise_adonis <span class="ot">&lt;-</span> vegan<span class="sc">::</span><span class="fu">adonis2</span>(</span>
+<span id="cb68-21"><a href="22-Beta_stats.html#cb68-21" tabindex="-1"></a>    wunifrac_dist_mat_subset <span class="sc">~</span> media, <span class="at">data =</span> metadf_subset, <span class="at">by =</span> <span class="st">&quot;margin&quot;</span>)</span>
+<span id="cb68-22"><a href="22-Beta_stats.html#cb68-22" tabindex="-1"></a>  <span class="co">#Add the group names and p-value to the main data frame</span></span>
+<span id="cb68-23"><a href="22-Beta_stats.html#cb68-23" tabindex="-1"></a>  pairwise_permanova_df[i,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="ot">&lt;-</span> cbn[,i]</span>
+<span id="cb68-24"><a href="22-Beta_stats.html#cb68-24" tabindex="-1"></a>  pairwise_permanova_df[i,<span class="dv">3</span>] <span class="ot">&lt;-</span> wunifrac_pairwise_adonis[<span class="dv">1</span>,<span class="st">&quot;Pr(&gt;F)&quot;</span>]</span>
+<span id="cb68-25"><a href="22-Beta_stats.html#cb68-25" tabindex="-1"></a>}</span>
+<span id="cb68-26"><a href="22-Beta_stats.html#cb68-26" tabindex="-1"></a><span class="co">#View data frame</span></span>
+<span id="cb68-27"><a href="22-Beta_stats.html#cb68-27" tabindex="-1"></a>pairwise_permanova_df</span>
+<span id="cb68-28"><a href="22-Beta_stats.html#cb68-28" tabindex="-1"></a><span class="co">#Add adjusted P-values</span></span>
+<span id="cb68-29"><a href="22-Beta_stats.html#cb68-29" tabindex="-1"></a>pairwise_permanova_df<span class="sc">$</span>p.adj <span class="ot">&lt;-</span> <span class="fu">p.adjust</span>(pairwise_permanova_df<span class="sc">$</span>p, <span class="at">method =</span> <span class="st">&quot;BH&quot;</span>)</span>
+<span id="cb68-30"><a href="22-Beta_stats.html#cb68-30" tabindex="-1"></a><span class="co">#View data frame</span></span>
+<span id="cb68-31"><a href="22-Beta_stats.html#cb68-31" tabindex="-1"></a>pairwise_permanova_df</span>
+<span id="cb68-32"><a href="22-Beta_stats.html#cb68-32" tabindex="-1"></a><span class="co">#Write to a file</span></span>
+<span id="cb68-33"><a href="22-Beta_stats.html#cb68-33" tabindex="-1"></a><span class="fu">write.table</span>(<span class="at">x =</span> pairwise_permanova_df, <span class="at">file =</span> <span class="st">&quot;pairwise_permanova_media_wunifrac.tsv&quot;</span>,</span>
+<span id="cb68-34"><a href="22-Beta_stats.html#cb68-34" tabindex="-1"></a>            <span class="at">quote =</span> <span class="cn">FALSE</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 
 </div>
 </div>
@@ -593,8 +587,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="14-Alpha_data_frame_tidy.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="16-Alpha_plot_with_stats.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="21-Beta_ordination.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="23-Beta_subset_ordination.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
