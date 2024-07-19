@@ -69,8 +69,6 @@ for(i in 1:ncol(cbn)){
   pairwise_permanova_df[i,1:2] <- cbn[,i]
   pairwise_permanova_df[i,3] <- wunifrac_pairwise_adonis[1,"Pr(>F)"]
 }
-#View data frame
-pairwise_permanova_df
 #Add adjusted P-values
 pairwise_permanova_df$p.adj <- p.adjust(pairwise_permanova_df$p, method = "BH")
 #View data frame

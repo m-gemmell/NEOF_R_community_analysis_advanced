@@ -197,10 +197,10 @@ if (identicial(row.names(metadf), row.names(pcoa_points)) == FALSE) {
 }
 #Make points with metadata data frame
 pcoa_points_metadata <- cbind(pcoa_points, metadf)
-head(nmds_points_metadata)
+head(pcoa_points_metadata)
 #Save object we want, remove ones we don't
 save(pcoa_points_metadata, file = "wunifrac_PCoA.RData")
-rm(metadf, nmds_res, pcoa_points)
+rm(metadf, pcoa_res, pcoa_points)
 ```
 
 ### PCoA scatter plot
@@ -218,8 +218,8 @@ pcoa.wunifrac <- ggplot(data = pcoa_points_metadata,
                         aes(x = Axis.1, y = Axis.2, color = site, shape = media)) +
                 ggplot2::geom_point() +
                 #Add x and y labels to include % variance explained
-                labs(x = paste0("Axis.1 {", pcoa_axis_var_explained[1], "%]"),
-                     y = paste0("Axis.2 {", pcoa_axis_var_explained[2], "%]"))
+                labs(x = paste0("Axis.1 [", pcoa_axis_var_explained[1], "%]"),
+                     y = paste0("Axis.2 [", pcoa_axis_var_explained[2], "%]"))
 #Save ggplot2 object with ggsave
 ggsave(filename = "./Beta_diversity_pcoa_wunifrac_media_site.png", plot = pcoa.wunifrac
        device = "png", dpi = 300, units = "mm", height = 125, width = 150)
@@ -229,46 +229,6 @@ IRdisplay::display_png(file = "./Beta_diversity_pcoa_wunifrac_media_site.png")
 
 We have a PCoA plot which represents 82.1% (67.46+14.64) of the variance of our data.
 It is quite similar to our NMDS plot.
-
-## Which ordination method to use?
-
-A common question is "Which ordination method should I use?"
-There are many ordination methods with __NMDS__ and __PCoA__ being popular for ordination distance based values (dissimilarity matrices).
-
-A general guide to which to use for your data is by choosing the most informative one.
-Choose the one that shows the best picture and that explains the data the best.
-
-In this case the PCoA plot looks better than the NMDS plot as the PCoA plot has a high _% variance explained__ and it shows more separation of the samples.
-
-If the PCoA plot had a low __% variance explained__ it may be better to choose the NMDS plot.
-NMDS attempts to explain the data in the number of dimensions chosen by the user.
-We chose 2 as we want to plot the data in 2 dimensions.
-
-## More dimensions
-
-Your data may be very complex and two dimensions would not be sufficient to plot the data.
-There are two main ways to plot multiple dimensions.
-
-### Produce multiple plots {-}
-
-Create multiple 2D plots to compare pairs of axes.
-If you wanted to plot the first three axes this way you would produce the following scatter plots:
-
-- Axis 1 against Axis 2
-- Axis 1 against Axis 3
-- Axis 2 against Axis 3
-
-You can use this method to easily visualise as many axes as possible.
-The drawback is that you can only directly compare two axes in each plot.
-
-### 3D scatterplot {-}
-
-You can create an interactive 3D scatter plot with the package `plotly` using the `plot_ly()` function ([guide](https://plotly.com/r/3d-scatter-plots/)).
-
-This allows you to directly compare 3 axes at once.
-It is interactive, allowing you to change the perspective of the plot.
-This allows you to choose the best angle to save the image to use in publication.
-However, you would generally not use this method to compare more than 3 axes.
 
 ## Ordination recap
 

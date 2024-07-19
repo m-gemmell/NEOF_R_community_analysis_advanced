@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Iterative rarefaction background | Iterative rarefaction</title>
+  <title>Chapter 25 \(\beta\): Practice | Iterative rarefaction</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Iterative rarefaction background | Iterative rarefaction" />
+  <meta property="og:title" content="Chapter 25 \(\beta\): Practice | Iterative rarefaction" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/figures/NEOF.png" />
   <meta property="og:description" content="NEOF book for the R community advanced analysis course" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Iterative rarefaction background | Iterative rarefaction" />
+  <meta name="twitter:title" content="Chapter 25 \(\beta\): Practice | Iterative rarefaction" />
   
   <meta name="twitter:description" content="NEOF book for the R community advanced analysis course" />
   <meta name="twitter:image" content="/figures/NEOF.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
-<link rel="prev" href="01-Iterative_rarefaction_intro.html"/>
-<link rel="next" href="03-Setup.html"/>
+<link rel="prev" href="24-Beta_considerations.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -318,61 +318,139 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="iter_rarefaction_background_chap" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Iterative rarefaction background<a href="02-Background.html#iter_rarefaction_background_chap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<center>
-<img src="figures/iteration.png" style="width:200px; background-color:white; border-radius:15px" />
-</center>
-<p><strong>Rarefaction</strong> is the process of randomly subsetting samples so the total count values are identical across all samples.
-<strong>Rarefaction</strong> is intended to correct for bias caused by varying sampling depths across the samples to be analysed.</p>
-<div id="should-you-rarefy" class="section level2 hasAnchor" number="2.1">
-<h2><span class="header-section-number">2.1</span> Should you rarefy?<a href="02-Background.html#should-you-rarefy" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<center>
-<img src="figures/choice_sign.png" style="width:200px" />
-</center>
-<p><strong>Rarefaction</strong> can be a hotly debated topic with two main points of view.</p>
-<ol style="list-style-type: decimal">
-<li>Some researchers believe it is not appropriate.
-<ol style="list-style-type: decimal">
-<li>This is backed up by the 2014 paper <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531">"Waste Not, Want Not: Why Rarefying Microbiome Data Is Inadmissible"</a></li>
-<li>Various R package developers do not recommend it such as the developers of <a href="https://joey711.github.io/phyloseq/"><code>phyloseq</code></a> &amp; <a href="https://microbiome.github.io/tutorials/"><code>microbiome</code></a>.</li>
-</ol></li>
-<li>Some researchers believe it is appropriate.
-<ol style="list-style-type: decimal">
-<li>This is backed up by the 2022 paper <a href="https://academic.oup.com/bioinformatics/article/38/9/2389/6536959">"To rarefy or not to rarefy: robustness and efficiency trade-offs of rarefying microbiome data"</a></li>
-<li>The QIIME2 developers include rarefaction in their tutorials/SOPs for alpha and beta diversity analysis</li>
-</ol></li>
-</ol>
-<p>We use <strong>rarefaction</strong> in our analyses but it is ultimately up to you whether you utilise it or not.</p>
-</div>
-<div id="using-iterations" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> Using iterations<a href="02-Background.html#using-iterations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<center>
-<img src="figures/iterations.png" style="width:200px; background-color:white; border-radius:15px" />
-</center>
-<p>In our initial R community analysis workshop we only <strong>rarefy</strong> once for each sample.
-In this section we will <strong>rarefy</strong> multiple times to calculate average values for alpha and beta diversity metrics.
-This is <strong>iterative rarefaction</strong> analysis.</p>
-<p>This iterative approach will, in theory, smooth out any extreme results one round of <strong>rarefaction</strong> may cause. Extreme results are possibly due the random nature of <strong>rarefaction</strong>.
-These extreme results can include:</p>
+<div id="beta-practice" class="section level1 hasAnchor" number="25">
+<h1><span class="header-section-number">Chapter 25</span> <span class="math inline">\(\beta\)</span>: Practice<a href="25-Beta_practice.html#beta-practice" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="beta-task" class="section level2 hasAnchor" number="25.1">
+<h2><span class="header-section-number">25.1</span> <span class="math inline">\(\beta\)</span>: Task<a href="25-Beta_practice.html#beta-task" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As an optional task create a NMDS and PCoA scatter plot using Bray-Curtis. To do this carry out the following steps:</p>
 <ul>
-<li>Leaving important features (ASVs, taxonomic groups, etc.) with no counts</li>
-<li>Causing a few features to have much higher relative abundances</li>
-<li>Varying alpha and beta diversity values with different sets of rarefaction</li>
+<li>Generate a Bray-Curtis distance matrix using the 10 rng seeds previosuly created.</li>
+<li>Carry out ordination using NMDS and PCoA</li>
+<li>Create long data frames with metadata and points</li>
+<li>Plot the points using the media groupings as the shape and the site groupings as the colour</li>
 </ul>
+<div class="webex-solution">
+<button>
+Solution code
+</button>
+<p>Rarefaction values and rng seeds.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb73-1"><a href="25-Beta_practice.html#cb73-1" tabindex="-1"></a><span class="co">#Rarefaction values</span></span>
+<span id="cb73-2"><a href="25-Beta_practice.html#cb73-2" tabindex="-1"></a><span class="co">#Rarefaction size</span></span>
+<span id="cb73-3"><a href="25-Beta_practice.html#cb73-3" tabindex="-1"></a><span class="co">#Minimum sample depth in this case</span></span>
+<span id="cb73-4"><a href="25-Beta_practice.html#cb73-4" tabindex="-1"></a>rarefaction_size <span class="ot">&lt;-</span> <span class="fu">min</span>(microbiome<span class="sc">::</span><span class="fu">readcount</span>(pseq))</span>
+<span id="cb73-5"><a href="25-Beta_practice.html#cb73-5" tabindex="-1"></a><span class="co">#Load the vector of 10 rngseeds created in the previous chapter</span></span>
+<span id="cb73-6"><a href="25-Beta_practice.html#cb73-6" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;rngseeds.RData&quot;</span>)</span>
+<span id="cb73-7"><a href="25-Beta_practice.html#cb73-7" tabindex="-1"></a><span class="co">#Number of rarefaction iterations to be carried out</span></span>
+<span id="cb73-8"><a href="25-Beta_practice.html#cb73-8" tabindex="-1"></a><span class="co">#Based on length of rng seed vector</span></span>
+<span id="cb73-9"><a href="25-Beta_practice.html#cb73-9" tabindex="-1"></a>rarefaction_iters <span class="ot">&lt;-</span> <span class="fu">length</span>(rngseed_vec)</span></code></pre></div>
+<p>Calculate rarefied Bray-Curtis distance matrix by iterative rarefaction.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb74-1"><a href="25-Beta_practice.html#cb74-1" tabindex="-1"></a><span class="co">#Calculate rarefied bray-curtis through iterations</span></span>
+<span id="cb74-2"><a href="25-Beta_practice.html#cb74-2" tabindex="-1"></a><span class="co">#We can use a loop to carry this out for us</span></span>
+<span id="cb74-3"><a href="25-Beta_practice.html#cb74-3" tabindex="-1"></a></span>
+<span id="cb74-4"><a href="25-Beta_practice.html#cb74-4" tabindex="-1"></a><span class="co">#First create a matrix to contain the final summed bray-curtis beta diversity values</span></span>
+<span id="cb74-5"><a href="25-Beta_practice.html#cb74-5" tabindex="-1"></a><span class="co">#In this case we&#39;ll run the first rarefied beta diversity analysis</span></span>
+<span id="cb74-6"><a href="25-Beta_practice.html#cb74-6" tabindex="-1"></a>pseq_rarefy <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">rarefy_even_depth</span>(</span>
+<span id="cb74-7"><a href="25-Beta_practice.html#cb74-7" tabindex="-1"></a>  pseq,</span>
+<span id="cb74-8"><a href="25-Beta_practice.html#cb74-8" tabindex="-1"></a>  <span class="at">sample.size =</span> rarefaction_size,</span>
+<span id="cb74-9"><a href="25-Beta_practice.html#cb74-9" tabindex="-1"></a>  <span class="at">rngseed =</span> rngseed_vec[<span class="dv">1</span>],</span>
+<span id="cb74-10"><a href="25-Beta_practice.html#cb74-10" tabindex="-1"></a>  <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb74-11"><a href="25-Beta_practice.html#cb74-11" tabindex="-1"></a><span class="co">#bray-curtis beta diversity</span></span>
+<span id="cb74-12"><a href="25-Beta_practice.html#cb74-12" tabindex="-1"></a>beta_df_sum <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(</span>
+<span id="cb74-13"><a href="25-Beta_practice.html#cb74-13" tabindex="-1"></a>  vegan<span class="sc">::</span><span class="fu">vegdist</span>(<span class="at">x =</span> <span class="fu">t</span>(phyloseq<span class="sc">::</span><span class="fu">otu_table</span>(pseq_rarefy)), </span>
+<span id="cb74-14"><a href="25-Beta_practice.html#cb74-14" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">&quot;bray&quot;</span>))</span>
+<span id="cb74-15"><a href="25-Beta_practice.html#cb74-15" tabindex="-1"></a><span class="co">#Loop through 2 to the number of iterations</span></span>
+<span id="cb74-16"><a href="25-Beta_practice.html#cb74-16" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>rarefaction_iters){</span>
+<span id="cb74-17"><a href="25-Beta_practice.html#cb74-17" tabindex="-1"></a>  <span class="co">#Rarefaction</span></span>
+<span id="cb74-18"><a href="25-Beta_practice.html#cb74-18" tabindex="-1"></a>  pseq_rarefy <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">rarefy_even_depth</span>(</span>
+<span id="cb74-19"><a href="25-Beta_practice.html#cb74-19" tabindex="-1"></a>    pseq,</span>
+<span id="cb74-20"><a href="25-Beta_practice.html#cb74-20" tabindex="-1"></a>    <span class="at">sample.size =</span> rarefaction_size,</span>
+<span id="cb74-21"><a href="25-Beta_practice.html#cb74-21" tabindex="-1"></a>    <span class="at">rngseed =</span> rngseed_vec[i],</span>
+<span id="cb74-22"><a href="25-Beta_practice.html#cb74-22" tabindex="-1"></a>    <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb74-23"><a href="25-Beta_practice.html#cb74-23" tabindex="-1"></a>  <span class="co">#Beta diversity</span></span>
+<span id="cb74-24"><a href="25-Beta_practice.html#cb74-24" tabindex="-1"></a>  beta_df <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(</span>
+<span id="cb74-25"><a href="25-Beta_practice.html#cb74-25" tabindex="-1"></a>    rbiom<span class="sc">::</span><span class="fu">unifrac</span>(</span>
+<span id="cb74-26"><a href="25-Beta_practice.html#cb74-26" tabindex="-1"></a>      vegan<span class="sc">::</span><span class="fu">vegdist</span>(<span class="at">x =</span> <span class="fu">t</span>(phyloseq<span class="sc">::</span><span class="fu">otu_table</span>(pseq_rarefy)), </span>
+<span id="cb74-27"><a href="25-Beta_practice.html#cb74-27" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">&quot;bray&quot;</span>))</span>
+<span id="cb74-28"><a href="25-Beta_practice.html#cb74-28" tabindex="-1"></a>  <span class="co">#Add/sum the new data frame values to the sum data frame</span></span>
+<span id="cb74-29"><a href="25-Beta_practice.html#cb74-29" tabindex="-1"></a>  beta_df_sum <span class="ot">&lt;-</span> beta_df_sum <span class="sc">+</span> beta_df</span>
+<span id="cb74-30"><a href="25-Beta_practice.html#cb74-30" tabindex="-1"></a><span class="er">}</span></span>
+<span id="cb74-31"><a href="25-Beta_practice.html#cb74-31" tabindex="-1"></a><span class="co">#Divide by number of rarefaction iterations to get average</span></span>
+<span id="cb74-32"><a href="25-Beta_practice.html#cb74-32" tabindex="-1"></a>beta_df_mean <span class="ot">&lt;-</span> beta_df_sum <span class="sc">/</span> rarefaction_iters</span>
+<span id="cb74-33"><a href="25-Beta_practice.html#cb74-33" tabindex="-1"></a><span class="co">#Save alpha mean data frame</span></span>
+<span id="cb74-34"><a href="25-Beta_practice.html#cb74-34" tabindex="-1"></a><span class="fu">save</span>(beta_df_mean, <span class="at">file =</span> <span class="st">&quot;bray_curtis_df_mean.RData&quot;</span>)</span>
+<span id="cb74-35"><a href="25-Beta_practice.html#cb74-35" tabindex="-1"></a><span class="co">#View first 6 rows and columns of matrix</span></span>
+<span id="cb74-36"><a href="25-Beta_practice.html#cb74-36" tabindex="-1"></a>beta_df_mean[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb74-37"><a href="25-Beta_practice.html#cb74-37" tabindex="-1"></a><span class="co">#Remove unneeded objects</span></span>
+<span id="cb74-38"><a href="25-Beta_practice.html#cb74-38" tabindex="-1"></a><span class="fu">rm</span>(beta_df_sum, beta_df_mean, pseq_rarefy)</span></code></pre></div>
+<p>NMDS ordinate &amp; long data frame</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb75-1"><a href="25-Beta_practice.html#cb75-1" tabindex="-1"></a><span class="co">#NMDS ordinate</span></span>
+<span id="cb75-2"><a href="25-Beta_practice.html#cb75-2" tabindex="-1"></a>nmds_res <span class="ot">&lt;-</span> vegan<span class="sc">::</span><span class="fu">metaMDS</span>(beta_df_mean, <span class="at">k =</span> <span class="dv">2</span>)</span>
+<span id="cb75-3"><a href="25-Beta_practice.html#cb75-3" tabindex="-1"></a><span class="co">#Plot points</span></span>
+<span id="cb75-4"><a href="25-Beta_practice.html#cb75-4" tabindex="-1"></a>nmds_res<span class="sc">$</span>points</span>
+<span id="cb75-5"><a href="25-Beta_practice.html#cb75-5" tabindex="-1"></a><span class="co">#Create long data frame with metadata and points</span></span>
+<span id="cb75-6"><a href="25-Beta_practice.html#cb75-6" tabindex="-1"></a><span class="co">#Extract metadata and ensure row names order matches</span></span>
+<span id="cb75-7"><a href="25-Beta_practice.html#cb75-7" tabindex="-1"></a>metadf <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">sample_data</span>(pseq)</span>
+<span id="cb75-8"><a href="25-Beta_practice.html#cb75-8" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">identicial</span>(<span class="fu">row.names</span>(metadf), <span class="fu">row.names</span>(nmds_points)) <span class="sc">==</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb75-9"><a href="25-Beta_practice.html#cb75-9" tabindex="-1"></a>  metadf <span class="ot">&lt;-</span> metadf[<span class="fu">row.names</span>(nmds_points),]</span>
+<span id="cb75-10"><a href="25-Beta_practice.html#cb75-10" tabindex="-1"></a>}</span>
+<span id="cb75-11"><a href="25-Beta_practice.html#cb75-11" tabindex="-1"></a><span class="co">#Make points with metadata data frame</span></span>
+<span id="cb75-12"><a href="25-Beta_practice.html#cb75-12" tabindex="-1"></a>nmds_points_metadata <span class="ot">&lt;-</span> <span class="fu">cbind</span>(nmds_points, metadf)</span>
+<span id="cb75-13"><a href="25-Beta_practice.html#cb75-13" tabindex="-1"></a><span class="co">#Check head of data frame</span></span>
+<span id="cb75-14"><a href="25-Beta_practice.html#cb75-14" tabindex="-1"></a><span class="fu">head</span>(nmds_points_metadata)</span>
+<span id="cb75-15"><a href="25-Beta_practice.html#cb75-15" tabindex="-1"></a><span class="co">#Save object we want, remove ones we don&#39;t</span></span>
+<span id="cb75-16"><a href="25-Beta_practice.html#cb75-16" tabindex="-1"></a><span class="fu">save</span>(nmds_points_metadata, <span class="at">file =</span> <span class="st">&quot;bray_NMDS.RData&quot;</span>)</span>
+<span id="cb75-17"><a href="25-Beta_practice.html#cb75-17" tabindex="-1"></a><span class="fu">rm</span>(metadf, nmds_res, nmds_points)</span></code></pre></div>
+<p>NMDS scatterplot</p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb76-1"><a href="25-Beta_practice.html#cb76-1" tabindex="-1"></a><span class="co">#Produce NMDS scatter plot</span></span>
+<span id="cb76-2"><a href="25-Beta_practice.html#cb76-2" tabindex="-1"></a><span class="co">#Plot ordination</span></span>
+<span id="cb76-3"><a href="25-Beta_practice.html#cb76-3" tabindex="-1"></a>nmds.bray <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> nmds_points_metadata,</span>
+<span id="cb76-4"><a href="25-Beta_practice.html#cb76-4" tabindex="-1"></a>                        <span class="fu">aes</span>(<span class="at">x =</span> NMDS1, <span class="at">y =</span> NMDS2, <span class="at">color =</span> site, <span class="at">shape =</span> media)) <span class="sc">+</span></span>
+<span id="cb76-5"><a href="25-Beta_practice.html#cb76-5" tabindex="-1"></a>                ggplot2<span class="sc">::</span><span class="fu">geom_point</span>()</span>
+<span id="cb76-6"><a href="25-Beta_practice.html#cb76-6" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave</span></span>
+<span id="cb76-7"><a href="25-Beta_practice.html#cb76-7" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;./Beta_diversity_NMDS_bray_media_site.png&quot;</span>,</span>
+<span id="cb76-8"><a href="25-Beta_practice.html#cb76-8" tabindex="-1"></a>       <span class="at">plot =</span> nmds.bray,</span>
+<span id="cb76-9"><a href="25-Beta_practice.html#cb76-9" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">&quot;png&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">&quot;mm&quot;</span>, <span class="at">height =</span> <span class="dv">125</span>, <span class="at">width =</span> <span class="dv">150</span>)</span>
+<span id="cb76-10"><a href="25-Beta_practice.html#cb76-10" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb76-11"><a href="25-Beta_practice.html#cb76-11" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">&quot;./Beta_diversity_NMDS_bray_media_site.png&quot;</span>)</span></code></pre></div>
+<p>PCoA ordinate &amp; long data frame</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb77-1"><a href="25-Beta_practice.html#cb77-1" tabindex="-1"></a><span class="co">#PCoA ordinate</span></span>
+<span id="cb77-2"><a href="25-Beta_practice.html#cb77-2" tabindex="-1"></a>pcoa_res <span class="ot">&lt;-</span> ape<span class="sc">::</span><span class="fu">pcoa</span>(beta_df_mean)</span>
+<span id="cb77-3"><a href="25-Beta_practice.html#cb77-3" tabindex="-1"></a><span class="co">#Extract first 2 axes</span></span>
+<span id="cb77-4"><a href="25-Beta_practice.html#cb77-4" tabindex="-1"></a>pcoa_points <span class="ot">&lt;-</span> pcoa_res<span class="sc">$</span>vectors[,<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span>
+<span id="cb77-5"><a href="25-Beta_practice.html#cb77-5" tabindex="-1"></a><span class="fu">head</span>(pcoa_points)</span>
+<span id="cb77-6"><a href="25-Beta_practice.html#cb77-6" tabindex="-1"></a><span class="co">#Variation explained values </span></span>
+<span id="cb77-7"><a href="25-Beta_practice.html#cb77-7" tabindex="-1"></a>pcoa_axis_var_explained <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="at">x=</span>pcoa_res<span class="sc">$</span>values[,<span class="st">&quot;Relative_eig&quot;</span>] <span class="sc">*</span> <span class="dv">100</span>, <span class="at">digits=</span><span class="dv">2</span>)</span>
+<span id="cb77-8"><a href="25-Beta_practice.html#cb77-8" tabindex="-1"></a>pcoa_axis_var_explained</span>
+<span id="cb77-9"><a href="25-Beta_practice.html#cb77-9" tabindex="-1"></a><span class="co">#Create point long data frame with metadata</span></span>
+<span id="cb77-10"><a href="25-Beta_practice.html#cb77-10" tabindex="-1"></a><span class="co">#Extract metadata and ensure row names order matches</span></span>
+<span id="cb77-11"><a href="25-Beta_practice.html#cb77-11" tabindex="-1"></a>metadf <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">sample_data</span>(pseq)</span>
+<span id="cb77-12"><a href="25-Beta_practice.html#cb77-12" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">identicial</span>(<span class="fu">row.names</span>(metadf), <span class="fu">row.names</span>(pcoa_points)) <span class="sc">==</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb77-13"><a href="25-Beta_practice.html#cb77-13" tabindex="-1"></a>  metadf <span class="ot">&lt;-</span> metadf[<span class="fu">row.names</span>(pcoa_points),]</span>
+<span id="cb77-14"><a href="25-Beta_practice.html#cb77-14" tabindex="-1"></a>}</span>
+<span id="cb77-15"><a href="25-Beta_practice.html#cb77-15" tabindex="-1"></a><span class="co">#Make points with metadata data frame</span></span>
+<span id="cb77-16"><a href="25-Beta_practice.html#cb77-16" tabindex="-1"></a>pcoa_points_metadata <span class="ot">&lt;-</span> <span class="fu">cbind</span>(pcoa_points, metadf)</span>
+<span id="cb77-17"><a href="25-Beta_practice.html#cb77-17" tabindex="-1"></a><span class="fu">head</span>(pcoa_points_metadata)</span>
+<span id="cb77-18"><a href="25-Beta_practice.html#cb77-18" tabindex="-1"></a><span class="co">#Save object we want, remove ones we don&#39;t</span></span>
+<span id="cb77-19"><a href="25-Beta_practice.html#cb77-19" tabindex="-1"></a><span class="fu">save</span>(pcoa_points_metadata, <span class="at">file =</span> <span class="st">&quot;wunifrac_PCoA.RData&quot;</span>)</span>
+<span id="cb77-20"><a href="25-Beta_practice.html#cb77-20" tabindex="-1"></a><span class="fu">rm</span>(metadf, pcoa_res, pcoa_points)</span></code></pre></div>
+<p>PCoA scatterplot</p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb78-1"><a href="25-Beta_practice.html#cb78-1" tabindex="-1"></a><span class="co">#Produce PCoA scatter plot</span></span>
+<span id="cb78-2"><a href="25-Beta_practice.html#cb78-2" tabindex="-1"></a><span class="co">#Plot ordination</span></span>
+<span id="cb78-3"><a href="25-Beta_practice.html#cb78-3" tabindex="-1"></a>pcoa.bray <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> pcoa_points_metadata, </span>
+<span id="cb78-4"><a href="25-Beta_practice.html#cb78-4" tabindex="-1"></a>                        <span class="fu">aes</span>(<span class="at">x =</span> Axis<span class="fl">.1</span>, <span class="at">y =</span> Axis<span class="fl">.2</span>, <span class="at">color =</span> site, <span class="at">shape =</span> media)) <span class="sc">+</span></span>
+<span id="cb78-5"><a href="25-Beta_practice.html#cb78-5" tabindex="-1"></a>                ggplot2<span class="sc">::</span><span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb78-6"><a href="25-Beta_practice.html#cb78-6" tabindex="-1"></a>                <span class="co">#Add x and y labels to include % variance explained</span></span>
+<span id="cb78-7"><a href="25-Beta_practice.html#cb78-7" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">&quot;Axis.1 [&quot;</span>, pcoa_axis_var_explained[<span class="dv">1</span>], <span class="st">&quot;%]&quot;</span>),</span>
+<span id="cb78-8"><a href="25-Beta_practice.html#cb78-8" tabindex="-1"></a>                     <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">&quot;Axis.2 [&quot;</span>, pcoa_axis_var_explained[<span class="dv">2</span>], <span class="st">&quot;%]&quot;</span>))</span>
+<span id="cb78-9"><a href="25-Beta_practice.html#cb78-9" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave</span></span>
+<span id="cb78-10"><a href="25-Beta_practice.html#cb78-10" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;./Beta_diversity_pcoa_bray_media_site.png&quot;</span>, <span class="at">plot =</span> pcoa.bray</span>
+<span id="cb78-11"><a href="25-Beta_practice.html#cb78-11" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">&quot;png&quot;</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">&quot;mm&quot;</span>, <span class="at">height =</span> <span class="dv">125</span>, <span class="at">width =</span> <span class="dv">150</span>)</span>
+<span id="cb78-12"><a href="25-Beta_practice.html#cb78-12" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb78-13"><a href="25-Beta_practice.html#cb78-13" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">&quot;./Beta_diversity_pcoa_bray_media_site.png&quot;</span>)</span></code></pre></div>
 </div>
-<div id="section-contents" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> Section contents<a href="02-Background.html#section-contents" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<center>
-<img src="figures/contents.png" style="width:200px; background-color:white; border-radius:15px" />
-</center>
-<p>In this section we will learn how to:</p>
-<ul>
-<li>Use <strong>random seeds</strong> for sampling</li>
-<li>Carry out <strong>iterative rarefaction</strong> with sets of <strong>random seeds</strong></li>
-<li>Use <strong>iterative rarefaction</strong> to carry out alpha diversity analysis</li>
-<li>Use <strong>iterative rarefaction</strong> to carry out beta diversity analysis</li>
-</ul>
+</div>
+<div id="beta-recap" class="section level2 hasAnchor" number="25.2">
+<h2><span class="header-section-number">25.2</span> <span class="math inline">\(\beta\)</span>: Recap<a href="25-Beta_practice.html#beta-recap" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
 </div>
 </div>
@@ -587,8 +665,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="01-Iterative_rarefaction_intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="03-Setup.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="24-Beta_considerations.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

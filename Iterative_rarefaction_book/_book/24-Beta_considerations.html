@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Iterative rarefaction background | Iterative rarefaction</title>
+  <title>Chapter 24 \(\beta\): Considerations | Iterative rarefaction</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
   <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Iterative rarefaction background | Iterative rarefaction" />
+  <meta property="og:title" content="Chapter 24 \(\beta\): Considerations | Iterative rarefaction" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="/figures/NEOF.png" />
   <meta property="og:description" content="NEOF book for the R community advanced analysis course" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Iterative rarefaction background | Iterative rarefaction" />
+  <meta name="twitter:title" content="Chapter 24 \(\beta\): Considerations | Iterative rarefaction" />
   
   <meta name="twitter:description" content="NEOF book for the R community advanced analysis course" />
   <meta name="twitter:image" content="/figures/NEOF.png" />
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="figures/NEOF_favicon.png" type="image/x-icon" />
-<link rel="prev" href="01-Iterative_rarefaction_intro.html"/>
-<link rel="next" href="03-Setup.html"/>
+<link rel="prev" href="23-Beta_subset_ordination.html"/>
+<link rel="next" href="25-Beta_practice.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -318,62 +318,62 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="iter_rarefaction_background_chap" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Iterative rarefaction background<a href="02-Background.html#iter_rarefaction_background_chap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<center>
-<img src="figures/iteration.png" style="width:200px; background-color:white; border-radius:15px" />
-</center>
-<p><strong>Rarefaction</strong> is the process of randomly subsetting samples so the total count values are identical across all samples.
-<strong>Rarefaction</strong> is intended to correct for bias caused by varying sampling depths across the samples to be analysed.</p>
-<div id="should-you-rarefy" class="section level2 hasAnchor" number="2.1">
-<h2><span class="header-section-number">2.1</span> Should you rarefy?<a href="02-Background.html#should-you-rarefy" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<center>
-<img src="figures/choice_sign.png" style="width:200px" />
-</center>
-<p><strong>Rarefaction</strong> can be a hotly debated topic with two main points of view.</p>
-<ol style="list-style-type: decimal">
-<li>Some researchers believe it is not appropriate.
-<ol style="list-style-type: decimal">
-<li>This is backed up by the 2014 paper <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531">"Waste Not, Want Not: Why Rarefying Microbiome Data Is Inadmissible"</a></li>
-<li>Various R package developers do not recommend it such as the developers of <a href="https://joey711.github.io/phyloseq/"><code>phyloseq</code></a> &amp; <a href="https://microbiome.github.io/tutorials/"><code>microbiome</code></a>.</li>
-</ol></li>
-<li>Some researchers believe it is appropriate.
-<ol style="list-style-type: decimal">
-<li>This is backed up by the 2022 paper <a href="https://academic.oup.com/bioinformatics/article/38/9/2389/6536959">"To rarefy or not to rarefy: robustness and efficiency trade-offs of rarefying microbiome data"</a></li>
-<li>The QIIME2 developers include rarefaction in their tutorials/SOPs for alpha and beta diversity analysis</li>
-</ol></li>
-</ol>
-<p>We use <strong>rarefaction</strong> in our analyses but it is ultimately up to you whether you utilise it or not.</p>
-</div>
-<div id="using-iterations" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> Using iterations<a href="02-Background.html#using-iterations" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<center>
-<img src="figures/iterations.png" style="width:200px; background-color:white; border-radius:15px" />
-</center>
-<p>In our initial R community analysis workshop we only <strong>rarefy</strong> once for each sample.
-In this section we will <strong>rarefy</strong> multiple times to calculate average values for alpha and beta diversity metrics.
-This is <strong>iterative rarefaction</strong> analysis.</p>
-<p>This iterative approach will, in theory, smooth out any extreme results one round of <strong>rarefaction</strong> may cause. Extreme results are possibly due the random nature of <strong>rarefaction</strong>.
-These extreme results can include:</p>
+<div id="beta-considerations" class="section level1 hasAnchor" number="24">
+<h1><span class="header-section-number">Chapter 24</span> <span class="math inline">\(\beta\)</span>: Considerations<a href="24-Beta_considerations.html#beta-considerations" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>There are many considerations to take in mind when carrying out beta diversity analysis.</p>
+<div id="which-distance-measure-to-use" class="section level2 hasAnchor" number="24.1">
+<h2><span class="header-section-number">24.1</span> Which distance measure to use?<a href="24-Beta_considerations.html#which-distance-measure-to-use" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are many beta diversity distances that you can use.
+Ultimately the choice is yours but our recommendations would be:</p>
 <ul>
-<li>Leaving important features (ASVs, taxonomic groups, etc.) with no counts</li>
-<li>Causing a few features to have much higher relative abundances</li>
-<li>Varying alpha and beta diversity values with different sets of rarefaction</li>
+<li>Weighted and unweighted unifrac distances if you have a phylogenetic tree</li>
+<li>Bray-Curtis and Jaccard distances if you do not have a phylogenetic tree</li>
 </ul>
-</div>
-<div id="section-contents" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> Section contents<a href="02-Background.html#section-contents" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<center>
-<img src="figures/contents.png" style="width:200px; background-color:white; border-radius:15px" />
-</center>
-<p>In this section we will learn how to:</p>
+<p>These 2 sets of distances are very popular and commonly used as the default choices.</p>
+<p>There are two distances in each set as one is based on:</p>
 <ul>
-<li>Use <strong>random seeds</strong> for sampling</li>
-<li>Carry out <strong>iterative rarefaction</strong> with sets of <strong>random seeds</strong></li>
-<li>Use <strong>iterative rarefaction</strong> to carry out alpha diversity analysis</li>
-<li>Use <strong>iterative rarefaction</strong> to carry out beta diversity analysis</li>
+<li>Richness (presence/absence): Unweighted unifrac &amp; Jaccard</li>
+<li>Richness and abundance values: Weighted unifrac &amp; Bray-Curtis</li>
 </ul>
+<p>Normally the measure using abundance values will be more infomrative.
+However, it is good to attempt the richness only approach too as it may show something hidden by tthe inclusion of the abundance data.</p>
+</div>
+<div id="which-ordination-method-to-use" class="section level2 hasAnchor" number="24.2">
+<h2><span class="header-section-number">24.2</span> Which ordination method to use?<a href="24-Beta_considerations.html#which-ordination-method-to-use" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A common question is "Which ordination method should I use?"
+There are many ordination methods with <strong>NMDS</strong> and <strong>PCoA</strong> being popular for ordination distance based values (dissimilarity matrices).</p>
+<p>A general guide to which to use for your data is by choosing the most informative one.
+Choose the one that shows the best picture and that explains the data the best.</p>
+<p>In this case the PCoA plot looks better than the NMDS plot as the PCoA plot has a high _% variance explained__ and it shows more separation of the samples.</p>
+<p>If the PCoA plot had a low <strong>% variance explained</strong> it may be better to choose the NMDS plot.
+NMDS attempts to explain the data in the number of dimensions chosen by the user.
+We chose 2 as we want to plot the data in 2 dimensions.</p>
+</div>
+<div id="more-dimensions" class="section level2 hasAnchor" number="24.3">
+<h2><span class="header-section-number">24.3</span> More dimensions<a href="24-Beta_considerations.html#more-dimensions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Your data may be very complex and two dimensions would not be sufficient to plot the data.
+There are two main ways to plot multiple dimensions.</p>
+<div id="produce-multiple-plots" class="section level3 unnumbered hasAnchor">
+<h3>Produce multiple plots<a href="24-Beta_considerations.html#produce-multiple-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Create multiple 2D plots to compare pairs of axes.
+If you wanted to plot the first three axes this way you would produce the following scatter plots:</p>
+<ul>
+<li>Axis 1 against Axis 2</li>
+<li>Axis 1 against Axis 3</li>
+<li>Axis 2 against Axis 3</li>
+</ul>
+<p>You can use this method to easily visualise as many axes as possible.
+The drawback is that you can only directly compare two axes in each plot.</p>
+</div>
+<div id="d-scatterplot" class="section level3 unnumbered hasAnchor">
+<h3>3D scatterplot<a href="24-Beta_considerations.html#d-scatterplot" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>You can create an interactive 3D scatter plot with the package <code>plotly</code> using the <code>plot_ly()</code> function (<a href="https://plotly.com/r/3d-scatter-plots/">guide</a>).</p>
+<p>This allows you to directly compare 3 axes at once.
+It is interactive, allowing you to change the perspective of the plot.
+This allows you to choose the best angle to save the image to use in publication.
+However, you would generally not use this method to compare more than 3 axes.</p>
 
+</div>
 </div>
 </div>
 <script>
@@ -587,8 +587,8 @@ window.onload = function() {
           </div>
         </div>
       </div>
-<a href="01-Iterative_rarefaction_intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="03-Setup.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="23-Beta_subset_ordination.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="25-Beta_practice.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
