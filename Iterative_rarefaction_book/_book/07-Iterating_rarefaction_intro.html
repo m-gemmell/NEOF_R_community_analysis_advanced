@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 7 Iterating rarefaction intro &amp; setup | Iterative rarefaction</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 7 Iterating rarefaction intro &amp; setup | Iterative rarefaction" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Matthew R. Gemmell" />
 
 
-<meta name="date" content="2024-07-19" />
+<meta name="date" content="2024-07-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -56,7 +56,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -151,13 +151,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.1" data-path="02-Background.html"><a href="02-Background.html#should-you-rarefy"><i class="fa fa-check"></i><b>2.1</b> Should you rarefy?</a></li>
 <li class="chapter" data-level="2.2" data-path="02-Background.html"><a href="02-Background.html#using-iterations"><i class="fa fa-check"></i><b>2.2</b> Using iterations</a></li>
-<li class="chapter" data-level="2.3" data-path="02-Background.html"><a href="02-Background.html#section-contents"><i class="fa fa-check"></i><b>2.3</b> Section contents</a></li>
+<li class="chapter" data-level="2.3" data-path="02-Background.html"><a href="02-Background.html#book-contents"><i class="fa fa-check"></i><b>2.3</b> Book contents</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="03-Setup.html"><a href="03-Setup.html"><i class="fa fa-check"></i><b>3</b> Setup</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="03-Setup.html"><a href="03-Setup.html#dataset"><i class="fa fa-check"></i><b>3.1</b> Dataset</a></li>
 <li class="chapter" data-level="3.2" data-path="03-Setup.html"><a href="03-Setup.html#conda-environment"><i class="fa fa-check"></i><b>3.2</b> Conda environment</a></li>
-<li class="chapter" data-level="3.3" data-path="03-Setup.html"><a href="03-Setup.html#diretory-and-files"><i class="fa fa-check"></i><b>3.3</b> Diretory and files</a></li>
+<li class="chapter" data-level="3.3" data-path="03-Setup.html"><a href="03-Setup.html#directory-and-files"><i class="fa fa-check"></i><b>3.3</b> Directory and files</a></li>
 </ul></li>
 <li class="part"><span><b>Random seeds</b></span></li>
 <li class="chapter" data-level="4" data-path="04-Random_seeds.html"><a href="04-Random_seeds.html"><i class="fa fa-check"></i><b>4</b> Random seeds and sampling</a>
@@ -223,6 +223,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15" data-path="15-Alpha_violin_plot_and_stats.html"><a href="15-Alpha_violin_plot_and_stats.html"><i class="fa fa-check"></i><b>15</b> <span class="math inline">\(\alpha\)</span>: Plot and stats</a>
 <ul>
 <li class="chapter" data-level="15.1" data-path="15-Alpha_violin_plot_and_stats.html"><a href="15-Alpha_violin_plot_and_stats.html#alpha-violin-plot"><i class="fa fa-check"></i><b>15.1</b> <span class="math inline">\(\alpha\)</span>: Violin plot</a></li>
+<li class="chapter" data-level="15.2" data-path="15-Alpha_violin_plot_and_stats.html"><a href="15-Alpha_violin_plot_and_stats.html#alpha-stats"><i class="fa fa-check"></i><b>15.2</b> <span class="math inline">\(\alpha\)</span>: Stats</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="15-Alpha_violin_plot_and_stats.html"><a href="15-Alpha_violin_plot_and_stats.html#kruskal-wallis-test"><i class="fa fa-check"></i><b>15.2.1</b> Kruskal Wallis test</a></li>
+<li class="chapter" data-level="15.2.2" data-path="15-Alpha_violin_plot_and_stats.html"><a href="15-Alpha_violin_plot_and_stats.html#paired-wilcoxon-test"><i class="fa fa-check"></i><b>15.2.2</b> Paired Wilcoxon test</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="16-Alpha_plot_with_stats.html"><a href="16-Alpha_plot_with_stats.html"><i class="fa fa-check"></i><b>16</b> <span class="math inline">\(\alpha\)</span>: Plot with stats</a>
 <ul>
@@ -236,7 +241,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17.2" data-path="17-Alpha_diversity_practice.html"><a href="17-Alpha_diversity_practice.html#alpha-recap"><i class="fa fa-check"></i><b>17.2</b> <span class="math inline">\(\alpha\)</span>: Recap</a></li>
 </ul></li>
 <li class="part"><span><b>Beta diversity</b></span></li>
-<li class="chapter" data-level="18" data-path="18-Beta_intro.html"><a href="18-Beta_intro.html"><i class="fa fa-check"></i><b>18</b> Beta Diversity</a>
+<li class="chapter" data-level="18" data-path="18-Beta_intro.html"><a href="18-Beta_intro.html"><i class="fa fa-check"></i><b>18</b> <span class="math inline">\(\beta\)</span> Diversity intro</a>
 <ul>
 <li class="chapter" data-level="18.1" data-path="18-Beta_intro.html"><a href="18-Beta_intro.html#beta-setup"><i class="fa fa-check"></i><b>18.1</b> <span class="math inline">\(\beta\)</span>: Setup</a></li>
 </ul></li>
@@ -321,8 +326,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="iterating_rarefaction_chap" class="section level1 hasAnchor" number="7">
 <h1><span class="header-section-number">Chapter 7</span> Iterating rarefaction intro &amp; setup<a href="07-Iterating_rarefaction_intro.html#iterating_rarefaction_chap" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>In this section we will create code to carry out <strong>iterative rarefaction</strong>.
-We'll create a vector of <strong>random seeds</strong>, each used for a different <strong>iteration</strong> of <strong>rarefaction</strong>.
-We use this vector to loop through, using each <strong>random seed</strong> to carry out one <strong>iteration</strong> of <strong>rarefaction</strong>.
+For this we need to create a vector of <strong>random seeds</strong>, one for each <strong>iteration</strong> of <strong>rarefaction</strong>.
+We will loop through this vector, using each <strong>random seed</strong> to carry out one <strong>iteration</strong> of <strong>rarefaction</strong>.
 In the next sections we will utilise this code to produce alpha and beta diversity values that we will analyse.</p>
 <div id="iterating-rarefaction-setup" class="section level2 hasAnchor" number="7.1">
 <h2><span class="header-section-number">7.1</span> Iterating rarefaction setup<a href="07-Iterating_rarefaction_intro.html#iterating-rarefaction-setup" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -330,7 +335,7 @@ In the next sections we will utilise this code to produce alpha and beta diversi
 <img src="figures/setup_5.png" style="width:200px" />
 </center>
 <p>First, create a new R jupyter-notebook called "Iterating_rarefaction.ipynb".</p>
-<p>At the top of this notebook create a code cell to load in the various packages and data we need. The code is below:</p>
+<p>At the top of this notebook create a code cell to load in the various packages and data we need.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb10-1"><a href="07-Iterating_rarefaction_intro.html#cb10-1" tabindex="-1"></a><span class="co">#Libraries</span></span>
 <span id="cb10-2"><a href="07-Iterating_rarefaction_intro.html#cb10-2" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;phyloseq&quot;</span>)</span>
 <span id="cb10-3"><a href="07-Iterating_rarefaction_intro.html#cb10-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">&quot;microbiome&quot;</span>)</span>
@@ -344,7 +349,7 @@ In the next sections we will utilise this code to produce alpha and beta diversi
 <img src="figures/number_pad.png" style="width:200px" />
 </center>
 <p>We need to choose the number of <strong>iterations</strong> we are going to carry out.</p>
-<p>For our <strong>practice</strong> we will use <strong>10 iterations</strong> for speed.
+<p>For our speed we will use <strong>10 iterations</strong> in this practice.
 In your real analysis I would recommend using <strong>1000 iterations</strong>.</p>
 <p>Let's create a variable for our number of <strong>iterations</strong>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r Rchunk"><code class="sourceCode r"><span id="cb11-1"><a href="07-Iterating_rarefaction_intro.html#cb11-1" tabindex="-1"></a><span class="co">#Number of rarefaction iterations to be carried out</span></span>
@@ -374,7 +379,7 @@ In your real analysis I would recommend using <strong>1000 iterations</strong>.<
 <li><strong>Setting the random seed:</strong> We carry this out so we will always get the same rngseed vector that will be used for the rarefaction iterations. This is important so you will always get the same results if you need to rework some analysis, stats, or plots. Also useful here so you get the same results as the instructor and other attendees.</li>
 <li><strong>Creating the rngseed vector:</strong> We use our old friend <code>sample()</code> to create a random number for each <strong>iteration</strong> we will carry out.
 <ul>
-<li>We arbitrarily sample from the numbers 1-100,000, you could change this to a larger range in your future research.</li>
+<li>We arbitrarily sample from the numbers 1-100,000. You could change this to a larger range in your future research.</li>
 <li>We use our previous object <code>rarefaction_iters</code> as <code>size=</code> to produce a random number for each of our <strong>iterations</strong>.</li>
 <li>We carry this out <strong>without replacement</strong> so none of our <strong>rarefaction iterations</strong> are identical.</li>
 </ul></li>

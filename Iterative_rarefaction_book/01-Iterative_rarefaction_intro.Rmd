@@ -37,7 +37,9 @@ knitr::write_bib(c(
 
 # Introduction
 
-ADD NEW COURSE LOGO
+<center>
+![](figures/iterative_rarefaction.png){style="width: 300px"}
+</center>
 
 This book explains and demonstrates how to carry out __iterative rarefaction__ for __alpha__ and __beta__ diversity analysis in __R__ with the `phyloseq` object.
 This involves running multiple rounds/iterations of rarefaction and producing and averaged table of __alpha__ and __beta__ diversity values.

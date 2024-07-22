@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 2 Iterative rarefaction background | Iterative rarefaction</title>
   <meta name="description" content="NEOF book for the R community advanced analysis course" />
-  <meta name="generator" content="bookdown 0.36 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.40 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 2 Iterative rarefaction background | Iterative rarefaction" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Matthew R. Gemmell" />
 
 
-<meta name="date" content="2024-07-19" />
+<meta name="date" content="2024-07-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -56,7 +56,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -151,13 +151,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.1" data-path="02-Background.html"><a href="02-Background.html#should-you-rarefy"><i class="fa fa-check"></i><b>2.1</b> Should you rarefy?</a></li>
 <li class="chapter" data-level="2.2" data-path="02-Background.html"><a href="02-Background.html#using-iterations"><i class="fa fa-check"></i><b>2.2</b> Using iterations</a></li>
-<li class="chapter" data-level="2.3" data-path="02-Background.html"><a href="02-Background.html#section-contents"><i class="fa fa-check"></i><b>2.3</b> Section contents</a></li>
+<li class="chapter" data-level="2.3" data-path="02-Background.html"><a href="02-Background.html#book-contents"><i class="fa fa-check"></i><b>2.3</b> Book contents</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="03-Setup.html"><a href="03-Setup.html"><i class="fa fa-check"></i><b>3</b> Setup</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="03-Setup.html"><a href="03-Setup.html#dataset"><i class="fa fa-check"></i><b>3.1</b> Dataset</a></li>
 <li class="chapter" data-level="3.2" data-path="03-Setup.html"><a href="03-Setup.html#conda-environment"><i class="fa fa-check"></i><b>3.2</b> Conda environment</a></li>
-<li class="chapter" data-level="3.3" data-path="03-Setup.html"><a href="03-Setup.html#diretory-and-files"><i class="fa fa-check"></i><b>3.3</b> Diretory and files</a></li>
+<li class="chapter" data-level="3.3" data-path="03-Setup.html"><a href="03-Setup.html#directory-and-files"><i class="fa fa-check"></i><b>3.3</b> Directory and files</a></li>
 </ul></li>
 <li class="part"><span><b>Random seeds</b></span></li>
 <li class="chapter" data-level="4" data-path="04-Random_seeds.html"><a href="04-Random_seeds.html"><i class="fa fa-check"></i><b>4</b> Random seeds and sampling</a>
@@ -223,6 +223,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="15" data-path="15-Alpha_violin_plot_and_stats.html"><a href="15-Alpha_violin_plot_and_stats.html"><i class="fa fa-check"></i><b>15</b> <span class="math inline">\(\alpha\)</span>: Plot and stats</a>
 <ul>
 <li class="chapter" data-level="15.1" data-path="15-Alpha_violin_plot_and_stats.html"><a href="15-Alpha_violin_plot_and_stats.html#alpha-violin-plot"><i class="fa fa-check"></i><b>15.1</b> <span class="math inline">\(\alpha\)</span>: Violin plot</a></li>
+<li class="chapter" data-level="15.2" data-path="15-Alpha_violin_plot_and_stats.html"><a href="15-Alpha_violin_plot_and_stats.html#alpha-stats"><i class="fa fa-check"></i><b>15.2</b> <span class="math inline">\(\alpha\)</span>: Stats</a>
+<ul>
+<li class="chapter" data-level="15.2.1" data-path="15-Alpha_violin_plot_and_stats.html"><a href="15-Alpha_violin_plot_and_stats.html#kruskal-wallis-test"><i class="fa fa-check"></i><b>15.2.1</b> Kruskal Wallis test</a></li>
+<li class="chapter" data-level="15.2.2" data-path="15-Alpha_violin_plot_and_stats.html"><a href="15-Alpha_violin_plot_and_stats.html#paired-wilcoxon-test"><i class="fa fa-check"></i><b>15.2.2</b> Paired Wilcoxon test</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="16" data-path="16-Alpha_plot_with_stats.html"><a href="16-Alpha_plot_with_stats.html"><i class="fa fa-check"></i><b>16</b> <span class="math inline">\(\alpha\)</span>: Plot with stats</a>
 <ul>
@@ -236,7 +241,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="17.2" data-path="17-Alpha_diversity_practice.html"><a href="17-Alpha_diversity_practice.html#alpha-recap"><i class="fa fa-check"></i><b>17.2</b> <span class="math inline">\(\alpha\)</span>: Recap</a></li>
 </ul></li>
 <li class="part"><span><b>Beta diversity</b></span></li>
-<li class="chapter" data-level="18" data-path="18-Beta_intro.html"><a href="18-Beta_intro.html"><i class="fa fa-check"></i><b>18</b> Beta Diversity</a>
+<li class="chapter" data-level="18" data-path="18-Beta_intro.html"><a href="18-Beta_intro.html"><i class="fa fa-check"></i><b>18</b> <span class="math inline">\(\beta\)</span> Diversity intro</a>
 <ul>
 <li class="chapter" data-level="18.1" data-path="18-Beta_intro.html"><a href="18-Beta_intro.html#beta-setup"><i class="fa fa-check"></i><b>18.1</b> <span class="math inline">\(\beta\)</span>: Setup</a></li>
 </ul></li>
@@ -323,8 +328,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <center>
 <img src="figures/iteration.png" style="width:200px; background-color:white; border-radius:15px" />
 </center>
-<p><strong>Rarefaction</strong> is the process of randomly subsetting samples so the total count values are identical across all samples.
-<strong>Rarefaction</strong> is intended to correct for bias caused by varying sampling depths across the samples to be analysed.</p>
+<p><strong>Rarefaction</strong> is the process of randomly subsetting abundances to ensure the total count values are identical across all samples.
+<strong>Rarefaction</strong> is intended to correct for bias caused by varying sampling depths across the samples.</p>
 <div id="should-you-rarefy" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Should you rarefy?<a href="02-Background.html#should-you-rarefy" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
@@ -350,10 +355,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <center>
 <img src="figures/iterations.png" style="width:200px; background-color:white; border-radius:15px" />
 </center>
-<p>In our initial R community analysis workshop we only <strong>rarefy</strong> once for each sample.
-In this section we will <strong>rarefy</strong> multiple times to calculate average values for alpha and beta diversity metrics.
+<p>In our initial R community analysis workshop we only carried out one round of <strong>rarefaction</strong> for each sample.
+In this book we will <strong>rarefy</strong> with multiple rounds/iterations to calculate average values for alpha and beta diversity metrics.
 This is <strong>iterative rarefaction</strong> analysis.</p>
-<p>This iterative approach will, in theory, smooth out any extreme results one round of <strong>rarefaction</strong> may cause. Extreme results are possibly due the random nature of <strong>rarefaction</strong>.
+<p>This iterative approach will, in theory, smooth out any extreme results one round of <strong>rarefaction</strong> may cause. Extreme results are possible due the random nature of <strong>rarefaction</strong>.
 These extreme results can include:</p>
 <ul>
 <li>Leaving important features (ASVs, taxonomic groups, etc.) with no counts</li>
@@ -361,12 +366,12 @@ These extreme results can include:</p>
 <li>Varying alpha and beta diversity values with different sets of rarefaction</li>
 </ul>
 </div>
-<div id="section-contents" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> Section contents<a href="02-Background.html#section-contents" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="book-contents" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Book contents<a href="02-Background.html#book-contents" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <center>
 <img src="figures/contents.png" style="width:200px; background-color:white; border-radius:15px" />
 </center>
-<p>In this section we will learn how to:</p>
+<p>In this book you will learn how to:</p>
 <ul>
 <li>Use <strong>random seeds</strong> for sampling</li>
 <li>Carry out <strong>iterative rarefaction</strong> with sets of <strong>random seeds</strong></li>

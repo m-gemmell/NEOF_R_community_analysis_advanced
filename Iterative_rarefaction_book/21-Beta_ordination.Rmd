@@ -233,7 +233,7 @@ It is quite similar to our NMDS plot.
 ## Ordination recap
 
 In this chapter you have created ordination values (NMDS & PCOA) with iterative rarefaction and created scatter plots with these.
-In this next chapter we will use the ordination values to carry out statistics. 
+In the next chapter we will use the ordination values to carry out statistics. 
 
 
 

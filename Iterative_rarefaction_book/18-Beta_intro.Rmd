@@ -1,6 +1,6 @@
 # (PART\*) Beta diversity {-}
 
-# Beta Diversity {#beta_chap}
+# $\beta$ Diversity intro {#beta_chap}
 <center>
 ![](figures/beta_iterative_rarefaction.png){style="width:300px"}
 </center>

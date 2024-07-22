@@ -4,8 +4,8 @@
 ![](figures/iteration.png){style="width:200px; background-color:white; border-radius:15px"}
 </center>
 
-__Rarefaction__ is the process of randomly subsetting samples so the total count values are identical across all samples.
-__Rarefaction__ is intended to correct for bias caused by varying sampling depths across the samples to be analysed.
+__Rarefaction__ is the process of randomly subsetting abundances to ensure the total count values are identical across all samples.
+__Rarefaction__ is intended to correct for bias caused by varying sampling depths across the samples.
 
 ## Should you rarefy?
 <center>
@@ -28,23 +28,23 @@ We use __rarefaction__ in our analyses but it is ultimately up to you whether yo
 ![](figures/iterations.png){style="width:200px; background-color:white; border-radius:15px"}
 </center>
 
-In our initial R community analysis workshop we only __rarefy__ once for each sample.
-In this section we will __rarefy__ multiple times to calculate average values for alpha and beta diversity metrics.
+In our initial R community analysis workshop we only carried out one round of __rarefaction__ for each sample.
+In this book we will __rarefy__ with multiple rounds/iterations to calculate average values for alpha and beta diversity metrics.
 This is __iterative rarefaction__ analysis.
 
-This iterative approach will, in theory, smooth out any extreme results one round of __rarefaction__ may cause. Extreme results are possibly due the random nature of __rarefaction__.
+This iterative approach will, in theory, smooth out any extreme results one round of __rarefaction__ may cause. Extreme results are possible due the random nature of __rarefaction__.
 These extreme results can include:
 
 -   Leaving important features (ASVs, taxonomic groups, etc.) with no counts
 -   Causing a few features to have much higher relative abundances
 -   Varying alpha and beta diversity values with different sets of rarefaction
 
-## Section contents
+## Book contents
 <center>
 ![](figures/contents.png){style="width:200px; background-color:white; border-radius:15px"}
 </center>
 
-In this section we will learn how to:
+In this book you will learn how to:
 
 - Use __random seeds__ for sampling
 - Carry out __iterative rarefaction__ with sets of __random seeds__

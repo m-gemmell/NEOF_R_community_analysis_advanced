@@ -3,7 +3,7 @@
 ![](figures/one_round.png){style="width:200px"}
 </center>
 
-Building up to multiple __iterations__ of __rarefaction__ we will first carry out one round of __rarefaction__ on our environmental pPhyla relative abundance data.
+Building up to multiple __iterations__ of __rarefaction__ we will first carry out one round of __rarefaction__ on our environmental phyla relative abundance data.
 
 This will also allow us to compare the compare the results of no __rarefaction__ to only one round.
 

@@ -2,10 +2,9 @@
 
 # Iterating rarefaction intro & setup {#iterating_rarefaction_chap}
 
-
 In this section we will create code to carry out __iterative rarefaction__.
-We'll create a vector of __random seeds__, each used for a different __iteration__ of __rarefaction__.
-We use this vector to loop through, using each __random seed__ to carry out one __iteration__ of __rarefaction__.
+For this we need to create a vector of __random seeds__, one for each __iteration__ of __rarefaction__.
+We will loop through this vector, using each __random seed__ to carry out one __iteration__ of __rarefaction__.
 In the next sections we will utilise this code to produce alpha and beta diversity values that we will analyse.
 
 ## Iterating rarefaction setup
@@ -15,7 +14,7 @@ In the next sections we will utilise this code to produce alpha and beta diversi
 
 First, create a new R jupyter-notebook called "Iterating_rarefaction.ipynb".
 
-At the top of this notebook create a code cell to load in the various packages and data we need. The code is below:
+At the top of this notebook create a code cell to load in the various packages and data we need.
 
 ```{R, eval=FALSE}
 #Libraries
@@ -33,7 +32,7 @@ load("phyloseq.RData")
 
 We need to choose the number of __iterations__ we are going to carry out.
 
-For our __practice__ we will use __10 iterations__ for speed. 
+For our speed we will use __10 iterations__ in this practice. 
 In your real analysis I would recommend using __1000 iterations__.
 
 Let's create a variable for our number of __iterations__.
@@ -70,7 +69,7 @@ There are a lot of steps above. These are:
 
 - __Setting the random seed:__ We carry this out so we will always get the same rngseed vector that will be used for the rarefaction iterations. This is important so you will always get the same results if you need to rework some analysis, stats, or plots. Also useful here so you get the same results as the instructor and other attendees.
 - __Creating the rngseed vector:__ We use our old friend `sample()` to create a random number for each __iteration__ we will carry out. 
-  - We arbitrarily sample from the numbers 1-100,000, you could change this to a larger range in your future research.
+  - We arbitrarily sample from the numbers 1-100,000. You could change this to a larger range in your future research.
   - We use our previous object `rarefaction_iters` as `size=` to produce a random number for each of our __iterations__.
   - We carry this out __without replacement__ so none of our __rarefaction iterations__ are identical.
 - __Save the rngseed vector:__ We save the vector as a file. We will load this in our alpha and beta diversity notebooks to be used for iterative rarefaction. This is also useful so you have a backup file of the rngseed vectors. 

@@ -29,4 +29,4 @@ Below are brief bullet points about the data:
 
 ## Conda environment
 
-## Diretory and files
+## Directory and files

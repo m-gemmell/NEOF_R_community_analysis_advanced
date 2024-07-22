@@ -3,7 +3,7 @@
 ![](figures/seed_sowing.png){style="width:200px; border-radius:15px; background:white; border:#FFFFFF 6px solid"}
 </center>
 
-Brilliant! To reinforce the above knowledge try out the following challenges.
+Brilliant! To reinforce your gained knowledge try out the following challenges.
 
 First create the following vector:
 
@@ -58,7 +58,7 @@ opts_p <- c("__1120__", "__1369__", answer="__1744__")
 ```
 What is the 16th number in the produced vector? `r longmcq(opts_p)`
 
-`r hide("RSQ1 code solution")`
+`r hide("RSQ2 code solution")`
 ```{R, eval=FALSE}
 #RSQ2
 #Set random seed

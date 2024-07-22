@@ -2,11 +2,11 @@ introduction
 iter_rarefaction_background_chap
 should-you-rarefy
 using-iterations
-section-contents
+book-contents
 setupchap
 dataset
 conda-environment
-diretory-and-files
+directory-and-files
 random_seeds_n_sampling_chap
 random-seed-notebook
 random-sampling

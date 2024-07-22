@@ -1,12 +1,18 @@
 # $\beta$: Subset ordinations
+<center>
+![](figures/navigation_subset.png){style="width:200px"}
+</center>
 
-Many times when you ordinate data the distances within groups can be hard to see.
-This may be caused by one group causing a larger difference and therefore most of the variation is explaining that.
+When you ordinate data the distances within groups may be hard to see.
+This can be caused by one group causing a larger difference and therefore most of the displayed variation is explaining that.
 
 This can be seen with our previous ordination plots where the majority of the variation explained is caused by the difference of the environmental samples against the media samples.
 We will therefore subset our ordination in this chapter to only look at the media samples.
 
 ## Subset distance matrix
+<center>
+![](figures/wide_data_frame_subset.png){style="width:200px"}
+</center>
 
 The ordination values (PCoA, NMDS) will change when you remove or add samples.
 This means we cannot simply subset our ordination points.
@@ -30,6 +36,9 @@ beta_df_mean_no_env
 ```
 
 ## Points long data frame
+<center>
+![](figures/long_data_frame_subset.png){style="width:150px"}
+</center>
 
 We can now ordinate (PCoA) our subset distance matrix:
 
@@ -62,6 +71,9 @@ rm(metadf, nmds_res, pcoa_points)
 ```
 
 ## Media PCoA scatter plot
+<center>
+![](figures/scatter_subset.png){style="width:200px; background-color:white; border-radius:15px; border: white solid 5px"}
+</center>
 
 Finally you can produce the PCoA scatter plot for just the media samples:
 

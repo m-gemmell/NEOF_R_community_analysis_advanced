@@ -29,6 +29,21 @@ The four `scales` are:
 - __`"free_y"`:__ The y axis is free and the x axis is fixed.
 
 Which you want to use depends on your data and how you are facetting it.
+`r unhide()`
+
+```{R, eval = FALSE}
+#Produce ggplot object of violin plot
+alpha_violinplot <- ggplot(basic_alpha_metrics_long_df, aes(x = media, y = value)) +
+                            ggplot2::geom_violin() +
+                            ggforce::geom_sina(alpha=0.5, aes(color=site)) +
+                            ggplot2::labs(color = "Site", x = "Media", y = "Value") +
+                            ggplot2::facet_wrap(~metric, scales = "free")
+#Save ggplot2 object with ggsave()
+ggsave(filename = "./Alpha_diversity_rarefy_iters_media_violinplot.png", plot = alpha_violinplot,
+       device = "png", dpi = 300, units = "mm", height = 150, width = 250)
+#Display plot
+IRdisplay::display_png(file = "./Alpha_diversity_rarefy_iters_media_violinplot.png")
+```
 
 ## $\alpha$: Stats
 <center>
@@ -71,18 +86,3 @@ pairwise.wilcox.test(meta_alpha_mean_df$shannon, meta_alpha_mean_df, p.adjust.me
 ```
 
 You'll see three p-value adjusted tables with all the values (except Shannon: ENV against TSA) being significant (<0.05).
-`r unhide()`
-
-```{R, eval = FALSE}
-#Produce ggplot object of violin plot
-alpha_violinplot <- ggplot(basic_alpha_metrics_long_df, aes(x = media, y = value)) +
-                            ggplot2::geom_violin() +
-                            ggforce::geom_sina(alpha=0.5, aes(color=site)) +
-                            ggplot2::labs(color = "Site", x = "Media", y = "Value") +
-                            ggplot2::facet_wrap(~metric, scales = "free")
-#Save ggplot2 object with ggsave()
-ggsave(filename = "./Alpha_diversity_rarefy_iters_media_violinplot.png", plot = alpha_violinplot,
-       device = "png", dpi = 300, units = "mm", height = 150, width = 250)
-#Display plot
-IRdisplay::display_png(file = "./Alpha_diversity_rarefy_iters_media_violinplot.png")
-```

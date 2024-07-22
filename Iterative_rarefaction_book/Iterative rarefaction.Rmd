@@ -40,7 +40,9 @@ knitr::write_bib(c(
 
 # Introduction
 
-ADD NEW COURSE LOGO
+<center>
+![](figures/iterative_rarefaction.png){style="width: 300px"}
+</center>
 
 This book explains and demonstrates how to carry out __iterative rarefaction__ for __alpha__ and __beta__ diversity analysis in __R__ with the `phyloseq` object.
 This involves running multiple rounds/iterations of rarefaction and producing and averaged table of __alpha__ and __beta__ diversity values.
@@ -63,8 +65,8 @@ library(webexercises)
 ![](figures/iteration.png){style="width:200px; background-color:white; border-radius:15px"}
 </center>
 
-__Rarefaction__ is the process of randomly subsetting samples so the total count values are identical across all samples.
-__Rarefaction__ is intended to correct for bias caused by varying sampling depths across the samples to be analysed.
+__Rarefaction__ is the process of randomly subsetting abundances to ensure the total count values are identical across all samples.
+__Rarefaction__ is intended to correct for bias caused by varying sampling depths across the samples.
 
 ## Should you rarefy?
 <center>
@@ -87,23 +89,23 @@ We use __rarefaction__ in our analyses but it is ultimately up to you whether yo
 ![](figures/iterations.png){style="width:200px; background-color:white; border-radius:15px"}
 </center>
 
-In our initial R community analysis workshop we only __rarefy__ once for each sample.
-In this section we will __rarefy__ multiple times to calculate average values for alpha and beta diversity metrics.
+In our initial R community analysis workshop we only carried out one round of __rarefaction__ for each sample.
+In this book we will __rarefy__ with multiple rounds/iterations to calculate average values for alpha and beta diversity metrics.
 This is __iterative rarefaction__ analysis.
 
-This iterative approach will, in theory, smooth out any extreme results one round of __rarefaction__ may cause. Extreme results are possibly due the random nature of __rarefaction__.
+This iterative approach will, in theory, smooth out any extreme results one round of __rarefaction__ may cause. Extreme results are possible due the random nature of __rarefaction__.
 These extreme results can include:
 
 -   Leaving important features (ASVs, taxonomic groups, etc.) with no counts
 -   Causing a few features to have much higher relative abundances
 -   Varying alpha and beta diversity values with different sets of rarefaction
 
-## Section contents
+## Book contents
 <center>
 ![](figures/contents.png){style="width:200px; background-color:white; border-radius:15px"}
 </center>
 
-In this section we will learn how to:
+In this book you will learn how to:
 
 - Use __random seeds__ for sampling
 - Carry out __iterative rarefaction__ with sets of __random seeds__
@@ -146,7 +148,7 @@ Below are brief bullet points about the data:
 
 ## Conda environment
 
-## Diretory and files
+## Directory and files
 
 <!--chapter:end:03-Setup.Rmd-->
 
@@ -164,9 +166,8 @@ What are __random seeds__?
 
 __Random seeds__ are numbers that computational tasks use to determine how they will carry out a random task.
 
-In this chapter we will demonstrate the use of __random seeds__. 
+In this section we will demonstrate the use of __random seeds__. 
 This is to help understand what they are and why they are used.
-We won't do anything of value with the results in this chapter, instead this knowledge will be useful for understanding __iterative rarefaction__.
 
 ## Random seed notebook
 
@@ -174,22 +175,21 @@ We won't do anything of value with the results in this chapter, instead this kno
 ![](figures/seed_notebook.png){style="width:100px"}
 </center>
 
-Create a new R jupyter-notebook called "Random_seeds.ipynb".
-We will use this for this chapter.
+Create a new R jupyter-notebook called "Random_seeds.ipynb" for this section.
 
 ## Random sampling
 <center>
 ![](figures/random_sampling.png){style="width:200px; background:white; border-radius:5px"}
 </center>
 
-To demonstrate the use of random seed we will use the R function `sample()`. 
+To demonstrate the use of random seeds we will use the R function `sample()`. 
 This function randomly samples a set of numbers.
 
 Create the below code in a code cell.
 
 ```{R, eval=FALSE}
-#Create a vector containing the numbers 0 to 10
-num_vec <- 0:10
+#Create a vector containing the numbers 0 to 9
+num_vec <- 0:9
 #Randomly sample 5 of these numbers
 sample(x = num_vec, size = 5)
 ```
@@ -215,8 +215,8 @@ sample(x = num_vec, size = 5, replace = TRUE)
 
 Run this a few times and you will hopefully notice that the five numbers are not always unique.
 
-When sampling __with replacement__ you replace any results back into the sampling pool.
-When sampling __without replacement__ you don't replace any results back into the sampling pool.
+When sampling __with replacement__ you replace each result back into the pool before sampling again.
+When sampling __without replacement__ you don't replace the results.
 
 The famous example is sampling green and yellow balls from a bag.
 If you had a bag with 1000 balls and you wanted a rough idea of the ratio of yellow and green balls you could count the number of these balls within a sample of only 50.
@@ -226,15 +226,15 @@ With replacement you would take out a ball, record its colour and put it back in
 One advantage of sampling with replacement is that your sampling size can be larger than your actual population size.
 For example, you could create a random sampling of 50 with a bag containing 10 balls with replacement.
 This would not work without replacement.
-The below script will cause R to produce an error saying it can be done with replacement.
+The below script will cause R to produce an error saying "cannot take a sample larger than the population when 'replace = FALSE' ".
 
 ```{R, eval=FALSE}
-#Randomly sample 5 of these numbers with replacement
-sample(x = num_vec, size = 5, replace = TRUE)
+#Randomly sample 15 of these numbers without replacement
+sample(x = num_vec, size = 15, replace = FALSE)
 ```
 
 Importantly for us __rarefaction__ uses sampling __without replacement__.
-Any samples with a lower depth than the rarefaction size will be removed and not be in the resulting rarefied data.
+Any samples with a lower depth than the rarefaction size will be removed and will therefore not be in the resulting rarefied data.
 
 <!--chapter:end:04-Random_seeds.Rmd-->
 
@@ -260,11 +260,11 @@ Various programs that use __random seeds__ include:
 </center>
 
 To carry out random processes `R` uses a global variable called `seed`.
-The `seed` is normally random and changed every time it is used.
+The `seed` is normally random and changes every time it is used.
 This is useful for everyday analysis but what if you want replicable results?
 
 In R we can set the `seed` with the function `seet.seed()`.
-Carry this out followed by sampling.
+Carry this to determien the randomness of sampling.
 
 ```{R, eval=FALSE}
 #Set random seed
@@ -275,7 +275,7 @@ sample(x = num_vec, size = 12, replace = FALSE)
 set.seed(NULL)
 ```
 
-You will get a result of "9, 5, 4, 3, & 6".
+You will get a result of "9, 5, 4, 3, & 0".
 You can try to run the code multiple times and you will always get the same results.
 
 If you run a tool that uses random sampling you will always get the same results if:
@@ -297,12 +297,12 @@ sample(x = num_vec, size = 5)
 set.seed(NULL)
 ```
 
-That's right, `sample()` will always take the 10th (9/19), 6th (5/15), 5th (4/14), 4th (3/13), and 7th (6/16) values if it is given the __random seed__ of __1234__, provided with an 11 length vector, and asked to sample 5 values.
+That's right, `sample()` will always take the 10th (9/19), 6th (5/15), 5th (4/14), 4th (3/13), and 1st (0/10) values if it is given the __random seed__ of __1234__, provided with an 10 length vector, and asked to sample 5 values.
 
-Setting our randomness is incredible beneficial for reproducibility in research.
+Setting our randomness is incredibly beneficial for reproducibility in research.
 
 When you carry out analysis you may need to redo some work. 
-This could be due to reviewer comments or you want to incorporate some new methods.
+This could be due to reviewer comments or you may want to incorporate some new methods.
 As long as you saved the random seeds you used you can get the same results where you need to.
 It also means others can replicate your results.
 
@@ -315,7 +315,7 @@ We set a __random seed__ at the start of the cell for reproducibility and contro
 
 The normal operation of R means that, in effect, its __random seed__ changes every time it is used.
 This means R normally randomly determines randomness.
-This is how it should be until we want to set the randomness.
+This is how it should be until we want to determine the randomness.
 It is therefore good practice to set the seed to `NULL` after you have utilised your set __seeds__.
 This will revert the __seed__ to its normal random operations.
 
@@ -333,7 +333,7 @@ library(webexercises)
 ![](figures/seed_sowing.png){style="width:200px; border-radius:15px; background:white; border:#FFFFFF 6px solid"}
 </center>
 
-Brilliant! To reinforce the above knowledge try out the following challenges.
+Brilliant! To reinforce your gained knowledge try out the following challenges.
 
 First create the following vector:
 
@@ -388,7 +388,7 @@ opts_p <- c("__1120__", "__1369__", answer="__1744__")
 ```
 What is the 16th number in the produced vector? `r longmcq(opts_p)`
 
-`r hide("RSQ1 code solution")`
+`r hide("RSQ2 code solution")`
 ```{R, eval=FALSE}
 #RSQ2
 #Set random seed
@@ -454,10 +454,9 @@ library(webexercises)
 
 # Iterating rarefaction intro & setup {#iterating_rarefaction_chap}
 
-
 In this section we will create code to carry out __iterative rarefaction__.
-We'll create a vector of __random seeds__, each used for a different __iteration__ of __rarefaction__.
-We use this vector to loop through, using each __random seed__ to carry out one __iteration__ of __rarefaction__.
+For this we need to create a vector of __random seeds__, one for each __iteration__ of __rarefaction__.
+We will loop through this vector, using each __random seed__ to carry out one __iteration__ of __rarefaction__.
 In the next sections we will utilise this code to produce alpha and beta diversity values that we will analyse.
 
 ## Iterating rarefaction setup
@@ -467,7 +466,7 @@ In the next sections we will utilise this code to produce alpha and beta diversi
 
 First, create a new R jupyter-notebook called "Iterating_rarefaction.ipynb".
 
-At the top of this notebook create a code cell to load in the various packages and data we need. The code is below:
+At the top of this notebook create a code cell to load in the various packages and data we need.
 
 ```{R, eval=FALSE}
 #Libraries
@@ -485,7 +484,7 @@ load("phyloseq.RData")
 
 We need to choose the number of __iterations__ we are going to carry out.
 
-For our __practice__ we will use __10 iterations__ for speed. 
+For our speed we will use __10 iterations__ in this practice. 
 In your real analysis I would recommend using __1000 iterations__.
 
 Let's create a variable for our number of __iterations__.
@@ -522,7 +521,7 @@ There are a lot of steps above. These are:
 
 - __Setting the random seed:__ We carry this out so we will always get the same rngseed vector that will be used for the rarefaction iterations. This is important so you will always get the same results if you need to rework some analysis, stats, or plots. Also useful here so you get the same results as the instructor and other attendees.
 - __Creating the rngseed vector:__ We use our old friend `sample()` to create a random number for each __iteration__ we will carry out. 
-  - We arbitrarily sample from the numbers 1-100,000, you could change this to a larger range in your future research.
+  - We arbitrarily sample from the numbers 1-100,000. You could change this to a larger range in your future research.
   - We use our previous object `rarefaction_iters` as `size=` to produce a random number for each of our __iterations__.
   - We carry this out __without replacement__ so none of our __rarefaction iterations__ are identical.
 - __Save the rngseed vector:__ We save the vector as a file. We will load this in our alpha and beta diversity notebooks to be used for iterative rarefaction. This is also useful so you have a backup file of the rngseed vectors. 
@@ -1218,6 +1217,21 @@ The four `scales` are:
 - __`"free_y"`:__ The y axis is free and the x axis is fixed.
 
 Which you want to use depends on your data and how you are facetting it.
+`r unhide()`
+
+```{R, eval = FALSE}
+#Produce ggplot object of violin plot
+alpha_violinplot <- ggplot(basic_alpha_metrics_long_df, aes(x = media, y = value)) +
+                            ggplot2::geom_violin() +
+                            ggforce::geom_sina(alpha=0.5, aes(color=site)) +
+                            ggplot2::labs(color = "Site", x = "Media", y = "Value") +
+                            ggplot2::facet_wrap(~metric, scales = "free")
+#Save ggplot2 object with ggsave()
+ggsave(filename = "./Alpha_diversity_rarefy_iters_media_violinplot.png", plot = alpha_violinplot,
+       device = "png", dpi = 300, units = "mm", height = 150, width = 250)
+#Display plot
+IRdisplay::display_png(file = "./Alpha_diversity_rarefy_iters_media_violinplot.png")
+```
 
 ## $\alpha$: Stats
 <center>
@@ -1260,21 +1274,6 @@ pairwise.wilcox.test(meta_alpha_mean_df$shannon, meta_alpha_mean_df, p.adjust.me
 ```
 
 You'll see three p-value adjusted tables with all the values (except Shannon: ENV against TSA) being significant (<0.05).
-`r unhide()`
-
-```{R, eval = FALSE}
-#Produce ggplot object of violin plot
-alpha_violinplot <- ggplot(basic_alpha_metrics_long_df, aes(x = media, y = value)) +
-                            ggplot2::geom_violin() +
-                            ggforce::geom_sina(alpha=0.5, aes(color=site)) +
-                            ggplot2::labs(color = "Site", x = "Media", y = "Value") +
-                            ggplot2::facet_wrap(~metric, scales = "free")
-#Save ggplot2 object with ggsave()
-ggsave(filename = "./Alpha_diversity_rarefy_iters_media_violinplot.png", plot = alpha_violinplot,
-       device = "png", dpi = 300, units = "mm", height = 150, width = 250)
-#Display plot
-IRdisplay::display_png(file = "./Alpha_diversity_rarefy_iters_media_violinplot.png")
-```
 
 <!--chapter:end:15-Alpha_violin_plot_and_stats.Rmd-->
 
@@ -1516,7 +1515,7 @@ library(webexercises)
 ```
 # (PART\*) Beta diversity {-}
 
-# Beta Diversity {#beta_chap}
+# $\beta$ Diversity intro {#beta_chap}
 <center>
 ![](figures/beta_iterative_rarefaction.png){style="width:300px"}
 </center>
@@ -1962,7 +1961,7 @@ It is quite similar to our NMDS plot.
 ## Ordination recap
 
 In this chapter you have created ordination values (NMDS & PCOA) with iterative rarefaction and created scatter plots with these.
-In this next chapter we will use the ordination values to carry out statistics. 
+In the next chapter we will use the ordination values to carry out statistics. 
 
 
 
@@ -2060,14 +2059,20 @@ write.table(x = pairwise_permanova_df, file = "pairwise_permanova_media_wunifrac
 library(webexercises)
 ```
 # $\beta$: Subset ordinations
+<center>
+![](figures/navigation_subset.png){style="width:200px"}
+</center>
 
-Many times when you ordinate data the distances within groups can be hard to see.
-This may be caused by one group causing a larger difference and therefore most of the variation is explaining that.
+When you ordinate data the distances within groups may be hard to see.
+This can be caused by one group causing a larger difference and therefore most of the displayed variation is explaining that.
 
 This can be seen with our previous ordination plots where the majority of the variation explained is caused by the difference of the environmental samples against the media samples.
 We will therefore subset our ordination in this chapter to only look at the media samples.
 
 ## Subset distance matrix
+<center>
+![](figures/wide_data_frame_subset.png){style="width:200px"}
+</center>
 
 The ordination values (PCoA, NMDS) will change when you remove or add samples.
 This means we cannot simply subset our ordination points.
@@ -2091,6 +2096,9 @@ beta_df_mean_no_env
 ```
 
 ## Points long data frame
+<center>
+![](figures/long_data_frame_subset.png){style="width:150px"}
+</center>
 
 We can now ordinate (PCoA) our subset distance matrix:
 
@@ -2123,6 +2131,9 @@ rm(metadf, nmds_res, pcoa_points)
 ```
 
 ## Media PCoA scatter plot
+<center>
+![](figures/scatter_subset.png){style="width:200px; background-color:white; border-radius:15px; border: white solid 5px"}
+</center>
 
 Finally you can produce the PCoA scatter plot for just the media samples:
 
