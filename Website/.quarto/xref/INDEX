@@ -241,5 +241,26 @@
   },
   "ggplot2/ggplot_object.qmd": {
     "ggplot_object.html": "69fd1168"
+  },
+  "setup/setup.qmd": {
+    "setup.html": "12329add"
+  },
+  "upset/code.qmd": {
+    "code.html": "5baf7bc9"
+  },
+  "upset/data_and_setup.qmd": {
+    "data_and_setup.html": "80ac69ad"
+  },
+  "upset/upset.qmd": {
+    "upset.html": "d5e26b45"
+  },
+  "upset/simple_bar_chart.qmd": {
+    "simple_bar_chart.html": "bd800518"
+  },
+  "upset/upset_data_format.qmd": {
+    "upset_data_format.html": "c3023cc5"
+  },
+  "upset/phyloseq_to_tibble.qmd": {
+    "phyloseq_to_tibble.html": "8e9be6de"
   }
 }

@@ -1,0 +1,47 @@
+# Data & Setup
+
+Before you carry out any practice you will need to setup your environment by:
+
+- Creating a jupyter-notebook in a new work directory.
+- Loading in the required libraries.
+- Loading in the data.
+
+## Jupyter notebook
+
+In jupyter-notebook file explorer create and move into a new directory called "upset".
+We'll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.
+
+Create a new R based jupyter-notebook called "upset.ipynb".
+At the top of the jupyter-notebook add the following headers:
+
+- A first level header of "Upset plots".
+- A second level header of "Libraries & data".
+
+## Libraries
+
+```{r, eval=FALSE}
+#Libraries
+library("phyloseq")
+library("microbiome")
+library("IRdisplay")
+library("tidyverse")
+library("ggupset")
+```
+
+## Data
+
+We have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 ([theory](https://neof-workshops.github.io/16S_yg84o9/Course/03-Intro_to_qiime2.html#amplicon-sequence-variants-identification) & [code](https://neof-workshops.github.io/16S_yg84o9/Course/09-ASV_identification.html)).
+For our upset plots we will be utilising the Durance river data used in our R community analysis workshop.
+This is a 16S dataset with two main metadata groupings:
+
+- Sites: Upper, Middle, and Lower Durance sampling site.
+- Culture media: Environmental sample (ENV), TSA, KBC, and CVP.
+
+More info in the [R community analysis workbook](https://neof-workshops.github.io/R_community_whqkt8/Course/02-Dataset_and_workflow.html#dataset)
+
+Load in the phyloseq object.
+
+```{r, eval=FALSE}
+#Data
+load("/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData")
+```

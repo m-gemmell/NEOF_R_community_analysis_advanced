@@ -1,0 +1,247 @@
+# CODE tiujhioupiao
+
+
+
+
+
+```{r, eval=FALSE}
+#Remove Abundance column and then make Sample column contain lists
+#I.e will have a row for each unique Phylum
+#Then Sample column will contain a list showing each sample the phylum is found in
+#This is the format the upset plot needs
+phyla_upset_tibble <- phyla_tibble_long |>
+    #Remove Abundamce column
+    dplyr::select(-Abundance) |>
+    #Group tibble by the Phylum column important for next step
+    dplyr::group_by(Phylum) |>
+    #Summarize Sample column so it becomes column of list variables
+    dplyr::summarize(Samples = list(Sample))
+```
+```{r, eval=FALSE}
+#Jupyter notebook does not like displaying tibbles that have 
+# lists as column variables
+#Therefore we will view it with str() instead
+str(phyla_upset_tibble)
+```
+```{r, eval=FALSE}
+#Two examples of Phyla and the samples they are present in
+#First row
+#Phylum
+phyla_upset_tibble |> dplyr::slice(1) |> dplyr::pull(Phylum)
+#List of samples it is present in
+phyla_upset_tibble |> dplyr::slice(1) |> dplyr::pull(Samples)
+```
+```{r, eval=FALSE}
+#Seventh row
+#Phylum
+phyla_upset_tibble |> dplyr::slice(7) |> dplyr::pull(Phylum)
+#List of samples it is present in
+phyla_upset_tibble |> dplyr::slice(7) |> dplyr::pull(Samples)
+```
+```{r, eval=FALSE}
+#Upset plot with bar chart
+samples_phyla_upset_plot <- phyla_upset_tibble |>
+    ggplot2::ggplot(aes(x = Samples)) +
+        #Add bar chart
+        ggplot2::geom_bar() +
+        #Add upset visualisation as x axis below bar chart
+        ggupset::scale_x_upset() + 
+        #Specify y axis label
+        ggplot2::labs(y="Phyla count")
+ggplot2::ggsave(filename = "./sample_phylum_upset.png", plot = samples_phyla_upset_plot,
+       device = "png", dpi = 300, units = "mm", height = 200, width = 300)
+IRdisplay::display_png(file="./sample_phylum_upset.png")
+```
+```{r, eval=FALSE}
+#Lets do it the other way around where the Intersection of samples 
+# across Phyla will be showed
+#We'll also try to do it in one pipe starting from the initial 
+# phyloseq object for demonstrative purposes
+phyla_samples_upset_plot <- pseq |>
+    #Convert abundances to relative/compositional abundances
+    microbiome::transform("compositional") |>
+    #Aggregate ASVs to phylum level
+    microbiome::aggregate_taxa("Phylum", verbose = FALSE) |>
+    #Extract phyla relative abundance table
+    phyloseq::otu_table() |>
+    #Rather than convert to df then tibble we can extract a tibble directly
+    microbiome::otu_tibble(column.id = "Phylum") |>
+    #Longify tibble
+    tidyr::pivot_longer(!Phylum, names_to="Sample", values_to="Abundance") |>
+    #Filter out rows were relative abundance is 0
+    #i.e. retain rows showing presence
+    dplyr::filter(Abundance > 0) |>
+    #Select to remove unwanted Abundance column
+    dplyr::select(-Abundance) |>
+    #Group tibble by the Sample column
+    dplyr::group_by(Sample) |>
+    #Using grouping to summarise the Phylum column
+    #Results in each row having a unique phyla
+    # with a list of the samples the phylum is present in
+    dplyr::summarize(Phyla = list(Phylum)) |>
+    #ggplot
+    ggplot2::ggplot(aes(x = Phyla)) +
+        #Bar chart
+        ggplot2::geom_bar() +
+        #Upset scale on x axis
+        ggupset::scale_x_upset() + 
+        #Y label
+        ggplot2::labs(y="Sample count")
+#Save plot to png file
+ggplot2::ggsave(filename = "./phyla_sample_upset.png", plot = phyla_samples_upset_plot,
+       device = "png", dpi = 300, units = "mm", height = 200, width = 300)
+#Dsplay plot in jupyter notebook
+IRdisplay::display_png(file="./phyla_sample_upset.png")
+```
+```{r, eval=FALSE}
+#Aggregate taxa, Will not aggragate rare taxa as we want
+# all the different genera to be included in the upset plot counts
+genus_pseq <- microbiome::aggregate_taxa(pseq, "Genus", verbose = FALSE)
+```
+```{r, eval=FALSE}
+#Convert sample abundance table to metadata abundance table
+# Extract and transpose Genus table
+#Transpose it so we can add metadata as a column
+#Column is set to Sample as "column names" will be samples with transpose
+genus_tibble <- genus_pseq |>
+    phyloseq::otu_table() |>
+    as.data.frame() |> t() |>
+    dplyr::as_tibble(rownames = "Sample")
+head(genus_tibble)
+```
+```{r, eval=FALSE}
+#Demonstration on why we don't use microbiome::otu_tibble
+#Can't easily use microbiome::otu_tibble with transpose
+#t() converts the tibble to a matrix
+microbiome::otu_tibble(genus_pseq, column.id = "Sample") |>
+    t() |>
+    head()
+```
+```{r, eval=FALSE}
+#Metadata tibble
+metadata_tibble <- microbiome::sample_tibble(genus_pseq)
+head(metadata_tibble)
+```
+```{r, eval=FALSE}
+#bind metadata and genus tibbles
+genus_metadata_tibble <- dplyr::bind_cols(metadata_tibble, genus_tibble)
+head(genus_metadata_tibble)
+```
+```{r, eval=FALSE}
+#We are going to make an upset plot for site so we will remove 
+#the other metadata columns we are not interested in
+#Therefore we will create a vector of "site" with the genus names
+cols_to_keep <- c("site", colnames(genus_tibble[,-1]))
+#Subset tibble to our desired columns
+site_genus_tibble <- genus_metadata_tibble[,cols_to_keep]
+head(site_genus_tibble)
+```
+
+```{r, eval=FALSE}
+#Create upset tibble where each row is a unique genus and
+# there is a site column where each row contains a list
+# of the sites the genus is present in
+site_genus_upset_tibble  <- site_genus_tibble |>
+    #Longify tibble    
+    tidyr::pivot_longer(!site, names_to="Genus", values_to="Abundance") |>
+    #Filter out rows with 0 as their abundance level
+    #I.e. remove absence
+    dplyr::filter(Abundance > 0) |>
+    #Remove the Abundance column
+    dplyr::select(-Abundance) |>
+    #Remove duplicate rows to prevent multiple values appearing for each site
+    #Carry out with dplyr:distinct() it seems
+    dplyr::distinct() |>
+    #Group by the Genus column to....
+    dplyr::group_by(Genus) |>
+    #Summarise site column so each row has a unique Genus
+    # with a list of the sites each Genus is found in
+    dplyr::summarize(Sites = list(site))
+#Check structure of the first 10 rows of resulting upset tibble
+str(site_genus_upset_tibble[1:10,])
+```
+```{r, eval=FALSE}
+#Upset plot displaying number of intersecting genera, by presence, across the three sites
+upset_plot <- site_genus_upset_tibble |>
+ggplot2::ggplot(aes(x = Sites)) +
+    ggplot2::geom_bar() +
+    ggupset::scale_x_upset() +
+    ggplot2::labs(y="Genera count")
+ggplot2::ggsave(filename = "./site_genera_upset.png", plot = upset_plot,
+       device = "png", dpi = 300, units = "mm", height = 200, width = 300)
+IRdisplay::display_png(file="./site_genera_upset.png")
+```
+```{r, eval=FALSE}
+#Upset plot displaying number of intersecting genera, by presence, across the media
+#Columns to keep
+cols_to_keep <- c("media", colnames(genus_tibble[,-1]))
+#All in one code to produce upset plot
+upset_plot <- genus_metadata_tibble[,cols_to_keep] |>
+    #Longify tibble
+    tidyr::pivot_longer(!media, names_to="Genus", values_to="Abundance") |>
+    #Filter to remove rows with an abundance of 0
+    dplyr::filter(Abundance > 0) |>
+    #Select to remove unwanted abundance column
+    dplyr::select(-Abundance) |>
+    #Remove duplicate rows to prevent multiple values appearing for each media
+    dplyr::distinct() |>
+    #Group tibble by Genus column
+    dplyr::group_by(Genus) |>
+    #Summarise media column so each row has a unique Genus
+    # with a list of the medias each Genus is found in
+    dplyr::summarize(Medias = list(media)) |>
+    #Upset plot with ggplot2
+    ggplot2::ggplot(aes(x = Medias)) +
+        ggplot2::geom_bar() +
+        ggupset::scale_x_upset() + 
+        ggplot2::labs(y="Genera count")
+ggplot2::ggsave(filename = "./media_genera_upset.png", plot = upset_plot,
+       device = "png", dpi = 300, units = "mm", height = 200, width = 300)
+IRdisplay::display_png(file="./media_genera_upset.png")
+```
+```{r, eval=FALSE}
+#Upset plot displaying number of intersecting genera, by presence, across the site and media combinations
+#Create a column for Site_Media
+site_media_genus_tibble <- genus_metadata_tibble |>
+    tidyr::unite(site_media, c("site","media"), sep = "_")
+#Columns to keep
+cols_to_keep <- c("site_media", colnames(genus_tibble[,-1]))
+#Subset tibble to our desired columns
+site_media_genus_tibble <- site_media_genus_tibble[,cols_to_keep]
+#Display top 10 rows
+site_media_genus_tibble |> dplyr::slice(1:10)
+```
+```{r, eval=FALSE}
+#Longify and convert to presence absence
+upset_plot  <- site_media_genus_tibble %>%
+    #Longify tibble
+    tidyr::pivot_longer(!site_media, names_to="Genus", values_to="Abundance") |>
+    #Filter to remove rows with an abundance of 0
+    dplyr::filter(Abundance > 0) |>
+    #Select to remove unwanted abundance column
+    dplyr::select(-Abundance) |>
+    #Remove duplicate rows to prevent multiple values appearing for each media
+    dplyr::distinct() |>
+    #Group tibble by Genus column
+    dplyr::group_by(Genus) |>
+    #Summarise site_media column so each row has a unique Genus
+    # with a list of the site and media combo each Genus is found in
+    dplyr::summarize(site_media = list(site_media)) |>
+    #Upset plot with ggplot2
+    ggplot2::ggplot(aes(x = site_media)) +
+        ggplot2::geom_bar() +
+        ggupset::scale_x_upset() + 
+        ggplot2::labs(x="Site & Media",y="Genera count")
+ggplot2::ggsave(filename = "./site_media_genera_upset.png", plot = upset_plot,
+       device = "png", dpi = 300, units = "mm", height = 200, width = 300)
+IRdisplay::display_png(file="./site_media_genera_upset.png")
+```
+```{r, eval=FALSE}
+
+```
+```{r, eval=FALSE}
+
+```
+```{r, eval=FALSE}
+
+```

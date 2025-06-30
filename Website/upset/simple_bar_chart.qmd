@@ -1,0 +1,41 @@
+# Simple bar chart
+
+Prior to learning more about upset plots lets first look at a simple phylum bar chart with our data.
+
+Create a new header cell with the 2nd level header of "Phylum bar chart".
+
+## Data transformation
+
+Prior to creating the bar chart we will:
+
+- Convert the abundance values to relative abundances so it is easier to compare the samples.
+- Aggregate the taxa to phylum level.
+
+More info about taxa plots in our [R community analysis workbook](https://neof-workshops.github.io/R_community_whqkt8/Course/10-Relative_abundance.html)
+
+```{r, eval=FALSE}
+#Aggregate taxa to relative abundance phylum level
+phylum_pseq <- pseq |>
+    microbiome::transform("compositional") |>
+    microbiome::aggregate_taxa("Phylum", verbose = FALSE)
+```
+
+## Bar chart
+
+Create a simple bar chart, save it, and display it in jupyter-notebook.
+
+```{r, eval=FALSE}
+#Simple bar chart
+phylum_bar <- microbiome::plot_composition(phylum_pseq)
+#Save ggplot object as png file
+ggplot2::ggsave(filename = "./phylum_relabund_simple.png", plot = phylum_bar,
+       device = "png", dpi = 300, units = "mm", height = 200, width = 300)
+#Display the plot in jupyter notebook
+IRdisplay::display_png(file="./phylum_relabund_simple.png")
+```
+
+The above code will produce the below plot/figure.
+
+<center>
+![](images/phylum_relabund_simple.png){style="width:1000px; border-radius:5px"}
+</center>

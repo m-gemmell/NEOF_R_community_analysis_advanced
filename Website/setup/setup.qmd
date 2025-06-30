@@ -1,0 +1,10 @@
+# Setup
+
+## Workshop directory
+
+Create and move into a new directory in your home directory called "adv_R_comm".
+
+```{bash, eval=FALSE}
+mkdir ~/adv_R_comm
+cd ~/adv_R_comm
+```

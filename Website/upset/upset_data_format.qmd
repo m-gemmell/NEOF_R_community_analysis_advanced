@@ -1,0 +1,7 @@
+# Upset data format
+
+Theory as to the format that the data needs to be in to work for an upset plot.
+
+A column of lists with these lists really only containing vectors.
+
+Diagram of wide to long to upset tibble.
