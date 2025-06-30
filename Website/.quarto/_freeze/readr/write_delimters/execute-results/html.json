@@ -1,0 +1,14 @@
+{
+  "hash": "d6dbefed6fcca7381bb125596187ce02",
+  "result": {
+    "markdown": "---\ntitle: \"Write delimiters\"\n---\n\n::: {.cell}\n\n```{.r .cell-code}\nreadr::read_delim(\n    file = \"https://neof-workshops.github.io/Tidyverse/data/all_plant_details.csv\",\n    delim = \",\") |>\n    #Slice out the first 5 lines\n    dplyr::slice(1:5)\n```\n\n::: {.cell-output .cell-output-stderr}\n```\nRows: 155 Columns: 33\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (1): common_name\ndbl (32): id, seeds, drought_tolerant, salt_tolerant, thorny, invasive, trop...\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.\n```\n:::\n\n::: {.cell-output .cell-output-stdout}\n```\n# A tibble: 5 × 33\n     id common_name     seeds drought_tolerant salt_tolerant thorny invasive\n  <dbl> <chr>           <dbl>            <dbl>         <dbl>  <dbl>    <dbl>\n1   425 flowering-maple     0                1             0      1        0\n2   426 flowering-maple     0                1             0      0        0\n3   427 flowering-maple     0                1             0      0        0\n4   428 flowering-maple     0                1             1      0        0\n5   434 Jacob's coat        0                0             0      0        0\n# ℹ 26 more variables: tropical <dbl>, indoor <dbl>, flowers <dbl>,\n#   cones <dbl>, fruits <dbl>, edible_fruit <dbl>, leaf <dbl>,\n#   edible_leaf <dbl>, cuisine <dbl>, medicinal <dbl>,\n#   poisonous_to_humans <dbl>, poisonous_to_pets <dbl>,\n#   sunlight_part_sun_part_shade <dbl>, sunlight_full_shade <dbl>,\n#   sunlight_deep_shade <dbl>, sunlight_part_shade <dbl>,\n#   sunlight_full_sun_only_if_soil_kept_moist <dbl>, sunlight_full_sun <dbl>, …\n```\n:::\n:::",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

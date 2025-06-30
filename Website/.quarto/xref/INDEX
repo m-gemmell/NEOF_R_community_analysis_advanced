@@ -1,0 +1,245 @@
+{
+  "index.qmd": {
+    "index.html": "0e91e0a3"
+  },
+  "tibble/creating_tibbles.qmd": {
+    "creating_tibbles.html": "a05f0e00"
+  },
+  "tibble/tibble_features.qmd": {
+    "tibble_features.html": "747a17e8"
+  },
+  "tibble/tibble_structure.qmd": {
+    "tibble_structure.html": "6cb6b553"
+  },
+  "tibble/tibble.qmd": {
+    "tibble.html": "7fa99bb0"
+  },
+  "lubridate/lubridate.qmd": {
+    "lubridate.html": "c38b269c"
+  },
+  "lubridate/cheatsheets.qmd": {
+    "cheatsheets.html": "a7ae1a44"
+  },
+  "dplyr/dplyr.qmd": {
+    "dplyr.html": "590480de"
+  },
+  "dplyr/cheatsheets.qmd": {
+    "cheatsheets.html": "976f80a8"
+  },
+  "purrr/images/purrr.qmd": {
+    "purrr.html": "c8b70428"
+  },
+  "purrr/images/cheatsheets.qmd": {
+    "cheatsheets.html": "d804dedc"
+  },
+  "stringr/images/cheatsheets.qmd": {
+    "cheatsheets.html": "9b200e84"
+  },
+  "stringr/images/readr.qmd": {
+    "readr.html": "56668594"
+  },
+  "ggplot2/ggplot2.qmd": {
+    "ggplot2.html": "50c9f03e"
+  },
+  "ggplot2/cheatsheets.qmd": {
+    "cheatsheets.html": "8ed2fb37"
+  },
+  "readr/cheatsheets.qmd": {
+    "cheatsheets.html": "3a25a506"
+  },
+  "readr/images/readr.qmd": {
+    "readr.html": "1113a0e5"
+  },
+  "forcats/cheatsheets.qmd": {
+    "cheatsheets.html": "a6bfd676"
+  },
+  "forcats/forcats.qmd": {
+    "forcats.html": "572ca5dd"
+  },
+  "tidyr/images/cheatsheets.qmd": {
+    "cheatsheets.html": "421ef0b4"
+  },
+  "tidyr/images/tidyr.qmd": {
+    "tidyr.html": "264aebd2"
+  },
+  "include/lubridate.qmd": {
+    "lubridate.html": "38e12440"
+  },
+  "include/cheatsheets.qmd": {
+    "cheatsheets.html": "9b74c75e"
+  },
+  "datasets/mammal_sleep.qmd": {
+    "mammal_sleep.html": "82e65774"
+  },
+  "datasets/datasets.qmd": {
+    "datasets.html": "e6622bc7"
+  },
+  "readr/readr.qmd": {
+    "readr.html": "903def61"
+  },
+  "stringr/readr.qmd": {
+    "readr.html": "f132eaa5"
+  },
+  "tidyr/cheatsheets.qmd": {
+    "cheatsheets.html": "3f6281e7"
+  },
+  "tidyr/tidyr.qmd": {
+    "tidyr.html": "dfdce0ea"
+  },
+  "stringr/cheatsheets.qmd": {
+    "cheatsheets.html": "54633890"
+  },
+  "stringr/stringr.qmd": {
+    "stringr.html": "47b99dc1"
+  },
+  "purrr/purrr.qmd": {
+    "purrr.html": "2c8b38ad"
+  },
+  "purrr/cheatsheets.qmd": {
+    "cheatsheets.html": "6e355159"
+  },
+  "datasets/lterdatasampler.qmd": {
+    "lterdatasampler.html": "ac345c54"
+  },
+  "tibble/tibble_subsetting.qmd": {
+    "tibble_subsetting.html": "a2917931"
+  },
+  "tibble/features.qmd": {
+    "features.html": "9be0aa08"
+  },
+  "tibble/subsetting.qmd": {
+    "subsetting.html": "d3c6a408"
+  },
+  "tibble/structure.qmd": {
+    "structure.html": "dec337b5"
+  },
+  "tibble/printing.qmd": {
+    "printing.html": "df6282aa"
+  },
+  "tibble/add_rows_and_columns.qmd": {
+    "add_rows_and_columns.html": "4ab93179"
+  },
+  "dplyr/bind_tibbles.qmd": {
+    "bind_tibbles.html": "a06acf88"
+  },
+  "dplyr/row_functions.qmd": {
+    "row_functions.html": "eb29af49"
+  },
+  "dplyr/arrange.qmd": {
+    "arrange.html": "8be5942b"
+  },
+  "dplyr/distinct.qmd": {
+    "distinct.html": "ef9afcc2"
+  },
+  "dplyr/filter.qmd": {
+    "filter.html": "17bc6272"
+  },
+  "dplyr/slice.qmd": {
+    "slice.html": "9fc50ac3"
+  },
+  "dplyr/pipes.qmd": {
+    "pipes.html": "ffbfbfe7"
+  },
+  "dplyr/select.qmd": {
+    "select.html": "3c179307"
+  },
+  "datasets/mgrtibbles.qmd": {
+    "mgrtibbles.html": "273a0135"
+  },
+  "dplyr/glimpse.qmd": {
+    "glimpse.html": "98f67305"
+  },
+  "dplyr/mutate.qmd": {
+    "mutate.html": "2a4d2780"
+  },
+  "dplyr/na_removal.qmd": {
+    "na_removal.html": "28c6778a"
+  },
+  "dplyr/column_functions.qmd": {
+    "column_functions.html": "340fd571"
+  },
+  "dplyr/pull.qmd": {
+    "pull.html": "00dd8481"
+  },
+  "dplyr/relocate.qmd": {
+    "relocate.html": "c827047b"
+  },
+  "dplyr/rename.qmd": {
+    "rename.html": "ffd4f3b7"
+  },
+  "dplyr/group.qmd": {
+    "group.html": "3363b6ab"
+  },
+  "dplyr/Group_by.qmd": {
+    "Group_by.html": "7e77b6e4"
+  },
+  "dplyr/group_by.qmd": {
+    "group_by.html": "bf8c761f"
+  },
+  "dplyr/count.qmd": {
+    "count.html": "9b6a10dd"
+  },
+  "dplyr/summarise.qmd": {
+    "summarise.html": "e1ea72c6"
+  },
+  "readr/read.qmd": {
+    "read.html": "7ce8d792"
+  },
+  "datasets/data_files.qmd": {
+    "data_files.html": "d5b8555c"
+  },
+  "readr/read_delimiters.qmd": {
+    "read_delimiters.html": "e5037d5b"
+  },
+  "readr/write.qmd": {
+    "write.html": "07ed3cc4"
+  },
+  "readr/write_delimters.qmd": {
+    "write_delimters.html": "4d27379d"
+  },
+  "readr/write_delimiters.qmd": {
+    "write_delimiters.html": "b21fc05c"
+  },
+  "readr/column_types.qmd": {
+    "column_types.html": "2dd0a3cf"
+  },
+  "readr/read_misc.qmd": {
+    "read_misc.html": "c024b679"
+  },
+  "tidyr/pivot_longer.qmd": {
+    "pivot_longer.html": "143e0a5a"
+  },
+  "tidyr/pivot_wider.qmd": {
+    "pivot_wider.html": "348d6236"
+  },
+  "tidyr/separate_wider.qmd": {
+    "separate_wider.html": "768b2454"
+  },
+  "tidyr/separate_longer.qmd": {
+    "separate_longer.html": "8130ccf3"
+  },
+  "tibble/unite.qmd": {
+    "unite.html": "1dcb3c43"
+  },
+  "tidyr/unite.qmd": {
+    "unite.html": "2388fe40"
+  },
+  "tidyr/na_removal.qmd": {
+    "na_removal.html": "36abbf76"
+  },
+  "tidyr/na_filling.qmd": {
+    "na_filling.html": "f97b56a8"
+  },
+  "tidyr/drop_na.qmd": {
+    "drop_na.html": "9ef8f171"
+  },
+  "tidyr/replace_na.qmd": {
+    "replace_na.html": "323ab118"
+  },
+  "ggplot2/basic_plot.qmd": {
+    "basic_plot.html": "8fd21841"
+  },
+  "ggplot2/ggplot_object.qmd": {
+    "ggplot_object.html": "69fd1168"
+  }
+}
