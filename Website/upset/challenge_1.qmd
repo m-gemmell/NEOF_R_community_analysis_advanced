@@ -1,0 +1,55 @@
+# Challenge class upset plot
+
+As a challenge create an upset plot with the following instructions:
+
+- Use the data within the `pseq` object we have used for the previous upset plots.
+- Aggregate the `pseq` object to class level.
+- Use the classes as the sets for the intersections.
+- Use the sample names as the groups.
+
+Your upset plot should look like the below:
+
+MATTHEW ADD PLOT
+
+`r hide("Code solution")`
+```{r, eval=FALSE}
+#Upset plot of class intersections with sample groupings
+class_samples_upset_plot <- pseq |>
+    #Convert abundances to relative/compositional abundances
+    microbiome::transform("compositional") |>
+    #Aggregate ASVs to class level
+    microbiome::aggregate_taxa("Class", verbose = FALSE) |>
+    #Extract phyla relative abundance table
+    phyloseq::otu_table() |>
+    #Extract otu_table as a tibble
+    microbiome::otu_tibble(column.id = "Class") |>
+    #Longify tibble
+    tidyr::pivot_longer(!Class, names_to="Sample", values_to="Abundance") |>
+    #Filter out rows were relative abundance is 0
+    #i.e. retain rows showing presence
+    dplyr::filter(Abundance > 0) |>
+    #Select to remove unwanted Abundance column
+    dplyr::select(-Abundance) |>
+    #Group tibble by the Sample (grouping) column
+    dplyr::group_by(Sample) |>
+    #Summarise the Phylum (sets) column
+    #Results in each row having a unique sample
+    # with a list of the intersection of present phyla
+    dplyr::summarize(Classes = list(Class)) |>
+    #ggplot
+    #Classes (intersection) column as the x aesthetic
+    ggplot2::ggplot(aes(x = Classes)) +
+        #Bar chart
+        ggplot2::geom_bar() +
+        #Upset scale on x axis
+        ggupset::scale_x_upset() + 
+        #Y label
+        ggplot2::labs(y="Sample count")
+#Save plot to png file
+ggplot2::ggsave(filename = "./class_intersection_sample_group_upset.png", 
+                plot = class_samples_upset_plot,
+                device = "png", dpi = 300, units = "mm", height = 200, width = 300)
+#Dsplay plot in jupyter notebook
+IRdisplay::display_png(file="./class_intersection_sample_group_upset.png")
+```
+`r unhide()`

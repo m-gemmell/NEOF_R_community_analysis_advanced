@@ -1,0 +1,57 @@
+# Media upset plot
+
+Below is an all in one code to create an upset plot of:
+
+- Media sets as the intersections.
+- genus as the groups.
+
+```{r, eval=FALSE}
+#Upset plot displaying number of intersecting media and groups of genera, based on presence
+#Sample (rows) by Genus (columns) abundance tibble
+genus_tibble <- pseq |>
+	#Aggregate genus
+	microbiome::aggregate_taxa("Genus", verbose = FALSE) |>
+	#extract otu table
+	phyloseq::otu_table() |>
+	#Convert to data.frame then transpose
+	as.data.frame() |> t() |>
+	#Convert to tibble
+	dplyr::as_tibble(rownames = "Sample")
+#Vector of media and taxa names, used to filter next tibble
+cols_to_keep <- c("media", colnames(genus_tibble[,-1]))
+#Create media (rows) by Genus (columns) abundance tibble
+#Upset tibble
+media_genus_upset_tibble <- pseq |>
+	#Extract metadata tibble
+	microbiome::sample_tibble() |>
+	#Bind by columns with genus_tibble
+	dplyr::bind_cols(genus_tibble) |>
+	#Select al of the columns specified in vector cols_to_keep
+	select(all_of(cols_to_keep)) |>
+	#Longify tibble
+	tidyr::pivot_longer(!media, names_to="Genus", values_to="Abundance") |>
+	#Filter to remove rows with an abundance of 0
+	dplyr::filter(Abundance > 0) |>
+	#Select to remove unwanted abundance column
+	dplyr::select(-Abundance) |>
+	#Remove duplicate rows to prevent multiple values appearing for each media
+	dplyr::distinct() |>
+	#Group tibble by Genus column
+	dplyr::group_by(Genus) |>
+	#Summarise media column so each row has a unique Genus
+	# with a list of the medias each Genus is found in
+	dplyr::summarize(Medias = list(media))
+#Upset plot
+upset_plot <- media_genus_upset_tibble |>
+	#Upset plot with ggplot2
+	#Use Medias as interactions on x axis
+	ggplot2::ggplot(aes(x = Medias)) +
+    	#Bar chart
+    	ggplot2::geom_bar() +
+    	#Upset scale display
+    	ggupset::scale_x_upset() +
+    	ggplot2::labs(y="Genera count")
+ggplot2::ggsave(filename = "./media_genera_upset.png", plot = upset_plot,
+   	device = "png", dpi = 300, units = "mm", height = 200, width = 300)
+IRdisplay::display_png(file="./media_genera_upset.png")
+```

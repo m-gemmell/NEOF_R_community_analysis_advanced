@@ -1,0 +1,112 @@
+# Upset tibble creation
+
+In this part we will finish creating the __tibble__ needed for our upset plot.
+The steps are:
+
+- Remove the Abundance column so we only have the Taxa (Phylum) and Metadata (Sample) columns.
+- Group the __tibble__ by the column we will use as the __group__ for the upset plot (Phylum).
+- Create the __intersection__ column by summarising, via listing, the __set__ column (Sample).
+
+To carry this out we will build up a __tidyverse__ based pipeline step by step.
+
+## Abundance column removal
+<center>
+<p><a href="https://neof-workshops.github.io/Tidyverse/dplyr/select.html">
+<img src="/images/dplyr_select.png" width="150px">
+</a></p>
+</center>
+
+The first step is to remove the now unwanted Abundance column with [`dplyr::select()`](https://neof-workshops.github.io/Tidyverse/dplyr/select.html).
+We are only interested in presence for our upset plot and have already removed the rows that represent absence so we can safely remove this row.
+
+To view a transposed summary of the tibble we will use [`dplyr::glimpse()`](https://neof-workshops.github.io/Tidyverse/dplyr/glimpse.html)
+
+```{r, eval=FALSE}
+#Remove Abundance column and then make Sample column contain lists
+phyla_upset_tibble <- phyla_tibble_long |>
+    #Remove Abundance column
+    dplyr::select(-Abundance)
+#Glimpse tibble
+phyla_upset_tibble |> dplyre::glimpse()
+```
+
+You will notice we have 201 rows, and 2 columns called Phylum and Sample.
+
+## Group tibble
+<center>
+<p><a href="https://neof-workshops.github.io/Tidyverse/dplyr/group_by.html">
+<img src="/images/dplyr_group_by.png" width="150px">
+</a></p>
+</center>
+
+Next we will group the tibble by the Phylum column with [`dplyr::group_by()`](https://neof-workshops.github.io/Tidyverse/dplyr/group_by.html), creating a grouped tibble.
+Grouping a column is needed for some __tidyverse__ functions such as the [`dplyr::summarise()`](https://neof-workshops.github.io/Tidyverse/dplyr/summarise.html) function in the next step.
+
+Use the same code block as the previous step adding in the new annotations and code.
+
+__Tip:__ Ensure you add `|>` to the end of the [`dplyr::select()`](https://neof-workshops.github.io/Tidyverse/dplyr/select.html) line.
+
+```{r, eval=FALSE}
+#Remove Abundance column and then make Sample column contain lists
+phyla_upset_tibble <- phyla_tibble_long |>
+    #Remove Abundance column
+    dplyr::select(-Abundance) |>
+    #Group tibble by the Phylum column important for next step
+    dplyr::group_by(Phylum)    
+#Glimpse tibble
+phyla_upset_tibble |> dplyre::glimpse()
+```
+
+The `glimpse ()` function shows the same information but also includes a line about the grouping info: `Groups: Phylum [27]`.
+This lets us know that it is grouped by the Phylum column and that there are 27 groups (i.e. 27 unique phyla).
+
+## Summarise
+<center>
+<p><a href="https://neof-workshops.github.io/Tidyverse/dplyr/summarise.html">
+<img src="/images/dplyr_summarise.png" width="150px">
+</a></p>
+</center>
+
+Our final step is to use [`dplyr::summarise()`](https://neof-workshops.github.io/Tidyverse/dplyr/summarise.html) to convert the Sample column into a __list__ column.
+Each row will then have a unique Phylum (group) with a corresponding vector (intersections) of the samples (sets) it is found in.
+
+```{r, eval=FALSE}
+#Remove Abundance column and then make Sample column contain lists
+phyla_upset_tibble <- phyla_tibble_long |>
+    #Remove Abundance column
+    dplyr::select(-Abundance) |>
+    #Group tibble by the Phylum column important for next step
+    dplyr::group_by(Phylum) |>
+    #Summarize Sample column so it becomes column of list variables
+    dplyr::summarize(Samples = list(Sample))  
+#Glimpse tibble
+phyla_upset_tibble |> dplyre::glimpse()
+```
+
+Unfortunately, Jupyter notebook does not like displaying tibbles that have lists as columns.
+Therefore we will also view it with `str()` to get a larger picture of it
+
+```{r, eval=FALSE}
+#Structure of tibble
+str(phyla_upset_tibble)
+```
+
+To get an even better picture of the __tibble__ layout, view the contents from the first and seventh row.
+
+```{r, eval=FALSE}
+#First row
+#Phylum
+phyla_upset_tibble |> dplyr::slice(1) |> dplyr::pull(Phylum)
+#List of samples it is present in
+phyla_upset_tibble |> dplyr::slice(1) |> dplyr::pull(Samples)
+```
+
+```{r, eval=FALSE}
+#Seventh row
+#Phylum
+phyla_upset_tibble |> dplyr::slice(7) |> dplyr::pull(Phylum)
+#List of samples it is present in
+phyla_upset_tibble |> dplyr::slice(7) |> dplyr::pull(Samples)
+```
+
+Now that we have our formatted __tibble__ we can create an __upset plot__.

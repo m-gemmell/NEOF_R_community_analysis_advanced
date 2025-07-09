@@ -1,5 +1,10 @@
 # Setup
 
+```{r, eval=FALSE, echo=FALSE}
+#R code block that does nothing so the engine used is knitr for this page
+#Other wise non python code blocks don't display the code properly (i.e. the bash code block below)
+```
+
 ## Workshop directory
 
 Create and move into a new directory in your home directory called "adv_R_comm".

@@ -1,0 +1,42 @@
+# Sample and taxa tibble
+
+The first step is to extract the genus abundance table and then transpose it.
+
+Transposing is vital for the next step as it means that:
+
+- Each column is a taxa (except the Sample column)
+- Each row is a sample
+
+## Transposed genus abundance
+
+Carry out aggregation and transposing.
+
+```{r, eval=FALSE}
+#Abundance tibble of samples (rows) against egenra (columns)
+genus_tibble  <- pseq |>
+	#Aggregate to genus
+	microbiome::aggregate_taxa("Genus", verbose = FALSE) |>
+	#Extract otu_table
+	phyloseq::otu_table() |>
+	#Convert to data.frame and transpose
+	as.data.frame() |> t() |>
+	#Convert to tibble
+	dplyr::as_tibble(rownames = "Sample")
+#Display top 6 rows of tibble
+head(genus_tibble)
+```
+
+## Tibbles and transposing
+
+You may notice that we do not use the function `microbiome::tax_tibble()` in the above code.
+This is because transposing a __tibble__ will create a matrix in a format we do not want.
+If you want to see this in action you can type and run the below demonstrative code.
+
+```{r, eval=FALSE}
+#Demonstration on why we don't use microbiome::otu_tibble
+#Can't easily use microbiome::otu_tibble with transpose
+#t() converts the tibble to a matrix
+microbiome::otu_tibble(genus_pseq, column.id = "Sample") |>
+    t() |>
+    head()
+```

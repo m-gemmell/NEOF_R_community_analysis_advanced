@@ -1,0 +1,67 @@
+# Upset plot
+
+Now that we have our upset __tibble__ we can create out upset plot.
+
+We'll carry this out with the [`ggplot2`](https://neof-workshops.github.io/Tidyverse/ggplot2/ggplot2.html) package and a variety of its functions.
+
+- `ggplot(aes(x=Samples))`: This creates the initial ggplot2 object setting the x aesthetic as our "Sample" column (the intersection list column).
+- `geom_bar()`: This turns the plot into a bar chart. This will show the number of groups each unique interaction is found in.
+- `labs(y="Phyla count")`: Let's us customise the plot labels. In this case we are specifying the y label.
+
+The main function for creating our upset plot is `scale_x_upset()` from the package [`ggupset`](https://cran.r-project.org/web/packages/ggupset/readme/README.html).
+This converts the x axis of our bar chart to an intersection scale display (the lines and connected dots).
+The function is required to make a plot with our upset formatted __tibble__.
+
+Create the upset plot with the below code.
+
+```{r, eval=FALSE}
+#Upset plot with bar chart
+samples_phyla_upset_plot <- phyla_upset_tibble |>
+    ggplot2::ggplot(aes(x = Sample)) +
+        #Add bar chart
+        ggplot2::geom_bar() +
+        #Add upset display scale as x axis below bar chart
+        ggupset::scale_x_upset() + 
+        #Specify y axis label
+        ggplot2::labs(y="Phyla count")
+#ggsave and display in jupyter
+ggplot2::ggsave(filename = "./sample_intersection_phylum_group_upset.png", 
+                plot = samples_phyla_upset_plot,
+                device = "png", dpi = 300, units = "mm", height = 200, width = 300)
+IRdisplay::display_png(file="./sample_intersection_phylum_group_upset.png")
+```
+
+The code will produce the below plot.
+
+<center>
+![](images/sample_phylum_upset.png){style="width:800px; background: white; border-radius:15px"}
+</center>
+
+The above plots shows the number of phyla (groups) found in specific sample (set) intersections.
+The total phyla count in the bar chart is equal to the total phyla count of our data.
+
+#### MCQs
+<center>
+![](/images/question_bubble_purple.png){style="width:150px"}
+</center>
+
+Super! With the upset plot answer the below MCQs.
+
+__Note:__ An intersection of one is still an intersection. I.e. Some of the intersections in the plot only contain one sample.
+
+__Tip:__ Right click on image and then select "Open image in new tab" to get a larger image you can zoom in on.
+
+```{r, echo = FALSE}
+opts_p <- c(answer="__MD_ENV_rep2__", "__MD_ENV_rep_1 + MD_ENV_rep2 + UD_ENV_rep3__", "__UD_ENV_rep3 + UD_ENV_rep1 + UD_TSA_rep2__")
+```
+1. Which intersection has the highest Phyla count? I.e. which intersection of samples has the highest number of phyla that are only present in it? `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c("__MD_ENV_rep2__", "__MD_ENV_rep_1 + MD_ENV_rep2 + UD_ENV_rep3__", answer="__UD_ENV_rep3 + UD_ENV_rep1 + UD_TSA_rep2__")
+```
+2. Which intersection is on the far right of the plot? `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c("__MD_ENV_rep2__", answer="__MD_ENV_rep_1 + MD_ENV_rep2 + UD_ENV_rep3__", "__UD_ENV_rep3 + UD_ENV_rep1 + UD_TSA_rep2__")
+```
+3. Which of the three intersections is not present in the plot? I.e. which intersection has no phyla unique to it? `r longmcq(opts_p)`

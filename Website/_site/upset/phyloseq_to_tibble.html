@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../upset/upset_tibble_creation.html" rel="next">
 <link href="../upset/upset_data_format.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
@@ -121,6 +122,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li class="nav-item">
     <a class="nav-link" href="../index.html" rel="" target="">
  <span class="menu-text">Overview</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../setup/setup.html" rel="" target="">
+ <span class="menu-text">Setup</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="../upset/upset.html" rel="" target="" aria-current="page">
@@ -216,6 +221,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Phyloseq to long presence tibble</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/upset_tibble_creation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Upset tibble creation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Upset plots</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/upset_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Upset plot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/all_in_one_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">All in one code</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/challenge_1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Challenge class upset plot</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -244,7 +284,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="phyloseq-to-long-presence-tibble" class="level1">
 <h1>Phyloseq to long presence tibble</h1>
-<p>We need to create a long tibble containing data on all the Phyla and the samples they are present in. To carry this out we:</p>
+<center>
+<img src="images/phyloseq_to_tibble.png" class="img-fluid" style="width:300px; background:white; border-radius:15px; border:white solid 10px">
+</center>
+<p>We need to create a long tibble containing data on all the phyla and the samples they are present in. To carry this out we:</p>
 <ul>
 <li>Extract the phyloseq object’s abundance table as a tibble.</li>
 <li>Longify the tibble so there is a row for each phylum and sample pair with its corresponding abundance value.</li>
@@ -253,6 +296,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We use a <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> due to the useage of some specific <strong>tidyverse</strong> commands in downstream steps.</p>
 <section id="otu_table-to-tibble" class="level2">
 <h2 class="anchored" data-anchor-id="otu_table-to-tibble">Otu_table to tibble</h2>
+<center>
+<img src="..\images/tibble.png" class="img-fluid" style="width:150px">
+</center>
 <p>To extract the <strong>otu_table</strong> as a <strong>tibble</strong> we can use the <code>microbiome</code> package with its function <code>otu_tibble()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract abundance table as tibble</span></span>
@@ -266,25 +312,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="longify" class="level2">
 <h2 class="anchored" data-anchor-id="longify">Longify</h2>
-<p>The next step is to longify the <strong>tibble</strong> with <code>tidyr::pivot_longer()</code>.</p>
+<center>
+<p>
+<a href="https://neof-workshops.github.io/Tidyverse/tidyr/pivot_longer.html"> <img src="../images/tidyr_pivot_longer.png" width="150px"> </a>
+</p>
+</center>
+<p>The next step is to longify the <strong>tibble</strong> with <a href="https://neof-workshops.github.io/Tidyverse/tidyr/pivot_longer.html"><code>tidyr::pivot_longer()</code></a>.</p>
 <p>For our long <strong>tibble</strong> we want to:</p>
 <ul>
 <li>Longify all the columns except the <strong>Phylum</strong> column (<code>!Phylum</code>).</li>
 <li>Make a column with the sample names, the column names of <code>phyla_tibble</code>, called “Sample” (<code>names_to="Sample"</code>).</li>
-<li>Make a column with the abundance values, values in tibble, called “Abundance” (<code>values_to="Abundance"</code>)</li>
+<li>Make a column with the abundance values, values in tibble, called “Abundance” (<code>values_to="Abundance"</code>).</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Time to longify</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Longify</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>phyla_tibble_long <span class="ot">&lt;-</span> phyla_tibble <span class="sc">|&gt;</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">!</span>Phylum, <span class="at">names_to=</span><span class="st">"Sample"</span>, <span class="at">values_to=</span><span class="st">"Abundance"</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Display first 10 rows of resulting long tibble</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>phyla_tibble_long <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Currently all abundance values in the first 10 rows are all zeros. We will remove these rows next.</p>
+<p>Currently all abundance values in the first 10 rows are all zeros. We will remove all 0 abundance rows next.</p>
 </section>
 <section id="remove-absence" class="level2">
 <h2 class="anchored" data-anchor-id="remove-absence">Remove absence</h2>
-<p>The upset plots we will create will show the intersection of taxa presence. We will therefore remove ros were the abundance is equal to zero as these rows represent absence. If we did not remove these rows they would be included in the upset plot creation.</p>
+<center>
+<img src="images/no_zero.png" class="img-fluid" style="width:200px; background:white; border-radius:15px">
+</center>
+<p>The upset plots we will create will show the intersection of taxa presence. We will therefore remove rows were the abundance is equal to zero as these rows represent absence. If we did not remove these rows they would be included in the upset plot creation.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove rows with 0 values</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>phyla_tibble_long <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(phyla_tibble_long, Abundance <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
@@ -858,6 +912,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../upset/upset_tibble_creation.html" class="pagination-link">
+        <span class="nav-page-text">Upset tibble creation</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

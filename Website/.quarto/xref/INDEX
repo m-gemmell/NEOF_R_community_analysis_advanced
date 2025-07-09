@@ -262,5 +262,41 @@
   },
   "upset/phyloseq_to_tibble.qmd": {
     "phyloseq_to_tibble.html": "8e9be6de"
+  },
+  "upset/upset_tibble_creation.qmd": {
+    "upset_tibble_creation.html": "06f43704"
+  },
+  "upset/upset_plot.qmd": {
+    "upset_plot.html": "40025c0d"
+  },
+  "upset/all_in_one_code.qmd": {
+    "all_in_one_code.html": "6f0c79e6"
+  },
+  "upset/challenge_1.qmd": {
+    "challenge_1.html": "a2b52856"
+  },
+  "upset/rare_aggregation_plot.qmd": {
+    "rare_aggregation_plot.html": "b246c2ac"
+  },
+  "upset/rare_removal_plot.qmd": {
+    "rare_removal_plot.html": "425df419"
+  },
+  "upset/rare_upset_plot.qmd": {
+    "rare_upset_plot.html": "f3864eaf"
+  },
+  "upset/metadata_sets.qmd": {
+    "metadata_sets.html": "dfb25d78"
+  },
+  "upset/sample_and_taxa.qmd": {
+    "sample_and_taxa.html": "78670242"
+  },
+  "upset/metadata_and_taxa.qmd": {
+    "metadata_and_taxa.html": "73daed1a"
+  },
+  "upset/metadata_upset_plot.qmd": {
+    "metadata_upset_plot.html": "949357a7"
+  },
+  "upset/media_genus_upset.qmd": {
+    "media_genus_upset.html": "8b0d0d00"
   }
 }

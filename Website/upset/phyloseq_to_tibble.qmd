@@ -1,6 +1,9 @@
 # Phyloseq to long presence tibble
+<center>
+![](images/phyloseq_to_tibble.png){style="width:300px; background:white; border-radius:15px; border:white solid 10px"}
+</center>
 
-We need to create a long tibble containing data on all the Phyla and the samples they are present in.
+We need to create a long tibble containing data on all the phyla and the samples they are present in.
 To carry this out we:
 
 - Extract the phyloseq object's abundance table as a tibble.
@@ -10,6 +13,9 @@ To carry this out we:
 We use a [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) due to the useage of some specific __tidyverse__ commands in downstream steps.
 
 ## Otu_table to tibble
+<center>
+![](/images/tibble.png){style="width:150px"}
+</center>
 
 To extract the __otu_table__ as a __tibble__ we can use the `microbiome` package with its function `otu_tibble()`.
 
@@ -25,16 +31,22 @@ phyla_df[1:10,1:10]
 
 ## Longify
 
-The next step is to longify the __tibble__ with `tidyr::pivot_longer()`.
+<center>
+<p><a href="https://neof-workshops.github.io/Tidyverse/tidyr/pivot_longer.html">
+<img src="/images/tidyr_pivot_longer.png" width="150px">
+</a></p>
+</center>
+
+The next step is to longify the __tibble__ with [`tidyr::pivot_longer()`](https://neof-workshops.github.io/Tidyverse/tidyr/pivot_longer.html).
 
 For our long __tibble__ we want to:
 
 - Longify all the columns except the __Phylum__ column (`!Phylum`).
 - Make a column with the sample names, the column names of `phyla_tibble`, called "Sample" (`names_to="Sample"`).
-- Make a column with the abundance values, values in tibble, called "Abundance" (`values_to="Abundance"`)
+- Make a column with the abundance values, values in tibble, called "Abundance" (`values_to="Abundance"`).
 
 ```{r, eval=FALSE}
-#Time to longify
+#Longify
 phyla_tibble_long <- phyla_tibble |>
     tidyr::pivot_longer(!Phylum, names_to="Sample", values_to="Abundance")
 #Display first 10 rows of resulting long tibble
@@ -42,12 +54,15 @@ phyla_tibble_long |> dplyr::slice(1:10)
 ```
 
 Currently all abundance values in the first 10 rows are all zeros.
-We will remove these rows next.
+We will remove all 0 abundance rows next.
 
 ## Remove absence
+<center>
+![](images/no_zero.png){style="width:200px; background:white; border-radius:15px"}
+</center>
 
 The upset plots we will create will show the intersection of taxa presence.
-We will therefore remove ros were the abundance is equal to zero as these rows represent absence.
+We will therefore remove rows were the abundance is equal to zero as these rows represent absence.
 If we did not remove these rows they would be included in the upset plot creation.
 
 ```{r, eval=FALSE}

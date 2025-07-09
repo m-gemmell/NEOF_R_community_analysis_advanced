@@ -1,0 +1,200 @@
+# Rare features upset plot
+
+You may want to see the intersection of rare features (taxa) to see what samples they are present and absent in.
+This page will show you how to make an upset of rare families through the following steps:
+
+- Carrying out rare aggregation of families to acquire the names of the "non-rare" features.
+- Carrying out normal family aggregation on the original phyloseq object.
+- Removing the "non-rare" features from the family aggregated phyloseq object.
+- Creating an upset plot.
+
+## Number of families
+
+It is always useful to check the total number of groups in a taxa you are interested in.
+
+```{r, eval=FALSE}
+#Lower taxa levels may have a very high number of members
+microbiome::aggregate_taxa(pseq, level = "Family")
+```
+
+## Rare aggregation
+
+We have 112 taxa. Let's try to extract ~50 of the rarest taxa.
+
+First we will carry out rare aggregation to try ot get a phyloseq object of the top ~60 (112-~50=~60) most common families.
+
+```{r, eval=FALSE}
+#Rare aggregate to family to extract vector of "non-rare" families
+family_rareaggregate_pseq <- pseq |>
+	#Convert to compositional values
+	microbiome::transform("compositional") |>
+	#Use thresholds of at least 1% relative abundance (detection)
+	#In at least 10% of samples (prevalence)
+	microbiome::aggregate_rare(level = "Family",
+                      	detection = 0.001, prevalence = 1/10) |>
+	#Remove the "other" genus which consists of all the rare aggragted taxa
+	#This won't be interesting to include in our upset plot
+	phyloseq::subset_taxa(Family != "Other")
+```
+
+With our rare aggregation thresholds we ended up with 49 non-rare taxa.
+This means we have classified 63 taxa as rare (112-49=63).
+This should be ok for our purposes.
+
+## Non-rare families vector
+
+With our family aggregated phyloseq object we can create a vector containing the names of non-rare families.
+This is needed for our next step.
+
+```{r, eval=FALSE}
+#Overview of phyloseq object
+family_rareaggregate_pseq
+#Extract names of "non-rare" taxa
+non_rare_families <- tax_table(family_rareaggregate_pseq)[,"Family"] |> as.vector()
+non_rare_families
+```
+
+## Rare phyloseq creation
+
+To create our rare phyloseq object we need to carry out three steps.
+
+1. Create a family aggregated phyloseq object.
+2. Create a vector of our "rare" families using the non rare family vector and the family aggregated phyloseq object.
+3. Subset the family aggregated phyloseq object by retain the "rare" families.
+
+### Family aggregation
+
+Carry out family aggregation of our phyloseq object.
+
+```{r, eval=FALSE}
+#Aggregate to family and remove "non-rare" taxa
+family_rare_pseq <- pseq |>
+	#Convert to compositional values
+	microbiome::transform("compositional") |>
+	#Aggregate to family
+	microbiome::aggregate_taxa(level = "Family")
+```
+
+### Rare family vector
+
+In this step we extract all the family names in our family aggregated phyloseq object as a vector.
+
+Then we compare the vector of all the families against the vector of non-rare families with `setdiff()` to create a vector of the "rare" families.
+
+```{r, eval=FALSE}
+#Create vector of rare features
+# i.e. inverse of non-rare asv
+rare_families <- family_rare_pseq |>
+    #Extract tax table as tibble
+	microbiome::tax_tibble() |>
+    #Pull the family column out as a vector
+	dplyr::pull(Family) |>
+    #Extract family names in vector of all families
+    # that are not in the non_rare_families
+	setdiff(non_rare_families)
+#Vector of "rare" families
+rare_families
+```
+
+`r hide("__setdiff()__ explanation and examples")`
+
+The function `setdiff()` compares the first vector provided with the second vector provided.
+It outputs a vector containing the elements that are in vector 1 but not vector 2.
+The output does not contain elements that are in vector 2 but not vector 1.
+
+In other words, `setdiff()` outputs the elements unique to vector 1.
+
+Please see examples below:
+
+```{r,}
+#Create vectors
+num_series <- 0:9
+num_even <- c(0,2,4,6,8)
+num_odd <- c(1,3,5,7,9)
+num_prime <- c(2,3,5,7)
+```
+
+All our vectors have numbers between 0 and 9 with __num_series__ containing the numbers from 0 to 9.
+If we use __num_series__ as the first vector we get the inverse of the second vector.
+```{r}
+setdiff(num_series,num_even)
+```
+
+```{r}
+num_series |> setdiff(num_odd)
+```
+
+```{r}
+setdiff(num_series,num_prime)
+```
+
+However, if we use __num_series__ as the second vector the output is `numeric(0)`.
+This is because none of the elements/numbers in `num_even`, `num_odd`, and `num_prime` are unique compared to `num_series`.
+```{r}
+num_even |> setdiff(num_series)
+```
+
+```{r}
+setdiff(num_odd,num_series)
+```
+
+```{r}
+setdiff(num_prime,num_series)
+```
+
+`r unhide()`
+
+### Rare family phyloseq subset
+
+With our vector containing our "rare" families we can subset our family phyloseq object to retain them and remove the "non-rare" families with `phyloseq::subset_taxa()`.
+
+```{r, eval=FALSE}
+#Remove the "non-rare" families
+family_rare_pseq <- family_rare_pseq |>
+	phyloseq::subset_taxa(Family %in% rare_families)
+#Display dimensions of rare familiy phyloseq object
+family_rare_pseq
+```
+
+We now have the 63 "rare" families remaining in our phyloseq object.
+
+You could also use this method with a manually created vector of families that you what to investigate.
+
+## Rare family upset plot
+
+Now you can create the upset plot.
+
+```{r, eval=FALSE}
+#Upset plot of rare family intersections with sample groupings
+family_rare_samples_upset_plot <- family_rare_pseq |>
+	#Extract otu_table as a tibble
+	microbiome::otu_tibble(column.id = "Family") |>
+	#Longify tibble
+	tidyr::pivot_longer(!Family, names_to="Sample", values_to="Abundance") |>
+	#Filter out rows were relative abundance is 0
+	#i.e. retain rows showing presence
+	dplyr::filter(Abundance > 0) |>
+	#Select to remove unwanted Abundance column
+	dplyr::select(-Abundance) |>
+	#Group tibble by the Sample (grouping) column
+	dplyr::group_by(Sample) |>
+	#Summarise the Family (sets) column
+	#Results in each row having a unique sample (group)
+	# with a list of the intersections of present families
+	dplyr::summarize(Families = list(Family)) |>
+	#ggplot
+	#Families (intersection) column as the x aesthetic
+	ggplot2::ggplot(aes(x = Families)) +
+    	#Bar chart
+    	ggplot2::geom_bar() +
+    	#Upset scale on x axis
+    	ggupset::scale_x_upset() +
+    	#Y label
+    	ggplot2::labs(y="Sample count")
+#Save plot to png file
+ggplot2::ggsave(filename = "./family_rare__intersection_sample_group_upset.png",
+            	plot = family_rare_samples_upset_plot,
+           	device = "png", dpi = 300, units = "mm", height = 300, width = 300)
+#Dsplay plot in jupyter notebook
+IRdisplay::display_png(file="./family_rare__intersection_sample_group_upset.png")
+```

@@ -1,0 +1,17 @@
+# Metadata as sets
+
+In previous parts we have been using the sample names as groups or sets.
+In this part we will use metadata groupings as sets for intersections.
+This makes the resulting upset plot less granular but allows us to see the differences between metadata groups easier.
+
+Creating an upset __tibble__ with metadata grouping intersections requires a bit more data manipulation including:
+
+- Creating a transposed abundance __tibble__ of samples (rows) against taxa (columns).
+- Converting the samples to your metadata grouping of interest, site in this case.
+- Creating the upset __tibble__ and plot.
+
+As an example we will create an upset plot of:
+
+- River sites (UD, MD, and LD) as the sets for intersections.
+- Genera as the groups.
+    - __Note:__ When using taxa levels as groups we do not need to remove the rare taxa as the groups are used for the counts of the bar plot. However, if you have a good reason to remove rares, e.g. you might have a lot of rares with incredibly low abundance, then please do remove them.

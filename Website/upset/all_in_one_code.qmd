@@ -1,0 +1,117 @@
+# All in one code
+<center>
+![](images/all_in.png){style="width:200px"}
+</center>
+
+We'll create another upset plot with two main differences.
+
+- It will display the intersection of the phyla sets against sample grouping.
+- We'll create and run one pipeline that goes from the ASV abundance phyloseq object to an upset plot.
+
+Read through, type, and run the code.
+Ensure you understand how it all works before continuing.
+
+Please feel free to copy, paste, and edit previous code to create the below code.
+This code will then be useful for copy, pasting, and editing to create further plots.
+
+```{r, eval=FALSE}
+#Upset plot of phyla intersections with sample groupings
+phyla_samples_upset_plot <- pseq |>
+    #Convert abundances to relative/compositional abundances
+    microbiome::transform("compositional") |>
+    #Aggregate ASVs to phylum level
+    microbiome::aggregate_taxa("Phylum", verbose = FALSE) |>
+    #Extract phyla relative abundance table
+    phyloseq::otu_table() |>
+    #Extract otu_table as a tibble
+    microbiome::otu_tibble(column.id = "Phylum") |>
+    #Longify tibble
+    tidyr::pivot_longer(!Phylum, names_to="Sample", values_to="Abundance") |>
+    #Filter out rows were relative abundance is 0
+    #i.e. retain rows showing presence
+    dplyr::filter(Abundance > 0) |>
+    #Select to remove unwanted Abundance column
+    dplyr::select(-Abundance) |>
+    #Group tibble by the Sample (grouping) column
+    dplyr::group_by(Sample) |>
+    #Summarise the Phylum (sets) column
+    #Results in each row having a unique sample
+    # with a list of the intersection of present phyla
+    dplyr::summarize(Phyla = list(Phylum)) |>
+    #ggplot
+    #Phyla (intersection) column as the x aesthetic
+    ggplot2::ggplot(aes(x = Phyla)) +
+        #Bar chart
+        ggplot2::geom_bar() +
+        #Upset scale on x axis
+        ggupset::scale_x_upset() + 
+        #Y label
+        ggplot2::labs(y="Sample count")
+#Save plot to png file
+ggplot2::ggsave(filename = "./phyla_intersection_sample_group_upset.png", 
+                plot = phyla_samples_upset_plot,
+                device = "png", dpi = 300, units = "mm", height = 200, width = 300)
+#Dsplay plot in jupyter notebook
+IRdisplay::display_png(file="./phyla_intersection_sample_group_upset.png")
+```
+
+<center>
+![](images/phyla_sample_upset.png){style="width:800px; background: white; border-radius:15px"}
+</center>
+
+The above plots shows the number of samples (groups) with in specific phyla (set) intersections.
+The total sample count in the bar chart is equal to the total sample count of our data.
+
+#### MCQs
+<center>
+![](/images/question_bubble_purple.png){style="width:150px"}
+</center>
+
+Great! With the upset plot answer the below yes/no MCQs.
+
+```{r, echo = FALSE}
+opts_p <- c("__Yes__", answer="__No__")
+```
+1. Is there at least one sample that contains all the phyla? I.e. is there an intersection of all the phyla in the plot? `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c("__Yes__", answer="__No__")
+```
+2. Are there any samples that only have one phyla present? I.e. is there an intersection of one phyla (set) displayed on the plot?  `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c(answer="__Yes__", "__No__")
+```
+3. Is there a total of 7 samples where Proteobacteria, Firmicutes, and Bacteroidetes are the only phyla present? I.e is the intersection of Proteobacteria + Firmicutes + Bacteroidetes found in 7 samples?  `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c("__Yes__", answer="__No__")
+```
+4. Is there a total of 7 samples where Proteobacteria, Firmicutes, Bacteroidetes, and Actinobacteria are the only phyla present? I.e is the intersection of Proteobacteria + Firmicutes + Bacteroidetes + Actinobacteria found in 7 samples?  `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c("__Yes__", answer="__No__")
+```
+5. Is Firmicutes found in all the samples? I.e. is Firmicutes in all the displayed intersections? `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c(answer="__Yes__", "__No__")
+```
+6. Is Proteobacteria found in all the samples? I.e. is Proteobacteria in all the displayed intersections? `r longmcq(opts_p)`
+
+Using the fact that there are 36 samples attempt the following MCQs:
+
+```{r, echo = FALSE}
+opts_p <- c("__2__", "__26__", answer="__34__")
+```
+7. How many samples is Firmicutes present in? I.e. what is the total sample count of all the intersections Firmicutes is found in?  `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c("__2__", answer="__26__", "__34__")
+```
+8. How many samples is Bacteroidetes present in? I.e. what is the total sample count of all the intersections Bacteroidetes is found in? `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c(answer="__2__", "__26__", "__34__")
+```
+9. How many samples is Tenericutes present in? I.e. what is the total sample count of all the intersections Tenericutes is found in? `r longmcq(opts_p)`

@@ -1,0 +1,48 @@
+
+# Metadata and taxa tibble
+
+Now we'll create a total abundance __tibble__ of our metadata categories (rows) against the genera (columns).
+
+## Extract metadata
+
+The first step is to extract our metadata as a __tibble__ with `microbiome::sample_tibble()`.
+
+```{r, eval=FALSE}
+#Metadata tibble
+metadata_tibble <- microbiome::sample_tibble(pseq)
+head(metadata_tibble)
+```
+
+## Bind metadata and abundance tibble
+
+We will bind our metadata and taxa abundance tables but first lets ensure they have the same order of samples.
+
+```{r, eval=FALSE}
+#Ensure metadata and otu tibble have same order of samples
+metadata_tibble$SampleID == genus_tibble$Sample
+```
+
+All the values are `TRUE` so the order is the same allowing us to bind the __tibbles__ with [`dplyr::bind_cols`](https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html)
+
+```{r, eval=FALSE}
+#bind metadata and genus tibbles
+genus_metadata_tibble <- dplyr::bind_cols(metadata_tibble, genus_tibble)
+head(genus_metadata_tibble)
+```
+
+## Remove unwanted columns
+
+Finally to tidy up the __tibble__ we will remove all the non taxa columns except for the "site" column.
+We are going to use the sites as the sets for our upset plot.
+
+```{r, eval=FALSE}
+#Create tibble with site and taxa columns
+#Create vector of "site" and the genus names
+#The -1 is to remove the "Sample" column
+cols_to_keep <- c("site", colnames(genus_tibble[,-1]))
+#Subset tibble to our desired columns
+site_genus_tibble <- genus_metadata_tibble |>
+	#Select al of the columns specified in vector cols_to_keep
+	select(all_of(cols_to_keep))
+head(site_genus_tibble)
+```

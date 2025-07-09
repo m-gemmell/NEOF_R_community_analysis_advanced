@@ -12,6 +12,8 @@ website:
     left:
     - text: Overview
       href: index.qmd
+    - text: Setup
+      href: setup/setup.qmd
     - text: Upset
       href: upset/upset.qmd
     right:
@@ -57,6 +59,23 @@ website:
       contents:
       - href: upset/upset_data_format.qmd
       - href: upset/phyloseq_to_tibble.qmd
+      - href: upset/upset_tibble_creation.qmd
+    - section: "Upset plots"
+      contents:
+      - href: upset/upset_plot.qmd
+      - href: upset/all_in_one_code.qmd
+      - href: upset/challenge_1.qmd
+    - section: "Lower taxa levels"
+      contents:
+      - href: upset/rare_removal_plot.qmd
+      - href: upset/rare_upset_plot.qmd
+    - section: "Metadata intersections"
+      contents:
+      - href: upset/metadata_sets.qmd
+      - href: upset/sample_and_taxa.qmd
+      - href: upset/metadata_and_taxa.qmd
+      - href: upset/metadata_upset_plot.qmd
+      - href: upset/media_genus_upset.qmd
 format:
   html:
     grid:

@@ -1,7 +1,170 @@
 # Upset data format
+<center>
+![](images/format.png){style="width:200px"}
+</center>
 
-Theory as to the format that the data needs to be in to work for an upset plot.
+The structure of the data for an upset plot is not a typical __tibble__.
+It only requires one column of __intersections__.
+This is a __list__ containing the __intersections__ of __sets__.
 
-A column of lists with these lists really only containing vectors.
+To demonstrate we'll create an example __tibble__ required for an upset plot and visualise it.
 
-Diagram of wide to long to upset tibble.
+```{r, echo=FALSE, message=FALSE}
+#Data for venn and upset plots
+#if (!require(devtools)) install.packages("devtools")
+#devtools::install_github("gaospecial/ggVennDiagram")
+library("ggVennDiagram")
+library("tidyverse")
+library("ggupset")
+```
+
+## Group vector column
+<center>
+![](images/grouping.png){style="width:150px; background: white; border-radius:5px"}
+</center>
+
+For clarity we will include a __group column__.
+The __group__ column is a normal __vector__ column of __characters__.
+
+```{r}
+#Group column
+group_vec <- c("G1","G2","G3","G4","G5","G6")
+```
+
+## Intersection list column
+<center>
+![](images/road_intersection.png){style="width:150px; background:white; border-radius:15px; border: 5px white solid"}
+</center>
+
+More complicated is the required __intersections__ column.
+This column is a __list__ where each element is a __character vector__.
+
+__Lists__ are one dimensional objects like __vectors__.
+However, __lists__ can contain multiple [data classes](https://neof-workshops.github.io/R_j4c0xh/04-R_objects.html#classes) (heterogeneous) where __vectors__ can only contain one (homogeneous).
+This allows __lists__ to contain __vectors__ as elements.
+
+Each __vector__ contains the __sets__ found in the __row's group__.
+This represents the __intersection__.
+
+For simplicity we'll only include 3 different sets (A, B, & C).
+
+```{r, eval=FALSE}
+#Create vectors of intersections for the 6 groups
+i1 <- c("A","B","C")
+i2 <- c("A","B")
+i3 <- c("C")
+i4 <- c("A","B")
+i5 <- c("A","B")
+i6 <- c("A","B","C")
+#Create a list of the vectors
+intersection_list <- list(i1,i2,i3,i4,i5,i6)
+#Display intersection list
+intersection_list
+```
+
+## Upset tibble
+<center>
+![](images/2_column_table.png){style="width:150px"}
+</center>
+
+We can now combine our __group vector__ and our __intersection list__ into a __tibble__.
+
+```{r, eval=FALSE}
+#Upset tibble creation
+upset_tbl <- tibble::tibble(group_vec, intersection_list)
+#Display upset tibble
+upset_tbl |> dplyr::glimpse()
+```
+
+[Glimpsing](https://neof-workshops.github.io/Tidyverse/dplyr/glimpse.html) the __tibble__ shows you have 2 columns, one being a __character vector__ (`<chr>`) and one being a __list__ (`<list>`).
+Important features include:
+
+- Each __list element/vector__ is flanked by chevrons (`<` & `>`) unless the __element/vector__ only contains one element itself (e.g. the `"C"` of group `"G3"`).
+- The elements of the __list__ are separated by the commas (`,`) outside the chevrons.
+- The `...` indicates that `dplyr::glimpse()` is not displaying all the data from the column.
+
+The intersection for `"G1"` is `"A", "B", "C"` as denoted by `<"A", "B", "C">`.
+
+## Upset plot
+
+As a quick preview of the [Upset plots part](/upset/upset_plot.qmd) we'll create an upset plot.
+
+__Note:__ The below functions will be explained later on.
+
+```{r, eval=FALSE}
+#Upset plot with bar chart
+upset_plot <- upset_tbl |>
+    ggplot2::ggplot(aes(x = intersection_list)) +
+        #Add bar chart
+        ggplot2::geom_bar() +
+        #Add upset visualisation as x axis below bar chart
+        ggupset::scale_x_upset() + 
+        #Specify y axis label
+        ggplot2::labs(y="Group count", x="Intersections")
+ggplot2::ggsave(filename = "./example_upset.png", plot = upset_plot,
+       device = "png", dpi = 300, units = "mm", height = 75, width = 100)
+IRdisplay::display_png(file="./example_upset.png")
+```
+
+```{r, echo=FALSE, message=FALSE}
+#Group column
+group_vec <- c("G1","G2","G3","G4","G5","G6")
+#Create vectors of intersections for the 6 groups
+i1 <- c("A","B","C")
+i2 <- c("A","B")
+i3 <- c("C")
+i4 <- c("A","B")
+i5 <- c("A","B")
+i6 <- c("A","B","C")
+#Create a list of the vectors
+intersection_list <- list(i1,i2,i3,i4,i5,i6)
+#Upset tibble creation
+upset_tbl <- tibble::tibble(group_vec, intersection_list)
+#Upset plot with bar chart
+upset_plot <- upset_tbl |>
+    ggplot2::ggplot(aes(x = intersection_list)) +
+        #Add bar chart
+        ggplot2::geom_bar() +
+        #Add upset visualisation as x axis below bar chart
+        ggupset::scale_x_upset() + 
+        #Specify y axis label
+        ggplot2::labs(y="Group count", x= "Intersections")
+ggplot2::ggsave(filename = "images/example_upset.png", plot = upset_plot,
+       device = "png", dpi = 300, units = "mm", height = 75, width = 100)
+```
+
+You may note that we don't actually need the group column for the plot but I find it good to have so I know what the groups are for the sets.
+Additionally, it can be used for more complex graphics.
+
+We will talk in more depth about upset plots in the [Upset plots part](/upset/upset_plot.qmd) but briefly in the below plot you can see:
+
+- There are three different interactions (A+B, A+B+C, and just C).
+- These interactions are found in different numbers of groups (3, 2, and 1).
+
+<center>
+![](images/example_upset.png){style="width:600px; background: white; border-radius:15px"}
+</center>
+<br>
+
+## MCQs
+<center>
+![](/images/question_bubble_green.png){style="width:150px"}
+</center>
+
+Superb! Attempt the following MCQs by choosing the correct word for the blanks.
+
+```{r, echo = FALSE}
+opts_p <- c( "__Intersection__",answer="__List__", "__Vector__")
+```
+1. The required column for an upset plot is a ____________. `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c( "__Intersection__","__List__", answer="__Vector__")
+```
+2. The row elements of the required column for an upset plot are each a ____________. `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c( answer="__Intersection__","__List__", "__Vector__")
+```
+3. The required column for an upset plot contains the ____________ information. `r longmcq(opts_p)`
+

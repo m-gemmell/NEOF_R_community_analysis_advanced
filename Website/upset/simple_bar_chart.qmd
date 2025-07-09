@@ -1,10 +1,16 @@
 # Simple bar chart
+<center>
+![](images/stacked_bar_chart.png){style="width:200px; background: white; border-radius:15px; border: white 5px solid"}
+</center>
 
-Prior to learning more about upset plots lets first look at a simple phylum bar chart with our data.
+Prior to learning more about upset plots let's first look at a simple phylum bar chart with our data.
 
 Create a new header cell with the 2nd level header of "Phylum bar chart".
 
 ## Data transformation
+<center>
+![](images/count_to_percent.png){style="width:300px; background: white; border-radius:15px; border: white 5px solid"}
+</center>
 
 Prior to creating the bar chart we will:
 

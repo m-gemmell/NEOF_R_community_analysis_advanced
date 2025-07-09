@@ -1,0 +1,103 @@
+# Rare removal
+
+In this page we will quickly discuss and show how to use lower taxa levels with rare removal.
+This involves:
+
+- Determining the number of different taxa at a certain level.
+- Removing rare features (taxa) through rare aggregation.
+- Formatting the data and producing an upset plot.
+
+This upset plot will display the intersection of genera (sets) against the samples (groups).
+
+We remove rare features for a few reasons:
+
+- To many sets will make it hard to make a clear plot.
+- Rare features (taxa) will most likely only add noise when looking at the prominent features (taxa).
+
+## Number of taxa
+
+The easiest method to determine the number of taxa groups at certain taxonomic level is by aggregating the phyloseq object and display the dimension data of the objects within the aggregated phyloseq object.
+
+Carry this out for __Genus__ level.
+
+```{r, eval=FALSE}
+#Aggregate taxa to genus
+#This will also display the dimensions of the tables and data within the phyloseq object
+microbiome::aggregate_taxa(pseq, level = "Genus")
+```
+
+This shows we have 172 taxa (i.e. 172 unique genera).
+This would be to much to visualise in an upset plot so lets reduce that number by removing rare genera (i.e. genera with low abundances across the data).
+
+## Rare aggregation and removal
+
+To remove the rare genera we will aggregate the taxa whilst carrying out rare aggregation.
+This combines rare genera into one taxa group called "Other".
+We will then remove this "Other" group as it won't be interesting to include in our upset plot.
+
+For more information on rare aggregation please see our [R community analysis workbook](https://neof-workshops.github.io/R_community_whqkt8/Course/11-Taxa_plots.html#aggregateraretaxa).
+
+Carry out rare aggregation and removal.
+
+```{r, eval=FALSE}
+#Aggregate to genus and remove rare genera
+genus_rareaggregate_pseq <- pseq |>
+    #Convert to compositional values
+    microbiome:::transform("compositional") |>
+    #Use thresholds of at least 0.5% relative abundance (detection)
+    # in at least 10% of samples (prevalence)
+    #Thresholds chosen as they lead to a manageable amount of taxa
+    microbiome::aggregate_rare(level = "Genus",
+                                detection = 0.005, prevalence = 1/10) |>
+    #Remove the "Other" genus which consists of all the rare aggregated taxa
+    phyloseq::subset_taxa(Genus != "Other")
+#Overview of phyloseq object
+genus_rareaggregate_pseq
+```
+
+This lead to a phyloseq object with 29 taxa which seems like a good number of __sets__ to create an upset plot with.
+
+## Upset plot creation
+
+With our rare removed genus phyloseq object we can create an upset plot with:
+
+- Intersection of genera sets.
+- Samples as the groups.
+
+```{r, eval=FALSE}
+#Upset plot code
+genus_rare_removed_samples_upset_plot <- genus_rareaggregate_pseq |>
+    #Extract otu_table as a tibble
+    microbiome::otu_tibble(column.id = "Genus") |>
+    #Longify tibble
+    tidyr::pivot_longer(!Phylum, names_to="Sample", values_to="Abundance") |>
+    #Filter out rows were relative abundance is 0
+    #i.e. retain rows showing presence
+    dplyr::filter(Abundance > 0) |>
+    #Select to remove unwanted Abundance column
+    dplyr::select(-Abundance) |>
+    #Group tibble by the Sample (grouping) column
+    dplyr::group_by(Sample) |>
+    #Summarise the Genus (sets) column
+    #Results in each row having a unique sample (group)
+    # with a list of the intersection of present genera
+    dplyr::summarize(Genera = list(Genus)) |>
+    #ggplot
+    #Genera (intersection) column as the x aesthetic
+    ggplot2::ggplot(aes(x = Genera)) +
+        #Bar chart
+        ggplot2::geom_bar() +
+        #Upset scale on x axis
+        ggupset::scale_x_upset() + 
+        #Y label
+        ggplot2::labs(y="Sample count")
+#Save plot to png file
+ggplot2::ggsave(filename = "./genus_rare_removed_intersection_sample_group_upset.png", 
+                plot = genus_rare_removed_samples_upset_plot,
+                device = "png", dpi = 300, units = "mm", height = 200, width = 300)
+#Dsplay plot in jupyter notebook
+IRdisplay::display_png(file="./genus_rare_removed_intersection_sample_group_upset.png")
+```
+
+Great, you know how to create an upset plot based on a specific taxa level with rare taxa removed.
+What if you want to see the intersection of rare features?

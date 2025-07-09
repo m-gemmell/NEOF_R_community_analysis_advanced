@@ -89,6 +89,10 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Overview</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../setup/setup.html" rel="" target="">
+ <span class="menu-text">Setup</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link active" href="../upset/upset.html" rel="" target="" aria-current="page">
  <span class="menu-text">Upset</span></a>
   </li>  
@@ -176,6 +180,70 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Upset data format</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/phyloseq_to_tibble.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Phyloseq to long presence tibble</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/upset_tibble_creation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Upset tibble creation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Upset plots</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/upset_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Upset plot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/all_in_one_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">All in one code</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/challenge_1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Challenge class upset plot</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Lower taxa levels</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/rare_removal_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rare removal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/rare_upset_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rare features upset plot</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -184,7 +252,19 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#intersecting-sets" id="toc-intersecting-sets" class="nav-link active" data-scroll-target="#intersecting-sets">Intersecting sets</a></li>
+  <li><a href="#venn-versus-upset" id="toc-venn-versus-upset" class="nav-link" data-scroll-target="#venn-versus-upset">Venn versus Upset</a>
+  <ul class="collapse">
+  <li><a href="#way-venn-diagram" id="toc-way-venn-diagram" class="nav-link" data-scroll-target="#way-venn-diagram">3 way venn diagram</a></li>
+  <li><a href="#way-venn-digram" id="toc-way-venn-digram" class="nav-link" data-scroll-target="#way-venn-digram">4 way venn digram</a></li>
+  <li><a href="#upset-plot" id="toc-upset-plot" class="nav-link" data-scroll-target="#upset-plot">Upset plot</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -206,11 +286,125 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Intro to upset plot explaining what it is</p>
-<p>Show an example</p>
-<p>Say what we will do here</p>
+<center>
+<img src="images/upset_plot_icon.png" class="img-fluid" style="width:300px; background: white; border-radius:15px; border:5px white solid">
+</center>
+<p>Upset plots are a visualisation method to display <strong>intersections</strong> between <strong>sets</strong>. They can be seen as a different form of a venn diagram but are able to effectively display many <strong>intersecting sets</strong>.</p>
+<p>In this section we will:</p>
+<ul>
+<li>Introduce the concept of intersecting sets and displaying them with venn and upset plots.</li>
+<li>Setup our environment and introduce the dataset</li>
+<li>Format the data from a phyloseq object to a <strong>tibble</strong> for upset plot creation</li>
+<li>Create &amp; customise upset plots</li>
+</ul>
+<section id="intersecting-sets" class="level2">
+<h2 class="anchored" data-anchor-id="intersecting-sets">Intersecting sets</h2>
+<center>
+<img src="images/intersection.png" class="img-fluid" style="width:200px; background: white; border-radius:15px; border:5px white solid">
+</center>
+<p>Intersection plots for community analysis can be used to display the number of intersecting features (e.g.&nbsp;taxa) between samples or sample groups. In other words you can display the shared presence of features between groups.</p>
+<p>Additionally, you can flip it around to display the number of intersecting groups between taxa. This allows you to determine which taxa are common and uncommon across the groups. We will see this later on.</p>
+</section>
+<section id="venn-versus-upset" class="level2">
+<h2 class="anchored" data-anchor-id="venn-versus-upset">Venn versus Upset</h2>
+<p>Venn diagrams and upset plots display the <strong>intersections</strong> between <strong>sets</strong>. To demonstrate the concept of <strong>intersecting sets</strong> this section includes a few examples of these plots. These plots will display:</p>
+<ul>
+<li><strong>Sets</strong> of samples (e.g.&nbsp;S1, S2, &amp; S3).</li>
+<li>The <strong>intersection</strong> of phyla.</li>
+</ul>
+<section id="way-venn-diagram" class="level3">
+<h3 class="anchored" data-anchor-id="way-venn-diagram">3 way venn diagram</h3>
+<p>Three way venn digrams are a classic for visualising <strong>intersecting sets</strong>. Below is an example showing the number of <strong>intersecting</strong> phyla across three sets of samples (S1, S2, &amp; S3).</p>
+<center>
+<img src="images/3_way_venn.png" class="img-fluid" style="width:500px; background: white; border-radius:15px">
+</center>
+<p><br> This above plot shows:</p>
+<ul>
+<li>6 phyla are found in all samples.</li>
+<li>3 phyla are present in S1 and S3 but not S2.</li>
+<li>1 phylum is found in S2 that are not present in S1 or S3.</li>
+<li>There are a total of 25 phyla (4+2+1+3+6+3+6=10)</li>
+</ul>
+<section id="mcqs" class="level4">
+<h4 class="anchored" data-anchor-id="mcqs">MCQs</h4>
+<center>
+<img src="..\images/question_bubble_blue.png" class="img-fluid" style="width:150px">
+</center>
+<p>Please attempt the below MCQs based on the above venn diagram.</p>
+<ol type="1">
+<li>How many phyla are present in S2 &amp; S3 but not S1?
+<div id="radio_YKCHSISJMO" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_YKCHSISJMO" value="answer"> <span><strong>3</strong></span></label><label><input type="radio" autocomplete="off" name="radio_YKCHSISJMO" value=""> <span><strong>18</strong></span></label><label><input type="radio" autocomplete="off" name="radio_YKCHSISJMO" value=""> <span><strong>6</strong></span></label>
+</div></li>
+</ol>
+<ol start="2" type="1">
+<li>How many phyla are present in S3 but not S1 or S2?
+<div id="radio_HOZICPYIQM" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_HOZICPYIQM" value=""> <span><strong>3</strong></span></label><label><input type="radio" autocomplete="off" name="radio_HOZICPYIQM" value=""> <span><strong>18</strong></span></label><label><input type="radio" autocomplete="off" name="radio_HOZICPYIQM" value="answer"> <span><strong>6</strong></span></label>
+</div></li>
+</ol>
+<ol start="3" type="1">
+<li>How many total phyla are present in S3?
+<div id="radio_HBDLUKNLXW" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_HBDLUKNLXW" value=""> <span><strong>3</strong></span></label><label><input type="radio" autocomplete="off" name="radio_HBDLUKNLXW" value="answer"> <span><strong>18</strong></span></label><label><input type="radio" autocomplete="off" name="radio_HBDLUKNLXW" value=""> <span><strong>6</strong></span></label>
+</div></li>
+</ol>
+</section>
+</section>
+<section id="way-venn-digram" class="level3">
+<h3 class="anchored" data-anchor-id="way-venn-digram">4 way venn digram</h3>
+<p>Although venn diagrams can be nice, they become more difficult to parse as more sets are included. Below is a 4 way venn diagram to demonstrate this. It includes the same samples as the above venn diagram but with S4 added in.</p>
+<center>
+<img src="images/4_way_venn.png" class="img-fluid" style="width:600px; background: white; border-radius:15px">
+</center>
+</section>
+<section id="upset-plot" class="level3">
+<h3 class="anchored" data-anchor-id="upset-plot">Upset plot</h3>
+<p>Instead of venn diagrams we can use upset plots. Below is an upset plots made from the same data as the above 4 way venn diagram. It consists of 2 parts:</p>
+<ul>
+<li>A bar chart of the number of phyla found in the intersections of samples.</li>
+<li>The intersections of samples displayed with dots and lines.</li>
+</ul>
+<p>By default the order of the x-axis is ordered from frequency within the intersections. I.e. from intersection with highest phyla count to lowest phyla count.</p>
+<center>
+<img src="images/upset_plot.png" class="img-fluid" style="width:600px; background: white; border-radius:15px">
+</center>
+<p><br> The first three bars/columns of the above plot shows:</p>
+<ul>
+<li>S3 has 5 unique phyla.</li>
+<li>There are 4 phyla found in all the samples.</li>
+<li>S1 &amp; S4 share four phyla not present in S2 or S3.</li>
+</ul>
+<p>On important note is that intersections with values of 0 are not displayed in upset plots.</p>
+<section id="mcqs-1" class="level4">
+<h4 class="anchored" data-anchor-id="mcqs-1">MCQs</h4>
+<center>
+<img src="..\images/question_bubble_red.png" class="img-fluid" style="width:150px">
+</center>
+<p>Please attempt the below MCQs based on the above upset plot.</p>
+<ol type="1">
+<li>How many phyla are present in S1, S3, and S2 but not S4?
+<div id="radio_XEAGCQKBLV" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XEAGCQKBLV" value=""> <span><strong>12</strong></span></label><label><input type="radio" autocomplete="off" name="radio_XEAGCQKBLV" value=""> <span><strong>0</strong></span></label><label><input type="radio" autocomplete="off" name="radio_XEAGCQKBLV" value="answer"> <span><strong>2</strong></span></label>
+</div></li>
+</ol>
+<ol start="2" type="1">
+<li>How many phyla are only present in S4?
+<div id="radio_YORWZYQXHO" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_YORWZYQXHO" value=""> <span><strong>12</strong></span></label><label><input type="radio" autocomplete="off" name="radio_YORWZYQXHO" value="answer"> <span><strong>0</strong></span></label><label><input type="radio" autocomplete="off" name="radio_YORWZYQXHO" value=""> <span><strong>2</strong></span></label>
+</div></li>
+</ol>
+<ol start="3" type="1">
+<li>How many total phyla are present in S2?
+<div id="radio_ERCUUKFECQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ERCUUKFECQ" value="answer"> <span><strong>12</strong></span></label><label><input type="radio" autocomplete="off" name="radio_ERCUUKFECQ" value=""> <span><strong>0</strong></span></label><label><input type="radio" autocomplete="off" name="radio_ERCUUKFECQ" value=""> <span><strong>2</strong></span></label>
+</div></li>
+</ol>
 
 
+</section>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script>

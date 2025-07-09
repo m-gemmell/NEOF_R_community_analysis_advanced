@@ -1,4 +1,8 @@
 # Data & Setup
+<center>
+![](images/setup_8.png){style="width:200px; border-radius:5px"}
+</center>
+
 
 Before you carry out any practice you will need to setup your environment by:
 
@@ -7,6 +11,9 @@ Before you carry out any practice you will need to setup your environment by:
 - Loading in the data.
 
 ## Jupyter notebook
+<center>
+![](images/jupyter_logo.png){style="width:200px; background: white; border-radius:5px; border: white solid 5px"}
+</center>
 
 In jupyter-notebook file explorer create and move into a new directory called "upset".
 We'll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.
@@ -18,6 +25,11 @@ At the top of the jupyter-notebook add the following headers:
 - A second level header of "Libraries & data".
 
 ## Libraries
+<center>
+![](images/packages.png){style="width:200px"}
+</center>
+
+Load the required libraries/packages in a new code cell.
 
 ```{r, eval=FALSE}
 #Libraries
@@ -29,6 +41,10 @@ library("ggupset")
 ```
 
 ## Data
+
+<center>
+![](images/river.png){style="width:200px"}
+</center>
 
 We have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 ([theory](https://neof-workshops.github.io/16S_yg84o9/Course/03-Intro_to_qiime2.html#amplicon-sequence-variants-identification) & [code](https://neof-workshops.github.io/16S_yg84o9/Course/09-ASV_identification.html)).
 For our upset plots we will be utilising the Durance river data used in our R community analysis workshop.

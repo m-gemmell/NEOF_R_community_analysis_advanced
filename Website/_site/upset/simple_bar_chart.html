@@ -64,6 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../upset/upset_data_format.html" rel="next">
 <link href="../upset/data_and_setup.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
@@ -121,6 +122,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li class="nav-item">
     <a class="nav-link" href="../index.html" rel="" target="">
  <span class="menu-text">Overview</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../setup/setup.html" rel="" target="">
+ <span class="menu-text">Setup</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="../upset/upset.html" rel="" target="" aria-current="page">
@@ -195,6 +200,64 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Data format</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/upset_data_format.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Upset data format</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/phyloseq_to_tibble.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Phyloseq to long presence tibble</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/upset_tibble_creation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Upset tibble creation</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Upset plots</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/upset_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Upset plot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/all_in_one_code.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">All in one code</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/challenge_1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Challenge class upset plot</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -220,10 +283,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="simple-bar-chart" class="level1">
 <h1>Simple bar chart</h1>
-<p>Prior to learning more about upset plots lets first look at a simple phylum bar chart with our data.</p>
+<center>
+<img src="images/stacked_bar_chart.png" class="img-fluid" style="width:200px; background: white; border-radius:15px; border: white 5px solid">
+</center>
+<p>Prior to learning more about upset plots let’s first look at a simple phylum bar chart with our data.</p>
 <p>Create a new header cell with the 2nd level header of “Phylum bar chart”.</p>
 <section id="data-transformation" class="level2">
 <h2 class="anchored" data-anchor-id="data-transformation">Data transformation</h2>
+<center>
+<img src="images/count_to_percent.png" class="img-fluid" style="width:300px; background: white; border-radius:15px; border: white 5px solid">
+</center>
 <p>Prior to creating the bar chart we will:</p>
 <ul>
 <li>Convert the abundance values to relative abundances so it is easier to compare the samples.</li>
@@ -820,6 +889,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../upset/upset_data_format.html" class="pagination-link">
+        <span class="nav-page-text">Upset data format</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
