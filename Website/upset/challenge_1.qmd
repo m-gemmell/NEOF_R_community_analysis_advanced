@@ -1,4 +1,7 @@
 # Challenge class upset plot
+<center>
+![](images/challenge_1.png){style="width:200px; border-radius:5px; background: white"}
+</center>
 
 As a challenge create an upset plot with the following instructions:
 
@@ -9,7 +12,9 @@ As a challenge create an upset plot with the following instructions:
 
 Your upset plot should look like the below:
 
-MATTHEW ADD PLOT
+<center>
+![](images/class_intersection_sample_group_upset.png){style="width:800px; border-radius:5px"}
+</center>
 
 `r hide("Code solution")`
 ```{r, eval=FALSE}
@@ -53,3 +58,15 @@ ggplot2::ggsave(filename = "./class_intersection_sample_group_upset.png",
 IRdisplay::display_png(file="./class_intersection_sample_group_upset.png")
 ```
 `r unhide()`
+
+## Conclusion
+
+Fantastic! 
+Great effort and I hope you are comfortable with creating upset plots now.
+
+This is a good point to stop this upset section and move onto one of the other sections.
+
+Optionally, you can continue with this section and move onto the next two parts:
+
+- [Lower taxa levels](/upset/rare_removal_plot.qmd): Creating upset plots of lower taxa levels as the sets of interactions. Involves rare aggregation to reduce the number of taxa for the plot.
+- [Metadata intersections](/upset/metadata_sets.qmd): Creating upset plots of metadata groupings as the sets of interactions. This allows the comparison of sites and media compared to samples.

@@ -1,4 +1,7 @@
 # Media upset plot
+<center>
+![](images/petri_dish.png){style="width:200px; background: white; border-radius:5px"}
+</center>
 
 Below is an all in one code to create an upset plot of:
 

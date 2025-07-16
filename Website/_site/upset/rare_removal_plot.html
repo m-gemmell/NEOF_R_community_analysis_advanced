@@ -281,6 +281,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Metadata intersections</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/metadata_sets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata as sets</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/sample_and_taxa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sample and taxa tibble</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/metadata_and_taxa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata and taxa tibble</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/metadata_upset_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata upset plot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/media_genus_upset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Media upset plot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/challenge_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Challenge site and media upset plot</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -307,6 +354,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="rare-removal" class="level1">
 <h1>Rare removal</h1>
+<center>
+<img src="images/rare_removal.png" class="img-fluid" style="width:200px; border-radius:5px; background: white; border: white 5px solid">
+</center>
 <p>In this page we will quickly discuss and show how to use lower taxa levels with rare removal. This involves:</p>
 <ul>
 <li>Determining the number of different taxa at a certain level.</li>
@@ -321,7 +371,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <section id="number-of-taxa" class="level2">
 <h2 class="anchored" data-anchor-id="number-of-taxa">Number of taxa</h2>
-<p>The easiest method to determine the number of taxa groups at certain taxonomic level is by aggregating the phyloseq object and display the dimension data of the objects within the aggregated phyloseq object.</p>
+<center>
+<img src="images/tally.png" class="img-fluid" style="width:150px">
+</center>
+<p>The easiest method to determine the number of taxa groups at a certain taxonomic level is by aggregating the phyloseq object and display the dimension data of the objects within the aggregated phyloseq object.</p>
 <p>Carry this out for <strong>Genus</strong> level.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Aggregate taxa to genus</span></span>
@@ -332,6 +385,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="rare-aggregation-and-removal" class="level2">
 <h2 class="anchored" data-anchor-id="rare-aggregation-and-removal">Rare aggregation and removal</h2>
+<center>
+<img src="images/origami_rhino.png" class="img-fluid" style="width:200px">
+</center>
 <p>To remove the rare genera we will aggregate the taxa whilst carrying out rare aggregation. This combines rare genera into one taxa group called “Other”. We will then remove this “Other” group as it won’t be interesting to include in our upset plot.</p>
 <p>For more information on rare aggregation please see our <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/11-Taxa_plots.html#aggregateraretaxa">R community analysis workbook</a>.</p>
 <p>Carry out rare aggregation and removal.</p>
@@ -354,6 +410,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="upset-plot-creation" class="level2">
 <h2 class="anchored" data-anchor-id="upset-plot-creation">Upset plot creation</h2>
+<center>
+<img src="images/pencil.png" class="img-fluid" style="width:150px">
+</center>
 <p>With our rare removed genus phyloseq object we can create an upset plot with:</p>
 <ul>
 <li>Intersection of genera sets.</li>

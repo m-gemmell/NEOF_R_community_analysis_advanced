@@ -314,6 +314,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Metadata upset plot</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/media_genus_upset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Media upset plot</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -342,9 +348,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="metadata-and-taxa-tibble" class="level1">
 <h1>Metadata and taxa tibble</h1>
+<center>
+<img src="images/river_and_branch.png" class="img-fluid" style="width:300px; background:white; border-radius:15px; border:white solid 10px">
+</center>
 <p>Now we’ll create a total abundance <strong>tibble</strong> of our metadata categories (rows) against the genera (columns).</p>
 <section id="extract-metadata" class="level2">
 <h2 class="anchored" data-anchor-id="extract-metadata">Extract metadata</h2>
+<center>
+<img src="images/extract_2.png" class="img-fluid" style="width:150px; background:white; border-radius:15px">
+</center>
 <p>The first step is to extract our metadata as a <strong>tibble</strong> with <code>microbiome::sample_tibble()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Metadata tibble</span></span>
@@ -354,12 +366,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="bind-metadata-and-abundance-tibble" class="level2">
 <h2 class="anchored" data-anchor-id="bind-metadata-and-abundance-tibble">Bind metadata and abundance tibble</h2>
+<center>
+<p>
+<a href="https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html"> <img src="../images/dplyr_bind_cols.png" width="150px"> </a>
+</p>
+</center>
 <p>We will bind our metadata and taxa abundance tables but first lets ensure they have the same order of samples.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Ensure metadata and otu tibble have same order of samples</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>metadata_tibble<span class="sc">$</span>SampleID <span class="sc">==</span> genus_tibble<span class="sc">$</span>Sample</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>All the values are <code>TRUE</code> so the order is the same allowing us to bind the <strong>tibbles</strong> with <a href="https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html"><code>dplyr::bind_cols</code></a></p>
+<p>All the values are <code>TRUE</code> so the order is the same allowing us to bind the <strong>tibbles</strong> with <a href="https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html"><code>dplyr::bind_cols</code></a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#bind metadata and genus tibbles</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>genus_metadata_tibble <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(metadata_tibble, genus_tibble)</span>
@@ -368,15 +385,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="remove-unwanted-columns" class="level2">
 <h2 class="anchored" data-anchor-id="remove-unwanted-columns">Remove unwanted columns</h2>
+<center>
+<p>
+<a href="https://neof-workshops.github.io/Tidyverse/dplyr/select.html"> <img src="../images/dplyr_select.png" width="150px"> </a>
+</p>
+</center>
 <p>Finally to tidy up the <strong>tibble</strong> we will remove all the non taxa columns except for the “site” column. We are going to use the sites as the sets for our upset plot.</p>
+<p>Carry this out with <a href="https://neof-workshops.github.io/Tidyverse/dplyr/select.html"><code>dplyr::select()</code></a></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create tibble with site and taxa columns</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Create vector of "site" and the genus names</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#The -1 is to remove the "Sample" column</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#The -1 is to remove the "Sample" column name</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>cols_to_keep <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"site"</span>, <span class="fu">colnames</span>(genus_tibble[,<span class="sc">-</span><span class="dv">1</span>]))</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Subset tibble to our desired columns</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>site_genus_tibble <span class="ot">&lt;-</span> genus_metadata_tibble <span class="sc">|&gt;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Select al of the columns specified in vector cols_to_keep</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Select all of the columns specified in vector cols_to_keep</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">all_of</span>(cols_to_keep))</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(site_genus_tibble)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>

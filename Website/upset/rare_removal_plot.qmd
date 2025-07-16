@@ -1,4 +1,7 @@
 # Rare removal
+<center>
+![](images/rare_removal.png){style="width:200px; border-radius:5px; background: white; border: white 5px solid"}
+</center>
 
 In this page we will quickly discuss and show how to use lower taxa levels with rare removal.
 This involves:
@@ -15,8 +18,11 @@ We remove rare features for a few reasons:
 - Rare features (taxa) will most likely only add noise when looking at the prominent features (taxa).
 
 ## Number of taxa
+<center>
+![](images/tally.png){style="width:150px"}
+</center>
 
-The easiest method to determine the number of taxa groups at certain taxonomic level is by aggregating the phyloseq object and display the dimension data of the objects within the aggregated phyloseq object.
+The easiest method to determine the number of taxa groups at a certain taxonomic level is by aggregating the phyloseq object and display the dimension data of the objects within the aggregated phyloseq object.
 
 Carry this out for __Genus__ level.
 
@@ -30,6 +36,9 @@ This shows we have 172 taxa (i.e. 172 unique genera).
 This would be to much to visualise in an upset plot so lets reduce that number by removing rare genera (i.e. genera with low abundances across the data).
 
 ## Rare aggregation and removal
+<center>
+![](images/origami_rhino.png){style="width:200px"}
+</center>
 
 To remove the rare genera we will aggregate the taxa whilst carrying out rare aggregation.
 This combines rare genera into one taxa group called "Other".
@@ -58,6 +67,9 @@ genus_rareaggregate_pseq
 This lead to a phyloseq object with 29 taxa which seems like a good number of __sets__ to create an upset plot with.
 
 ## Upset plot creation
+<center>
+![](images/pencil.png){style="width:150px"}
+</center>
 
 With our rare removed genus phyloseq object we can create an upset plot with:
 

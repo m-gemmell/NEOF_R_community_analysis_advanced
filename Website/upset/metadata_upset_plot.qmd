@@ -1,8 +1,14 @@
 # Metadata upset plot
+<center>
+![](images/river_mountain.png){style="width:200px; background:white; border-radius:15px; border:white solid 10px"}
+</center>
 
-OUr lasts steps our to format the data into an upset __tibble__ and then create the upset plot.
+Our lasts steps are to format the data into an upset __tibble__ and then create the upset plot.
 
 ## Upset tibble
+<center>
+![](images/plier.png){style="width:150px; background: white; border-radius:5px; border: white 5px solid"}
+</center>
 
 Creating the upset __tibble__ is almost the same as our previous upset plots.
 However, after longifying, remove absence and removing the "Abundance" column we then use the `dplyr::distinct()` function.
@@ -11,7 +17,7 @@ This removes duplicate columns, keeping only one of them.
 This is important as since multiple samples belong to one metadata group we have multiple duplicated rows.
 E.g. we could have 3 columns for the Achromobacter and LD pairing.
 
-Carrying it out this way ensures that if a genus is present in at least one of the samples of a metadata group, it will be included in interaction.
+Carrying it out this way ensures that if a genus is present in at least one of the samples of a metadata group, it will be included in the interaction.
 
 Create the upset __tibble__.
 
@@ -40,6 +46,9 @@ site_genus_upset_tibble |> dplyr::slice(1:10) |> str()
 ```
 
 ## Upset plot
+<center>
+![](images/pencil_2.png){style="width:150px; background: white; border-radius:5px; border: white 5px solid"}
+</center>
 
 With the upset __tibble__ create the upset plot.
 

@@ -1,0 +1,84 @@
+# Challenge site and media upset plot
+<center>
+![](images/challenge_2.png){style="width:200px; border-radius:5px; background: white"}
+</center>
+
+As a challenge create an upset plot with the following instructions:
+
+- Use the data within the `pseq` object we have used for the previous upset plots.
+- Aggregate the `pseq` object to genera level.
+- Create a column called "site_media" with the site info and media info seperated by a "_", e.g. "UD_ENV" and "MD_KBC".
+- Use the "site_media" metadata as the sets for the intersections.
+- Use the genera as the groups.
+
+Your upset plot should look like the below:
+
+<center>
+![](images/site_media_genera_upset.png){style="width:800px; border-radius:5px"}
+</center>
+
+## Tip
+<center>
+<p><a href="https://neof-workshops.github.io/Tidyverse/tidyr/unite.html">
+ <img src="/images/tidyr_unite.png" width="150px">
+ </a></p>
+</center>
+
+You can use the function [`tidyr::unite()`](https://neof-workshops.github.io/Tidyverse/tidyr/unite.html) to combine/unite two columns in a tibble.
+
+`r hide("Code solution")`
+```{r, eval=FALSE}
+#Upset plot displaying number of intersecting site_media and groups of genera, based on presence
+#Sample (rows) by Genus (columns) abundance tibble
+genus_tibble <- pseq |>
+	#Aggregate genus
+	microbiome::aggregate_taxa("Genus", verbose = FALSE) |>
+	#extract otu table
+	phyloseq::otu_table() |>
+	#Convert to data.frame then transpose
+	as.data.frame() |> t() |>
+	#Convert to tibble
+	dplyr::as_tibble(rownames = "Sample")
+#Vector of site_media and taxa names, used to filter next tibble
+cols_to_keep <- c("site_media", colnames(genus_tibble[,-1]))
+#Create site_media (rows) by Genus (columns) abundance tibble
+#Upset tibble
+site_media_genus_upset_tibble <- pseq |>
+	#Extract metadata tibble
+	microbiome::sample_tibble() |>
+	#Combine the site and media columns with "_" as the separator
+	tidyr::unite(site_media, c("site","media"), sep = "_") |>
+	#Bind by columns with genus_tibble
+	dplyr::bind_cols(genus_tibble) |>
+	#Select al of the columns specified in vector cols_to_keep
+	select(all_of(cols_to_keep)) |>
+	#Longify tibble
+	tidyr::pivot_longer(!site_media, names_to="Genus", values_to="Abundance") |>
+	#Filter to remove rows with an abundance of 0
+	dplyr::filter(Abundance > 0) |>
+	#Select to remove unwanted abundance column
+	dplyr::select(-Abundance) |>
+	#Remove duplicate rows to prevent multiple values appearing for each media
+	dplyr::distinct() |>
+	#Group tibble by Genus column
+	dplyr::group_by(Genus) |>
+	#Summarise site_media column so each row has a unique Genus
+	# with a list of the site_media combos each Genus is found in
+	dplyr::summarize(site_media = list(site_media))
+#Upset plot
+upset_plot <- site_media_genus_upset_tibble |>
+	#Upset plot with ggplot2
+	#Use site_media as interactions on x axis
+	ggplot2::ggplot(aes(x = site_media)) +
+    	#Bar chart
+    	ggplot2::geom_bar() +
+    	#Upset scale display
+    	ggupset::scale_x_upset() +
+    	ggplot2::labs(y="Genera count", x = "Site & Media")
+ggplot2::ggsave(filename = "./site_media_genera_upset.png", plot = upset_plot,
+   	device = "png", dpi = 300, units = "mm", height = 200, width = 300)
+IRdisplay::display_png(file="./site_media_genera_upset.png")
+```
+`r unhide()`
+
+Spendid! That is the end of this upset section, hopefully you will find it useful in your future analyses.

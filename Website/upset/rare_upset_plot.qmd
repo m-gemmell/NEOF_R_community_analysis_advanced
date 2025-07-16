@@ -1,4 +1,7 @@
 # Rare features upset plot
+<center>
+![](images/clover_magnify.png){style="width:200px; background: white; border-radius:5px"}
+</center>
 
 You may want to see the intersection of rare features (taxa) to see what samples they are present and absent in.
 This page will show you how to make an upset of rare families through the following steps:
@@ -9,6 +12,9 @@ This page will show you how to make an upset of rare families through the follow
 - Creating an upset plot.
 
 ## Number of families
+<center>
+![](images/abacus.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 It is always useful to check the total number of groups in a taxa you are interested in.
 
@@ -18,6 +24,9 @@ microbiome::aggregate_taxa(pseq, level = "Family")
 ```
 
 ## Rare aggregation
+<center>
+![](images/elephant_origami.png){style="width:150px"}
+</center>
 
 We have 112 taxa. Let's try to extract ~50 of the rarest taxa.
 
@@ -42,6 +51,9 @@ This means we have classified 63 taxa as rare (112-49=63).
 This should be ok for our purposes.
 
 ## Non-rare families vector
+<center>
+![](images/daisy.png){style="width:100px; background: white; border-radius:5px; border: white 5px solid"}
+</center>
 
 With our family aggregated phyloseq object we can create a vector containing the names of non-rare families.
 This is needed for our next step.
@@ -55,6 +67,9 @@ non_rare_families
 ```
 
 ## Rare phyloseq creation
+<center>
+![](images/subset_table.png){style="width:200px; background: white; border-radius:5px; border: white 5px solid"}
+</center>
 
 To create our rare phyloseq object we need to carry out three steps.
 
@@ -161,6 +176,9 @@ We now have the 63 "rare" families remaining in our phyloseq object.
 You could also use this method with a manually created vector of families that you what to investigate.
 
 ## Rare family upset plot
+<center>
+![](images/paint_brush.png){style="width:150px"}
+</center>
 
 Now you can create the upset plot.
 

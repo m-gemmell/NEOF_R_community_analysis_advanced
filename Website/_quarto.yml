@@ -76,6 +76,7 @@ website:
       - href: upset/metadata_and_taxa.qmd
       - href: upset/metadata_upset_plot.qmd
       - href: upset/media_genus_upset.qmd
+      - href: upset/challenge_2.qmd
 format:
   html:
     grid:

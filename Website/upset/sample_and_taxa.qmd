@@ -1,4 +1,7 @@
 # Sample and taxa tibble
+<center>
+![](images/table_3.png){style="width:200px"}
+</center>
 
 The first step is to extract the genus abundance table and then transpose it.
 
@@ -8,6 +11,9 @@ Transposing is vital for the next step as it means that:
 - Each row is a sample
 
 ## Transposed genus abundance
+<center>
+![](images/transpose_table.png){style="width:400px; background: white; border-radius:5px"}
+</center>
 
 Carry out aggregation and transposing.
 

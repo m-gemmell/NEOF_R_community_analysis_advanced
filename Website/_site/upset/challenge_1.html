@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../rare_aggregation_plot.qmd" rel="next">
+<link href="../upset/rare_removal_plot.html" rel="next">
 <link href="../upset/all_in_one_code.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js"></script>
@@ -267,6 +267,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/rare_removal_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rare removal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/rare_upset_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rare features upset plot</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Metadata intersections</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/metadata_sets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata as sets</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/sample_and_taxa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sample and taxa tibble</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/metadata_and_taxa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata and taxa tibble</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/metadata_upset_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata upset plot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/media_genus_upset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Media upset plot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/challenge_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Challenge site and media upset plot</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -279,7 +338,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#challenge-class-upset-plot" id="toc-challenge-class-upset-plot" class="nav-link active" data-scroll-target="#challenge-class-upset-plot">Challenge class upset plot</a></li>
+  <li><a href="#challenge-class-upset-plot" id="toc-challenge-class-upset-plot" class="nav-link active" data-scroll-target="#challenge-class-upset-plot">Challenge class upset plot</a>
+  <ul class="collapse">
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -290,6 +352,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="challenge-class-upset-plot" class="level1">
 <h1>Challenge class upset plot</h1>
+<center>
+<img src="images/challenge_1.png" class="img-fluid" style="width:200px; border-radius:5px; background: white">
+</center>
 <p>As a challenge create an upset plot with the following instructions:</p>
 <ul>
 <li>Use the data within the <code>pseq</code> object we have used for the previous upset plots.</li>
@@ -298,7 +363,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Use the sample names as the groups.</li>
 </ul>
 <p>Your upset plot should look like the below:</p>
-<p>MATTHEW ADD PLOT</p>
+<center>
+<img src="images/class_intersection_sample_group_upset.png" class="img-fluid" style="width:800px; border-radius:5px">
+</center>
 <div class="webex-solution">
 <button>
 Code solution
@@ -344,8 +411,18 @@ Code solution
 <span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file=</span><span class="st">"./class_intersection_sample_group_upset.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Fantastic! Great effort and I hope you are comfortable with creating upset plots now.</p>
+<p>This is a good point to stop this upset section and move onto one of the other sections.</p>
+<p>Optionally, you can continue with this section and move onto the next two parts:</p>
+<ul>
+<li><a href="../upset/rare_removal_plot.html">Lower taxa levels</a>: Creating upset plots of lower taxa levels as the sets of interactions. Involves rare aggregation to reduce the number of taxa for the plot.</li>
+<li><a href="../upset/metadata_sets.html">Metadata intersections</a>: Creating upset plots of metadata groupings as the sets of interactions. This allows the comparison of sites and media compared to samples.</li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -910,8 +987,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../rare_aggregation_plot.qmd" class="pagination-link">
-        <span class="nav-page-text"></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../upset/rare_removal_plot.html" class="pagination-link">
+        <span class="nav-page-text">Rare removal</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

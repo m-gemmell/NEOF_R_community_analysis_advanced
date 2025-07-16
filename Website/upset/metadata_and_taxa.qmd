@@ -1,9 +1,14 @@
-
 # Metadata and taxa tibble
+<center>
+![](images/river_and_branch.png){style="width:300px; background:white; border-radius:15px; border:white solid 10px"}
+</center>
 
 Now we'll create a total abundance __tibble__ of our metadata categories (rows) against the genera (columns).
 
 ## Extract metadata
+<center>
+![](images/extract_2.png){style="width:150px; background:white; border-radius:15px"}
+</center>
 
 The first step is to extract our metadata as a __tibble__ with `microbiome::sample_tibble()`.
 
@@ -14,6 +19,12 @@ head(metadata_tibble)
 ```
 
 ## Bind metadata and abundance tibble
+<center>
+<p><a href="https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html">
+<img src="/images/dplyr_bind_cols.png" width="150px">
+</a></p>
+</center>
+
 
 We will bind our metadata and taxa abundance tables but first lets ensure they have the same order of samples.
 
@@ -22,7 +33,7 @@ We will bind our metadata and taxa abundance tables but first lets ensure they h
 metadata_tibble$SampleID == genus_tibble$Sample
 ```
 
-All the values are `TRUE` so the order is the same allowing us to bind the __tibbles__ with [`dplyr::bind_cols`](https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html)
+All the values are `TRUE` so the order is the same allowing us to bind the __tibbles__ with [`dplyr::bind_cols`](https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html).
 
 ```{r, eval=FALSE}
 #bind metadata and genus tibbles
@@ -31,18 +42,26 @@ head(genus_metadata_tibble)
 ```
 
 ## Remove unwanted columns
+<center>
+<p><a href="https://neof-workshops.github.io/Tidyverse/dplyr/select.html">
+<img src="/images/dplyr_select.png" width="150px">
+</a></p>
+</center>
+
 
 Finally to tidy up the __tibble__ we will remove all the non taxa columns except for the "site" column.
 We are going to use the sites as the sets for our upset plot.
 
+Carry this out with [`dplyr::select()`](https://neof-workshops.github.io/Tidyverse/dplyr/select.html)
+
 ```{r, eval=FALSE}
 #Create tibble with site and taxa columns
 #Create vector of "site" and the genus names
-#The -1 is to remove the "Sample" column
+#The -1 is to remove the "Sample" column name
 cols_to_keep <- c("site", colnames(genus_tibble[,-1]))
 #Subset tibble to our desired columns
 site_genus_tibble <- genus_metadata_tibble |>
-	#Select al of the columns specified in vector cols_to_keep
+	#Select all of the columns specified in vector cols_to_keep
 	select(all_of(cols_to_keep))
 head(site_genus_tibble)
 ```

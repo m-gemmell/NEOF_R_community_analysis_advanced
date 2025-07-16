@@ -284,7 +284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
- <span class="menu-text">Metadata as sets</span></a>
+ <span class="menu-text">Metadata intersections</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -294,6 +294,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="../upset/metadata_sets.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Metadata as sets</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/sample_and_taxa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sample and taxa tibble</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/metadata_and_taxa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata and taxa tibble</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/metadata_upset_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata upset plot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/media_genus_upset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Media upset plot</span></a>
   </div>
 </li>
       </ul>
@@ -331,6 +355,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="rare-features-upset-plot" class="level1">
 <h1>Rare features upset plot</h1>
+<center>
+<img src="images/clover_magnify.png" class="img-fluid" style="width:200px; background: white; border-radius:5px">
+</center>
 <p>You may want to see the intersection of rare features (taxa) to see what samples they are present and absent in. This page will show you how to make an upset of rare families through the following steps:</p>
 <ul>
 <li>Carrying out rare aggregation of families to acquire the names of the “non-rare” features.</li>
@@ -340,6 +367,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <section id="number-of-families" class="level2">
 <h2 class="anchored" data-anchor-id="number-of-families">Number of families</h2>
+<center>
+<img src="images/abacus.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
 <p>It is always useful to check the total number of groups in a taxa you are interested in.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Lower taxa levels may have a very high number of members</span></span>
@@ -348,6 +378,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="rare-aggregation" class="level2">
 <h2 class="anchored" data-anchor-id="rare-aggregation">Rare aggregation</h2>
+<center>
+<img src="images/elephant_origami.png" class="img-fluid" style="width:150px">
+</center>
 <p>We have 112 taxa. Let’s try to extract ~50 of the rarest taxa.</p>
 <p>First we will carry out rare aggregation to try ot get a phyloseq object of the top ~60 (112-<sub>50=</sub>60) most common families.</p>
 <div class="cell">
@@ -367,6 +400,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="non-rare-families-vector" class="level2">
 <h2 class="anchored" data-anchor-id="non-rare-families-vector">Non-rare families vector</h2>
+<center>
+<img src="images/daisy.png" class="img-fluid" style="width:100px; background: white; border-radius:5px; border: white 5px solid">
+</center>
 <p>With our family aggregated phyloseq object we can create a vector containing the names of non-rare families. This is needed for our next step.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Overview of phyloseq object</span></span>
@@ -378,6 +414,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="rare-phyloseq-creation" class="level2">
 <h2 class="anchored" data-anchor-id="rare-phyloseq-creation">Rare phyloseq creation</h2>
+<center>
+<img src="images/subset_table.png" class="img-fluid" style="width:200px; background: white; border-radius:5px; border: white 5px solid">
+</center>
 <p>To create our rare phyloseq object we need to carry out three steps.</p>
 <ol type="1">
 <li>Create a family aggregated phyloseq object.</li>
@@ -484,6 +523,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="rare-family-upset-plot" class="level2">
 <h2 class="anchored" data-anchor-id="rare-family-upset-plot">Rare family upset plot</h2>
+<center>
+<img src="images/paint_brush.png" class="img-fluid" style="width:150px">
+</center>
 <p>Now you can create the upset plot.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Upset plot of rare family intersections with sample groupings</span></span>

@@ -1,4 +1,7 @@
 # Upset tibble creation
+<center>
+![](images/allen_keys.png){style="width:200px"}
+</center>
 
 In this part we will finish creating the __tibble__ needed for our upset plot.
 The steps are:

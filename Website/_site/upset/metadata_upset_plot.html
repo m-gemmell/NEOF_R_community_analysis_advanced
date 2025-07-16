@@ -347,12 +347,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="metadata-upset-plot" class="level1">
 <h1>Metadata upset plot</h1>
-<p>OUr lasts steps our to format the data into an upset <strong>tibble</strong> and then create the upset plot.</p>
+<center>
+<img src="images/river_mountain.png" class="img-fluid" style="width:200px; background:white; border-radius:15px; border:white solid 10px">
+</center>
+<p>Our lasts steps are to format the data into an upset <strong>tibble</strong> and then create the upset plot.</p>
 <section id="upset-tibble" class="level2">
 <h2 class="anchored" data-anchor-id="upset-tibble">Upset tibble</h2>
+<center>
+<img src="images/plier.png" class="img-fluid" style="width:150px; background: white; border-radius:5px; border: white 5px solid">
+</center>
 <p>Creating the upset <strong>tibble</strong> is almost the same as our previous upset plots. However, after longifying, remove absence and removing the “Abundance” column we then use the <code>dplyr::distinct()</code> function. This removes duplicate columns, keeping only one of them.</p>
 <p>This is important as since multiple samples belong to one metadata group we have multiple duplicated rows. E.g. we could have 3 columns for the Achromobacter and LD pairing.</p>
-<p>Carrying it out this way ensures that if a genus is present in at least one of the samples of a metadata group, it will be included in interaction.</p>
+<p>Carrying it out this way ensures that if a genus is present in at least one of the samples of a metadata group, it will be included in the interaction.</p>
 <p>Create the upset <strong>tibble</strong>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create upset tibble where each row is a unique genus (group) and</span></span>
@@ -380,6 +386,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="upset-plot" class="level2">
 <h2 class="anchored" data-anchor-id="upset-plot">Upset plot</h2>
+<center>
+<img src="images/pencil_2.png" class="img-fluid" style="width:150px; background: white; border-radius:5px; border: white 5px solid">
+</center>
 <p>With the upset <strong>tibble</strong> create the upset plot.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Upset plot displaying number of intersecting sites with genera as the groups</span></span>

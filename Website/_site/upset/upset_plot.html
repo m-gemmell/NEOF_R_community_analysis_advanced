@@ -258,6 +258,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Lower taxa levels</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/rare_removal_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rare removal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/rare_upset_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rare features upset plot</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Metadata intersections</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/metadata_sets.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata as sets</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/sample_and_taxa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Sample and taxa tibble</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/metadata_and_taxa.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata and taxa tibble</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/metadata_upset_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata upset plot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../upset/media_genus_upset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Media upset plot</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -279,6 +343,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="upset-plot" class="level1">
 <h1>Upset plot</h1>
+<center>
+<img src="images/upset.png" class="img-fluid" style="width:150px">
+</center>
 <p>Now that we have our upset <strong>tibble</strong> we can create out upset plot.</p>
 <p>We’ll carry this out with the <a href="https://neof-workshops.github.io/Tidyverse/ggplot2/ggplot2.html"><code>ggplot2</code></a> package and a variety of its functions.</p>
 <ul>
@@ -312,27 +379,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="mcqs" class="level4">
 <h4 class="anchored" data-anchor-id="mcqs">MCQs</h4>
 <center>
-<img src="..\images/question_bubble_purple.png" class="img-fluid" style="width:150px">
+<img src="..\images/question_bubble_orange.png" class="img-fluid" style="width:150px">
 </center>
 <p>Super! With the upset plot answer the below MCQs.</p>
 <p><strong>Note:</strong> An intersection of one is still an intersection. I.e. Some of the intersections in the plot only contain one sample.</p>
 <p><strong>Tip:</strong> Right click on image and then select “Open image in new tab” to get a larger image you can zoom in on.</p>
 <ol type="1">
 <li>Which intersection has the highest Phyla count? I.e. which intersection of samples has the highest number of phyla that are only present in it?
-<div id="radio_UXOANMNKMU" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_UXOANMNKMU" value="answer"> <span><strong>MD_ENV_rep2</strong></span></label><label><input type="radio" autocomplete="off" name="radio_UXOANMNKMU" value=""> <span><strong>MD_ENV_rep_1 + MD_ENV_rep2 + UD_ENV_rep3</strong></span></label><label><input type="radio" autocomplete="off" name="radio_UXOANMNKMU" value=""> <span><strong>UD_ENV_rep3 + UD_ENV_rep1 + UD_TSA_rep2</strong></span></label>
+<div id="radio_QZUYIGTYDX" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_QZUYIGTYDX" value="answer"> <span><strong>MD_ENV_rep2</strong></span></label><label><input type="radio" autocomplete="off" name="radio_QZUYIGTYDX" value=""> <span><strong>MD_ENV_rep_1 + MD_ENV_rep2 + UD_ENV_rep3</strong></span></label><label><input type="radio" autocomplete="off" name="radio_QZUYIGTYDX" value=""> <span><strong>UD_ENV_rep3 + UD_ENV_rep1 + UD_TSA_rep2</strong></span></label>
 </div></li>
 </ol>
 <ol start="2" type="1">
 <li>Which intersection is on the far right of the plot?
-<div id="radio_MJGPVQXXMM" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_MJGPVQXXMM" value=""> <span><strong>MD_ENV_rep2</strong></span></label><label><input type="radio" autocomplete="off" name="radio_MJGPVQXXMM" value=""> <span><strong>MD_ENV_rep_1 + MD_ENV_rep2 + UD_ENV_rep3</strong></span></label><label><input type="radio" autocomplete="off" name="radio_MJGPVQXXMM" value="answer"> <span><strong>UD_ENV_rep3 + UD_ENV_rep1 + UD_TSA_rep2</strong></span></label>
+<div id="radio_ILHNLKQYSK" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ILHNLKQYSK" value=""> <span><strong>MD_ENV_rep2</strong></span></label><label><input type="radio" autocomplete="off" name="radio_ILHNLKQYSK" value=""> <span><strong>MD_ENV_rep_1 + MD_ENV_rep2 + UD_ENV_rep3</strong></span></label><label><input type="radio" autocomplete="off" name="radio_ILHNLKQYSK" value="answer"> <span><strong>UD_ENV_rep3 + UD_ENV_rep1 + UD_TSA_rep2</strong></span></label>
 </div></li>
 </ol>
 <ol start="3" type="1">
 <li>Which of the three intersections is not present in the plot? I.e. which intersection has no phyla unique to it?
-<div id="radio_AYRORHBGJJ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_AYRORHBGJJ" value=""> <span><strong>MD_ENV_rep2</strong></span></label><label><input type="radio" autocomplete="off" name="radio_AYRORHBGJJ" value="answer"> <span><strong>MD_ENV_rep_1 + MD_ENV_rep2 + UD_ENV_rep3</strong></span></label><label><input type="radio" autocomplete="off" name="radio_AYRORHBGJJ" value=""> <span><strong>UD_ENV_rep3 + UD_ENV_rep1 + UD_TSA_rep2</strong></span></label>
+<div id="radio_ODDCWGYLNQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ODDCWGYLNQ" value=""> <span><strong>MD_ENV_rep2</strong></span></label><label><input type="radio" autocomplete="off" name="radio_ODDCWGYLNQ" value="answer"> <span><strong>MD_ENV_rep_1 + MD_ENV_rep2 + UD_ENV_rep3</strong></span></label><label><input type="radio" autocomplete="off" name="radio_ODDCWGYLNQ" value=""> <span><strong>UD_ENV_rep3 + UD_ENV_rep1 + UD_TSA_rep2</strong></span></label>
 </div></li>
 </ol>
 
