@@ -13,3 +13,21 @@ Create and move into a new directory in your home directory called "adv_R_comm".
 mkdir ~/adv_R_comm
 cd ~/adv_R_comm
 ```
+
+## Conda & Jupyter-notebook
+
+Load the cond env `r_community` with the following use command:
+
+```{bash eval=FALSE}
+. usercommunity
+```
+
+Now load jupyter-notebook:
+
+```{bash eval=false}
+jupyter-noetbook
+```
+
+If you need a tutorial on using `jupyter-notebook` with R please see the following webpage:
+
+[NEOF R community analysis workbook jupyter chapter](https://neof-workshops.github.io/R_community_whqkt8/Course/05-Jupyter.html)

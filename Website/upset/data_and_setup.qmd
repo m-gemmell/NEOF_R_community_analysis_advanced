@@ -6,6 +6,7 @@
 
 Before you carry out any practice you will need to setup your environment by:
 
+- Ensure you have setup your directory, environment, and jupyter-notebook as shown in the overall [setup](/setup/setup.qmd)
 - Creating a jupyter-notebook in a new work directory.
 - Loading in the required libraries.
 - Loading in the data.
@@ -15,7 +16,7 @@ Before you carry out any practice you will need to setup your environment by:
 ![](images/jupyter_logo.png){style="width:200px; background: white; border-radius:5px; border: white solid 5px"}
 </center>
 
-In jupyter-notebook file explorer create and move into a new directory called "upset".
+In jupyter-notebook file explorer create and move into a new directory called "upset", ensure this is a subdiretcory of the main workshop directory (`adv_R_comm`).
 We'll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.
 
 Create a new R based jupyter-notebook called "upset.ipynb".
