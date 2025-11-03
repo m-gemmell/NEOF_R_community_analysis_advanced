@@ -364,10 +364,20 @@
     "href": "index.html",
     "title": "NEOF Advanced R community analysis",
     "section": "",
-    "text": "This is the Website ofr the NEOF Advance R community analysis workshop.",
+    "text": "This is the Website for the NEOF Advance R community analysis workshop.",
     "crumbs": [
       "Overview",
       "NEOF Advanced R community analysis"
+    ]
+  },
+  {
+    "objectID": "divergence/divergence.html",
+    "href": "divergence/divergence.html",
+    "title": "Divergence",
+    "section": "",
+    "text": "Divergence\n\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.1.4     ✔ readr     2.1.5\n✔ forcats   1.0.0     ✔ stringr   1.5.1\n✔ ggplot2   3.5.2     ✔ tibble    3.3.0\n✔ lubridate 1.9.4     ✔ tidyr     1.3.1\n✔ purrr     1.1.0     \n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors",
+    "crumbs": [
+      "Divergence"
     ]
   },
   {
@@ -375,7 +385,7 @@
     "href": "setup/setup.html",
     "title": "Setup",
     "section": "",
-    "text": "Create and move into a new directory in your home directory called “adv_R_comm”.\n\nmkdir ~/adv_R_comm\ncd ~/adv_R_comm",
+    "text": "Create and move into a new directory in your home directory called “adv_R_comm”.\n\nmkdir ~/adv_R_comm\ncd ~/adv_R_comm\n\n\n\n\nLoad the cond env r_community with the following use command:\n\n. usercommunity\n\nNow load jupyter-notebook:\n\njupyter-noetbook\n\nIf you need a tutorial on using jupyter-notebook with R please see the following webpage:\nNEOF R community analysis workbook jupyter chapter",
     "crumbs": [
       "Setup"
     ]
@@ -386,6 +396,16 @@
     "title": "Setup",
     "section": "",
     "text": "Create and move into a new directory in your home directory called “adv_R_comm”.\n\nmkdir ~/adv_R_comm\ncd ~/adv_R_comm",
+    "crumbs": [
+      "Setup"
+    ]
+  },
+  {
+    "objectID": "setup/setup.html#conda-jupyter-notebook",
+    "href": "setup/setup.html#conda-jupyter-notebook",
+    "title": "Setup",
+    "section": "",
+    "text": "Load the cond env r_community with the following use command:\n\n. usercommunity\n\nNow load jupyter-notebook:\n\njupyter-noetbook\n\nIf you need a tutorial on using jupyter-notebook with R please see the following webpage:\nNEOF R community analysis workbook jupyter chapter",
     "crumbs": [
       "Setup"
     ]
@@ -419,7 +439,7 @@
     "href": "upset/data_and_setup.html",
     "title": "Data & Setup",
     "section": "",
-    "text": "Before you carry out any practice you will need to setup your environment by:\n\nCreating a jupyter-notebook in a new work directory.\nLoading in the required libraries.\nLoading in the data.\n\n\n\n\n\n\nIn jupyter-notebook file explorer create and move into a new directory called “upset”. We’ll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.\nCreate a new R based jupyter-notebook called “upset.ipynb”. At the top of the jupyter-notebook add the following headers:\n\nA first level header of “Upset plots”.\nA second level header of “Libraries & data”.\n\n\n\n\n\n\n\nLoad the required libraries/packages in a new code cell.\n\n#Libraries\nlibrary(\"phyloseq\")\nlibrary(\"microbiome\")\nlibrary(\"IRdisplay\")\nlibrary(\"tidyverse\")\nlibrary(\"ggupset\")\n\n\n\n\n\n\n\nWe have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 (theory & code). For our upset plots we will be utilising the Durance river data used in our R community analysis workshop. This is a 16S dataset with two main metadata groupings:\n\nSites: Upper, Middle, and Lower Durance sampling site.\nCulture media: Environmental sample (ENV), TSA, KBC, and CVP.\n\nMore info in the R community analysis workbook\nLoad in the phyloseq object.\n\n#Data\nload(\"/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData\")",
+    "text": "Before you carry out any practice you will need to setup your environment by:\n\nEnsure you have setup your directory, environment, and jupyter-notebook as shown in the overall setup\nCreating a jupyter-notebook in a new work directory.\nLoading in the required libraries.\nLoading in the data.\n\n\n\n\n\n\nIn jupyter-notebook file explorer create and move into a new directory called “upset”, ensure this is a subdiretcory of the main workshop directory (adv_R_comm). We’ll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.\nCreate a new R based jupyter-notebook called “upset.ipynb”. At the top of the jupyter-notebook add the following headers:\n\nA first level header of “Upset plots”.\nA second level header of “Libraries & data”.\n\n\n\n\n\n\n\nLoad the required libraries/packages in a new code cell.\n\n#Libraries\nlibrary(\"phyloseq\")\nlibrary(\"microbiome\")\nlibrary(\"IRdisplay\")\nlibrary(\"tidyverse\")\nlibrary(\"ggupset\")\n\n\n\n\n\n\n\nWe have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 (theory & code). For our upset plots we will be utilising the Durance river data used in our R community analysis workshop. This is a 16S dataset with two main metadata groupings:\n\nSites: Upper, Middle, and Lower Durance sampling site.\nCulture media: Environmental sample (ENV), TSA, KBC, and CVP.\n\nMore info in the R community analysis workbook\nLoad in the phyloseq object.\n\n#Data\nload(\"/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData\")",
     "crumbs": [
       "Upset",
       "Setup",
@@ -431,7 +451,7 @@
     "href": "upset/data_and_setup.html#jupyter-notebook",
     "title": "Data & Setup",
     "section": "",
-    "text": "In jupyter-notebook file explorer create and move into a new directory called “upset”. We’ll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.\nCreate a new R based jupyter-notebook called “upset.ipynb”. At the top of the jupyter-notebook add the following headers:\n\nA first level header of “Upset plots”.\nA second level header of “Libraries & data”.",
+    "text": "In jupyter-notebook file explorer create and move into a new directory called “upset”, ensure this is a subdiretcory of the main workshop directory (adv_R_comm). We’ll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.\nCreate a new R based jupyter-notebook called “upset.ipynb”. At the top of the jupyter-notebook add the following headers:\n\nA first level header of “Upset plots”.\nA second level header of “Libraries & data”.",
     "crumbs": [
       "Upset",
       "Setup",

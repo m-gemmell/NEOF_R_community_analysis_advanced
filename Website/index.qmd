@@ -2,4 +2,4 @@
 title: "NEOF Advanced R community analysis"
 ---
 
-This is the Website ofr the NEOF Advance R community analysis workshop.
+This is the Website for the NEOF Advance R community analysis workshop.

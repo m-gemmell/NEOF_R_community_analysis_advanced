@@ -1,0 +1,29 @@
+# Divergence
+
+
+```{r, echo = FALSE}
+#Load tidyverse library
+library("tidyverse")
+
+#Create tidy dataset of points that will act as points in ordination plot
+#Comprise of three different datasets with 5 samples each
+#set seed
+set.seed(84368)
+#Sample groups
+group <- c(rep("G1",5), rep("G2",5), rep("G3",5))
+#Create axes 1 values
+axes1 <- c(sample(1:8,5),
+            sample(11:16,5),
+            sample(2:7,5))
+#Create axes 2 values
+axes2 <- c(sample(2:7,5),
+            sample(6:15,5),
+            sample(14:18,5))
+#Create long df
+tbl <- tibble::tibble(group, axes1, axes2)
+```
+
+```{r, echo=FALSE}
+ggplot2::ggplot(data = tbl, mapping=aes(x = axes1, y = axes2, colour = group)) +
+    ggplot2::geom_point()
+```

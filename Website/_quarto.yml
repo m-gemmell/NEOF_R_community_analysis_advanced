@@ -14,6 +14,8 @@ website:
       href: index.qmd
     - text: Setup
       href: setup/setup.qmd
+    - text: Divergence
+      href: divergence/divergence.qmd
     - text: Upset
       href: upset/upset.qmd
     right:
@@ -45,6 +47,13 @@ website:
     align: left
     contents:
     - href: setup/setup.qmd
+  - id: Divergence
+    title: Divergence
+    style: floating
+    collapse-level: 2
+    align: left
+    contents:
+    - href: divergence/divergence.qmd
   - id: Upset
     title: Upset
     style: floating
