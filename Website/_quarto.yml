@@ -89,6 +89,8 @@ website:
       - href: upset/challenge_2.qmd
 format:
   html:
+    fig-width: 10.2
+    fig-height: 6
     grid:
       sidebar-width: 200px
       body-width: 1000px
