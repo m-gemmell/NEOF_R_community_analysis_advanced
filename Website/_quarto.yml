@@ -54,6 +54,12 @@ website:
     align: left
     contents:
     - href: divergence/divergence.qmd
+    - section: "Setup"
+      contents: 
+      - href: divergence/data_and_setup.qmd
+    - section: "Data format"
+      contents:
+      - href: divergence/divergence_data_format.qmd
   - id: Upset
     title: Upset
     style: floating

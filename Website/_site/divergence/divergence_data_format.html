@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>metadata_and_taxa – Advanced R community analysis</title>
+<title>divergence_data_format – Advanced R community analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -65,8 +30,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../upset/metadata_upset_plot.html" rel="next">
-<link href="../upset/sample_and_taxa.html" rel="prev">
+<link href="../divergence/data_and_setup.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -341,7 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../upset/metadata_sets.html">Metadata intersections</a></li><li class="breadcrumb-item"><a href="../upset/metadata_and_taxa.html">Metadata and taxa tibble</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../divergence/divergence_data_format.html">Data format</a></li><li class="breadcrumb-item"><a href="../divergence/divergence_data_format.html">Divergence data format</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -359,8 +323,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/upset.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Upset</span></a>
+  <a href="../divergence/divergence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Divergence</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -374,14 +338,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/data_and_setup.html" class="sidebar-item-text sidebar-link">
+  <a href="../divergence/data_and_setup.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data &amp; Setup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/simple_bar_chart.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Simple bar chart</span></a>
   </div>
 </li>
       </ul>
@@ -397,119 +355,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/upset_data_format.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Upset data format</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/phyloseq_to_tibble.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Phyloseq to long presence tibble</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/upset_tibble_creation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Upset tibble creation</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Upset plots</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/upset_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Upset plot</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/all_in_one_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">All in one code</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/challenge_1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Challenge class upset plot</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Lower taxa levels</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/rare_removal_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Rare removal</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/rare_upset_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Rare features upset plot</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Metadata intersections</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/metadata_sets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Metadata as sets</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/sample_and_taxa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sample and taxa tibble</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/metadata_and_taxa.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Metadata and taxa tibble</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/metadata_upset_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Metadata upset plot</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/media_genus_upset.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Media upset plot</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/challenge_2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Challenge site and media upset plot</span></a>
+  <a href="../divergence/divergence_data_format.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Divergence data format</span></a>
   </div>
 </li>
       </ul>
@@ -524,78 +371,124 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#metadata-and-taxa-tibble" id="toc-metadata-and-taxa-tibble" class="nav-link active" data-scroll-target="#metadata-and-taxa-tibble">Metadata and taxa tibble</a>
+  <li><a href="#divergence-data-format" id="toc-divergence-data-format" class="nav-link active" data-scroll-target="#divergence-data-format">Divergence data format</a>
   <ul class="collapse">
-  <li><a href="#extract-metadata" id="toc-extract-metadata" class="nav-link" data-scroll-target="#extract-metadata">Extract metadata</a></li>
-  <li><a href="#bind-metadata-and-abundance-tibble" id="toc-bind-metadata-and-abundance-tibble" class="nav-link" data-scroll-target="#bind-metadata-and-abundance-tibble">Bind metadata and abundance tibble</a></li>
-  <li><a href="#remove-unwanted-columns" id="toc-remove-unwanted-columns" class="nav-link" data-scroll-target="#remove-unwanted-columns">Remove unwanted columns</a></li>
+  <li><a href="#square-distance-matrix" id="toc-square-distance-matrix" class="nav-link" data-scroll-target="#square-distance-matrix">Square distance matrix</a>
+  <ul class="collapse">
+  <li><a href="#lower-triangle" id="toc-lower-triangle" class="nav-link" data-scroll-target="#lower-triangle">Lower triangle</a></li>
+  <li><a href="#upper-triangle" id="toc-upper-triangle" class="nav-link" data-scroll-target="#upper-triangle">Upper triangle</a></li>
+  <li><a href="#diagonal" id="toc-diagonal" class="nav-link" data-scroll-target="#diagonal">Diagonal</a></li>
+  </ul></li>
+  <li><a href="#long-distance-matrix" id="toc-long-distance-matrix" class="nav-link" data-scroll-target="#long-distance-matrix">Long distance matrix</a></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../upset/metadata_sets.html">Metadata intersections</a></li><li class="breadcrumb-item"><a href="../upset/metadata_and_taxa.html">Metadata and taxa tibble</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../divergence/divergence_data_format.html">Data format</a></li><li class="breadcrumb-item"><a href="../divergence/divergence_data_format.html">Divergence data format</a></li></ol></nav></header>
 
 
 
 
 
-<section id="metadata-and-taxa-tibble" class="level1">
-<h1>Metadata and taxa tibble</h1>
-<center>
-<img src="images/river_and_branch.png" class="img-fluid" style="width:300px; background:white; border-radius:15px; border:white solid 10px">
-</center>
-<p>Now we’ll create a total abundance <strong>tibble</strong> of our metadata categories (rows) against the genera (columns).</p>
-<section id="extract-metadata" class="level2">
-<h2 class="anchored" data-anchor-id="extract-metadata">Extract metadata</h2>
-<center>
-<img src="images/extract_2.png" class="img-fluid" style="width:150px; background:white; border-radius:15px">
-</center>
-<p>The first step is to extract our metadata as a <strong>tibble</strong> with <code>microbiome::sample_tibble()</code>.</p>
+<section id="divergence-data-format" class="level1">
+<h1>Divergence data format</h1>
+<p>We will create box plots and violin plots with <a href="https://neof-workshops.github.io/Tidyverse/ggplot2/ggplot2.html"><code>ggplot2</code></a> similar to the plots we created in the [ALpha diveristy chapter of our R community analysis workshop][https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-diversity-violin-plot].</p>
+<p>For this we need to create a <a href="https://neof-workshops.github.io/Tidyverse/ggplot2/input_data.html">long data frame</a>. To carry this out we will:</p>
+<ul>
+<li>Load in the distance matrix</li>
+<li>Create a long data frame from the lower triangle</li>
+<li>Create a long data frame from the upper triangle</li>
+<li>Bind the data frame</li>
+</ul>
+<p>However, before that let’s see an example square distance matrix and long data frame for divergence analysis.</p>
+<section id="square-distance-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="square-distance-matrix">Square distance matrix</h2>
+<p>Our initial distance data is in a square distance matrix will be like below:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Metadata tibble</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>metadata_tibble <span class="ot">&lt;-</span> microbiome<span class="sc">::</span><span class="fu">sample_tibble</span>(pseq)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(metadata_tibble)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   S1 S2 S3
+S1  0  2  3
+S2  2  0  5
+S3  3  5  0</code></pre>
+</div>
+</div>
+<p>There are three main sections to this disatnce matrix.</p>
+<section id="lower-triangle" class="level3">
+<h3 class="anchored" data-anchor-id="lower-triangle">Lower triangle</h3>
+<p>The lower triangle is the bottom left triangle of unique values.</p>
+<p>For example (ignore the NAs):</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   S1 S2 S3
+S1 NA NA NA
+S2  2 NA NA
+S3  3  5 NA</code></pre>
+</div>
 </div>
 </section>
-<section id="bind-metadata-and-abundance-tibble" class="level2">
-<h2 class="anchored" data-anchor-id="bind-metadata-and-abundance-tibble">Bind metadata and abundance tibble</h2>
-<center>
-<p>
-<a href="https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html"> <img src="../images/dplyr_bind_cols.png" width="150px"> </a>
-</p>
-</center>
-<p>We will bind our metadata and taxa abundance tables but first lets ensure they have the same order of samples.</p>
+<section id="upper-triangle" class="level3">
+<h3 class="anchored" data-anchor-id="upper-triangle">Upper triangle</h3>
+<p>The upper triangle is the top right triangle of unique values.</p>
+<p>For example (ignore the NAs):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Ensure metadata and otu tibble have same order of samples</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>metadata_tibble<span class="sc">$</span>SampleID <span class="sc">==</span> genus_tibble<span class="sc">$</span>Sample</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   S1 S2 S3
+S1 NA  2  3
+S2 NA NA  5
+S3 NA NA NA</code></pre>
 </div>
-<p>All the values are <code>TRUE</code> so the order is the same allowing us to bind the <strong>tibbles</strong> with <a href="https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html"><code>dplyr::bind_cols</code></a>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#bind metadata and genus tibbles</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>genus_metadata_tibble <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(metadata_tibble, genus_tibble)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(genus_metadata_tibble)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="remove-unwanted-columns" class="level2">
-<h2 class="anchored" data-anchor-id="remove-unwanted-columns">Remove unwanted columns</h2>
-<center>
-<p>
-<a href="https://neof-workshops.github.io/Tidyverse/dplyr/select.html"> <img src="../images/dplyr_select.png" width="150px"> </a>
-</p>
-</center>
-<p>Finally to tidy up the <strong>tibble</strong> we will remove all the non taxa columns except for the “site” column. We are going to use the sites as the sets for our upset plot.</p>
-<p>Carry this out with <a href="https://neof-workshops.github.io/Tidyverse/dplyr/select.html"><code>dplyr::select()</code></a></p>
+<section id="diagonal" class="level3">
+<h3 class="anchored" data-anchor-id="diagonal">Diagonal</h3>
+<p>The diagonal is represents the distances of each sample to itself. These are always zero.</p>
+<p>For example (ignore the NAs):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create tibble with site and taxa columns</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Create vector of "site" and the genus names</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#The -1 is to remove the "Sample" column name</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>cols_to_keep <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"site"</span>, <span class="fu">colnames</span>(genus_tibble[,<span class="sc">-</span><span class="dv">1</span>]))</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Subset tibble to our desired columns</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>site_genus_tibble <span class="ot">&lt;-</span> genus_metadata_tibble <span class="sc">|&gt;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Select all of the columns specified in vector cols_to_keep</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="fu">all_of</span>(cols_to_keep))</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(site_genus_tibble)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   S1 S2 S3
+S1  0 NA NA
+S2 NA  0 NA
+S3 NA NA  0</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="long-distance-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="long-distance-matrix">Long distance matrix</h2>
+<p>WHen the above example distance matrix is converted into <a href="https://neof-workshops.github.io/Tidyverse/ggplot2/input_data.html">long data frame</a> for divergence analys it will then look like:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sample_L Sample_R Value
+1       S1       S2     2
+2       S1       S3     3
+3       S2       S1     2
+4       S2       S3     5
+5       S3       S1     3
+6       S3       S2     5</code></pre>
+</div>
+</div>
+<p>Some of the features of this long data frame are:</p>
+<ul>
+<li>The “Value” column is the distance between the two samples</li>
+<li>Each observation/row has a “Sample_L” and “Sample_R” column to represent the 2 samples the distance is between
+<ul>
+<li>The “L” and “R” represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the data frame.</li>
+</ul></li>
+<li>We do not include the 0 values from the diaganol.</li>
+<li>Each value is represented twice, i.e.&nbsp;the lower and upper triangle values are included.
+<ul>
+<li>The 2 rows containing the duplicated values are different in which sample is the Left sample and which is the right sample.</li>
+<li>This is required for creating inter group divergence (explained later)</li>
+</ul></li>
+</ul>
+<p>As an example of duplicated values the below data frame shows the distance between S1 and S2 twice. Notice that S1 is the Left sample in the first row but it is the RIght sample in the other row.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  Sample_L Sample_R Value
+1       S1       S2     2
+3       S2       S1     2</code></pre>
+</div>
 </div>
 
 
@@ -1224,14 +1117,11 @@ window.onload = function() {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../upset/sample_and_taxa.html" class="pagination-link" aria-label="Sample and taxa tibble">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Sample and taxa tibble</span>
+      <a href="../divergence/data_and_setup.html" class="pagination-link" aria-label="Data &amp; Setup">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Data &amp; Setup</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../upset/metadata_upset_plot.html" class="pagination-link" aria-label="Metadata upset plot">
-        <span class="nav-page-text">Metadata upset plot</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

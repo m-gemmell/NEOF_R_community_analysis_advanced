@@ -304,5 +304,11 @@
   },
   "divergence/divergence.qmd": {
     "divergence.html": "580bc97b"
+  },
+  "divergence/data_and_setup.qmd": {
+    "data_and_setup.html": "8aa6d4bf"
+  },
+  "divergence/divergence_data_format.qmd": {
+    "divergence_data_format.html": "98b61ff9"
   }
 }

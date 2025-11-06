@@ -16,13 +16,13 @@ Before you carry out any practice you will need to setup your environment by:
 ![](images/jupyter_logo.png){style="width:200px; background: white; border-radius:5px; border: white solid 5px"}
 </center>
 
-In the jupyter-notebook file explorer create and move into a new directory called `upset`, ensure this is a subdiretcory of the main workshop directory (`adv_R_comm`).
+In the jupyter-notebook file explorer create and move into a new directory called `divergence`, ensure this is a subdiretcory of the main workshop directory (`adv_R_comm`).
 We'll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.
 
-Create a new R based jupyter-notebook called "upset.ipynb".
+Create a new R based jupyter-notebook called "divergence.ipynb".
 At the top of the jupyter-notebook add the following headers:
 
-- A first level header of "Upset plots".
+- A first level header of "Divergence".
 - A second level header of "Libraries & data".
 
 ## Libraries
@@ -38,7 +38,8 @@ library("phyloseq")
 library("microbiome")
 library("IRdisplay")
 library("tidyverse")
-library("ggupset")
+library("ggforce")
+library("patchwork")
 ```
 
 ## Data

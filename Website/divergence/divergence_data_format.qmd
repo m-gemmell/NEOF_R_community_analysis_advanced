@@ -1,0 +1,110 @@
+# Divergence data format
+
+We will create box plots and violin plots with [`ggplot2`](https://neof-workshops.github.io/Tidyverse/ggplot2/ggplot2.html) similar to the plots we created in the [ALpha diveristy chapter of our R community analysis workshop][https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-diversity-violin-plot].
+
+For this we need to create a [long data frame](https://neof-workshops.github.io/Tidyverse/ggplot2/input_data.html).
+To carry this out we will:
+
+- Load in the distance matrix
+- Create a long data frame from the lower triangle
+- Create a long data frame from the upper triangle
+- Bind the data frame
+
+However, before that let's see an example square distance matrix and long data frame for divergence analysis.
+
+## Square distance matrix
+
+Our initial distance data is in a square distance matrix will be like below:
+
+```{r, echo = FALSE}
+#Columns
+S1 <- c(0,2,3)
+S2 <- c(2,0,5)
+S3 <- c(3,5,0)
+mat <- as.matrix(data.frame(S1,S2,S3))
+colnames(mat) <- c("S1","S2","S3")
+row.names(mat) <- c("S1","S2","S3")
+mat
+```
+
+There are three main sections to this disatnce matrix.
+
+### Lower triangle
+
+The lower triangle is the bottom left triangle of unique values.
+
+For example (ignore the NAs):
+
+```{r, echo = FALSE}
+#Columns
+S1 <- c(NA,2,3)
+S2 <- c(NA,NA,5)
+S3 <- c(NA,NA,NA)
+mat <- as.matrix(data.frame(S1,S2,S3))
+colnames(mat) <- c("S1","S2","S3")
+row.names(mat) <- c("S1","S2","S3")
+mat
+```
+
+### Upper triangle
+
+The upper triangle is the top right triangle of unique values.
+
+For example (ignore the NAs):
+
+```{r, echo = FALSE}
+#Columns
+S1 <- c(NA,NA,NA)
+S2 <- c(2,NA,NA)
+S3 <- c(3,5,NA)
+mat <- as.matrix(data.frame(S1,S2,S3))
+colnames(mat) <- c("S1","S2","S3")
+row.names(mat) <- c("S1","S2","S3")
+mat
+```
+
+### Diagonal
+
+The diagonal is represents the distances of each sample to itself. These are always zero.
+
+For example (ignore the NAs):
+
+```{r, echo = FALSE}
+#Columns
+S1 <- c(0,NA,NA)
+S2 <- c(NA,0,NA)
+S3 <- c(NA,NA,0)
+mat <- as.matrix(data.frame(S1,S2,S3))
+colnames(mat) <- c("S1","S2","S3")
+row.names(mat) <- c("S1","S2","S3")
+mat
+```
+
+## Long distance matrix
+
+WHen the above example distance matrix is converted into [long data frame](https://neof-workshops.github.io/Tidyverse/ggplot2/input_data.html) for divergence analys it will then look like:
+
+```{r, echo = FALSE}
+Sample_L <- c("S1","S1","S2","S2","S3","S3")
+Sample_R <- c("S2","S3","S1","S3","S1","S2")
+Value <- c(2,3,2,5,3,5)
+long_df <- data.frame(Sample_L, Sample_R, Value)
+long_df
+```
+
+Some of the features of this long data frame are:
+
+- The "Value" column is the distance between the two samples
+- Each observation/row has a "Sample_L" and "Sample_R" column to represent the 2 samples the distance is between
+    - The "L" and "R" represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the data frame.
+- We do not include the 0 values from the diaganol.
+- Each value is represented twice, i.e. the lower and upper triangle values are included.
+    - The 2 rows containing the duplicated values are different in which sample is the Left sample and which is the right sample.
+    - This is required for creating inter group divergence (explained later)
+
+As an example of duplicated values the below data frame shows the distance between S1 and S2 twice. 
+Notice that S1 is the Left sample in the first row but it is the RIght sample in the other row.
+
+```{r, echo = FALSE}
+long_df[c(1,3),]
+```
