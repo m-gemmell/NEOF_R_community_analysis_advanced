@@ -63,3 +63,10 @@ Load in the phyloseq object.
 #Data
 load("/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData")
 ```
+
+Additionally, we will load a [dissimilarity matrix of weighted unifrac values created through iterative rarefaction](https://neof-workshops.github.io/R_community_whqkt8/iterative_rarefaction/20-Beta_rarefaction.html):
+
+```{r, eval=FALSE}
+#Iterative rarefied weighted unifrac data frame
+load("/pub14/tea/nsc206/NEOF/R_community_advanced/wunifrac_df_mean.RData")
+```

@@ -1,6 +1,6 @@
 # Divergence data format
 
-We will create box plots and violin plots with [`ggplot2`](https://neof-workshops.github.io/Tidyverse/ggplot2/ggplot2.html) similar to the plots we created in the [ALpha diveristy chapter of our R community analysis workshop][https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-diversity-violin-plot].
+We will create box plots and violin plots with [`ggplot2`](https://neof-workshops.github.io/Tidyverse/ggplot2/ggplot2.html) similar to the plots we created in the [Alpha diveristy chapter of our R community analysis workshop](https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-diversity-violin-plot).
 
 For this we need to create a [long data frame](https://neof-workshops.github.io/Tidyverse/ggplot2/input_data.html).
 To carry this out we will:
@@ -14,7 +14,7 @@ However, before that let's see an example square distance matrix and long data f
 
 ## Square distance matrix
 
-Our initial distance data is in a square distance matrix will be like below:
+Our initial dissimilarity distance data is in a square distance matrix will be like below:
 
 ```{r, echo = FALSE}
 #Columns

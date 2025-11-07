@@ -60,6 +60,7 @@ website:
     - section: "Data format"
       contents:
       - href: divergence/divergence_data_format.qmd
+      - href: divergence/lower_triangle.qmd
   - id: Upset
     title: Upset
     style: floating

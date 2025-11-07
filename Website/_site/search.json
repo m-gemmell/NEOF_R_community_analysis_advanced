@@ -1,5 +1,53 @@
 [
   {
+    "objectID": "divergence/data_and_setup.html",
+    "href": "divergence/data_and_setup.html",
+    "title": "Data & Setup",
+    "section": "",
+    "text": "Before you carry out any practice you will need to setup your environment by:\n\nEnsuring you have setup your directory, environment, and jupyter-notebook as shown in the overall setup.\nCreating a jupyter-notebook in a new work directory.\nLoading in the required libraries.\nLoading in the data.\n\n\n\n\n\n\nIn the jupyter-notebook file explorer create and move into a new directory called divergence, ensure this is a subdiretcory of the main workshop directory (adv_R_comm). We’ll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.\nCreate a new R based jupyter-notebook called “divergence.ipynb”. At the top of the jupyter-notebook add the following headers:\n\nA first level header of “Divergence”.\nA second level header of “Libraries & data”.\n\n\n\n\n\n\n\nLoad the required libraries/packages in a new code cell.\n\n#Libraries\nlibrary(\"phyloseq\")\nlibrary(\"microbiome\")\nlibrary(\"IRdisplay\")\nlibrary(\"tidyverse\")\nlibrary(\"ggforce\")\nlibrary(\"patchwork\")\n\n\n\n\n\n\n\nWe have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 (theory & code). For our upset plots we will be utilising the Durance river data used in our R community analysis workshop. This is a 16S dataset with two main metadata groupings:\n\nSites: Upper, Middle, and Lower Durance sampling site.\nCulture media: Environmental sample (ENV), TSA, KBC, and CVP.\n\nMore info in the R community analysis workbook\nLoad in the phyloseq object.\n\n#Data\nload(\"/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData\")\n\nAdditionally, we will load a dissimilarity matrix of weighted unifrac values created through iterative rarefaction:\n\n#Iterative rarefied weighted unifrac data frame\nload(\"/pub14/tea/nsc206/NEOF/R_community_advanced/wunifrac_df_mean.RData\")",
+    "crumbs": [
+      "Divergence",
+      "Setup",
+      "Data & Setup"
+    ]
+  },
+  {
+    "objectID": "divergence/data_and_setup.html#jupyter-notebook",
+    "href": "divergence/data_and_setup.html#jupyter-notebook",
+    "title": "Data & Setup",
+    "section": "",
+    "text": "In the jupyter-notebook file explorer create and move into a new directory called divergence, ensure this is a subdiretcory of the main workshop directory (adv_R_comm). We’ll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.\nCreate a new R based jupyter-notebook called “divergence.ipynb”. At the top of the jupyter-notebook add the following headers:\n\nA first level header of “Divergence”.\nA second level header of “Libraries & data”.",
+    "crumbs": [
+      "Divergence",
+      "Setup",
+      "Data & Setup"
+    ]
+  },
+  {
+    "objectID": "divergence/data_and_setup.html#libraries",
+    "href": "divergence/data_and_setup.html#libraries",
+    "title": "Data & Setup",
+    "section": "",
+    "text": "Load the required libraries/packages in a new code cell.\n\n#Libraries\nlibrary(\"phyloseq\")\nlibrary(\"microbiome\")\nlibrary(\"IRdisplay\")\nlibrary(\"tidyverse\")\nlibrary(\"ggforce\")\nlibrary(\"patchwork\")",
+    "crumbs": [
+      "Divergence",
+      "Setup",
+      "Data & Setup"
+    ]
+  },
+  {
+    "objectID": "divergence/data_and_setup.html#data",
+    "href": "divergence/data_and_setup.html#data",
+    "title": "Data & Setup",
+    "section": "",
+    "text": "We have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 (theory & code). For our upset plots we will be utilising the Durance river data used in our R community analysis workshop. This is a 16S dataset with two main metadata groupings:\n\nSites: Upper, Middle, and Lower Durance sampling site.\nCulture media: Environmental sample (ENV), TSA, KBC, and CVP.\n\nMore info in the R community analysis workbook\nLoad in the phyloseq object.\n\n#Data\nload(\"/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData\")\n\nAdditionally, we will load a dissimilarity matrix of weighted unifrac values created through iterative rarefaction:\n\n#Iterative rarefied weighted unifrac data frame\nload(\"/pub14/tea/nsc206/NEOF/R_community_advanced/wunifrac_df_mean.RData\")",
+    "crumbs": [
+      "Divergence",
+      "Setup",
+      "Data & Setup"
+    ]
+  },
+  {
     "objectID": "divergence/divergence.html",
     "href": "divergence/divergence.html",
     "title": "Divergence",
@@ -693,71 +741,11 @@
     ]
   },
   {
-    "objectID": "divergence/data_and_setup.html",
-    "href": "divergence/data_and_setup.html",
-    "title": "Data & Setup",
-    "section": "",
-    "text": "Before you carry out any practice you will need to setup your environment by:\n\nEnsuring you have setup your directory, environment, and jupyter-notebook as shown in the overall setup.\nCreating a jupyter-notebook in a new work directory.\nLoading in the required libraries.\nLoading in the data.\n\n\n\n\n\n\nIn the jupyter-notebook file explorer create and move into a new directory called divergence, ensure this is a subdiretcory of the main workshop directory (adv_R_comm). We’ll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.\nCreate a new R based jupyter-notebook called “divergence.ipynb”. At the top of the jupyter-notebook add the following headers:\n\nA first level header of “Divergence”.\nA second level header of “Libraries & data”.\n\n\n\n\n\n\n\nLoad the required libraries/packages in a new code cell.\n\n#Libraries\nlibrary(\"phyloseq\")\nlibrary(\"microbiome\")\nlibrary(\"IRdisplay\")\nlibrary(\"tidyverse\")\nlibrary(\"ggforce\")\nlibrary(\"patchwork\")\n\n\n\n\n\n\n\nWe have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 (theory & code). For our upset plots we will be utilising the Durance river data used in our R community analysis workshop. This is a 16S dataset with two main metadata groupings:\n\nSites: Upper, Middle, and Lower Durance sampling site.\nCulture media: Environmental sample (ENV), TSA, KBC, and CVP.\n\nMore info in the R community analysis workbook\nLoad in the phyloseq object.\n\n#Data\nload(\"/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData\")",
-    "crumbs": [
-      "Divergence",
-      "Setup",
-      "Data & Setup"
-    ]
-  },
-  {
-    "objectID": "divergence/data_and_setup.html#jupyter-notebook",
-    "href": "divergence/data_and_setup.html#jupyter-notebook",
-    "title": "Data & Setup",
-    "section": "",
-    "text": "In the jupyter-notebook file explorer create and move into a new directory called divergence, ensure this is a subdiretcory of the main workshop directory (adv_R_comm). We’ll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.\nCreate a new R based jupyter-notebook called “divergence.ipynb”. At the top of the jupyter-notebook add the following headers:\n\nA first level header of “Divergence”.\nA second level header of “Libraries & data”.",
-    "crumbs": [
-      "Divergence",
-      "Setup",
-      "Data & Setup"
-    ]
-  },
-  {
-    "objectID": "divergence/data_and_setup.html#libraries",
-    "href": "divergence/data_and_setup.html#libraries",
-    "title": "Data & Setup",
-    "section": "",
-    "text": "Load the required libraries/packages in a new code cell.\n\n#Libraries\nlibrary(\"phyloseq\")\nlibrary(\"microbiome\")\nlibrary(\"IRdisplay\")\nlibrary(\"tidyverse\")\nlibrary(\"ggforce\")\nlibrary(\"patchwork\")",
-    "crumbs": [
-      "Divergence",
-      "Setup",
-      "Data & Setup"
-    ]
-  },
-  {
-    "objectID": "divergence/data_and_setup.html#data",
-    "href": "divergence/data_and_setup.html#data",
-    "title": "Data & Setup",
-    "section": "",
-    "text": "We have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 (theory & code). For our upset plots we will be utilising the Durance river data used in our R community analysis workshop. This is a 16S dataset with two main metadata groupings:\n\nSites: Upper, Middle, and Lower Durance sampling site.\nCulture media: Environmental sample (ENV), TSA, KBC, and CVP.\n\nMore info in the R community analysis workbook\nLoad in the phyloseq object.\n\n#Data\nload(\"/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData\")",
-    "crumbs": [
-      "Divergence",
-      "Setup",
-      "Data & Setup"
-    ]
-  },
-  {
     "objectID": "divergence/divergence_data_format.html",
     "href": "divergence/divergence_data_format.html",
     "title": "Divergence data format",
     "section": "",
-    "text": "We will create box plots and violin plots with ggplot2 similar to the plots we created in the [ALpha diveristy chapter of our R community analysis workshop][https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-diversity-violin-plot].\nFor this we need to create a long data frame. To carry this out we will:\n\nLoad in the distance matrix\nCreate a long data frame from the lower triangle\nCreate a long data frame from the upper triangle\nBind the data frame\n\nHowever, before that let’s see an example square distance matrix and long data frame for divergence analysis.\n\n\nOur initial distance data is in a square distance matrix will be like below:\n\n\n   S1 S2 S3\nS1  0  2  3\nS2  2  0  5\nS3  3  5  0\n\n\nThere are three main sections to this disatnce matrix.\n\n\nThe lower triangle is the bottom left triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA NA NA\nS2  2 NA NA\nS3  3  5 NA\n\n\n\n\n\nThe upper triangle is the top right triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA  2  3\nS2 NA NA  5\nS3 NA NA NA\n\n\n\n\n\nThe diagonal is represents the distances of each sample to itself. These are always zero.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1  0 NA NA\nS2 NA  0 NA\nS3 NA NA  0\n\n\n\n\n\n\nWHen the above example distance matrix is converted into long data frame for divergence analys it will then look like:\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n2       S1       S3     3\n3       S2       S1     2\n4       S2       S3     5\n5       S3       S1     3\n6       S3       S2     5\n\n\nSome of the features of this long data frame are:\n\nThe “Value” column is the distance between the two samples\nEach observation/row has a “Sample_L” and “Sample_R” column to represent the 2 samples the distance is between\n\nThe “L” and “R” represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the data frame.\n\nWe do not include the 0 values from the diaganol.\nEach value is represented twice, i.e. the lower and upper triangle values are included.\n\nThe 2 rows containing the duplicated values are different in which sample is the Left sample and which is the right sample.\nThis is required for creating inter group divergence (explained later)\n\n\nAs an example of duplicated values the below data frame shows the distance between S1 and S2 twice. Notice that S1 is the Left sample in the first row but it is the RIght sample in the other row.\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n3       S2       S1     2",
-    "crumbs": [
-      "Divergence",
-      "Data format",
-      "Divergence data format"
-    ]
-  },
-  {
-    "objectID": "divergence/divergence_data_format.html#distance-data-frame",
-    "href": "divergence/divergence_data_format.html#distance-data-frame",
-    "title": "Divergence data format",
-    "section": "",
-    "text": "Our initial distance matrix will be like below:\n\n\n   S1 S2 S3\nS1  0  2  3\nS2  2  0  5\nS3  3  5  0\n\n\nWhen converted into a long data frame for divergence analys it will then be like:\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n2       S1       S3     3\n3       S2       S1     2\n4       S2       S3     5\n5       S3       S1     3\n6       S3       S2     5\n\n\nSome of the features of this long data frame are:\n\nThe “Value” column is the distance between the two samples\nEach observation/row has a “Sample_L” and “Sample_R” column to represent the 2 samples the distance is between\n\nThe “L” and “R” represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the data frame.\n\nWe do not include the 0 values from each sample against itself.\nEach value is represented twice (duplicated) in the data frame by the left and right samples swapping.\n\nThis is required for creating inter group divergence (explianed later)\n\n\nAs an example of duplicated values the below data frame shows the distance between S1 and S2 twice.\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n3       S2       S1     2",
+    "text": "We will create box plots and violin plots with ggplot2 similar to the plots we created in the Alpha diveristy chapter of our R community analysis workshop.\nFor this we need to create a long data frame. To carry this out we will:\n\nLoad in the distance matrix\nCreate a long data frame from the lower triangle\nCreate a long data frame from the upper triangle\nBind the data frame\n\nHowever, before that let’s see an example square distance matrix and long data frame for divergence analysis.\n\n\nOur initial dissimilarity distance data is in a square distance matrix will be like below:\n\n\n   S1 S2 S3\nS1  0  2  3\nS2  2  0  5\nS3  3  5  0\n\n\nThere are three main sections to this disatnce matrix.\n\n\nThe lower triangle is the bottom left triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA NA NA\nS2  2 NA NA\nS3  3  5 NA\n\n\n\n\n\nThe upper triangle is the top right triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA  2  3\nS2 NA NA  5\nS3 NA NA NA\n\n\n\n\n\nThe diagonal is represents the distances of each sample to itself. These are always zero.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1  0 NA NA\nS2 NA  0 NA\nS3 NA NA  0\n\n\n\n\n\n\nWHen the above example distance matrix is converted into long data frame for divergence analys it will then look like:\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n2       S1       S3     3\n3       S2       S1     2\n4       S2       S3     5\n5       S3       S1     3\n6       S3       S2     5\n\n\nSome of the features of this long data frame are:\n\nThe “Value” column is the distance between the two samples\nEach observation/row has a “Sample_L” and “Sample_R” column to represent the 2 samples the distance is between\n\nThe “L” and “R” represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the data frame.\n\nWe do not include the 0 values from the diaganol.\nEach value is represented twice, i.e. the lower and upper triangle values are included.\n\nThe 2 rows containing the duplicated values are different in which sample is the Left sample and which is the right sample.\nThis is required for creating inter group divergence (explained later)\n\n\nAs an example of duplicated values the below data frame shows the distance between S1 and S2 twice. Notice that S1 is the Left sample in the first row but it is the RIght sample in the other row.\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n3       S2       S1     2",
     "crumbs": [
       "Divergence",
       "Data format",
@@ -769,7 +757,7 @@
     "href": "divergence/divergence_data_format.html#square-distance-matrix",
     "title": "Divergence data format",
     "section": "",
-    "text": "Our initial distance data is in a square distance matrix will be like below:\n\n\n   S1 S2 S3\nS1  0  2  3\nS2  2  0  5\nS3  3  5  0\n\n\nThere are three main sections to this disatnce matrix.\n\n\nThe lower triangle is the bottom left triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA NA NA\nS2  2 NA NA\nS3  3  5 NA\n\n\n\n\n\nThe upper triangle is the top right triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA  2  3\nS2 NA NA  5\nS3 NA NA NA\n\n\n\n\n\nThe diagonal is represents the distances of each sample to itself. These are always zero.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1  0 NA NA\nS2 NA  0 NA\nS3 NA NA  0",
+    "text": "Our initial dissimilarity distance data is in a square distance matrix will be like below:\n\n\n   S1 S2 S3\nS1  0  2  3\nS2  2  0  5\nS3  3  5  0\n\n\nThere are three main sections to this disatnce matrix.\n\n\nThe lower triangle is the bottom left triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA NA NA\nS2  2 NA NA\nS3  3  5 NA\n\n\n\n\n\nThe upper triangle is the top right triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA  2  3\nS2 NA NA  5\nS3 NA NA NA\n\n\n\n\n\nThe diagonal is represents the distances of each sample to itself. These are always zero.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1  0 NA NA\nS2 NA  0 NA\nS3 NA NA  0",
     "crumbs": [
       "Divergence",
       "Data format",
@@ -786,6 +774,30 @@
       "Divergence",
       "Data format",
       "Divergence data format"
+    ]
+  },
+  {
+    "objectID": "divergence/lower_triangle.html",
+    "href": "divergence/lower_triangle.html",
+    "title": "Lower triangle",
+    "section": "",
+    "text": "Our first formatting step is to create a long data frame of the dissimilarity values in the lower triangle of the dissimalirty matrix.\n\n\nBefore we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in data and setup page.\nOnce it is loaded we can view the top 10 rows and columns of the matrix.\n\n#Check first 10 rows and columns of beta dissimilarity matrix\nbeta_df_mean[1:10,1:10]",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Lower triangle"
+    ]
+  },
+  {
+    "objectID": "divergence/lower_triangle.html#dissimialrity-matrix",
+    "href": "divergence/lower_triangle.html#dissimialrity-matrix",
+    "title": "Lower triangle",
+    "section": "",
+    "text": "Before we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in data and setup page.\nOnce it is loaded we can view the top 10 rows and columns of the matrix.\n\n#Check first 10 rows and columns of beta dissimilarity matrix\nbeta_df_mean[1:10,1:10]",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Lower triangle"
     ]
   }
 ]

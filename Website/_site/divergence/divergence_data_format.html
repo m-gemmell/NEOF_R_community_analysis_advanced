@@ -30,6 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../divergence/lower_triangle.html" rel="next">
 <link href="../divergence/data_and_setup.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
@@ -359,6 +360,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Divergence data format</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/lower_triangle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dissimilarity matrix</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -393,7 +400,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="divergence-data-format" class="level1">
 <h1>Divergence data format</h1>
-<p>We will create box plots and violin plots with <a href="https://neof-workshops.github.io/Tidyverse/ggplot2/ggplot2.html"><code>ggplot2</code></a> similar to the plots we created in the [ALpha diveristy chapter of our R community analysis workshop][https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-diversity-violin-plot].</p>
+<p>We will create box plots and violin plots with <a href="https://neof-workshops.github.io/Tidyverse/ggplot2/ggplot2.html"><code>ggplot2</code></a> similar to the plots we created in the <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-diversity-violin-plot">Alpha diveristy chapter of our R community analysis workshop</a>.</p>
 <p>For this we need to create a <a href="https://neof-workshops.github.io/Tidyverse/ggplot2/input_data.html">long data frame</a>. To carry this out we will:</p>
 <ul>
 <li>Load in the distance matrix</li>
@@ -404,7 +411,7 @@ ul.task-list li input[type="checkbox"] {
 <p>However, before that let’s see an example square distance matrix and long data frame for divergence analysis.</p>
 <section id="square-distance-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="square-distance-matrix">Square distance matrix</h2>
-<p>Our initial distance data is in a square distance matrix will be like below:</p>
+<p>Our initial dissimilarity distance data is in a square distance matrix will be like below:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>   S1 S2 S3
@@ -1122,6 +1129,9 @@ window.onload = function() {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../divergence/lower_triangle.html" class="pagination-link" aria-label="Dissimilarity matrix">
+        <span class="nav-page-text">Dissimilarity matrix</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

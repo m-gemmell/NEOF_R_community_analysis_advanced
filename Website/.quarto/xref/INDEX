@@ -310,5 +310,8 @@
   },
   "divergence/divergence_data_format.qmd": {
     "divergence_data_format.html": "98b61ff9"
+  },
+  "divergence/lower_triangle.qmd": {
+    "lower_triangle.html": "44ae4eea"
   }
 }

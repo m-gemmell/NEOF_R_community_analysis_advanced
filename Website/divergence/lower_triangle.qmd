@@ -1,0 +1,14 @@
+# Lower triangle
+
+Our first formatting step is to create a long data frame of the dissimilarity values in the lower triangle of the dissimalirty matrix.
+
+## Dissimialrity matrix
+
+Before we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in [data and setup page](/divergence/data_and_setup.qmd).
+
+Once it is loaded we can view the top 10 rows and columns of the matrix.
+
+```{r eval = FALSE}
+#Check first 10 rows and columns of beta dissimilarity matrix
+beta_df_mean[1:10,1:10]
+```
