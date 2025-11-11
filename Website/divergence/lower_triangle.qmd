@@ -2,7 +2,7 @@
 
 Our first formatting step is to create a long data frame of the dissimilarity values in the lower triangle of the dissimalirty matrix.
 
-## Dissimialrity matrix
+## Dissimilarity matrix
 
 Before we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in [data and setup page](/divergence/data_and_setup.qmd).
 
@@ -11,4 +11,85 @@ Once it is loaded we can view the top 10 rows and columns of the matrix.
 ```{r eval = FALSE}
 #Check first 10 rows and columns of beta dissimilarity matrix
 beta_df_mean[1:10,1:10]
+```
+
+## Lower triangle matrix
+
+The next step is to convert the martix so all but the lower triangle values are `NA`s.
+
+### Demo code
+
+We'll first carry this out with a demonstration.
+
+First create a small version of our distance matrix so it is easy to view.
+
+```{r, eval=FALSE}
+#Create demo distance matrix
+demo_mat <- beta_df_mean[1:6,1:6]
+demo_mat
+```
+
+We will use the `upper.tri()` function for our conversion.
+It creates a logical matrix from a matrix where the upper triangle values are `TRUE` and the lower triangle values are `FALSE`.
+
+The diaganol values are set with the option `diag=`.
+We will set them to `TRUE` with `diag=TRUE`.
+
+```{r eval=FALSE}
+#Demonstration of upper.tri
+upper.tri(demo_mat, diag=TRUE)
+```
+
+We can then subset out matrix with this function to assign the upper tirangle and diaganol values as `NA`.
+
+```{r eval=FALSE}
+#Convert upper triangle and diaganol to NA
+demo_mat[upper.tri(demo_mat, diag=TRUE)] <- NA
+demo_mat
+```
+
+### Real code
+
+With the above demonstrated let us create our lower triangle matrix.
+For this we will create a new object for the lower triangle matrix so our edits won't change the inital `beta_df_mean` object which we will need later.
+
+```{r eval = FALSE}
+#Create new lower triangle matrix
+lower_tri_mat <- beta_df_mean
+#Convert upper triangle and the diagonal to NAs
+lower_tri_mat[upper.tri(lower_tri_mat, diag = TRUE)] <- NA
+#Check first 10 rows and columns
+lower_tri_mat[1:10,1:10]
+```
+
+## Long data frame of lower triangel values
+
+With our lower triangel matrix we can create a long data frame for future `ggplot2` plot production.
+
+For this code we utlising [piping (`>`)](https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html) with the below steps:
+
+- Convert the matrix `lower_tri_mat` to a data frame with `as.data.frame()`
+- Move the row names to column called "Sample_L" with [tibble::rownames_to_column](https://tibble.tidyverse.org/reference/rownames.html)
+- Longify all the columns except the "Sample_L" column with [`tidyr::pivot_longer()`](https://neof-workshops.github.io/Tidyverse/tidyr/pivot_longer.html)
+- Remove rows with NAs (i.e. the upper tirangle and diaganol values) with [`tidyr::drop_na()`](https://neof-workshops.github.io/Tidyverse/tidyr/drop_na.html)
+- Create a column called triangle with each value being "lower" with [`dplyr::mutate()`](https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html), this is required later
+
+```{r eval=FALSE}
+#Convert to long data frame of paired distance values
+#We will refer to the different samples in a pair as the left an right pair
+beta_long_df_mean <- 
+    lower_tri_mat |>
+        #Convert to data frame
+        as.data.frame() |>
+        #Create column from row names (Sample_l, l = left)
+        tibble::rownames_to_column("Sample_L") |>
+        #Longify df
+        #Set names to "Sample_r" column (r = right)
+        tidyr::pivot_longer(!Sample_L, names_to="Sample_R", values_to="value") |>
+        #Remove rows with an NA
+        tidyr::drop_na() |>
+        #Create triangle column containing value "lower" for each row
+        dplyr::mutate(triangle="lower")
+#Check head of long df
+beta_long_df_mean |> head()
 ```

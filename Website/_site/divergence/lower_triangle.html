@@ -414,7 +414,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#lower-triangle" id="toc-lower-triangle" class="nav-link active" data-scroll-target="#lower-triangle">Lower triangle</a>
   <ul class="collapse">
-  <li><a href="#dissimialrity-matrix" id="toc-dissimialrity-matrix" class="nav-link" data-scroll-target="#dissimialrity-matrix">Dissimialrity matrix</a></li>
+  <li><a href="#dissimilarity-matrix" id="toc-dissimilarity-matrix" class="nav-link" data-scroll-target="#dissimilarity-matrix">Dissimilarity matrix</a></li>
+  <li><a href="#lower-triangle-matrix" id="toc-lower-triangle-matrix" class="nav-link" data-scroll-target="#lower-triangle-matrix">Lower triangle matrix</a>
+  <ul class="collapse">
+  <li><a href="#demo-code" id="toc-demo-code" class="nav-link" data-scroll-target="#demo-code">Demo code</a></li>
+  <li><a href="#real-code" id="toc-real-code" class="nav-link" data-scroll-target="#real-code">Real code</a></li>
+  </ul></li>
+  <li><a href="#long-data-frame-of-lower-triangel-values" id="toc-long-data-frame-of-lower-triangel-values" class="nav-link" data-scroll-target="#long-data-frame-of-lower-triangel-values">Long data frame of lower triangel values</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -429,13 +435,82 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="lower-triangle" class="level1">
 <h1>Lower triangle</h1>
 <p>Our first formatting step is to create a long data frame of the dissimilarity values in the lower triangle of the dissimalirty matrix.</p>
-<section id="dissimialrity-matrix" class="level2">
-<h2 class="anchored" data-anchor-id="dissimialrity-matrix">Dissimialrity matrix</h2>
+<section id="dissimilarity-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="dissimilarity-matrix">Dissimilarity matrix</h2>
 <p>Before we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in <a href="../divergence/data_and_setup.html">data and setup page</a>.</p>
 <p>Once it is loaded we can view the top 10 rows and columns of the matrix.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Check first 10 rows and columns of beta dissimilarity matrix</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>beta_df_mean[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="lower-triangle-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="lower-triangle-matrix">Lower triangle matrix</h2>
+<p>The next step is to convert the martix so all but the lower triangle values are <code>NA</code>s.</p>
+<section id="demo-code" class="level3">
+<h3 class="anchored" data-anchor-id="demo-code">Demo code</h3>
+<p>We’ll first carry this out with a demonstration.</p>
+<p>First create a small version of our distance matrix so it is easy to view.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create demo distance matrix</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>demo_mat <span class="ot">&lt;-</span> beta_df_mean[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>demo_mat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We will use the <code>upper.tri()</code> function for our conversion. It creates a logical matrix from a matrix where the upper triangle values are <code>TRUE</code> and the lower triangle values are <code>FALSE</code>.</p>
+<p>The diaganol values are set with the option <code>diag=</code>. We will set them to <code>TRUE</code> with <code>diag=TRUE</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Demonstration of upper.tri</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">upper.tri</span>(demo_mat, <span class="at">diag=</span><span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We can then subset out matrix with this function to assign the upper tirangle and diaganol values as <code>NA</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert upper triangle and diaganol to NA</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>demo_mat[<span class="fu">upper.tri</span>(demo_mat, <span class="at">diag=</span><span class="cn">TRUE</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>demo_mat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="real-code" class="level3">
+<h3 class="anchored" data-anchor-id="real-code">Real code</h3>
+<p>With the above demonstrated let us create our lower triangle matrix. For this we will create a new object for the lower triangle matrix so our edits won’t change the inital <code>beta_df_mean</code> object which we will need later.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create new lower triangle matrix</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>lower_tri_mat <span class="ot">&lt;-</span> beta_df_mean</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert upper triangle and the diagonal to NAs</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>lower_tri_mat[<span class="fu">upper.tri</span>(lower_tri_mat, <span class="at">diag =</span> <span class="cn">TRUE</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Check first 10 rows and columns</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>lower_tri_mat[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="long-data-frame-of-lower-triangel-values" class="level2">
+<h2 class="anchored" data-anchor-id="long-data-frame-of-lower-triangel-values">Long data frame of lower triangel values</h2>
+<p>With our lower triangel matrix we can create a long data frame for future <code>ggplot2</code> plot production.</p>
+<p>For this code we utlising <a href="https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html">piping (<code>&gt;</code>)</a> with the below steps:</p>
+<ul>
+<li>Convert the matrix <code>lower_tri_mat</code> to a data frame with <code>as.data.frame()</code></li>
+<li>Move the row names to column called “Sample_L” with <a href="https://tibble.tidyverse.org/reference/rownames.html">tibble::rownames_to_column</a></li>
+<li>Longify all the columns except the “Sample_L” column with <a href="https://neof-workshops.github.io/Tidyverse/tidyr/pivot_longer.html"><code>tidyr::pivot_longer()</code></a></li>
+<li>Remove rows with NAs (i.e.&nbsp;the upper tirangle and diaganol values) with <a href="https://neof-workshops.github.io/Tidyverse/tidyr/drop_na.html"><code>tidyr::drop_na()</code></a></li>
+<li>Create a column called triangle with each value being “lower” with <a href="https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html"><code>dplyr::mutate()</code></a>, this is required later</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert to long data frame of paired distance values</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#We will refer to the different samples in a pair as the left an right pair</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>beta_long_df_mean <span class="ot">&lt;-</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    lower_tri_mat <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Convert to data frame</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Create column from row names (Sample_l, l = left)</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"Sample_L"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Longify df</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Set names to "Sample_r" column (r = right)</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">!</span>Sample_L, <span class="at">names_to=</span><span class="st">"Sample_R"</span>, <span class="at">values_to=</span><span class="st">"value"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Remove rows with an NA</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        tidyr<span class="sc">::</span><span class="fu">drop_na</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Create triangle column containing value "lower" for each row</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">triangle=</span><span class="st">"lower"</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Check head of long df</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>beta_long_df_mean <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 
