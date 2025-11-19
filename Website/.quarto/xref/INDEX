@@ -313,5 +313,23 @@
   },
   "divergence/lower_triangle.qmd": {
     "lower_triangle.html": "44ae4eea"
+  },
+  "divergence/metadata_addition.qmd": {
+    "metadata_addition.html": "8d779539"
+  },
+  "divergence/bind_long_tibbles.qmd": {
+    "bind_long_tibbles.html": "7007d6c5"
+  },
+  "divergence/upper_triangle.qmd": {
+    "upper_triangle.html": "ae041a9f"
+  },
+  "divergence/intra_site_divergence.qmd": {
+    "intra_site_divergence.html": "18b4996c"
+  },
+  "divergence/intra_divergence.qmd": {
+    "intra_divergence.html": "fee881d8"
+  },
+  "divergence/intra_media_exercise.qmd": {
+    "intra_media_exercise.html": "1f837e1a"
   }
 }

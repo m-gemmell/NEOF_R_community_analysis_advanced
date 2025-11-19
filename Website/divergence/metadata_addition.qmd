@@ -1,0 +1,121 @@
+# Metadata addition
+
+Data needs metadata for us to make sense of it.
+In this section we'll add our metadata from our `phyloseq` object (`pseq`) to the long data frame we have created.
+
+We'll need to add the metadata twice, once for our left sample and once for our right samples.
+
+## Extract metadata from phyloseq
+
+For ease we'll first extract our metadata from the `phyloseq` object.
+
+```{r eval=FALSE}
+#Extract metadata from original phyloseq object
+metadf <- phyloseq::sample_data(pseq)
+#Check head of metadata
+metadf |> head()
+```
+
+## Metadata for left samples
+
+With our metadata data frame we will first add the metadata for the left samples to our long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html).
+We'll do this for the left samples first so it is on the left side of the final [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) compared to the right sample metadata.
+
+This formatting requires a few steps:
+
+1. Create the [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) (`metadf_L`) of the metadata matching the order of the long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html).
+    - [`tibble::as_tibble()`](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html): Converts a data frame to a tibble.
+    - [`dplyr::select()`](https://neof-workshops.github.io/Tidyverse/dplyr/select.html): Select columns from a tibble.
+2. Rename the columns so they have `_L` as their suffix e.g. `site` to `site_L`
+3. Bind our long tibble of beta diversity values (`beta_long_tbl_mean`) to our matching left metadata tibble (`metadf_L`)
+    - [`dplyr::bind_cols`](https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html): 
+
+```{r eval=FALSE}
+#Add metadata for the left samples
+metadf_L <-
+    #Extend metadf to match order of left samples
+    metadf[beta_long_tbl_mean$Sample_L,] |>
+    #Convert to tibble for tidyverse manipulation
+    tibble::as_tibble() |>
+    #Remove sample.name row
+    dplyr::select(-1)
+#Rename columns so they have "_L" as their suffix
+colnames(metadf_L) <- paste0(colnames(metadf_L),"_L")
+#Add metadata_L to beta_long_tbl_mean
+beta_long_tbl_mean <-
+    dplyr::bind_cols(beta_long_tbl_mean, metadf_L)
+#Check head of our long df
+beta_long_tbl_meann |> head()
+```
+
+## Testing code
+
+If you are ever unsure of what a step is doing you can create a new cell and run the specific parts to see what the output is.
+
+For example if you are not sure how the initial `metadf_L` creation is working you could run the following code cells.
+In the below cells I like to pipe ([`|>`](https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html)) the final output to `head()` so only the top 6 rows are printed.
+Printing the entirety of large data frames or [tibbles](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) can be overwhelming.
+
+```{r eval=FALSE}
+#Extend metadf to match order of left samples
+metadf[beta_long_tbl_mean$Sample_L,] |> head()
+```
+
+```{r eval=FALSE}
+#Extend metadf to match order of left samples
+metadf[beta_long_tbl_mean$Sample_L,] |>
+#Convert to tibble for tidyverse manipulation
+tibble::as_tibble() |> head()
+```
+```{r eval=FALSE}
+#Extend metadf to match order of left samples
+metadf[beta_long_tbl_mean$Sample_L,] |>
+#Convert to tibble for tidyverse manipulation
+tibble::as_tibble() |>
+#Remove sample.name row
+dplyr::select(-1) |> head()
+```
+
+## Metadata for right samples
+
+Next carry out the same steps used for the left samples' metadata but for the right samples.
+
+__Note:__ Copying and pasting your own code is great.
+However, ensure you change all the parts you need to, this will primarily changing "L" to "R" in multiple locations.
+
+```{r eval=FALSE}
+#Add metadata for the right samples
+metadf_R <-
+    #Extend metadf to match order of right samples
+    metadf[beta_long_tbl_mean$Sample_R,] |>
+    #Convert to tibble for tidyverse manipulation
+    tibble::as_tibble() |>
+    #Remove sample.name row
+    dplyr::select(-1)
+#Rename columns so they have "_R" as their suffix
+colnames(metadf_R) <- paste0(colnames(metadf_R),"_R")
+#Add metadata_R to beta_long_tbl_mean
+beta_long_tbl_mean <-
+    dplyr::bind_cols(beta_long_tbl_mean, metadf_R)
+#Check head of our long df
+beta_long_tbl_meann |> head()
+```
+
+## Variable management
+
+Brilliant! before moving onto adding the info from the upper triangle we'll manage some variables.
+
+First assign the object `beta_long_tbl_mean` to `beta_lower_long_tbl_mean`.
+This will allow us to reuse a lot of previous code for the upper triangle long tibble creation whilst reusing the `beta_long_tbl_mean` variable.
+
+```{r eval=FALSE}
+#Assign to a new variable
+beta_lower_long_tbl_mean <- beta_long_tbl_mean
+```
+
+To clear up some space we'll remove object we don't need any more.
+
+```{r eval=FALSE}
+#Remove unwanted metadata objects
+rm(metadf_L, metadf_R)
+```

@@ -1,6 +1,6 @@
 # Lower triangle
 
-Our first formatting step is to create a long data frame of the dissimilarity values in the lower triangle of the dissimalirty matrix.
+Our first formatting step is to create a long data frame of the dissimilarity values in the lower triangle of the dissimilarity matrix.
 
 ## Dissimilarity matrix
 
@@ -15,7 +15,7 @@ beta_df_mean[1:10,1:10]
 
 ## Lower triangle matrix
 
-The next step is to convert the martix so all but the lower triangle values are `NA`s.
+The next step is to convert the matrix so all but the lower triangle values are `NA`s.
 
 ### Demo code
 
@@ -32,7 +32,7 @@ demo_mat
 We will use the `upper.tri()` function for our conversion.
 It creates a logical matrix from a matrix where the upper triangle values are `TRUE` and the lower triangle values are `FALSE`.
 
-The diaganol values are set with the option `diag=`.
+The diagonal values are set with the option `diag=`.
 We will set them to `TRUE` with `diag=TRUE`.
 
 ```{r eval=FALSE}
@@ -40,7 +40,7 @@ We will set them to `TRUE` with `diag=TRUE`.
 upper.tri(demo_mat, diag=TRUE)
 ```
 
-We can then subset out matrix with this function to assign the upper tirangle and diaganol values as `NA`.
+We can then subset out matrix with this function to assign the upper triangle and diagonal values as `NA`.
 
 ```{r eval=FALSE}
 #Convert upper triangle and diaganol to NA
@@ -50,8 +50,8 @@ demo_mat
 
 ### Real code
 
-With the above demonstrated let us create our lower triangle matrix.
-For this we will create a new object for the lower triangle matrix so our edits won't change the inital `beta_df_mean` object which we will need later.
+With the above demonstrated we'll create our lower triangle matrix.
+For this we will create a new object for the lower triangle matrix so our edits won't change the initial `beta_df_mean` object which we will need later.
 
 ```{r eval = FALSE}
 #Create new lower triangle matrix
@@ -62,34 +62,37 @@ lower_tri_mat[upper.tri(lower_tri_mat, diag = TRUE)] <- NA
 lower_tri_mat[1:10,1:10]
 ```
 
-## Long data frame of lower triangel values
+## Long data frame of lower triangle values
 
-With our lower triangel matrix we can create a long data frame for future `ggplot2` plot production.
+With our lower triangle matrix we can create a long data frame for future `ggplot2` plot production.
 
-For this code we utlising [piping (`>`)](https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html) with the below steps:
+For this code we utilising [piping (`|>`)](https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html) with the below steps:
 
 - Convert the matrix `lower_tri_mat` to a data frame with `as.data.frame()`
 - Move the row names to column called "Sample_L" with [tibble::rownames_to_column](https://tibble.tidyverse.org/reference/rownames.html)
 - Longify all the columns except the "Sample_L" column with [`tidyr::pivot_longer()`](https://neof-workshops.github.io/Tidyverse/tidyr/pivot_longer.html)
-- Remove rows with NAs (i.e. the upper tirangle and diaganol values) with [`tidyr::drop_na()`](https://neof-workshops.github.io/Tidyverse/tidyr/drop_na.html)
+    - This also serves to convert our data frame to a [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html)
+- Remove rows with NAs (i.e. the upper triangle and diaganol values) with [`tidyr::drop_na()`](https://neof-workshops.github.io/Tidyverse/tidyr/drop_na.html)
 - Create a column called triangle with each value being "lower" with [`dplyr::mutate()`](https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html), this is required later
 
 ```{r eval=FALSE}
 #Convert to long data frame of paired distance values
 #We will refer to the different samples in a pair as the left an right pair
-beta_long_df_mean <- 
+beta_long_tbl_mean <- 
     lower_tri_mat |>
         #Convert to data frame
         as.data.frame() |>
         #Create column from row names (Sample_l, l = left)
         tibble::rownames_to_column("Sample_L") |>
-        #Longify df
+        #Longify
         #Set names to "Sample_r" column (r = right)
         tidyr::pivot_longer(!Sample_L, names_to="Sample_R", values_to="value") |>
         #Remove rows with an NA
         tidyr::drop_na() |>
         #Create triangle column containing value "lower" for each row
         dplyr::mutate(triangle="lower")
-#Check head of long df
-beta_long_df_mean |> head()
+#Check head of long tibble
+beta_long_tbl_mean |> head()
 ```
+
+Great! Next we'll add our metadata to this long data frame.

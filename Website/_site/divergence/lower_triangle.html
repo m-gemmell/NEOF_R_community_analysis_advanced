@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.23">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -65,6 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../divergence/metadata_addition.html" rel="next">
 <link href="../divergence/divergence_data_format.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
@@ -74,14 +75,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-6f6599830d51be977da3b6af758f8eff.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-93350be311041d895211185d16262725.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-72f1f092bded54ef3b8af8cd68eb6993.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-93350be311041d895211185d16262725.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-044e1f1187b8a3520d7219e74891bcca.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-76f1f52e804a430988f87909d6717cd2.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-044e1f1187b8a3520d7219e74891bcca.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -400,6 +401,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Lower triangle</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/metadata_addition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata addition</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -420,7 +427,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#demo-code" id="toc-demo-code" class="nav-link" data-scroll-target="#demo-code">Demo code</a></li>
   <li><a href="#real-code" id="toc-real-code" class="nav-link" data-scroll-target="#real-code">Real code</a></li>
   </ul></li>
-  <li><a href="#long-data-frame-of-lower-triangel-values" id="toc-long-data-frame-of-lower-triangel-values" class="nav-link" data-scroll-target="#long-data-frame-of-lower-triangel-values">Long data frame of lower triangel values</a></li>
+  <li><a href="#long-data-frame-of-lower-triangle-values" id="toc-long-data-frame-of-lower-triangle-values" class="nav-link" data-scroll-target="#long-data-frame-of-lower-triangle-values">Long data frame of lower triangle values</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -434,7 +441,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="lower-triangle" class="level1">
 <h1>Lower triangle</h1>
-<p>Our first formatting step is to create a long data frame of the dissimilarity values in the lower triangle of the dissimalirty matrix.</p>
+<p>Our first formatting step is to create a long data frame of the dissimilarity values in the lower triangle of the dissimilarity matrix.</p>
 <section id="dissimilarity-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="dissimilarity-matrix">Dissimilarity matrix</h2>
 <p>Before we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in <a href="../divergence/data_and_setup.html">data and setup page</a>.</p>
@@ -446,7 +453,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="lower-triangle-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="lower-triangle-matrix">Lower triangle matrix</h2>
-<p>The next step is to convert the martix so all but the lower triangle values are <code>NA</code>s.</p>
+<p>The next step is to convert the matrix so all but the lower triangle values are <code>NA</code>s.</p>
 <section id="demo-code" class="level3">
 <h3 class="anchored" data-anchor-id="demo-code">Demo code</h3>
 <p>We’ll first carry this out with a demonstration.</p>
@@ -457,12 +464,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>demo_mat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We will use the <code>upper.tri()</code> function for our conversion. It creates a logical matrix from a matrix where the upper triangle values are <code>TRUE</code> and the lower triangle values are <code>FALSE</code>.</p>
-<p>The diaganol values are set with the option <code>diag=</code>. We will set them to <code>TRUE</code> with <code>diag=TRUE</code>.</p>
+<p>The diagonal values are set with the option <code>diag=</code>. We will set them to <code>TRUE</code> with <code>diag=TRUE</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Demonstration of upper.tri</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">upper.tri</span>(demo_mat, <span class="at">diag=</span><span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We can then subset out matrix with this function to assign the upper tirangle and diaganol values as <code>NA</code>.</p>
+<p>We can then subset out matrix with this function to assign the upper triangle and diagonal values as <code>NA</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert upper triangle and diaganol to NA</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>demo_mat[<span class="fu">upper.tri</span>(demo_mat, <span class="at">diag=</span><span class="cn">TRUE</span>)] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
@@ -471,7 +478,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="real-code" class="level3">
 <h3 class="anchored" data-anchor-id="real-code">Real code</h3>
-<p>With the above demonstrated let us create our lower triangle matrix. For this we will create a new object for the lower triangle matrix so our edits won’t change the inital <code>beta_df_mean</code> object which we will need later.</p>
+<p>With the above demonstrated we’ll create our lower triangle matrix. For this we will create a new object for the lower triangle matrix so our edits won’t change the initial <code>beta_df_mean</code> object which we will need later.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create new lower triangle matrix</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>lower_tri_mat <span class="ot">&lt;-</span> beta_df_mean</span>
@@ -482,36 +489,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 </section>
-<section id="long-data-frame-of-lower-triangel-values" class="level2">
-<h2 class="anchored" data-anchor-id="long-data-frame-of-lower-triangel-values">Long data frame of lower triangel values</h2>
-<p>With our lower triangel matrix we can create a long data frame for future <code>ggplot2</code> plot production.</p>
-<p>For this code we utlising <a href="https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html">piping (<code>&gt;</code>)</a> with the below steps:</p>
+<section id="long-data-frame-of-lower-triangle-values" class="level2">
+<h2 class="anchored" data-anchor-id="long-data-frame-of-lower-triangle-values">Long data frame of lower triangle values</h2>
+<p>With our lower triangle matrix we can create a long data frame for future <code>ggplot2</code> plot production.</p>
+<p>For this code we utilising <a href="https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html">piping (<code>|&gt;</code>)</a> with the below steps:</p>
 <ul>
 <li>Convert the matrix <code>lower_tri_mat</code> to a data frame with <code>as.data.frame()</code></li>
 <li>Move the row names to column called “Sample_L” with <a href="https://tibble.tidyverse.org/reference/rownames.html">tibble::rownames_to_column</a></li>
-<li>Longify all the columns except the “Sample_L” column with <a href="https://neof-workshops.github.io/Tidyverse/tidyr/pivot_longer.html"><code>tidyr::pivot_longer()</code></a></li>
-<li>Remove rows with NAs (i.e.&nbsp;the upper tirangle and diaganol values) with <a href="https://neof-workshops.github.io/Tidyverse/tidyr/drop_na.html"><code>tidyr::drop_na()</code></a></li>
+<li>Longify all the columns except the “Sample_L” column with <a href="https://neof-workshops.github.io/Tidyverse/tidyr/pivot_longer.html"><code>tidyr::pivot_longer()</code></a>
+<ul>
+<li>This also serves to convert our data frame to a <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a></li>
+</ul></li>
+<li>Remove rows with NAs (i.e.&nbsp;the upper triangle and diaganol values) with <a href="https://neof-workshops.github.io/Tidyverse/tidyr/drop_na.html"><code>tidyr::drop_na()</code></a></li>
 <li>Create a column called triangle with each value being “lower” with <a href="https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html"><code>dplyr::mutate()</code></a>, this is required later</li>
 </ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert to long data frame of paired distance values</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#We will refer to the different samples in a pair as the left an right pair</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>beta_long_df_mean <span class="ot">&lt;-</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>beta_long_tbl_mean <span class="ot">&lt;-</span> </span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    lower_tri_mat <span class="sc">|&gt;</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Convert to data frame</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Create column from row names (Sample_l, l = left)</span></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"Sample_L"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Longify df</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Longify</span></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Set names to "Sample_r" column (r = right)</span></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">!</span>Sample_L, <span class="at">names_to=</span><span class="st">"Sample_R"</span>, <span class="at">values_to=</span><span class="st">"value"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Remove rows with an NA</span></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        tidyr<span class="sc">::</span><span class="fu">drop_na</span>() <span class="sc">|&gt;</span></span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Create triangle column containing value "lower" for each row</span></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">triangle=</span><span class="st">"lower"</span>)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Check head of long df</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>beta_long_df_mean <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Check head of long tibble</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>beta_long_tbl_mean <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Great! Next we’ll add our metadata to this long data frame.</p>
 
 
 </section>
@@ -1144,6 +1155,9 @@ window.onload = function() {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../divergence/metadata_addition.html" class="pagination-link" aria-label="Metadata addition">
+        <span class="nav-page-text">Metadata addition</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -1153,7 +1167,7 @@ window.onload = function() {
 <p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/"><img src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" alt="CC BY-SA 4.0" height="30"></a></p>
 </div>   
     <div class="nav-footer-center">
-<p><a href="https://neof.org.uk/"><img src="../images/NEOF_rounded_corners.png" alt="NEOF" height="60"></a></p>
+<p><a href="https://neof.org.uk/"><img src="..\images/NEOF_rounded_corners.png" alt="NEOF" height="60"></a></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

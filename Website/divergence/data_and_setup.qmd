@@ -60,7 +60,7 @@ More info in the [R community analysis workbook](https://neof-workshops.github.i
 Load in the phyloseq object.
 
 ```{r, eval=FALSE}
-#Data
+#Original phyloseq object
 load("/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData")
 ```
 

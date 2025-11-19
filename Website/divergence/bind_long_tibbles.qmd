@@ -1,0 +1,11 @@
+# Bind long tibbles
+
+OUr final step is to combine the lower and upper long tibbles with [`dplyr::bind_rows()`](https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html#bind-by-rows).
+
+Additionally, we'll use the [`dplyr::glimpse()`](https://neof-workshops.github.io/Tidyverse/dplyr/glimpse.html) function to get a preview of the final [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html).
+
+```{r eval=FALSE}
+beta_long_tbl_mean <-
+    dplyr::bind_rows(beta_lower_tbl_mean, beta_upper_long_tbl_mean)
+beta_long_tbl_mean |> dplyr::glimpse()
+```

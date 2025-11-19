@@ -2,6 +2,7 @@ project:
   type: website
 editor: source
 website:
+  bread-crumbs: false
   favicon: /images/NEOF_favicon.png
   page-navigation: true
   title: Advanced R community analysis
@@ -61,6 +62,14 @@ website:
       contents:
       - href: divergence/divergence_data_format.qmd
       - href: divergence/lower_triangle.qmd
+      - href: divergence/metadata_addition.qmd
+      - href: divergence/upper_triangle.qmd
+      - href: divergence/bind_long_tibbles.qmd
+    - section: "Intra-group divergence"
+      contents:
+      - href: divergence/intra_divergence.qmd
+      - href: divergence/intra_site_divergence.qmd
+      - href: divergence/intra_media_exercise.qmd
   - id: Upset
     title: Upset
     style: floating

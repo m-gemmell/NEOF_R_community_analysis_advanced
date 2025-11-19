@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>rare_upset_plot – Advanced R community analysis</title>
+<title>intra_media_exercise – Advanced R community analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -65,8 +30,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../upset/metadata_sets.html" rel="next">
-<link href="../upset/rare_removal_plot.html" rel="prev">
+<link href="../divergence/intra_site_divergence.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -341,9 +305,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../upset/rare_removal_plot.html">Lower taxa levels</a></li><li class="breadcrumb-item"><a href="../upset/rare_upset_plot.html">Rare features upset plot</a></li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
+        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title"></h1>
+        </a>     
     </div>
   </nav>
 </header>
@@ -359,8 +323,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/upset.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Upset</span></a>
+  <a href="../divergence/divergence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Divergence</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -374,14 +338,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/data_and_setup.html" class="sidebar-item-text sidebar-link">
+  <a href="../divergence/data_and_setup.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data &amp; Setup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/simple_bar_chart.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Simple bar chart</span></a>
   </div>
 </li>
       </ul>
@@ -397,20 +355,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/upset_data_format.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Upset data format</span></a>
+  <a href="../divergence/divergence_data_format.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Divergence data format</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/phyloseq_to_tibble.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Phyloseq to long presence tibble</span></a>
+  <a href="../divergence/lower_triangle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lower triangle</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/upset_tibble_creation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Upset tibble creation</span></a>
+  <a href="../divergence/metadata_addition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata addition</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/upper_triangle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Upper triangle</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/bind_long_tibbles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bind long tibbles</span></a>
   </div>
 </li>
       </ul>
@@ -418,7 +388,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Upset plots</span></a>
+ <span class="menu-text">Intra-group divergence</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -426,90 +396,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/upset_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Upset plot</span></a>
+  <a href="../divergence/intra_divergence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intra-group intro</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/all_in_one_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">All in one code</span></a>
+  <a href="../divergence/intra_site_divergence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intra-site divergence</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/challenge_1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Challenge class upset plot</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Lower taxa levels</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/rare_removal_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Rare removal</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/rare_upset_plot.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Rare features upset plot</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Metadata intersections</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/metadata_sets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Metadata as sets</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/sample_and_taxa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sample and taxa tibble</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/metadata_and_taxa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Metadata and taxa tibble</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/metadata_upset_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Metadata upset plot</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/media_genus_upset.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Media upset plot</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/challenge_2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Challenge site and media upset plot</span></a>
+  <a href="../divergence/intra_media_exercise.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Intra-media exercise</span></a>
   </div>
 </li>
       </ul>
@@ -524,240 +424,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#rare-features-upset-plot" id="toc-rare-features-upset-plot" class="nav-link active" data-scroll-target="#rare-features-upset-plot">Rare features upset plot</a>
-  <ul class="collapse">
-  <li><a href="#number-of-families" id="toc-number-of-families" class="nav-link" data-scroll-target="#number-of-families">Number of families</a></li>
-  <li><a href="#rare-aggregation" id="toc-rare-aggregation" class="nav-link" data-scroll-target="#rare-aggregation">Rare aggregation</a></li>
-  <li><a href="#non-rare-families-vector" id="toc-non-rare-families-vector" class="nav-link" data-scroll-target="#non-rare-families-vector">Non-rare families vector</a></li>
-  <li><a href="#rare-phyloseq-creation" id="toc-rare-phyloseq-creation" class="nav-link" data-scroll-target="#rare-phyloseq-creation">Rare phyloseq creation</a>
-  <ul class="collapse">
-  <li><a href="#family-aggregation" id="toc-family-aggregation" class="nav-link" data-scroll-target="#family-aggregation">Family aggregation</a></li>
-  <li><a href="#rare-family-vector" id="toc-rare-family-vector" class="nav-link" data-scroll-target="#rare-family-vector">Rare family vector</a></li>
-  <li><a href="#rare-family-phyloseq-subset" id="toc-rare-family-phyloseq-subset" class="nav-link" data-scroll-target="#rare-family-phyloseq-subset">Rare family phyloseq subset</a></li>
-  </ul></li>
-  <li><a href="#rare-family-upset-plot" id="toc-rare-family-upset-plot" class="nav-link" data-scroll-target="#rare-family-upset-plot">Rare family upset plot</a></li>
-  </ul></li>
+  <li><a href="#intra-media-exercise" id="toc-intra-media-exercise" class="nav-link active" data-scroll-target="#intra-media-exercise">Intra-media exercise</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../upset/rare_removal_plot.html">Lower taxa levels</a></li><li class="breadcrumb-item"><a href="../upset/rare_upset_plot.html">Rare features upset plot</a></li></ol></nav></header>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
 
-<section id="rare-features-upset-plot" class="level1">
-<h1>Rare features upset plot</h1>
-<center>
-<img src="images/clover_magnify.png" class="img-fluid" style="width:200px; background: white; border-radius:5px">
-</center>
-<p>You may want to see the intersection of rare features (taxa) to see what samples they are present and absent in. This page will show you how to make an upset of rare families through the following steps:</p>
-<ul>
-<li>Carrying out rare aggregation of families to acquire the names of the “non-rare” features.</li>
-<li>Carrying out normal family aggregation on the original phyloseq object.</li>
-<li>Removing the “non-rare” features from the family aggregated phyloseq object.</li>
-<li>Creating an upset plot.</li>
-</ul>
-<section id="number-of-families" class="level2">
-<h2 class="anchored" data-anchor-id="number-of-families">Number of families</h2>
-<center>
-<img src="images/abacus.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
-</center>
-<p>It is always useful to check the total number of groups in a taxa you are interested in.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Lower taxa levels may have a very high number of members</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>microbiome<span class="sc">::</span><span class="fu">aggregate_taxa</span>(pseq, <span class="at">level =</span> <span class="st">"Family"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="rare-aggregation" class="level2">
-<h2 class="anchored" data-anchor-id="rare-aggregation">Rare aggregation</h2>
-<center>
-<img src="images/elephant_origami.png" class="img-fluid" style="width:150px">
-</center>
-<p>We have 112 taxa. Let’s try to extract ~50 of the rarest taxa.</p>
-<p>First we will carry out rare aggregation to try ot get a phyloseq object of the top ~60 (112-<sub>50=</sub>60) most common families.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Rare aggregate to family to extract vector of "non-rare" families</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>family_rareaggregate_pseq <span class="ot">&lt;-</span> pseq <span class="sc">|&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Convert to compositional values</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    microbiome<span class="sc">::</span><span class="fu">transform</span>(<span class="st">"compositional"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Use thresholds of at least 1% relative abundance (detection)</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#In at least 10% of samples (prevalence)</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    microbiome<span class="sc">::</span><span class="fu">aggregate_rare</span>(<span class="at">level =</span> <span class="st">"Family"</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                        <span class="at">detection =</span> <span class="fl">0.001</span>, <span class="at">prevalence =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">10</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Remove the "other" genus which consists of all the rare aggragted taxa</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">#This won't be interesting to include in our upset plot</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    phyloseq<span class="sc">::</span><span class="fu">subset_taxa</span>(Family <span class="sc">!=</span> <span class="st">"Other"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>With our rare aggregation thresholds we ended up with 49 non-rare taxa. This means we have classified 63 taxa as rare (112-49=63). This should be ok for our purposes.</p>
-</section>
-<section id="non-rare-families-vector" class="level2">
-<h2 class="anchored" data-anchor-id="non-rare-families-vector">Non-rare families vector</h2>
-<center>
-<img src="images/daisy.png" class="img-fluid" style="width:100px; background: white; border-radius:5px; border: white 5px solid">
-</center>
-<p>With our family aggregated phyloseq object we can create a vector containing the names of non-rare families. This is needed for our next step.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Overview of phyloseq object</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>family_rareaggregate_pseq</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract names of "non-rare" taxa</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>non_rare_families <span class="ot">&lt;-</span> <span class="fu">tax_table</span>(family_rareaggregate_pseq)[,<span class="st">"Family"</span>] <span class="sc">|&gt;</span> <span class="fu">as.vector</span>()</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>non_rare_families</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="rare-phyloseq-creation" class="level2">
-<h2 class="anchored" data-anchor-id="rare-phyloseq-creation">Rare phyloseq creation</h2>
-<center>
-<img src="images/subset_table.png" class="img-fluid" style="width:200px; background: white; border-radius:5px; border: white 5px solid">
-</center>
-<p>To create our rare phyloseq object we need to carry out three steps.</p>
-<ol type="1">
-<li>Create a family aggregated phyloseq object.</li>
-<li>Create a vector of our “rare” families using the non rare family vector and the family aggregated phyloseq object.</li>
-<li>Subset the family aggregated phyloseq object by retain the “rare” families.</li>
-</ol>
-<section id="family-aggregation" class="level3">
-<h3 class="anchored" data-anchor-id="family-aggregation">Family aggregation</h3>
-<p>Carry out family aggregation of our phyloseq object.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Aggregate to family and remove "non-rare" taxa</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>family_rare_pseq <span class="ot">&lt;-</span> pseq <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Convert to compositional values</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    microbiome<span class="sc">::</span><span class="fu">transform</span>(<span class="st">"compositional"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Aggregate to family</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    microbiome<span class="sc">::</span><span class="fu">aggregate_taxa</span>(<span class="at">level =</span> <span class="st">"Family"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="rare-family-vector" class="level3">
-<h3 class="anchored" data-anchor-id="rare-family-vector">Rare family vector</h3>
-<p>In this step we extract all the family names in our family aggregated phyloseq object as a vector.</p>
-<p>Then we compare the vector of all the families against the vector of non-rare families with <code>setdiff()</code> to create a vector of the “rare” families.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create vector of rare features</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># i.e. inverse of non-rare asv</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>rare_families <span class="ot">&lt;-</span> family_rare_pseq <span class="sc">|&gt;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Extract tax table as tibble</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    microbiome<span class="sc">::</span><span class="fu">tax_tibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Pull the family column out as a vector</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">pull</span>(Family) <span class="sc">|&gt;</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Extract family names in vector of all families</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># that are not in the non_rare_families</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">setdiff</span>(non_rare_families)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Vector of "rare" families</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>rare_families</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="webex-solution">
-<button>
-<strong>setdiff()</strong> explanation and examples
-</button>
-<p>The function <code>setdiff()</code> compares the first vector provided with the second vector provided. It outputs a vector containing the elements that are in vector 1 but not vector 2. The output does not contain elements that are in vector 2 but not vector 1.</p>
-<p>In other words, <code>setdiff()</code> outputs the elements unique to vector 1.</p>
-<p>Please see examples below:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create vectors</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>num_series <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">9</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>num_even <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>num_odd <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">9</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>num_prime <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>All our vectors have numbers between 0 and 9 with <strong>num_series</strong> containing the numbers from 0 to 9. If we use <strong>num_series</strong> as the first vector we get the inverse of the second vector.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(num_series,num_even)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1 3 5 7 9</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>num_series <span class="sc">|&gt;</span> <span class="fu">setdiff</span>(num_odd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0 2 4 6 8</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(num_series,num_prime)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0 1 4 6 8 9</code></pre>
-</div>
-</div>
-<p>However, if we use <strong>num_series</strong> as the second vector the output is <code>numeric(0)</code>. This is because none of the elements/numbers in <code>num_even</code>, <code>num_odd</code>, and <code>num_prime</code> are unique compared to <code>num_series</code>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>num_even <span class="sc">|&gt;</span> <span class="fu">setdiff</span>(num_series)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>numeric(0)</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(num_odd,num_series)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>numeric(0)</code></pre>
-</div>
-</div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setdiff</span>(num_prime,num_series)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>numeric(0)</code></pre>
-</div>
-</div>
-</div>
-</section>
-<section id="rare-family-phyloseq-subset" class="level3">
-<h3 class="anchored" data-anchor-id="rare-family-phyloseq-subset">Rare family phyloseq subset</h3>
-<p>With our vector containing our “rare” families we can subset our family phyloseq object to retain them and remove the “non-rare” families with <code>phyloseq::subset_taxa()</code>.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove the "non-rare" families</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>family_rare_pseq <span class="ot">&lt;-</span> family_rare_pseq <span class="sc">|&gt;</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    phyloseq<span class="sc">::</span><span class="fu">subset_taxa</span>(Family <span class="sc">%in%</span> rare_families)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Display dimensions of rare familiy phyloseq object</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>family_rare_pseq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>We now have the 63 “rare” families remaining in our phyloseq object.</p>
-<p>You could also use this method with a manually created vector of families that you what to investigate.</p>
-</section>
-</section>
-<section id="rare-family-upset-plot" class="level2">
-<h2 class="anchored" data-anchor-id="rare-family-upset-plot">Rare family upset plot</h2>
-<center>
-<img src="images/paint_brush.png" class="img-fluid" style="width:150px">
-</center>
-<p>Now you can create the upset plot.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Upset plot of rare family intersections with sample groupings</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>family_rare_samples_upset_plot <span class="ot">&lt;-</span> family_rare_pseq <span class="sc">|&gt;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Extract otu_table as a tibble</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    microbiome<span class="sc">::</span><span class="fu">otu_tibble</span>(<span class="at">column.id =</span> <span class="st">"Family"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Longify tibble</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">!</span>Family, <span class="at">names_to=</span><span class="st">"Sample"</span>, <span class="at">values_to=</span><span class="st">"Abundance"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter out rows were relative abundance is 0</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#i.e. retain rows showing presence</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(Abundance <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Select to remove unwanted Abundance column</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>Abundance) <span class="sc">|&gt;</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Group tibble by the Sample (grouping) column</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(Sample) <span class="sc">|&gt;</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Summarise the Family (sets) column</span></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Results in each row having a unique sample (group)</span></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># with a list of the intersections of present families</span></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarize</span>(<span class="at">Families =</span> <span class="fu">list</span>(Family)) <span class="sc">|&gt;</span></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">#ggplot</span></span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Families (intersection) column as the x aesthetic</span></span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Families)) <span class="sc">+</span></span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Bar chart</span></span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>        ggplot2<span class="sc">::</span><span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Upset scale on x axis</span></span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>        ggupset<span class="sc">::</span><span class="fu">scale_x_upset</span>() <span class="sc">+</span></span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Y label</span></span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>        ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Sample count"</span>)</span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a><span class="co">#Save plot to png file</span></span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"./family_rare__intersection_sample_group_upset.png"</span>,</span>
-<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>                <span class="at">plot =</span> family_rare_samples_upset_plot,</span>
-<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>            <span class="at">device =</span> <span class="st">"png"</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">"mm"</span>, <span class="at">height =</span> <span class="dv">300</span>, <span class="at">width =</span> <span class="dv">300</span>)</span>
-<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a><span class="co">#Dsplay plot in jupyter notebook</span></span>
-<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file=</span><span class="st">"./family_rare__intersection_sample_group_upset.png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<section id="intra-media-exercise" class="level1">
+<h1>Intra-media exercise</h1>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1382,14 +1063,11 @@ window.onload = function() {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../upset/rare_removal_plot.html" class="pagination-link" aria-label="Rare removal">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Rare removal</span>
+      <a href="../divergence/intra_site_divergence.html" class="pagination-link" aria-label="Intra-site divergence">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Intra-site divergence</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../upset/metadata_sets.html" class="pagination-link" aria-label="Metadata as sets">
-        <span class="nav-page-text">Metadata as sets</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

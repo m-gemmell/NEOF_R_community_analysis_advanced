@@ -1,0 +1,74 @@
+# Upper triangle
+
+Below is all the code needed to create the long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) from the upper triangle.
+
+```{r eval=FALSE}
+#One code cell for the upper triangle long tibble
+
+#Create new upper triangle matrix
+upper_tri_mat <- beta_df_mean
+
+#Convert lower triangle and the diagonal to NAs
+upper_tri_mat[lower.tri(upper_tri_mat, diag = TRUE)] <- NA
+
+#Convert to long data frame of paired distance values
+#We will refer to the different samples in a pair as the left an right pair
+beta_long_tbl_mean <- 
+    upper_tri_mat |>
+        #Convert to data frame
+        as.data.frame() |>
+        #Create column from row names (Sample_l, l = left)
+        tibble::rownames_to_column("Sample_L") |>
+        #Longify
+        #Set names to "Sample_r" column (r = right)
+        tidyr::pivot_longer(!Sample_L, names_to="Sample_R", values_to="value") |>
+        #Remove rows with an NA
+        tidyr::drop_na() |>
+        #Create triangle column containing value "lower" for each row
+        #REMEMBER To CHANGE THIS VALUE TO "upper" IF COPYING AND PASTING
+        dplyr::mutate(triangle="upper")
+#Check head of long tibble
+beta_long_tbl_mean |> head()
+
+#Extract metadata from original phyloseq object
+metadf <- phyloseq::sample_data(pseq)
+
+#Add metadata for the left samples
+metadf_L <-
+    #Extend metadf to match order of left samples
+    metadf[beta_long_tbl_mean$Sample_L,] |>
+    #Convert to tibble for tidyverse manipulation
+    tibble::as_tibble() |>
+    #Remove sample.name row
+    dplyr::select(-1)
+#Rename columns so they have "_L" as their suffix
+colnames(metadf_L) <- paste0(colnames(metadf_L),"_L")
+#Add metadata_L to beta_long_tbl_mean
+beta_long_tbl_mean <-
+    dplyr::bind_cols(beta_long_tbl_mean, metadf_L)
+
+#Add metadata for the right samples
+metadf_R <-
+    #Extend metadf to match order of right samples
+    metadf[beta_long_tbl_mean$Sample_R,] |>
+    #Convert to tibble for tidyverse manipulation
+    tibble::as_tibble() |>
+    #Remove sample.name row
+    dplyr::select(-1)
+#Rename columns so they have "_R" as their suffix
+colnames(metadf_R) <- paste0(colnames(metadf_R),"_R")
+#Add metadata_R to beta_long_tbl_mean
+beta_long_tbl_mean <-
+    dplyr::bind_cols(beta_long_tbl_mean, metadf_R)
+#Check head of our long df
+beta_long_tbl_meann |> head()
+
+#Assign to a new variable
+beta_upper_long_tbl_mean <- beta_long_tbl_mean
+
+#Remove unwanted metadata objects
+rm(metadf_L, metadf_R)
+
+#Check head of our long tibble
+beta_upper_long_tbl_mean |> head()
+```

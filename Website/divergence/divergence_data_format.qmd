@@ -82,7 +82,7 @@ mat
 
 ## Long distance matrix
 
-WHen the above example distance matrix is converted into [long data frame](https://neof-workshops.github.io/Tidyverse/ggplot2/input_data.html) for divergence analys it will then look like:
+When the above example distance matrix is converted into [long data frame/tibble](https://neof-workshops.github.io/Tidyverse/ggplot2/input_data.html) for divergence analysis it will then look like:
 
 ```{r, echo = FALSE}
 Sample_L <- c("S1","S1","S2","S2","S3","S3")
@@ -97,7 +97,7 @@ Some of the features of this long data frame are:
 - The "Value" column is the distance between the two samples
 - Each observation/row has a "Sample_L" and "Sample_R" column to represent the 2 samples the distance is between
     - The "L" and "R" represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the data frame.
-- We do not include the 0 values from the diaganol.
+- We do not include the 0 values from the diagonal.
 - Each value is represented twice, i.e. the lower and upper triangle values are included.
     - The 2 rows containing the duplicated values are different in which sample is the Left sample and which is the right sample.
     - This is required for creating inter group divergence (explained later)

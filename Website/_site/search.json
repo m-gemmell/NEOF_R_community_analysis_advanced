@@ -1,218 +1,122 @@
 [
   {
-    "objectID": "divergence/data_and_setup.html",
-    "href": "divergence/data_and_setup.html",
-    "title": "Data & Setup",
+    "objectID": "upset/upset_tibble_creation.html",
+    "href": "upset/upset_tibble_creation.html",
+    "title": "Upset tibble creation",
     "section": "",
-    "text": "Before you carry out any practice you will need to setup your environment by:\n\nEnsuring you have setup your directory, environment, and jupyter-notebook as shown in the overall setup.\nCreating a jupyter-notebook in a new work directory.\nLoading in the required libraries.\nLoading in the data.\n\n\n\n\n\n\nIn the jupyter-notebook file explorer create and move into a new directory called divergence, ensure this is a subdiretcory of the main workshop directory (adv_R_comm). We’ll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.\nCreate a new R based jupyter-notebook called “divergence.ipynb”. At the top of the jupyter-notebook add the following headers:\n\nA first level header of “Divergence”.\nA second level header of “Libraries & data”.\n\n\n\n\n\n\n\nLoad the required libraries/packages in a new code cell.\n\n#Libraries\nlibrary(\"phyloseq\")\nlibrary(\"microbiome\")\nlibrary(\"IRdisplay\")\nlibrary(\"tidyverse\")\nlibrary(\"ggforce\")\nlibrary(\"patchwork\")\n\n\n\n\n\n\n\nWe have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 (theory & code). For our upset plots we will be utilising the Durance river data used in our R community analysis workshop. This is a 16S dataset with two main metadata groupings:\n\nSites: Upper, Middle, and Lower Durance sampling site.\nCulture media: Environmental sample (ENV), TSA, KBC, and CVP.\n\nMore info in the R community analysis workbook\nLoad in the phyloseq object.\n\n#Data\nload(\"/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData\")\n\nAdditionally, we will load a dissimilarity matrix of weighted unifrac values created through iterative rarefaction:\n\n#Iterative rarefied weighted unifrac data frame\nload(\"/pub14/tea/nsc206/NEOF/R_community_advanced/wunifrac_df_mean.RData\")",
+    "text": "In this part we will finish creating the tibble needed for our upset plot. The steps are:\n\nRemove the Abundance column so we only have the Taxa (Phylum) and Metadata (Sample) columns.\nGroup the tibble by the column we will use as the group for the upset plot (Phylum).\nCreate the intersection column by summarising, via listing, the set column (Sample).\n\nTo carry this out we will build up a tidyverse based pipeline step by step.\n\n\n\n\n  \n\n\nThe first step is to remove the now unwanted Abundance column with dplyr::select(). We are only interested in presence for our upset plot and have already removed the rows that represent absence so we can safely remove this row.\nTo view a transposed summary of the tibble we will use dplyr::glimpse()\n\n#Remove Abundance column and then make Sample column contain lists\nphyla_upset_tibble &lt;- phyla_tibble_long |&gt;\n    #Remove Abundance column\n    dplyr::select(-Abundance)\n#Glimpse tibble\nphyla_upset_tibble |&gt; dplyre::glimpse()\n\nYou will notice we have 201 rows, and 2 columns called Phylum and Sample.\n\n\n\n\n\n  \n\n\nNext we will group the tibble by the Phylum column with dplyr::group_by(), creating a grouped tibble. Grouping a column is needed for some tidyverse functions such as the dplyr::summarise() function in the next step.\nUse the same code block as the previous step adding in the new annotations and code.\nTip: Ensure you add |&gt; to the end of the dplyr::select() line.\n\n#Remove Abundance column and then make Sample column contain lists\nphyla_upset_tibble &lt;- phyla_tibble_long |&gt;\n    #Remove Abundance column\n    dplyr::select(-Abundance) |&gt;\n    #Group tibble by the Phylum column important for next step\n    dplyr::group_by(Phylum)    \n#Glimpse tibble\nphyla_upset_tibble |&gt; dplyre::glimpse()\n\nThe glimpse () function shows the same information but also includes a line about the grouping info: Groups: Phylum [27]. This lets us know that it is grouped by the Phylum column and that there are 27 groups (i.e. 27 unique phyla).\n\n\n\n\n\n  \n\n\nOur final step is to use dplyr::summarise() to convert the Sample column into a list column. Each row will then have a unique Phylum (group) with a corresponding vector (intersections) of the samples (sets) it is found in.\n\n#Remove Abundance column and then make Sample column contain lists\nphyla_upset_tibble &lt;- phyla_tibble_long |&gt;\n    #Remove Abundance column\n    dplyr::select(-Abundance) |&gt;\n    #Group tibble by the Phylum column important for next step\n    dplyr::group_by(Phylum) |&gt;\n    #Summarize Sample column so it becomes column of list variables\n    dplyr::summarize(Samples = list(Sample))  \n#Glimpse tibble\nphyla_upset_tibble |&gt; dplyre::glimpse()\n\nUnfortunately, Jupyter notebook does not like displaying tibbles that have lists as columns. Therefore we will also view it with str() to get a larger picture of it\n\n#Structure of tibble\nstr(phyla_upset_tibble)\n\nTo get an even better picture of the tibble layout, view the contents from the first and seventh row.\n\n#First row\n#Phylum\nphyla_upset_tibble |&gt; dplyr::slice(1) |&gt; dplyr::pull(Phylum)\n#List of samples it is present in\nphyla_upset_tibble |&gt; dplyr::slice(1) |&gt; dplyr::pull(Samples)\n\n\n#Seventh row\n#Phylum\nphyla_upset_tibble |&gt; dplyr::slice(7) |&gt; dplyr::pull(Phylum)\n#List of samples it is present in\nphyla_upset_tibble |&gt; dplyr::slice(7) |&gt; dplyr::pull(Samples)\n\nNow that we have our formatted tibble we can create an upset plot.",
     "crumbs": [
-      "Divergence",
-      "Setup",
-      "Data & Setup"
-    ]
-  },
-  {
-    "objectID": "divergence/data_and_setup.html#jupyter-notebook",
-    "href": "divergence/data_and_setup.html#jupyter-notebook",
-    "title": "Data & Setup",
-    "section": "",
-    "text": "In the jupyter-notebook file explorer create and move into a new directory called divergence, ensure this is a subdiretcory of the main workshop directory (adv_R_comm). We’ll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.\nCreate a new R based jupyter-notebook called “divergence.ipynb”. At the top of the jupyter-notebook add the following headers:\n\nA first level header of “Divergence”.\nA second level header of “Libraries & data”.",
-    "crumbs": [
-      "Divergence",
-      "Setup",
-      "Data & Setup"
-    ]
-  },
-  {
-    "objectID": "divergence/data_and_setup.html#libraries",
-    "href": "divergence/data_and_setup.html#libraries",
-    "title": "Data & Setup",
-    "section": "",
-    "text": "Load the required libraries/packages in a new code cell.\n\n#Libraries\nlibrary(\"phyloseq\")\nlibrary(\"microbiome\")\nlibrary(\"IRdisplay\")\nlibrary(\"tidyverse\")\nlibrary(\"ggforce\")\nlibrary(\"patchwork\")",
-    "crumbs": [
-      "Divergence",
-      "Setup",
-      "Data & Setup"
-    ]
-  },
-  {
-    "objectID": "divergence/data_and_setup.html#data",
-    "href": "divergence/data_and_setup.html#data",
-    "title": "Data & Setup",
-    "section": "",
-    "text": "We have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 (theory & code). For our upset plots we will be utilising the Durance river data used in our R community analysis workshop. This is a 16S dataset with two main metadata groupings:\n\nSites: Upper, Middle, and Lower Durance sampling site.\nCulture media: Environmental sample (ENV), TSA, KBC, and CVP.\n\nMore info in the R community analysis workbook\nLoad in the phyloseq object.\n\n#Data\nload(\"/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData\")\n\nAdditionally, we will load a dissimilarity matrix of weighted unifrac values created through iterative rarefaction:\n\n#Iterative rarefied weighted unifrac data frame\nload(\"/pub14/tea/nsc206/NEOF/R_community_advanced/wunifrac_df_mean.RData\")",
-    "crumbs": [
-      "Divergence",
-      "Setup",
-      "Data & Setup"
-    ]
-  },
-  {
-    "objectID": "divergence/lower_triangle.html",
-    "href": "divergence/lower_triangle.html",
-    "title": "Lower triangle",
-    "section": "",
-    "text": "Our first formatting step is to create a long data frame of the dissimilarity values in the lower triangle of the dissimalirty matrix.\n\n\nBefore we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in data and setup page.\nOnce it is loaded we can view the top 10 rows and columns of the matrix.\n\n#Check first 10 rows and columns of beta dissimilarity matrix\nbeta_df_mean[1:10,1:10]\n\n\n\n\nThe next step is to convert the martix so all but the lower triangle values are NAs.\n\n\nWe’ll first carry this out with a demonstration.\nFirst create a small version of our distance matrix so it is easy to view.\n\n#Create demo distance matrix\ndemo_mat &lt;- beta_df_mean[1:6,1:6]\ndemo_mat\n\nWe will use the upper.tri() function for our conversion. It creates a logical matrix from a matrix where the upper triangle values are TRUE and the lower triangle values are FALSE.\nThe diaganol values are set with the option diag=. We will set them to TRUE with diag=TRUE.\n\n#Demonstration of upper.tri\nupper.tri(demo_mat, diag=TRUE)\n\nWe can then subset out matrix with this function to assign the upper tirangle and diaganol values as NA.\n\n#Convert upper triangle and diaganol to NA\ndemo_mat[upper.tri(demo_mat, diag=TRUE)] &lt;- NA\ndemo_mat\n\n\n\n\nWith the above demonstrated let us create our lower triangle matrix. For this we will create a new object for the lower triangle matrix so our edits won’t change the inital beta_df_mean object which we will need later.\n\n#Create new lower triangle matrix\nlower_tri_mat &lt;- beta_df_mean\n#Convert upper triangle and the diagonal to NAs\nlower_tri_mat[upper.tri(lower_tri_mat, diag = TRUE)] &lt;- NA\n#Check first 10 rows and columns\nlower_tri_mat[1:10,1:10]\n\n\n\n\n\nWith our lower triangel matrix we can create a long data frame for future ggplot2 plot production.\nFor this code we utlising piping (&gt;) with the below steps:\n\nConvert the matrix lower_tri_mat to a data frame with as.data.frame()\nMove the row names to column called “Sample_L” with tibble::rownames_to_column\nLongify all the columns except the “Sample_L” column with tidyr::pivot_longer()\nRemove rows with NAs (i.e. the upper tirangle and diaganol values) with tidyr::drop_na()\nCreate a column called triangle with each value being “lower” with dplyr::mutate(), this is required later\n\n\n#Convert to long data frame of paired distance values\n#We will refer to the different samples in a pair as the left an right pair\nbeta_long_df_mean &lt;- \n    lower_tri_mat |&gt;\n        #Convert to data frame\n        as.data.frame() |&gt;\n        #Create column from row names (Sample_l, l = left)\n        tibble::rownames_to_column(\"Sample_L\") |&gt;\n        #Longify df\n        #Set names to \"Sample_r\" column (r = right)\n        tidyr::pivot_longer(!Sample_L, names_to=\"Sample_R\", values_to=\"value\") |&gt;\n        #Remove rows with an NA\n        tidyr::drop_na() |&gt;\n        #Create triangle column containing value \"lower\" for each row\n        dplyr::mutate(triangle=\"lower\")\n#Check head of long df\nbeta_long_df_mean |&gt; head()",
-    "crumbs": [
-      "Divergence",
+      "Upset",
       "Data format",
-      "Lower triangle"
+      "Upset tibble creation"
     ]
   },
   {
-    "objectID": "divergence/lower_triangle.html#dissimialrity-matrix",
-    "href": "divergence/lower_triangle.html#dissimialrity-matrix",
-    "title": "Lower triangle",
+    "objectID": "upset/upset_tibble_creation.html#abundance-column-removal",
+    "href": "upset/upset_tibble_creation.html#abundance-column-removal",
+    "title": "Upset tibble creation",
     "section": "",
-    "text": "Before we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in data and setup page.\nOnce it is loaded we can view the top 10 rows and columns of the matrix.\n\n#Check first 10 rows and columns of beta dissimilarity matrix\nbeta_df_mean[1:10,1:10]",
+    "text": "The first step is to remove the now unwanted Abundance column with dplyr::select(). We are only interested in presence for our upset plot and have already removed the rows that represent absence so we can safely remove this row.\nTo view a transposed summary of the tibble we will use dplyr::glimpse()\n\n#Remove Abundance column and then make Sample column contain lists\nphyla_upset_tibble &lt;- phyla_tibble_long |&gt;\n    #Remove Abundance column\n    dplyr::select(-Abundance)\n#Glimpse tibble\nphyla_upset_tibble |&gt; dplyre::glimpse()\n\nYou will notice we have 201 rows, and 2 columns called Phylum and Sample.",
     "crumbs": [
-      "Divergence",
+      "Upset",
       "Data format",
-      "Lower triangle"
+      "Upset tibble creation"
     ]
   },
   {
-    "objectID": "upset/data_and_setup.html",
-    "href": "upset/data_and_setup.html",
-    "title": "Data & Setup",
+    "objectID": "upset/upset_tibble_creation.html#group-tibble",
+    "href": "upset/upset_tibble_creation.html#group-tibble",
+    "title": "Upset tibble creation",
     "section": "",
-    "text": "Before you carry out any practice you will need to setup your environment by:\n\nEnsuring you have setup your directory, environment, and jupyter-notebook as shown in the overall setup.\nCreating a jupyter-notebook in a new work directory.\nLoading in the required libraries.\nLoading in the data.\n\n\n\n\n\n\nIn the jupyter-notebook file explorer create and move into a new directory called upset, ensure this is a subdiretcory of the main workshop directory (adv_R_comm). We’ll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.\nCreate a new R based jupyter-notebook called “upset.ipynb”. At the top of the jupyter-notebook add the following headers:\n\nA first level header of “Upset plots”.\nA second level header of “Libraries & data”.\n\n\n\n\n\n\n\nLoad the required libraries/packages in a new code cell.\n\n#Libraries\nlibrary(\"phyloseq\")\nlibrary(\"microbiome\")\nlibrary(\"IRdisplay\")\nlibrary(\"tidyverse\")\nlibrary(\"ggupset\")\n\n\n\n\n\n\n\nWe have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 (theory & code). For our upset plots we will be utilising the Durance river data used in our R community analysis workshop. This is a 16S dataset with two main metadata groupings:\n\nSites: Upper, Middle, and Lower Durance sampling site.\nCulture media: Environmental sample (ENV), TSA, KBC, and CVP.\n\nMore info in the R community analysis workbook\nLoad in the phyloseq object.\n\n#Data\nload(\"/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData\")",
+    "text": "Next we will group the tibble by the Phylum column with dplyr::group_by(), creating a grouped tibble. Grouping a column is needed for some tidyverse functions such as the dplyr::summarise() function in the next step.\nUse the same code block as the previous step adding in the new annotations and code.\nTip: Ensure you add |&gt; to the end of the dplyr::select() line.\n\n#Remove Abundance column and then make Sample column contain lists\nphyla_upset_tibble &lt;- phyla_tibble_long |&gt;\n    #Remove Abundance column\n    dplyr::select(-Abundance) |&gt;\n    #Group tibble by the Phylum column important for next step\n    dplyr::group_by(Phylum)    \n#Glimpse tibble\nphyla_upset_tibble |&gt; dplyre::glimpse()\n\nThe glimpse () function shows the same information but also includes a line about the grouping info: Groups: Phylum [27]. This lets us know that it is grouped by the Phylum column and that there are 27 groups (i.e. 27 unique phyla).",
     "crumbs": [
       "Upset",
-      "Setup",
-      "Data & Setup"
+      "Data format",
+      "Upset tibble creation"
     ]
   },
   {
-    "objectID": "upset/data_and_setup.html#jupyter-notebook",
-    "href": "upset/data_and_setup.html#jupyter-notebook",
-    "title": "Data & Setup",
+    "objectID": "upset/upset_tibble_creation.html#summarise",
+    "href": "upset/upset_tibble_creation.html#summarise",
+    "title": "Upset tibble creation",
     "section": "",
-    "text": "In the jupyter-notebook file explorer create and move into a new directory called upset, ensure this is a subdiretcory of the main workshop directory (adv_R_comm). We’ll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.\nCreate a new R based jupyter-notebook called “upset.ipynb”. At the top of the jupyter-notebook add the following headers:\n\nA first level header of “Upset plots”.\nA second level header of “Libraries & data”.",
+    "text": "Our final step is to use dplyr::summarise() to convert the Sample column into a list column. Each row will then have a unique Phylum (group) with a corresponding vector (intersections) of the samples (sets) it is found in.\n\n#Remove Abundance column and then make Sample column contain lists\nphyla_upset_tibble &lt;- phyla_tibble_long |&gt;\n    #Remove Abundance column\n    dplyr::select(-Abundance) |&gt;\n    #Group tibble by the Phylum column important for next step\n    dplyr::group_by(Phylum) |&gt;\n    #Summarize Sample column so it becomes column of list variables\n    dplyr::summarize(Samples = list(Sample))  \n#Glimpse tibble\nphyla_upset_tibble |&gt; dplyre::glimpse()\n\nUnfortunately, Jupyter notebook does not like displaying tibbles that have lists as columns. Therefore we will also view it with str() to get a larger picture of it\n\n#Structure of tibble\nstr(phyla_upset_tibble)\n\nTo get an even better picture of the tibble layout, view the contents from the first and seventh row.\n\n#First row\n#Phylum\nphyla_upset_tibble |&gt; dplyr::slice(1) |&gt; dplyr::pull(Phylum)\n#List of samples it is present in\nphyla_upset_tibble |&gt; dplyr::slice(1) |&gt; dplyr::pull(Samples)\n\n\n#Seventh row\n#Phylum\nphyla_upset_tibble |&gt; dplyr::slice(7) |&gt; dplyr::pull(Phylum)\n#List of samples it is present in\nphyla_upset_tibble |&gt; dplyr::slice(7) |&gt; dplyr::pull(Samples)\n\nNow that we have our formatted tibble we can create an upset plot.",
     "crumbs": [
       "Upset",
-      "Setup",
-      "Data & Setup"
+      "Data format",
+      "Upset tibble creation"
     ]
   },
   {
-    "objectID": "upset/data_and_setup.html#libraries",
-    "href": "upset/data_and_setup.html#libraries",
-    "title": "Data & Setup",
+    "objectID": "upset/upset_data_format.html",
+    "href": "upset/upset_data_format.html",
+    "title": "Upset data format",
     "section": "",
-    "text": "Load the required libraries/packages in a new code cell.\n\n#Libraries\nlibrary(\"phyloseq\")\nlibrary(\"microbiome\")\nlibrary(\"IRdisplay\")\nlibrary(\"tidyverse\")\nlibrary(\"ggupset\")",
+    "text": "The structure of the data for an upset plot is not a typical tibble. It only requires one column of intersections. This is a list containing the intersections of sets.\nTo demonstrate we’ll create an example tibble required for an upset plot and visualise it.\n\n\n\n\n\nFor clarity we will include a group column. The group column is a normal vector column of characters.\n\n#Group column\ngroup_vec &lt;- c(\"G1\",\"G2\",\"G3\",\"G4\",\"G5\",\"G6\")\n\n\n\n\n\n\n\nMore complicated is the required intersections column. This column is a list where each element is a character vector.\nLists are one dimensional objects like vectors. However, lists can contain multiple data classes (heterogeneous) where vectors can only contain one (homogeneous). This allows lists to contain vectors as elements.\nEach vector contains the sets found in the row’s group. This represents the intersection.\nFor simplicity we’ll only include 3 different sets (A, B, & C).\n\n#Create vectors of intersections for the 6 groups\ni1 &lt;- c(\"A\",\"B\",\"C\")\ni2 &lt;- c(\"A\",\"B\")\ni3 &lt;- c(\"C\")\ni4 &lt;- c(\"A\",\"B\")\ni5 &lt;- c(\"A\",\"B\")\ni6 &lt;- c(\"A\",\"B\",\"C\")\n#Create a list of the vectors\nintersection_list &lt;- list(i1,i2,i3,i4,i5,i6)\n#Display intersection list\nintersection_list\n\n\n\n\n\n\n\nWe can now combine our group vector and our intersection list into a tibble.\n\n#Upset tibble creation\nupset_tbl &lt;- tibble::tibble(group_vec, intersection_list)\n#Display upset tibble\nupset_tbl |&gt; dplyr::glimpse()\n\nGlimpsing the tibble shows you have 2 columns, one being a character vector (&lt;chr&gt;) and one being a list (&lt;list&gt;). Important features include:\n\nEach list element/vector is flanked by chevrons (&lt; & &gt;) unless the element/vector only contains one element itself (e.g. the \"C\" of group \"G3\").\nThe elements of the list are separated by the commas (,) outside the chevrons.\nThe ... indicates that dplyr::glimpse() is not displaying all the data from the column.\n\nThe intersection for \"G1\" is \"A\", \"B\", \"C\" as denoted by &lt;\"A\", \"B\", \"C\"&gt;.\n\n\n\nAs a quick preview of the Upset plots part we’ll create an upset plot.\nNote: The below functions will be explained later on.\n\n#Upset plot with bar chart\nupset_plot &lt;- upset_tbl |&gt;\n    ggplot2::ggplot(aes(x = intersection_list)) +\n        #Add bar chart\n        ggplot2::geom_bar() +\n        #Add upset visualisation as x axis below bar chart\n        ggupset::scale_x_upset() + \n        #Specify y axis label\n        ggplot2::labs(y=\"Group count\", x=\"Intersections\")\nggplot2::ggsave(filename = \"./example_upset.png\", plot = upset_plot,\n       device = \"png\", dpi = 300, units = \"mm\", height = 75, width = 100)\nIRdisplay::display_png(file=\"./example_upset.png\")\n\nYou may note that we don’t actually need the group column for the plot but I find it good to have so I know what the groups are for the sets. Additionally, it can be used for more complex graphics.\nWe will talk in more depth about upset plots in the Upset plots part but briefly in the below plot you can see:\n\nThere are three different interactions (A+B, A+B+C, and just C).\nThese interactions are found in different numbers of groups (3, 2, and 1).\n\n\n\n\n\n\n\n\n\n\n\nSuperb! Attempt the following MCQs by choosing the correct word for the blanks.\n\nThe required column for an upset plot is a ____________.\n\n Intersection List Vector\n\n\n\nThe row elements of the required column for an upset plot are each a ____________.\n\n Intersection List Vector\n\n\n\nThe required column for an upset plot contains the ____________ information.\n\n Intersection List Vector",
     "crumbs": [
       "Upset",
-      "Setup",
-      "Data & Setup"
+      "Data format",
+      "Upset data format"
     ]
   },
   {
-    "objectID": "upset/data_and_setup.html#data",
-    "href": "upset/data_and_setup.html#data",
-    "title": "Data & Setup",
+    "objectID": "upset/upset_data_format.html#group-vector-column",
+    "href": "upset/upset_data_format.html#group-vector-column",
+    "title": "Upset data format",
     "section": "",
-    "text": "We have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 (theory & code). For our upset plots we will be utilising the Durance river data used in our R community analysis workshop. This is a 16S dataset with two main metadata groupings:\n\nSites: Upper, Middle, and Lower Durance sampling site.\nCulture media: Environmental sample (ENV), TSA, KBC, and CVP.\n\nMore info in the R community analysis workbook\nLoad in the phyloseq object.\n\n#Data\nload(\"/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData\")",
+    "text": "For clarity we will include a group column. The group column is a normal vector column of characters.\n\n#Group column\ngroup_vec &lt;- c(\"G1\",\"G2\",\"G3\",\"G4\",\"G5\",\"G6\")",
     "crumbs": [
       "Upset",
-      "Setup",
-      "Data & Setup"
+      "Data format",
+      "Upset data format"
     ]
   },
   {
-    "objectID": "upset/rare_removal_plot.html",
-    "href": "upset/rare_removal_plot.html",
-    "title": "Rare removal",
+    "objectID": "upset/upset_data_format.html#intersection-list-column",
+    "href": "upset/upset_data_format.html#intersection-list-column",
+    "title": "Upset data format",
     "section": "",
-    "text": "In this page we will quickly discuss and show how to use lower taxa levels with rare removal. This involves:\n\nDetermining the number of different taxa at a certain level.\nRemoving rare features (taxa) through rare aggregation.\nFormatting the data and producing an upset plot.\n\nThis upset plot will display the intersection of genera (sets) against the samples (groups).\nWe remove rare features for a few reasons:\n\nTo many sets will make it hard to make a clear plot.\nRare features (taxa) will most likely only add noise when looking at the prominent features (taxa).\n\n\n\n\n\n\nThe easiest method to determine the number of taxa groups at a certain taxonomic level is by aggregating the phyloseq object and display the dimension data of the objects within the aggregated phyloseq object.\nCarry this out for Genus level.\n\n#Aggregate taxa to genus\n#This will also display the dimensions of the tables and data within the phyloseq object\nmicrobiome::aggregate_taxa(pseq, level = \"Genus\")\n\nThis shows we have 172 taxa (i.e. 172 unique genera). This would be to much to visualise in an upset plot so lets reduce that number by removing rare genera (i.e. genera with low abundances across the data).\n\n\n\n\n\n\nTo remove the rare genera we will aggregate the taxa whilst carrying out rare aggregation. This combines rare genera into one taxa group called “Other”. We will then remove this “Other” group as it won’t be interesting to include in our upset plot.\nFor more information on rare aggregation please see our R community analysis workbook.\nCarry out rare aggregation and removal.\n\n#Aggregate to genus and remove rare genera\ngenus_rareaggregate_pseq &lt;- pseq |&gt;\n    #Convert to compositional values\n    microbiome:::transform(\"compositional\") |&gt;\n    #Use thresholds of at least 0.5% relative abundance (detection)\n    # in at least 10% of samples (prevalence)\n    #Thresholds chosen as they lead to a manageable amount of taxa\n    microbiome::aggregate_rare(level = \"Genus\",\n                                detection = 0.005, prevalence = 1/10) |&gt;\n    #Remove the \"Other\" genus which consists of all the rare aggregated taxa\n    phyloseq::subset_taxa(Genus != \"Other\")\n#Overview of phyloseq object\ngenus_rareaggregate_pseq\n\nThis lead to a phyloseq object with 29 taxa which seems like a good number of sets to create an upset plot with.\n\n\n\n\n\n\nWith our rare removed genus phyloseq object we can create an upset plot with:\n\nIntersection of genera sets.\nSamples as the groups.\n\n\n#Upset plot code\ngenus_rare_removed_samples_upset_plot &lt;- genus_rareaggregate_pseq |&gt;\n    #Extract otu_table as a tibble\n    microbiome::otu_tibble(column.id = \"Genus\") |&gt;\n    #Longify tibble\n    tidyr::pivot_longer(!Phylum, names_to=\"Sample\", values_to=\"Abundance\") |&gt;\n    #Filter out rows were relative abundance is 0\n    #i.e. retain rows showing presence\n    dplyr::filter(Abundance &gt; 0) |&gt;\n    #Select to remove unwanted Abundance column\n    dplyr::select(-Abundance) |&gt;\n    #Group tibble by the Sample (grouping) column\n    dplyr::group_by(Sample) |&gt;\n    #Summarise the Genus (sets) column\n    #Results in each row having a unique sample (group)\n    # with a list of the intersection of present genera\n    dplyr::summarize(Genera = list(Genus)) |&gt;\n    #ggplot\n    #Genera (intersection) column as the x aesthetic\n    ggplot2::ggplot(aes(x = Genera)) +\n        #Bar chart\n        ggplot2::geom_bar() +\n        #Upset scale on x axis\n        ggupset::scale_x_upset() + \n        #Y label\n        ggplot2::labs(y=\"Sample count\")\n#Save plot to png file\nggplot2::ggsave(filename = \"./genus_rare_removed_intersection_sample_group_upset.png\", \n                plot = genus_rare_removed_samples_upset_plot,\n                device = \"png\", dpi = 300, units = \"mm\", height = 200, width = 300)\n#Dsplay plot in jupyter notebook\nIRdisplay::display_png(file=\"./genus_rare_removed_intersection_sample_group_upset.png\")\n\nGreat, you know how to create an upset plot based on a specific taxa level with rare taxa removed. What if you want to see the intersection of rare features?",
+    "text": "More complicated is the required intersections column. This column is a list where each element is a character vector.\nLists are one dimensional objects like vectors. However, lists can contain multiple data classes (heterogeneous) where vectors can only contain one (homogeneous). This allows lists to contain vectors as elements.\nEach vector contains the sets found in the row’s group. This represents the intersection.\nFor simplicity we’ll only include 3 different sets (A, B, & C).\n\n#Create vectors of intersections for the 6 groups\ni1 &lt;- c(\"A\",\"B\",\"C\")\ni2 &lt;- c(\"A\",\"B\")\ni3 &lt;- c(\"C\")\ni4 &lt;- c(\"A\",\"B\")\ni5 &lt;- c(\"A\",\"B\")\ni6 &lt;- c(\"A\",\"B\",\"C\")\n#Create a list of the vectors\nintersection_list &lt;- list(i1,i2,i3,i4,i5,i6)\n#Display intersection list\nintersection_list",
     "crumbs": [
       "Upset",
-      "Lower taxa levels",
-      "Rare removal"
+      "Data format",
+      "Upset data format"
     ]
   },
   {
-    "objectID": "upset/rare_removal_plot.html#number-of-taxa",
-    "href": "upset/rare_removal_plot.html#number-of-taxa",
-    "title": "Rare removal",
+    "objectID": "upset/upset_data_format.html#upset-tibble",
+    "href": "upset/upset_data_format.html#upset-tibble",
+    "title": "Upset data format",
     "section": "",
-    "text": "The easiest method to determine the number of taxa groups at a certain taxonomic level is by aggregating the phyloseq object and display the dimension data of the objects within the aggregated phyloseq object.\nCarry this out for Genus level.\n\n#Aggregate taxa to genus\n#This will also display the dimensions of the tables and data within the phyloseq object\nmicrobiome::aggregate_taxa(pseq, level = \"Genus\")\n\nThis shows we have 172 taxa (i.e. 172 unique genera). This would be to much to visualise in an upset plot so lets reduce that number by removing rare genera (i.e. genera with low abundances across the data).",
+    "text": "We can now combine our group vector and our intersection list into a tibble.\n\n#Upset tibble creation\nupset_tbl &lt;- tibble::tibble(group_vec, intersection_list)\n#Display upset tibble\nupset_tbl |&gt; dplyr::glimpse()\n\nGlimpsing the tibble shows you have 2 columns, one being a character vector (&lt;chr&gt;) and one being a list (&lt;list&gt;). Important features include:\n\nEach list element/vector is flanked by chevrons (&lt; & &gt;) unless the element/vector only contains one element itself (e.g. the \"C\" of group \"G3\").\nThe elements of the list are separated by the commas (,) outside the chevrons.\nThe ... indicates that dplyr::glimpse() is not displaying all the data from the column.\n\nThe intersection for \"G1\" is \"A\", \"B\", \"C\" as denoted by &lt;\"A\", \"B\", \"C\"&gt;.",
     "crumbs": [
       "Upset",
-      "Lower taxa levels",
-      "Rare removal"
+      "Data format",
+      "Upset data format"
     ]
   },
   {
-    "objectID": "upset/rare_removal_plot.html#rare-aggregation-and-removal",
-    "href": "upset/rare_removal_plot.html#rare-aggregation-and-removal",
-    "title": "Rare removal",
+    "objectID": "upset/upset_data_format.html#upset-plot",
+    "href": "upset/upset_data_format.html#upset-plot",
+    "title": "Upset data format",
     "section": "",
-    "text": "To remove the rare genera we will aggregate the taxa whilst carrying out rare aggregation. This combines rare genera into one taxa group called “Other”. We will then remove this “Other” group as it won’t be interesting to include in our upset plot.\nFor more information on rare aggregation please see our R community analysis workbook.\nCarry out rare aggregation and removal.\n\n#Aggregate to genus and remove rare genera\ngenus_rareaggregate_pseq &lt;- pseq |&gt;\n    #Convert to compositional values\n    microbiome:::transform(\"compositional\") |&gt;\n    #Use thresholds of at least 0.5% relative abundance (detection)\n    # in at least 10% of samples (prevalence)\n    #Thresholds chosen as they lead to a manageable amount of taxa\n    microbiome::aggregate_rare(level = \"Genus\",\n                                detection = 0.005, prevalence = 1/10) |&gt;\n    #Remove the \"Other\" genus which consists of all the rare aggregated taxa\n    phyloseq::subset_taxa(Genus != \"Other\")\n#Overview of phyloseq object\ngenus_rareaggregate_pseq\n\nThis lead to a phyloseq object with 29 taxa which seems like a good number of sets to create an upset plot with.",
+    "text": "As a quick preview of the Upset plots part we’ll create an upset plot.\nNote: The below functions will be explained later on.\n\n#Upset plot with bar chart\nupset_plot &lt;- upset_tbl |&gt;\n    ggplot2::ggplot(aes(x = intersection_list)) +\n        #Add bar chart\n        ggplot2::geom_bar() +\n        #Add upset visualisation as x axis below bar chart\n        ggupset::scale_x_upset() + \n        #Specify y axis label\n        ggplot2::labs(y=\"Group count\", x=\"Intersections\")\nggplot2::ggsave(filename = \"./example_upset.png\", plot = upset_plot,\n       device = \"png\", dpi = 300, units = \"mm\", height = 75, width = 100)\nIRdisplay::display_png(file=\"./example_upset.png\")\n\nYou may note that we don’t actually need the group column for the plot but I find it good to have so I know what the groups are for the sets. Additionally, it can be used for more complex graphics.\nWe will talk in more depth about upset plots in the Upset plots part but briefly in the below plot you can see:\n\nThere are three different interactions (A+B, A+B+C, and just C).\nThese interactions are found in different numbers of groups (3, 2, and 1).",
     "crumbs": [
       "Upset",
-      "Lower taxa levels",
-      "Rare removal"
+      "Data format",
+      "Upset data format"
     ]
   },
   {
-    "objectID": "upset/rare_removal_plot.html#upset-plot-creation",
-    "href": "upset/rare_removal_plot.html#upset-plot-creation",
-    "title": "Rare removal",
+    "objectID": "upset/upset_data_format.html#mcqs",
+    "href": "upset/upset_data_format.html#mcqs",
+    "title": "Upset data format",
     "section": "",
-    "text": "With our rare removed genus phyloseq object we can create an upset plot with:\n\nIntersection of genera sets.\nSamples as the groups.\n\n\n#Upset plot code\ngenus_rare_removed_samples_upset_plot &lt;- genus_rareaggregate_pseq |&gt;\n    #Extract otu_table as a tibble\n    microbiome::otu_tibble(column.id = \"Genus\") |&gt;\n    #Longify tibble\n    tidyr::pivot_longer(!Phylum, names_to=\"Sample\", values_to=\"Abundance\") |&gt;\n    #Filter out rows were relative abundance is 0\n    #i.e. retain rows showing presence\n    dplyr::filter(Abundance &gt; 0) |&gt;\n    #Select to remove unwanted Abundance column\n    dplyr::select(-Abundance) |&gt;\n    #Group tibble by the Sample (grouping) column\n    dplyr::group_by(Sample) |&gt;\n    #Summarise the Genus (sets) column\n    #Results in each row having a unique sample (group)\n    # with a list of the intersection of present genera\n    dplyr::summarize(Genera = list(Genus)) |&gt;\n    #ggplot\n    #Genera (intersection) column as the x aesthetic\n    ggplot2::ggplot(aes(x = Genera)) +\n        #Bar chart\n        ggplot2::geom_bar() +\n        #Upset scale on x axis\n        ggupset::scale_x_upset() + \n        #Y label\n        ggplot2::labs(y=\"Sample count\")\n#Save plot to png file\nggplot2::ggsave(filename = \"./genus_rare_removed_intersection_sample_group_upset.png\", \n                plot = genus_rare_removed_samples_upset_plot,\n                device = \"png\", dpi = 300, units = \"mm\", height = 200, width = 300)\n#Dsplay plot in jupyter notebook\nIRdisplay::display_png(file=\"./genus_rare_removed_intersection_sample_group_upset.png\")\n\nGreat, you know how to create an upset plot based on a specific taxa level with rare taxa removed. What if you want to see the intersection of rare features?",
+    "text": "Superb! Attempt the following MCQs by choosing the correct word for the blanks.\n\nThe required column for an upset plot is a ____________.\n\n Intersection List Vector\n\n\n\nThe row elements of the required column for an upset plot are each a ____________.\n\n Intersection List Vector\n\n\n\nThe required column for an upset plot contains the ____________ information.\n\n Intersection List Vector",
     "crumbs": [
       "Upset",
-      "Lower taxa levels",
-      "Rare removal"
-    ]
-  },
-  {
-    "objectID": "upset/all_in_one_code.html",
-    "href": "upset/all_in_one_code.html",
-    "title": "All in one code",
-    "section": "",
-    "text": "All in one code\n\n\n\nWe’ll create another upset plot with two main differences.\n\nIt will display the intersection of the phyla sets against sample grouping.\nWe’ll create and run one pipeline that goes from the ASV abundance phyloseq object to an upset plot.\n\nRead through, type, and run the code. Ensure you understand how it all works before continuing.\nPlease feel free to copy, paste, and edit previous code to create the below code. This code will then be useful for copy, pasting, and editing to create further plots.\n\n#Upset plot of phyla intersections with sample groupings\nphyla_samples_upset_plot &lt;- pseq |&gt;\n    #Convert abundances to relative/compositional abundances\n    microbiome::transform(\"compositional\") |&gt;\n    #Aggregate ASVs to phylum level\n    microbiome::aggregate_taxa(\"Phylum\", verbose = FALSE) |&gt;\n    #Extract phyla relative abundance table\n    phyloseq::otu_table() |&gt;\n    #Extract otu_table as a tibble\n    microbiome::otu_tibble(column.id = \"Phylum\") |&gt;\n    #Longify tibble\n    tidyr::pivot_longer(!Phylum, names_to=\"Sample\", values_to=\"Abundance\") |&gt;\n    #Filter out rows were relative abundance is 0\n    #i.e. retain rows showing presence\n    dplyr::filter(Abundance &gt; 0) |&gt;\n    #Select to remove unwanted Abundance column\n    dplyr::select(-Abundance) |&gt;\n    #Group tibble by the Sample (grouping) column\n    dplyr::group_by(Sample) |&gt;\n    #Summarise the Phylum (sets) column\n    #Results in each row having a unique sample\n    # with a list of the intersection of present phyla\n    dplyr::summarize(Phyla = list(Phylum)) |&gt;\n    #ggplot\n    #Phyla (intersection) column as the x aesthetic\n    ggplot2::ggplot(aes(x = Phyla)) +\n        #Bar chart\n        ggplot2::geom_bar() +\n        #Upset scale on x axis\n        ggupset::scale_x_upset() + \n        #Y label\n        ggplot2::labs(y=\"Sample count\")\n#Save plot to png file\nggplot2::ggsave(filename = \"./phyla_intersection_sample_group_upset.png\", \n                plot = phyla_samples_upset_plot,\n                device = \"png\", dpi = 300, units = \"mm\", height = 200, width = 300)\n#Dsplay plot in jupyter notebook\nIRdisplay::display_png(file=\"./phyla_intersection_sample_group_upset.png\")\n\n\n\n\nThe above plots shows the number of samples (groups) with in specific phyla (set) intersections. The total sample count in the bar chart is equal to the total sample count of our data.\n\nMCQs\n\n\n\nGreat! With the upset plot answer the below yes/no MCQs.\n\nIs there at least one sample that contains all the phyla? I.e. is there an intersection of all the phyla in the plot?\n\n Yes No\n\n\n\nAre there any samples that only have one phyla present? I.e. is there an intersection of one phyla (set) displayed on the plot?\n\n Yes No\n\n\n\nIs there a total of 7 samples where Proteobacteria, Firmicutes, and Bacteroidetes are the only phyla present? I.e is the intersection of Proteobacteria + Firmicutes + Bacteroidetes found in 7 samples?\n\n Yes No\n\n\n\nIs there a total of 7 samples where Proteobacteria, Firmicutes, Bacteroidetes, and Actinobacteria are the only phyla present? I.e is the intersection of Proteobacteria + Firmicutes + Bacteroidetes + Actinobacteria found in 7 samples?\n\n Yes No\n\n\n\nIs Firmicutes found in all the samples? I.e. is Firmicutes in all the displayed intersections?\n\n Yes No\n\n\n\nIs Proteobacteria found in all the samples? I.e. is Proteobacteria in all the displayed intersections?\n\n Yes No\n\n\nUsing the fact that there are 36 samples attempt the following MCQs:\n\nHow many samples is Firmicutes present in? I.e. what is the total sample count of all the intersections Firmicutes is found in?\n\n 2 26 34\n\n\n\nHow many samples is Bacteroidetes present in? I.e. what is the total sample count of all the intersections Bacteroidetes is found in?\n\n 2 26 34\n\n\n\nHow many samples is Tenericutes present in? I.e. what is the total sample count of all the intersections Tenericutes is found in?\n\n 2 26 34",
-    "crumbs": [
-      "Upset",
-      "Upset plots",
-      "All in one code"
-    ]
-  },
-  {
-    "objectID": "upset/sample_and_taxa.html",
-    "href": "upset/sample_and_taxa.html",
-    "title": "Sample and taxa tibble",
-    "section": "",
-    "text": "The first step is to extract the genus abundance table and then transpose it.\nTransposing is vital for the next step as it means that:\n\nEach column is a taxa (except the Sample column)\nEach row is a sample\n\n\n\n\n\n\nCarry out aggregation and transposing.\n\n#Abundance tibble of samples (rows) against egenra (columns)\ngenus_tibble  &lt;- pseq |&gt;\n    #Aggregate to genus\n    microbiome::aggregate_taxa(\"Genus\", verbose = FALSE) |&gt;\n    #Extract otu_table\n    phyloseq::otu_table() |&gt;\n    #Convert to data.frame and transpose\n    as.data.frame() |&gt; t() |&gt;\n    #Convert to tibble\n    dplyr::as_tibble(rownames = \"Sample\")\n#Display top 6 rows of tibble\nhead(genus_tibble)\n\n\n\n\nYou may notice that we do not use the function microbiome::tax_tibble() in the above code. This is because transposing a tibble will create a matrix in a format we do not want. If you want to see this in action you can type and run the below demonstrative code.\n\n#Demonstration on why we don't use microbiome::otu_tibble\n#Can't easily use microbiome::otu_tibble with transpose\n#t() converts the tibble to a matrix\nmicrobiome::otu_tibble(genus_pseq, column.id = \"Sample\") |&gt;\n    t() |&gt;\n    head()",
-    "crumbs": [
-      "Upset",
-      "Metadata intersections",
-      "Sample and taxa tibble"
-    ]
-  },
-  {
-    "objectID": "upset/sample_and_taxa.html#transposed-genus-abundance",
-    "href": "upset/sample_and_taxa.html#transposed-genus-abundance",
-    "title": "Sample and taxa tibble",
-    "section": "",
-    "text": "Carry out aggregation and transposing.\n\n#Abundance tibble of samples (rows) against egenra (columns)\ngenus_tibble  &lt;- pseq |&gt;\n    #Aggregate to genus\n    microbiome::aggregate_taxa(\"Genus\", verbose = FALSE) |&gt;\n    #Extract otu_table\n    phyloseq::otu_table() |&gt;\n    #Convert to data.frame and transpose\n    as.data.frame() |&gt; t() |&gt;\n    #Convert to tibble\n    dplyr::as_tibble(rownames = \"Sample\")\n#Display top 6 rows of tibble\nhead(genus_tibble)",
-    "crumbs": [
-      "Upset",
-      "Metadata intersections",
-      "Sample and taxa tibble"
-    ]
-  },
-  {
-    "objectID": "upset/sample_and_taxa.html#tibbles-and-transposing",
-    "href": "upset/sample_and_taxa.html#tibbles-and-transposing",
-    "title": "Sample and taxa tibble",
-    "section": "",
-    "text": "You may notice that we do not use the function microbiome::tax_tibble() in the above code. This is because transposing a tibble will create a matrix in a format we do not want. If you want to see this in action you can type and run the below demonstrative code.\n\n#Demonstration on why we don't use microbiome::otu_tibble\n#Can't easily use microbiome::otu_tibble with transpose\n#t() converts the tibble to a matrix\nmicrobiome::otu_tibble(genus_pseq, column.id = \"Sample\") |&gt;\n    t() |&gt;\n    head()",
-    "crumbs": [
-      "Upset",
-      "Metadata intersections",
-      "Sample and taxa tibble"
+      "Data format",
+      "Upset data format"
     ]
   },
   {
@@ -249,84 +153,6 @@
       "Upset",
       "Setup",
       "Simple bar chart"
-    ]
-  },
-  {
-    "objectID": "upset/metadata_and_taxa.html",
-    "href": "upset/metadata_and_taxa.html",
-    "title": "Metadata and taxa tibble",
-    "section": "",
-    "text": "Now we’ll create a total abundance tibble of our metadata categories (rows) against the genera (columns).\n\n\n\n\n\nThe first step is to extract our metadata as a tibble with microbiome::sample_tibble().\n\n#Metadata tibble\nmetadata_tibble &lt;- microbiome::sample_tibble(pseq)\nhead(metadata_tibble)\n\n\n\n\n\n\n  \n\n\nWe will bind our metadata and taxa abundance tables but first lets ensure they have the same order of samples.\n\n#Ensure metadata and otu tibble have same order of samples\nmetadata_tibble$SampleID == genus_tibble$Sample\n\nAll the values are TRUE so the order is the same allowing us to bind the tibbles with dplyr::bind_cols.\n\n#bind metadata and genus tibbles\ngenus_metadata_tibble &lt;- dplyr::bind_cols(metadata_tibble, genus_tibble)\nhead(genus_metadata_tibble)\n\n\n\n\n\n\n  \n\n\nFinally to tidy up the tibble we will remove all the non taxa columns except for the “site” column. We are going to use the sites as the sets for our upset plot.\nCarry this out with dplyr::select()\n\n#Create tibble with site and taxa columns\n#Create vector of \"site\" and the genus names\n#The -1 is to remove the \"Sample\" column name\ncols_to_keep &lt;- c(\"site\", colnames(genus_tibble[,-1]))\n#Subset tibble to our desired columns\nsite_genus_tibble &lt;- genus_metadata_tibble |&gt;\n    #Select all of the columns specified in vector cols_to_keep\n    select(all_of(cols_to_keep))\nhead(site_genus_tibble)",
-    "crumbs": [
-      "Upset",
-      "Metadata intersections",
-      "Metadata and taxa tibble"
-    ]
-  },
-  {
-    "objectID": "upset/metadata_and_taxa.html#extract-metadata",
-    "href": "upset/metadata_and_taxa.html#extract-metadata",
-    "title": "Metadata and taxa tibble",
-    "section": "",
-    "text": "The first step is to extract our metadata as a tibble with microbiome::sample_tibble().\n\n#Metadata tibble\nmetadata_tibble &lt;- microbiome::sample_tibble(pseq)\nhead(metadata_tibble)",
-    "crumbs": [
-      "Upset",
-      "Metadata intersections",
-      "Metadata and taxa tibble"
-    ]
-  },
-  {
-    "objectID": "upset/metadata_and_taxa.html#bind-metadata-and-abundance-tibble",
-    "href": "upset/metadata_and_taxa.html#bind-metadata-and-abundance-tibble",
-    "title": "Metadata and taxa tibble",
-    "section": "",
-    "text": "We will bind our metadata and taxa abundance tables but first lets ensure they have the same order of samples.\n\n#Ensure metadata and otu tibble have same order of samples\nmetadata_tibble$SampleID == genus_tibble$Sample\n\nAll the values are TRUE so the order is the same allowing us to bind the tibbles with dplyr::bind_cols.\n\n#bind metadata and genus tibbles\ngenus_metadata_tibble &lt;- dplyr::bind_cols(metadata_tibble, genus_tibble)\nhead(genus_metadata_tibble)",
-    "crumbs": [
-      "Upset",
-      "Metadata intersections",
-      "Metadata and taxa tibble"
-    ]
-  },
-  {
-    "objectID": "upset/metadata_and_taxa.html#remove-unwanted-columns",
-    "href": "upset/metadata_and_taxa.html#remove-unwanted-columns",
-    "title": "Metadata and taxa tibble",
-    "section": "",
-    "text": "Finally to tidy up the tibble we will remove all the non taxa columns except for the “site” column. We are going to use the sites as the sets for our upset plot.\nCarry this out with dplyr::select()\n\n#Create tibble with site and taxa columns\n#Create vector of \"site\" and the genus names\n#The -1 is to remove the \"Sample\" column name\ncols_to_keep &lt;- c(\"site\", colnames(genus_tibble[,-1]))\n#Subset tibble to our desired columns\nsite_genus_tibble &lt;- genus_metadata_tibble |&gt;\n    #Select all of the columns specified in vector cols_to_keep\n    select(all_of(cols_to_keep))\nhead(site_genus_tibble)",
-    "crumbs": [
-      "Upset",
-      "Metadata intersections",
-      "Metadata and taxa tibble"
-    ]
-  },
-  {
-    "objectID": "upset/upset.html",
-    "href": "upset/upset.html",
-    "title": "Upset",
-    "section": "",
-    "text": "Upset plots are a visualisation method to display intersections between sets. They can be seen as a different form of a venn diagram but are able to effectively display many intersecting sets.\nIn this section we will:",
-    "crumbs": [
-      "Upset"
-    ]
-  },
-  {
-    "objectID": "upset/upset.html#intersecting-sets",
-    "href": "upset/upset.html#intersecting-sets",
-    "title": "Upset",
-    "section": "Intersecting sets",
-    "text": "Intersecting sets\n\n\n\nIntersection plots for community analysis can be used to display the number of intersecting features (e.g. taxa) between samples or sample groups. In other words you can display the shared presence of features between groups.\nAdditionally, you can flip it around to display the number of intersecting groups between taxa. This allows you to determine which taxa are common and uncommon across the groups. We will see this later on.",
-    "crumbs": [
-      "Upset"
-    ]
-  },
-  {
-    "objectID": "upset/upset.html#venn-versus-upset",
-    "href": "upset/upset.html#venn-versus-upset",
-    "title": "Upset",
-    "section": "Venn versus Upset",
-    "text": "Venn versus Upset\nVenn diagrams and upset plots display the intersections between sets. To demonstrate the concept of intersecting sets this section includes a few examples of these plots. These plots will display:\n\nSets of samples (e.g. S1, S2, & S3).\nThe intersection of phyla.\n\n\n3 way venn diagram\nThree way venn digrams are a classic for visualising intersecting sets. Below is an example showing the number of intersecting phyla across three sets of samples (S1, S2, & S3).\n\n\n\n This above plot shows:\n\n6 phyla are found in all samples.\n3 phyla are present in S1 and S3 but not S2.\n1 phylum is found in S2 that are not present in S1 or S3.\nThere are a total of 25 phyla (4+2+1+3+6+3+6=10)\n\n\nMCQs\n\n\n\nPlease attempt the below MCQs based on the above venn diagram.\n\nHow many phyla are present in S2 & S3 but not S1?\n\n 3 18 6\n\n\n\nHow many phyla are present in S3 but not S1 or S2?\n\n 3 18 6\n\n\n\nHow many total phyla are present in S3?\n\n 3 18 6\n\n\n\n\n\n4 way venn digram\nAlthough venn diagrams can be nice, they become more difficult to parse as more sets are included. Below is a 4 way venn diagram to demonstrate this. It includes the same samples as the above venn diagram but with S4 added in.\n\n\n\n\n\nUpset plot\nInstead of venn diagrams we can use upset plots. Below is an upset plots made from the same data as the above 4 way venn diagram. It consists of 2 parts:\n\nA bar chart of the number of phyla found in the intersections of samples.\nThe intersections of samples displayed with dots and lines.\n\nBy default the order of the x-axis is ordered from frequency within the intersections. I.e. from intersection with highest phyla count to lowest phyla count.\n\n\n\n The first three bars/columns of the above plot shows:\n\nS3 has 5 unique phyla.\nThere are 4 phyla found in all the samples.\nS1 & S4 share four phyla not present in S2 or S3.\n\nOn important note is that intersections with values of 0 are not displayed in upset plots.\n\nMCQs\n\n\n\nPlease attempt the below MCQs based on the above upset plot.\n\nHow many phyla are present in S1, S3, and S2 but not S4?\n\n 12 0 2\n\n\n\nHow many phyla are only present in S4?\n\n 12 0 2\n\n\n\nHow many total phyla are present in S2?\n\n 12 0 2",
-    "crumbs": [
-      "Upset"
     ]
   },
   {
@@ -450,47 +276,6 @@
     ]
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "NEOF Advanced R community analysis",
-    "section": "",
-    "text": "This is the Website for the NEOF Advance R community analysis workshop.",
-    "crumbs": [
-      "Overview",
-      "NEOF Advanced R community analysis"
-    ]
-  },
-  {
-    "objectID": "setup/setup.html",
-    "href": "setup/setup.html",
-    "title": "Setup",
-    "section": "",
-    "text": "Create and move into a new directory in your home directory called “adv_R_comm”.\n\nmkdir ~/adv_R_comm\ncd ~/adv_R_comm\n\n\n\n\nLoad the cond env r_community with the following use command:\n\n. usercommunity\n\nNow load jupyter-notebook:\n\njupyter-noetbook\n\nIf you need a tutorial on using jupyter-notebook with R please see the following webpage:\nNEOF R community analysis workbook jupyter chapter",
-    "crumbs": [
-      "Setup"
-    ]
-  },
-  {
-    "objectID": "setup/setup.html#workshop-directory",
-    "href": "setup/setup.html#workshop-directory",
-    "title": "Setup",
-    "section": "",
-    "text": "Create and move into a new directory in your home directory called “adv_R_comm”.\n\nmkdir ~/adv_R_comm\ncd ~/adv_R_comm",
-    "crumbs": [
-      "Setup"
-    ]
-  },
-  {
-    "objectID": "setup/setup.html#conda-jupyter-notebook",
-    "href": "setup/setup.html#conda-jupyter-notebook",
-    "title": "Setup",
-    "section": "",
-    "text": "Load the cond env r_community with the following use command:\n\n. usercommunity\n\nNow load jupyter-notebook:\n\njupyter-noetbook\n\nIf you need a tutorial on using jupyter-notebook with R please see the following webpage:\nNEOF R community analysis workbook jupyter chapter",
-    "crumbs": [
-      "Setup"
-    ]
-  },
-  {
     "objectID": "upset/metadata_sets.html",
     "href": "upset/metadata_sets.html",
     "title": "Metadata as sets",
@@ -527,78 +312,6 @@
     ]
   },
   {
-    "objectID": "upset/upset_data_format.html",
-    "href": "upset/upset_data_format.html",
-    "title": "Upset data format",
-    "section": "",
-    "text": "The structure of the data for an upset plot is not a typical tibble. It only requires one column of intersections. This is a list containing the intersections of sets.\nTo demonstrate we’ll create an example tibble required for an upset plot and visualise it.\n\n\n\n\n\nFor clarity we will include a group column. The group column is a normal vector column of characters.\n\n#Group column\ngroup_vec &lt;- c(\"G1\",\"G2\",\"G3\",\"G4\",\"G5\",\"G6\")\n\n\n\n\n\n\n\nMore complicated is the required intersections column. This column is a list where each element is a character vector.\nLists are one dimensional objects like vectors. However, lists can contain multiple data classes (heterogeneous) where vectors can only contain one (homogeneous). This allows lists to contain vectors as elements.\nEach vector contains the sets found in the row’s group. This represents the intersection.\nFor simplicity we’ll only include 3 different sets (A, B, & C).\n\n#Create vectors of intersections for the 6 groups\ni1 &lt;- c(\"A\",\"B\",\"C\")\ni2 &lt;- c(\"A\",\"B\")\ni3 &lt;- c(\"C\")\ni4 &lt;- c(\"A\",\"B\")\ni5 &lt;- c(\"A\",\"B\")\ni6 &lt;- c(\"A\",\"B\",\"C\")\n#Create a list of the vectors\nintersection_list &lt;- list(i1,i2,i3,i4,i5,i6)\n#Display intersection list\nintersection_list\n\n\n\n\n\n\n\nWe can now combine our group vector and our intersection list into a tibble.\n\n#Upset tibble creation\nupset_tbl &lt;- tibble::tibble(group_vec, intersection_list)\n#Display upset tibble\nupset_tbl |&gt; dplyr::glimpse()\n\nGlimpsing the tibble shows you have 2 columns, one being a character vector (&lt;chr&gt;) and one being a list (&lt;list&gt;). Important features include:\n\nEach list element/vector is flanked by chevrons (&lt; & &gt;) unless the element/vector only contains one element itself (e.g. the \"C\" of group \"G3\").\nThe elements of the list are separated by the commas (,) outside the chevrons.\nThe ... indicates that dplyr::glimpse() is not displaying all the data from the column.\n\nThe intersection for \"G1\" is \"A\", \"B\", \"C\" as denoted by &lt;\"A\", \"B\", \"C\"&gt;.\n\n\n\nAs a quick preview of the Upset plots part we’ll create an upset plot.\nNote: The below functions will be explained later on.\n\n#Upset plot with bar chart\nupset_plot &lt;- upset_tbl |&gt;\n    ggplot2::ggplot(aes(x = intersection_list)) +\n        #Add bar chart\n        ggplot2::geom_bar() +\n        #Add upset visualisation as x axis below bar chart\n        ggupset::scale_x_upset() + \n        #Specify y axis label\n        ggplot2::labs(y=\"Group count\", x=\"Intersections\")\nggplot2::ggsave(filename = \"./example_upset.png\", plot = upset_plot,\n       device = \"png\", dpi = 300, units = \"mm\", height = 75, width = 100)\nIRdisplay::display_png(file=\"./example_upset.png\")\n\nYou may note that we don’t actually need the group column for the plot but I find it good to have so I know what the groups are for the sets. Additionally, it can be used for more complex graphics.\nWe will talk in more depth about upset plots in the Upset plots part but briefly in the below plot you can see:\n\nThere are three different interactions (A+B, A+B+C, and just C).\nThese interactions are found in different numbers of groups (3, 2, and 1).\n\n\n\n\n\n\n\n\n\n\n\nSuperb! Attempt the following MCQs by choosing the correct word for the blanks.\n\nThe required column for an upset plot is a ____________.\n\n Intersection List Vector\n\n\n\nThe row elements of the required column for an upset plot are each a ____________.\n\n Intersection List Vector\n\n\n\nThe required column for an upset plot contains the ____________ information.\n\n Intersection List Vector",
-    "crumbs": [
-      "Upset",
-      "Data format",
-      "Upset data format"
-    ]
-  },
-  {
-    "objectID": "upset/upset_data_format.html#group-vector-column",
-    "href": "upset/upset_data_format.html#group-vector-column",
-    "title": "Upset data format",
-    "section": "",
-    "text": "For clarity we will include a group column. The group column is a normal vector column of characters.\n\n#Group column\ngroup_vec &lt;- c(\"G1\",\"G2\",\"G3\",\"G4\",\"G5\",\"G6\")",
-    "crumbs": [
-      "Upset",
-      "Data format",
-      "Upset data format"
-    ]
-  },
-  {
-    "objectID": "upset/upset_data_format.html#intersection-list-column",
-    "href": "upset/upset_data_format.html#intersection-list-column",
-    "title": "Upset data format",
-    "section": "",
-    "text": "More complicated is the required intersections column. This column is a list where each element is a character vector.\nLists are one dimensional objects like vectors. However, lists can contain multiple data classes (heterogeneous) where vectors can only contain one (homogeneous). This allows lists to contain vectors as elements.\nEach vector contains the sets found in the row’s group. This represents the intersection.\nFor simplicity we’ll only include 3 different sets (A, B, & C).\n\n#Create vectors of intersections for the 6 groups\ni1 &lt;- c(\"A\",\"B\",\"C\")\ni2 &lt;- c(\"A\",\"B\")\ni3 &lt;- c(\"C\")\ni4 &lt;- c(\"A\",\"B\")\ni5 &lt;- c(\"A\",\"B\")\ni6 &lt;- c(\"A\",\"B\",\"C\")\n#Create a list of the vectors\nintersection_list &lt;- list(i1,i2,i3,i4,i5,i6)\n#Display intersection list\nintersection_list",
-    "crumbs": [
-      "Upset",
-      "Data format",
-      "Upset data format"
-    ]
-  },
-  {
-    "objectID": "upset/upset_data_format.html#upset-tibble",
-    "href": "upset/upset_data_format.html#upset-tibble",
-    "title": "Upset data format",
-    "section": "",
-    "text": "We can now combine our group vector and our intersection list into a tibble.\n\n#Upset tibble creation\nupset_tbl &lt;- tibble::tibble(group_vec, intersection_list)\n#Display upset tibble\nupset_tbl |&gt; dplyr::glimpse()\n\nGlimpsing the tibble shows you have 2 columns, one being a character vector (&lt;chr&gt;) and one being a list (&lt;list&gt;). Important features include:\n\nEach list element/vector is flanked by chevrons (&lt; & &gt;) unless the element/vector only contains one element itself (e.g. the \"C\" of group \"G3\").\nThe elements of the list are separated by the commas (,) outside the chevrons.\nThe ... indicates that dplyr::glimpse() is not displaying all the data from the column.\n\nThe intersection for \"G1\" is \"A\", \"B\", \"C\" as denoted by &lt;\"A\", \"B\", \"C\"&gt;.",
-    "crumbs": [
-      "Upset",
-      "Data format",
-      "Upset data format"
-    ]
-  },
-  {
-    "objectID": "upset/upset_data_format.html#upset-plot",
-    "href": "upset/upset_data_format.html#upset-plot",
-    "title": "Upset data format",
-    "section": "",
-    "text": "As a quick preview of the Upset plots part we’ll create an upset plot.\nNote: The below functions will be explained later on.\n\n#Upset plot with bar chart\nupset_plot &lt;- upset_tbl |&gt;\n    ggplot2::ggplot(aes(x = intersection_list)) +\n        #Add bar chart\n        ggplot2::geom_bar() +\n        #Add upset visualisation as x axis below bar chart\n        ggupset::scale_x_upset() + \n        #Specify y axis label\n        ggplot2::labs(y=\"Group count\", x=\"Intersections\")\nggplot2::ggsave(filename = \"./example_upset.png\", plot = upset_plot,\n       device = \"png\", dpi = 300, units = \"mm\", height = 75, width = 100)\nIRdisplay::display_png(file=\"./example_upset.png\")\n\nYou may note that we don’t actually need the group column for the plot but I find it good to have so I know what the groups are for the sets. Additionally, it can be used for more complex graphics.\nWe will talk in more depth about upset plots in the Upset plots part but briefly in the below plot you can see:\n\nThere are three different interactions (A+B, A+B+C, and just C).\nThese interactions are found in different numbers of groups (3, 2, and 1).",
-    "crumbs": [
-      "Upset",
-      "Data format",
-      "Upset data format"
-    ]
-  },
-  {
-    "objectID": "upset/upset_data_format.html#mcqs",
-    "href": "upset/upset_data_format.html#mcqs",
-    "title": "Upset data format",
-    "section": "",
-    "text": "Superb! Attempt the following MCQs by choosing the correct word for the blanks.\n\nThe required column for an upset plot is a ____________.\n\n Intersection List Vector\n\n\n\nThe row elements of the required column for an upset plot are each a ____________.\n\n Intersection List Vector\n\n\n\nThe required column for an upset plot contains the ____________ information.\n\n Intersection List Vector",
-    "crumbs": [
-      "Upset",
-      "Data format",
-      "Upset data format"
-    ]
-  },
-  {
     "objectID": "upset/media_genus_upset.html",
     "href": "upset/media_genus_upset.html",
     "title": "Media upset plot",
@@ -608,54 +321,6 @@
       "Upset",
       "Metadata intersections",
       "Media upset plot"
-    ]
-  },
-  {
-    "objectID": "upset/upset_tibble_creation.html",
-    "href": "upset/upset_tibble_creation.html",
-    "title": "Upset tibble creation",
-    "section": "",
-    "text": "In this part we will finish creating the tibble needed for our upset plot. The steps are:\n\nRemove the Abundance column so we only have the Taxa (Phylum) and Metadata (Sample) columns.\nGroup the tibble by the column we will use as the group for the upset plot (Phylum).\nCreate the intersection column by summarising, via listing, the set column (Sample).\n\nTo carry this out we will build up a tidyverse based pipeline step by step.\n\n\n\n\n  \n\n\nThe first step is to remove the now unwanted Abundance column with dplyr::select(). We are only interested in presence for our upset plot and have already removed the rows that represent absence so we can safely remove this row.\nTo view a transposed summary of the tibble we will use dplyr::glimpse()\n\n#Remove Abundance column and then make Sample column contain lists\nphyla_upset_tibble &lt;- phyla_tibble_long |&gt;\n    #Remove Abundance column\n    dplyr::select(-Abundance)\n#Glimpse tibble\nphyla_upset_tibble |&gt; dplyre::glimpse()\n\nYou will notice we have 201 rows, and 2 columns called Phylum and Sample.\n\n\n\n\n\n  \n\n\nNext we will group the tibble by the Phylum column with dplyr::group_by(), creating a grouped tibble. Grouping a column is needed for some tidyverse functions such as the dplyr::summarise() function in the next step.\nUse the same code block as the previous step adding in the new annotations and code.\nTip: Ensure you add |&gt; to the end of the dplyr::select() line.\n\n#Remove Abundance column and then make Sample column contain lists\nphyla_upset_tibble &lt;- phyla_tibble_long |&gt;\n    #Remove Abundance column\n    dplyr::select(-Abundance) |&gt;\n    #Group tibble by the Phylum column important for next step\n    dplyr::group_by(Phylum)    \n#Glimpse tibble\nphyla_upset_tibble |&gt; dplyre::glimpse()\n\nThe glimpse () function shows the same information but also includes a line about the grouping info: Groups: Phylum [27]. This lets us know that it is grouped by the Phylum column and that there are 27 groups (i.e. 27 unique phyla).\n\n\n\n\n\n  \n\n\nOur final step is to use dplyr::summarise() to convert the Sample column into a list column. Each row will then have a unique Phylum (group) with a corresponding vector (intersections) of the samples (sets) it is found in.\n\n#Remove Abundance column and then make Sample column contain lists\nphyla_upset_tibble &lt;- phyla_tibble_long |&gt;\n    #Remove Abundance column\n    dplyr::select(-Abundance) |&gt;\n    #Group tibble by the Phylum column important for next step\n    dplyr::group_by(Phylum) |&gt;\n    #Summarize Sample column so it becomes column of list variables\n    dplyr::summarize(Samples = list(Sample))  \n#Glimpse tibble\nphyla_upset_tibble |&gt; dplyre::glimpse()\n\nUnfortunately, Jupyter notebook does not like displaying tibbles that have lists as columns. Therefore we will also view it with str() to get a larger picture of it\n\n#Structure of tibble\nstr(phyla_upset_tibble)\n\nTo get an even better picture of the tibble layout, view the contents from the first and seventh row.\n\n#First row\n#Phylum\nphyla_upset_tibble |&gt; dplyr::slice(1) |&gt; dplyr::pull(Phylum)\n#List of samples it is present in\nphyla_upset_tibble |&gt; dplyr::slice(1) |&gt; dplyr::pull(Samples)\n\n\n#Seventh row\n#Phylum\nphyla_upset_tibble |&gt; dplyr::slice(7) |&gt; dplyr::pull(Phylum)\n#List of samples it is present in\nphyla_upset_tibble |&gt; dplyr::slice(7) |&gt; dplyr::pull(Samples)\n\nNow that we have our formatted tibble we can create an upset plot.",
-    "crumbs": [
-      "Upset",
-      "Data format",
-      "Upset tibble creation"
-    ]
-  },
-  {
-    "objectID": "upset/upset_tibble_creation.html#abundance-column-removal",
-    "href": "upset/upset_tibble_creation.html#abundance-column-removal",
-    "title": "Upset tibble creation",
-    "section": "",
-    "text": "The first step is to remove the now unwanted Abundance column with dplyr::select(). We are only interested in presence for our upset plot and have already removed the rows that represent absence so we can safely remove this row.\nTo view a transposed summary of the tibble we will use dplyr::glimpse()\n\n#Remove Abundance column and then make Sample column contain lists\nphyla_upset_tibble &lt;- phyla_tibble_long |&gt;\n    #Remove Abundance column\n    dplyr::select(-Abundance)\n#Glimpse tibble\nphyla_upset_tibble |&gt; dplyre::glimpse()\n\nYou will notice we have 201 rows, and 2 columns called Phylum and Sample.",
-    "crumbs": [
-      "Upset",
-      "Data format",
-      "Upset tibble creation"
-    ]
-  },
-  {
-    "objectID": "upset/upset_tibble_creation.html#group-tibble",
-    "href": "upset/upset_tibble_creation.html#group-tibble",
-    "title": "Upset tibble creation",
-    "section": "",
-    "text": "Next we will group the tibble by the Phylum column with dplyr::group_by(), creating a grouped tibble. Grouping a column is needed for some tidyverse functions such as the dplyr::summarise() function in the next step.\nUse the same code block as the previous step adding in the new annotations and code.\nTip: Ensure you add |&gt; to the end of the dplyr::select() line.\n\n#Remove Abundance column and then make Sample column contain lists\nphyla_upset_tibble &lt;- phyla_tibble_long |&gt;\n    #Remove Abundance column\n    dplyr::select(-Abundance) |&gt;\n    #Group tibble by the Phylum column important for next step\n    dplyr::group_by(Phylum)    \n#Glimpse tibble\nphyla_upset_tibble |&gt; dplyre::glimpse()\n\nThe glimpse () function shows the same information but also includes a line about the grouping info: Groups: Phylum [27]. This lets us know that it is grouped by the Phylum column and that there are 27 groups (i.e. 27 unique phyla).",
-    "crumbs": [
-      "Upset",
-      "Data format",
-      "Upset tibble creation"
-    ]
-  },
-  {
-    "objectID": "upset/upset_tibble_creation.html#summarise",
-    "href": "upset/upset_tibble_creation.html#summarise",
-    "title": "Upset tibble creation",
-    "section": "",
-    "text": "Our final step is to use dplyr::summarise() to convert the Sample column into a list column. Each row will then have a unique Phylum (group) with a corresponding vector (intersections) of the samples (sets) it is found in.\n\n#Remove Abundance column and then make Sample column contain lists\nphyla_upset_tibble &lt;- phyla_tibble_long |&gt;\n    #Remove Abundance column\n    dplyr::select(-Abundance) |&gt;\n    #Group tibble by the Phylum column important for next step\n    dplyr::group_by(Phylum) |&gt;\n    #Summarize Sample column so it becomes column of list variables\n    dplyr::summarize(Samples = list(Sample))  \n#Glimpse tibble\nphyla_upset_tibble |&gt; dplyre::glimpse()\n\nUnfortunately, Jupyter notebook does not like displaying tibbles that have lists as columns. Therefore we will also view it with str() to get a larger picture of it\n\n#Structure of tibble\nstr(phyla_upset_tibble)\n\nTo get an even better picture of the tibble layout, view the contents from the first and seventh row.\n\n#First row\n#Phylum\nphyla_upset_tibble |&gt; dplyr::slice(1) |&gt; dplyr::pull(Phylum)\n#List of samples it is present in\nphyla_upset_tibble |&gt; dplyr::slice(1) |&gt; dplyr::pull(Samples)\n\n\n#Seventh row\n#Phylum\nphyla_upset_tibble |&gt; dplyr::slice(7) |&gt; dplyr::pull(Phylum)\n#List of samples it is present in\nphyla_upset_tibble |&gt; dplyr::slice(7) |&gt; dplyr::pull(Samples)\n\nNow that we have our formatted tibble we can create an upset plot.",
-    "crumbs": [
-      "Upset",
-      "Data format",
-      "Upset tibble creation"
     ]
   },
   {
@@ -683,6 +348,273 @@
     ]
   },
   {
+    "objectID": "upset/all_in_one_code.html",
+    "href": "upset/all_in_one_code.html",
+    "title": "All in one code",
+    "section": "",
+    "text": "All in one code\n\n\n\nWe’ll create another upset plot with two main differences.\n\nIt will display the intersection of the phyla sets against sample grouping.\nWe’ll create and run one pipeline that goes from the ASV abundance phyloseq object to an upset plot.\n\nRead through, type, and run the code. Ensure you understand how it all works before continuing.\nPlease feel free to copy, paste, and edit previous code to create the below code. This code will then be useful for copy, pasting, and editing to create further plots.\n\n#Upset plot of phyla intersections with sample groupings\nphyla_samples_upset_plot &lt;- pseq |&gt;\n    #Convert abundances to relative/compositional abundances\n    microbiome::transform(\"compositional\") |&gt;\n    #Aggregate ASVs to phylum level\n    microbiome::aggregate_taxa(\"Phylum\", verbose = FALSE) |&gt;\n    #Extract phyla relative abundance table\n    phyloseq::otu_table() |&gt;\n    #Extract otu_table as a tibble\n    microbiome::otu_tibble(column.id = \"Phylum\") |&gt;\n    #Longify tibble\n    tidyr::pivot_longer(!Phylum, names_to=\"Sample\", values_to=\"Abundance\") |&gt;\n    #Filter out rows were relative abundance is 0\n    #i.e. retain rows showing presence\n    dplyr::filter(Abundance &gt; 0) |&gt;\n    #Select to remove unwanted Abundance column\n    dplyr::select(-Abundance) |&gt;\n    #Group tibble by the Sample (grouping) column\n    dplyr::group_by(Sample) |&gt;\n    #Summarise the Phylum (sets) column\n    #Results in each row having a unique sample\n    # with a list of the intersection of present phyla\n    dplyr::summarize(Phyla = list(Phylum)) |&gt;\n    #ggplot\n    #Phyla (intersection) column as the x aesthetic\n    ggplot2::ggplot(aes(x = Phyla)) +\n        #Bar chart\n        ggplot2::geom_bar() +\n        #Upset scale on x axis\n        ggupset::scale_x_upset() + \n        #Y label\n        ggplot2::labs(y=\"Sample count\")\n#Save plot to png file\nggplot2::ggsave(filename = \"./phyla_intersection_sample_group_upset.png\", \n                plot = phyla_samples_upset_plot,\n                device = \"png\", dpi = 300, units = \"mm\", height = 200, width = 300)\n#Dsplay plot in jupyter notebook\nIRdisplay::display_png(file=\"./phyla_intersection_sample_group_upset.png\")\n\n\n\n\nThe above plots shows the number of samples (groups) with in specific phyla (set) intersections. The total sample count in the bar chart is equal to the total sample count of our data.\n\nMCQs\n\n\n\nGreat! With the upset plot answer the below yes/no MCQs.\n\nIs there at least one sample that contains all the phyla? I.e. is there an intersection of all the phyla in the plot?\n\n Yes No\n\n\n\nAre there any samples that only have one phyla present? I.e. is there an intersection of one phyla (set) displayed on the plot?\n\n Yes No\n\n\n\nIs there a total of 7 samples where Proteobacteria, Firmicutes, and Bacteroidetes are the only phyla present? I.e is the intersection of Proteobacteria + Firmicutes + Bacteroidetes found in 7 samples?\n\n Yes No\n\n\n\nIs there a total of 7 samples where Proteobacteria, Firmicutes, Bacteroidetes, and Actinobacteria are the only phyla present? I.e is the intersection of Proteobacteria + Firmicutes + Bacteroidetes + Actinobacteria found in 7 samples?\n\n Yes No\n\n\n\nIs Firmicutes found in all the samples? I.e. is Firmicutes in all the displayed intersections?\n\n Yes No\n\n\n\nIs Proteobacteria found in all the samples? I.e. is Proteobacteria in all the displayed intersections?\n\n Yes No\n\n\nUsing the fact that there are 36 samples attempt the following MCQs:\n\nHow many samples is Firmicutes present in? I.e. what is the total sample count of all the intersections Firmicutes is found in?\n\n 2 26 34\n\n\n\nHow many samples is Bacteroidetes present in? I.e. what is the total sample count of all the intersections Bacteroidetes is found in?\n\n 2 26 34\n\n\n\nHow many samples is Tenericutes present in? I.e. what is the total sample count of all the intersections Tenericutes is found in?\n\n 2 26 34",
+    "crumbs": [
+      "Upset",
+      "Upset plots",
+      "All in one code"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "NEOF Advanced R community analysis",
+    "section": "",
+    "text": "This is the Website for the NEOF Advance R community analysis workshop.",
+    "crumbs": [
+      "Overview",
+      "NEOF Advanced R community analysis"
+    ]
+  },
+  {
+    "objectID": "divergence/lower_triangle.html",
+    "href": "divergence/lower_triangle.html",
+    "title": "Lower triangle",
+    "section": "",
+    "text": "Our first formatting step is to create a long data frame of the dissimilarity values in the lower triangle of the dissimilarity matrix.\n\n\nBefore we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in data and setup page.\nOnce it is loaded we can view the top 10 rows and columns of the matrix.\n\n#Check first 10 rows and columns of beta dissimilarity matrix\nbeta_df_mean[1:10,1:10]\n\n\n\n\nThe next step is to convert the matrix so all but the lower triangle values are NAs.\n\n\nWe’ll first carry this out with a demonstration.\nFirst create a small version of our distance matrix so it is easy to view.\n\n#Create demo distance matrix\ndemo_mat &lt;- beta_df_mean[1:6,1:6]\ndemo_mat\n\nWe will use the upper.tri() function for our conversion. It creates a logical matrix from a matrix where the upper triangle values are TRUE and the lower triangle values are FALSE.\nThe diagonal values are set with the option diag=. We will set them to TRUE with diag=TRUE.\n\n#Demonstration of upper.tri\nupper.tri(demo_mat, diag=TRUE)\n\nWe can then subset out matrix with this function to assign the upper triangle and diagonal values as NA.\n\n#Convert upper triangle and diaganol to NA\ndemo_mat[upper.tri(demo_mat, diag=TRUE)] &lt;- NA\ndemo_mat\n\n\n\n\nWith the above demonstrated we’ll create our lower triangle matrix. For this we will create a new object for the lower triangle matrix so our edits won’t change the initial beta_df_mean object which we will need later.\n\n#Create new lower triangle matrix\nlower_tri_mat &lt;- beta_df_mean\n#Convert upper triangle and the diagonal to NAs\nlower_tri_mat[upper.tri(lower_tri_mat, diag = TRUE)] &lt;- NA\n#Check first 10 rows and columns\nlower_tri_mat[1:10,1:10]\n\n\n\n\n\nWith our lower triangle matrix we can create a long data frame for future ggplot2 plot production.\nFor this code we utilising piping (|&gt;) with the below steps:\n\nConvert the matrix lower_tri_mat to a data frame with as.data.frame()\nMove the row names to column called “Sample_L” with tibble::rownames_to_column\nLongify all the columns except the “Sample_L” column with tidyr::pivot_longer()\n\nThis also serves to convert our data frame to a tibble\n\nRemove rows with NAs (i.e. the upper triangle and diaganol values) with tidyr::drop_na()\nCreate a column called triangle with each value being “lower” with dplyr::mutate(), this is required later\n\n\n#Convert to long data frame of paired distance values\n#We will refer to the different samples in a pair as the left an right pair\nbeta_long_tbl_mean &lt;- \n    lower_tri_mat |&gt;\n        #Convert to data frame\n        as.data.frame() |&gt;\n        #Create column from row names (Sample_l, l = left)\n        tibble::rownames_to_column(\"Sample_L\") |&gt;\n        #Longify\n        #Set names to \"Sample_r\" column (r = right)\n        tidyr::pivot_longer(!Sample_L, names_to=\"Sample_R\", values_to=\"value\") |&gt;\n        #Remove rows with an NA\n        tidyr::drop_na() |&gt;\n        #Create triangle column containing value \"lower\" for each row\n        dplyr::mutate(triangle=\"lower\")\n#Check head of long tibble\nbeta_long_tbl_mean |&gt; head()\n\nGreat! Next we’ll add our metadata to this long data frame.",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Lower triangle"
+    ]
+  },
+  {
+    "objectID": "divergence/lower_triangle.html#dissimilarity-matrix",
+    "href": "divergence/lower_triangle.html#dissimilarity-matrix",
+    "title": "Lower triangle",
+    "section": "",
+    "text": "Before we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in data and setup page.\nOnce it is loaded we can view the top 10 rows and columns of the matrix.\n\n#Check first 10 rows and columns of beta dissimilarity matrix\nbeta_df_mean[1:10,1:10]",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Lower triangle"
+    ]
+  },
+  {
+    "objectID": "divergence/lower_triangle.html#lower-triangle-matrix",
+    "href": "divergence/lower_triangle.html#lower-triangle-matrix",
+    "title": "Lower triangle",
+    "section": "",
+    "text": "The next step is to convert the matrix so all but the lower triangle values are NAs.\n\n\nWe’ll first carry this out with a demonstration.\nFirst create a small version of our distance matrix so it is easy to view.\n\n#Create demo distance matrix\ndemo_mat &lt;- beta_df_mean[1:6,1:6]\ndemo_mat\n\nWe will use the upper.tri() function for our conversion. It creates a logical matrix from a matrix where the upper triangle values are TRUE and the lower triangle values are FALSE.\nThe diagonal values are set with the option diag=. We will set them to TRUE with diag=TRUE.\n\n#Demonstration of upper.tri\nupper.tri(demo_mat, diag=TRUE)\n\nWe can then subset out matrix with this function to assign the upper triangle and diagonal values as NA.\n\n#Convert upper triangle and diaganol to NA\ndemo_mat[upper.tri(demo_mat, diag=TRUE)] &lt;- NA\ndemo_mat\n\n\n\n\nWith the above demonstrated we’ll create our lower triangle matrix. For this we will create a new object for the lower triangle matrix so our edits won’t change the initial beta_df_mean object which we will need later.\n\n#Create new lower triangle matrix\nlower_tri_mat &lt;- beta_df_mean\n#Convert upper triangle and the diagonal to NAs\nlower_tri_mat[upper.tri(lower_tri_mat, diag = TRUE)] &lt;- NA\n#Check first 10 rows and columns\nlower_tri_mat[1:10,1:10]",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Lower triangle"
+    ]
+  },
+  {
+    "objectID": "divergence/lower_triangle.html#long-data-frame-of-lower-triangle-values",
+    "href": "divergence/lower_triangle.html#long-data-frame-of-lower-triangle-values",
+    "title": "Lower triangle",
+    "section": "",
+    "text": "With our lower triangle matrix we can create a long data frame for future ggplot2 plot production.\nFor this code we utilising piping (|&gt;) with the below steps:\n\nConvert the matrix lower_tri_mat to a data frame with as.data.frame()\nMove the row names to column called “Sample_L” with tibble::rownames_to_column\nLongify all the columns except the “Sample_L” column with tidyr::pivot_longer()\n\nThis also serves to convert our data frame to a tibble\n\nRemove rows with NAs (i.e. the upper triangle and diaganol values) with tidyr::drop_na()\nCreate a column called triangle with each value being “lower” with dplyr::mutate(), this is required later\n\n\n#Convert to long data frame of paired distance values\n#We will refer to the different samples in a pair as the left an right pair\nbeta_long_tbl_mean &lt;- \n    lower_tri_mat |&gt;\n        #Convert to data frame\n        as.data.frame() |&gt;\n        #Create column from row names (Sample_l, l = left)\n        tibble::rownames_to_column(\"Sample_L\") |&gt;\n        #Longify\n        #Set names to \"Sample_r\" column (r = right)\n        tidyr::pivot_longer(!Sample_L, names_to=\"Sample_R\", values_to=\"value\") |&gt;\n        #Remove rows with an NA\n        tidyr::drop_na() |&gt;\n        #Create triangle column containing value \"lower\" for each row\n        dplyr::mutate(triangle=\"lower\")\n#Check head of long tibble\nbeta_long_tbl_mean |&gt; head()\n\nGreat! Next we’ll add our metadata to this long data frame.",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Lower triangle"
+    ]
+  },
+  {
+    "objectID": "divergence/divergence.html",
+    "href": "divergence/divergence.html",
+    "title": "Divergence",
+    "section": "",
+    "text": "Divergence\n\n\n\n\n\n\n\n\n\nAll the Intra group distances\n9 total lines, 3 lines per group b/c 3 samples. A 4 sample group would have 6, a 5 sample group would have 10.\nTo calculate the number of pairs in a set you can use n(n-1)/2.\n\n\n\n\n\n\n\n\n\nIt is more difficult to work with inter group distances. When we do this we need each inter group distance twice as we need it for the first group and for the second group.\nInter group distances of group 1 samples to others\n\n\n\n\n\n\n\n\n\nInter group distances of group 2 samples to others\n\n\n\n\n\n\n\n\n\nInter group distances of group 1 samples to others\n\n\n\n\n\n\n\n\n\nIn this case with 3 groups with 3 samples each we have a total of 54 inter group distances. Each sample has 6 inter group distances and there are 9 samples (6*9=54).\nIf we had 4 groups with 10 samples each we would have:\n\n45 intra group distances (10*(10-1)/2 = 45)\n1,200 inter group distances (30*40=1200)",
+    "crumbs": [
+      "Divergence"
+    ]
+  },
+  {
+    "objectID": "divergence/data_and_setup.html",
+    "href": "divergence/data_and_setup.html",
+    "title": "Data & Setup",
+    "section": "",
+    "text": "Before you carry out any practice you will need to setup your environment by:\n\nEnsuring you have setup your directory, environment, and jupyter-notebook as shown in the overall setup.\nCreating a jupyter-notebook in a new work directory.\nLoading in the required libraries.\nLoading in the data.\n\n\n\n\n\n\nIn the jupyter-notebook file explorer create and move into a new directory called divergence, ensure this is a subdiretcory of the main workshop directory (adv_R_comm). We’ll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.\nCreate a new R based jupyter-notebook called “divergence.ipynb”. At the top of the jupyter-notebook add the following headers:\n\nA first level header of “Divergence”.\nA second level header of “Libraries & data”.\n\n\n\n\n\n\n\nLoad the required libraries/packages in a new code cell.\n\n#Libraries\nlibrary(\"phyloseq\")\nlibrary(\"microbiome\")\nlibrary(\"IRdisplay\")\nlibrary(\"tidyverse\")\nlibrary(\"ggforce\")\nlibrary(\"patchwork\")\n\n\n\n\n\n\n\nWe have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 (theory & code). For our upset plots we will be utilising the Durance river data used in our R community analysis workshop. This is a 16S dataset with two main metadata groupings:\n\nSites: Upper, Middle, and Lower Durance sampling site.\nCulture media: Environmental sample (ENV), TSA, KBC, and CVP.\n\nMore info in the R community analysis workbook\nLoad in the phyloseq object.\n\n#Original phyloseq object\nload(\"/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData\")\n\nAdditionally, we will load a dissimilarity matrix of weighted unifrac values created through iterative rarefaction:\n\n#Iterative rarefied weighted unifrac data frame\nload(\"/pub14/tea/nsc206/NEOF/R_community_advanced/wunifrac_df_mean.RData\")",
+    "crumbs": [
+      "Divergence",
+      "Setup",
+      "Data & Setup"
+    ]
+  },
+  {
+    "objectID": "divergence/data_and_setup.html#jupyter-notebook",
+    "href": "divergence/data_and_setup.html#jupyter-notebook",
+    "title": "Data & Setup",
+    "section": "",
+    "text": "In the jupyter-notebook file explorer create and move into a new directory called divergence, ensure this is a subdiretcory of the main workshop directory (adv_R_comm). We’ll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.\nCreate a new R based jupyter-notebook called “divergence.ipynb”. At the top of the jupyter-notebook add the following headers:\n\nA first level header of “Divergence”.\nA second level header of “Libraries & data”.",
+    "crumbs": [
+      "Divergence",
+      "Setup",
+      "Data & Setup"
+    ]
+  },
+  {
+    "objectID": "divergence/data_and_setup.html#libraries",
+    "href": "divergence/data_and_setup.html#libraries",
+    "title": "Data & Setup",
+    "section": "",
+    "text": "Load the required libraries/packages in a new code cell.\n\n#Libraries\nlibrary(\"phyloseq\")\nlibrary(\"microbiome\")\nlibrary(\"IRdisplay\")\nlibrary(\"tidyverse\")\nlibrary(\"ggforce\")\nlibrary(\"patchwork\")",
+    "crumbs": [
+      "Divergence",
+      "Setup",
+      "Data & Setup"
+    ]
+  },
+  {
+    "objectID": "divergence/data_and_setup.html#data",
+    "href": "divergence/data_and_setup.html#data",
+    "title": "Data & Setup",
+    "section": "",
+    "text": "We have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 (theory & code). For our upset plots we will be utilising the Durance river data used in our R community analysis workshop. This is a 16S dataset with two main metadata groupings:\n\nSites: Upper, Middle, and Lower Durance sampling site.\nCulture media: Environmental sample (ENV), TSA, KBC, and CVP.\n\nMore info in the R community analysis workbook\nLoad in the phyloseq object.\n\n#Original phyloseq object\nload(\"/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData\")\n\nAdditionally, we will load a dissimilarity matrix of weighted unifrac values created through iterative rarefaction:\n\n#Iterative rarefied weighted unifrac data frame\nload(\"/pub14/tea/nsc206/NEOF/R_community_advanced/wunifrac_df_mean.RData\")",
+    "crumbs": [
+      "Divergence",
+      "Setup",
+      "Data & Setup"
+    ]
+  },
+  {
+    "objectID": "divergence/divergence_data_format.html",
+    "href": "divergence/divergence_data_format.html",
+    "title": "Divergence data format",
+    "section": "",
+    "text": "We will create box plots and violin plots with ggplot2 similar to the plots we created in the Alpha diveristy chapter of our R community analysis workshop.\nFor this we need to create a long data frame. To carry this out we will:\n\nLoad in the distance matrix\nCreate a long data frame from the lower triangle\nCreate a long data frame from the upper triangle\nBind the data frame\n\nHowever, before that let’s see an example square distance matrix and long data frame for divergence analysis.\n\n\nOur initial dissimilarity distance data is in a square distance matrix will be like below:\n\n\n   S1 S2 S3\nS1  0  2  3\nS2  2  0  5\nS3  3  5  0\n\n\nThere are three main sections to this disatnce matrix.\n\n\nThe lower triangle is the bottom left triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA NA NA\nS2  2 NA NA\nS3  3  5 NA\n\n\n\n\n\nThe upper triangle is the top right triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA  2  3\nS2 NA NA  5\nS3 NA NA NA\n\n\n\n\n\nThe diagonal is represents the distances of each sample to itself. These are always zero.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1  0 NA NA\nS2 NA  0 NA\nS3 NA NA  0\n\n\n\n\n\n\nWhen the above example distance matrix is converted into long data frame/tibble for divergence analysis it will then look like:\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n2       S1       S3     3\n3       S2       S1     2\n4       S2       S3     5\n5       S3       S1     3\n6       S3       S2     5\n\n\nSome of the features of this long data frame are:\n\nThe “Value” column is the distance between the two samples\nEach observation/row has a “Sample_L” and “Sample_R” column to represent the 2 samples the distance is between\n\nThe “L” and “R” represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the data frame.\n\nWe do not include the 0 values from the diagonal.\nEach value is represented twice, i.e. the lower and upper triangle values are included.\n\nThe 2 rows containing the duplicated values are different in which sample is the Left sample and which is the right sample.\nThis is required for creating inter group divergence (explained later)\n\n\nAs an example of duplicated values the below data frame shows the distance between S1 and S2 twice. Notice that S1 is the Left sample in the first row but it is the RIght sample in the other row.\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n3       S2       S1     2",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Divergence data format"
+    ]
+  },
+  {
+    "objectID": "divergence/divergence_data_format.html#square-distance-matrix",
+    "href": "divergence/divergence_data_format.html#square-distance-matrix",
+    "title": "Divergence data format",
+    "section": "",
+    "text": "Our initial dissimilarity distance data is in a square distance matrix will be like below:\n\n\n   S1 S2 S3\nS1  0  2  3\nS2  2  0  5\nS3  3  5  0\n\n\nThere are three main sections to this disatnce matrix.\n\n\nThe lower triangle is the bottom left triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA NA NA\nS2  2 NA NA\nS3  3  5 NA\n\n\n\n\n\nThe upper triangle is the top right triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA  2  3\nS2 NA NA  5\nS3 NA NA NA\n\n\n\n\n\nThe diagonal is represents the distances of each sample to itself. These are always zero.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1  0 NA NA\nS2 NA  0 NA\nS3 NA NA  0",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Divergence data format"
+    ]
+  },
+  {
+    "objectID": "divergence/divergence_data_format.html#long-distance-matrix",
+    "href": "divergence/divergence_data_format.html#long-distance-matrix",
+    "title": "Divergence data format",
+    "section": "",
+    "text": "When the above example distance matrix is converted into long data frame/tibble for divergence analysis it will then look like:\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n2       S1       S3     3\n3       S2       S1     2\n4       S2       S3     5\n5       S3       S1     3\n6       S3       S2     5\n\n\nSome of the features of this long data frame are:\n\nThe “Value” column is the distance between the two samples\nEach observation/row has a “Sample_L” and “Sample_R” column to represent the 2 samples the distance is between\n\nThe “L” and “R” represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the data frame.\n\nWe do not include the 0 values from the diagonal.\nEach value is represented twice, i.e. the lower and upper triangle values are included.\n\nThe 2 rows containing the duplicated values are different in which sample is the Left sample and which is the right sample.\nThis is required for creating inter group divergence (explained later)\n\n\nAs an example of duplicated values the below data frame shows the distance between S1 and S2 twice. Notice that S1 is the Left sample in the first row but it is the RIght sample in the other row.\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n3       S2       S1     2",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Divergence data format"
+    ]
+  },
+  {
+    "objectID": "divergence/metadata_addition.html",
+    "href": "divergence/metadata_addition.html",
+    "title": "Metadata addition",
+    "section": "",
+    "text": "Data needs metadata for us to make sense of it. In this section we’ll add our metadata from our phyloseq object (pseq) to the long data frame we have created.\nWe’ll need to add the metadata twice, once for our left sample and once for our right samples.\n\n\nFor ease we’ll first extract our metadata from the phyloseq object.\n\n#Extract metadata from original phyloseq object\nmetadf &lt;- phyloseq::sample_data(pseq)\n#Check head of metadata\nmetadf |&gt; head()\n\n\n\n\nWith our metadata data frame we will first add the metadata for the left samples to our long tibble. We’ll do this for the left samples first so it is on the left side of the final tibble compared to the right sample metadata.\nThis formatting requires a few steps:\n\nCreate the tibble (metadf_L) of the metadata matching the order of the long tibble.\n\ntibble::as_tibble(): Converts a data frame to a tibble.\ndplyr::select(): Select columns from a tibble.\n\nRename the columns so they have _L as their suffix e.g. site to site_L\nBind our long tibble of beta diversity values (beta_long_tbl_mean) to our matching left metadata tibble (metadf_L)\n\ndplyr::bind_cols:\n\n\n\n#Add metadata for the left samples\nmetadf_L &lt;-\n    #Extend metadf to match order of left samples\n    metadf[beta_long_tbl_mean$Sample_L,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_L\" as their suffix\ncolnames(metadf_L) &lt;- paste0(colnames(metadf_L),\"_L\")\n#Add metadata_L to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_L)\n#Check head of our long df\nbeta_long_tbl_meann |&gt; head()\n\n\n\n\nIf you are ever unsure of what a step is doing you can create a new cell and run the specific parts to see what the output is.\nFor example if you are not sure how the initial metadf_L creation is working you could run the following code cells. In the below cells I like to pipe (|&gt;) the final output to head() so only the top 6 rows are printed. Printing the entirety of large data frames or tibbles can be overwhelming.\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt; head()\n\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt;\n#Convert to tibble for tidyverse manipulation\ntibble::as_tibble() |&gt; head()\n\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt;\n#Convert to tibble for tidyverse manipulation\ntibble::as_tibble() |&gt;\n#Remove sample.name row\ndplyr::select(-1) |&gt; head()\n\n\n\n\nNext carry out the same steps used for the left samples’ metadata but for the right samples.\nNote: Copying and pasting your own code is great. However, ensure you change all the parts you need to, this will primarily changing “L” to “R” in multiple locations.\n\n#Add metadata for the right samples\nmetadf_R &lt;-\n    #Extend metadf to match order of right samples\n    metadf[beta_long_tbl_mean$Sample_R,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_R\" as their suffix\ncolnames(metadf_R) &lt;- paste0(colnames(metadf_R),\"_R\")\n#Add metadata_R to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_R)\n#Check head of our long df\nbeta_long_tbl_meann |&gt; head()\n\n\n\n\nBrilliant! before moving onto adding the info from the upper triangle we’ll manage some variables.\nFirst assign the object beta_long_tbl_mean to beta_lower_long_tbl_mean. This will allow us to reuse a lot of previous code for the upper triangle long tibble creation whilst reusing the beta_long_tbl_mean variable.\n\n#Assign to a new variable\nbeta_lower_long_tbl_mean &lt;- beta_long_tbl_mean\n\nTo clear up some space we’ll remove object we don’t need any more.\n\n#Remove unwanted metadata objects\nrm(metadf_L, metadf_R)",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Metadata addition"
+    ]
+  },
+  {
+    "objectID": "divergence/metadata_addition.html#extract-metadata-from-phyloseq",
+    "href": "divergence/metadata_addition.html#extract-metadata-from-phyloseq",
+    "title": "Metadata addition",
+    "section": "",
+    "text": "For ease we’ll first extract our metadata from the phyloseq object.\n\n#Extract metadata from original phyloseq object\nmetadf &lt;- phyloseq::sample_data(pseq)\n#Check head of metadata\nmetadf |&gt; head()",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Metadata addition"
+    ]
+  },
+  {
+    "objectID": "divergence/metadata_addition.html#metadata-for-left-samples",
+    "href": "divergence/metadata_addition.html#metadata-for-left-samples",
+    "title": "Metadata addition",
+    "section": "",
+    "text": "With our metadata data frame we will first add the metadata for the left samples to our long tibble. We’ll do this for the left samples first so it is on the left side of the final tibble compared to the right sample metadata.\nThis formatting requires a few steps:\n\nCreate the tibble (metadf_L) of the metadata matching the order of the long tibble.\n\ntibble::as_tibble(): Converts a data frame to a tibble.\ndplyr::select(): Select columns from a tibble.\n\nRename the columns so they have _L as their suffix e.g. site to site_L\nBind our long tibble of beta diversity values (beta_long_tbl_mean) to our matching left metadata tibble (metadf_L)\n\ndplyr::bind_cols:\n\n\n\n#Add metadata for the left samples\nmetadf_L &lt;-\n    #Extend metadf to match order of left samples\n    metadf[beta_long_tbl_mean$Sample_L,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_L\" as their suffix\ncolnames(metadf_L) &lt;- paste0(colnames(metadf_L),\"_L\")\n#Add metadata_L to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_L)\n#Check head of our long df\nbeta_long_tbl_meann |&gt; head()",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Metadata addition"
+    ]
+  },
+  {
+    "objectID": "divergence/metadata_addition.html#testing-code",
+    "href": "divergence/metadata_addition.html#testing-code",
+    "title": "Metadata addition",
+    "section": "",
+    "text": "If you are ever unsure of what a step is doing you can create a new cell and run the specific parts to see what the output is.\nFor example if you are not sure how the initial metadf_L creation is working you could run the following code cells. In the below cells I like to pipe (|&gt;) the final output to head() so only the top 6 rows are printed. Printing the entirety of large data frames or tibbles can be overwhelming.\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt; head()\n\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt;\n#Convert to tibble for tidyverse manipulation\ntibble::as_tibble() |&gt; head()\n\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt;\n#Convert to tibble for tidyverse manipulation\ntibble::as_tibble() |&gt;\n#Remove sample.name row\ndplyr::select(-1) |&gt; head()",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Metadata addition"
+    ]
+  },
+  {
+    "objectID": "divergence/metadata_addition.html#metadata-for-right-samples",
+    "href": "divergence/metadata_addition.html#metadata-for-right-samples",
+    "title": "Metadata addition",
+    "section": "",
+    "text": "Next carry out the same steps used for the left samples’ metadata but for the right samples.\nNote: Copying and pasting your own code is great. However, ensure you change all the parts you need to, this will primarily changing “L” to “R” in multiple locations.\n\n#Add metadata for the right samples\nmetadf_R &lt;-\n    #Extend metadf to match order of right samples\n    metadf[beta_long_tbl_mean$Sample_R,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_R\" as their suffix\ncolnames(metadf_R) &lt;- paste0(colnames(metadf_R),\"_R\")\n#Add metadata_R to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_R)\n#Check head of our long df\nbeta_long_tbl_meann |&gt; head()",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Metadata addition"
+    ]
+  },
+  {
+    "objectID": "divergence/metadata_addition.html#variable-management",
+    "href": "divergence/metadata_addition.html#variable-management",
+    "title": "Metadata addition",
+    "section": "",
+    "text": "Brilliant! before moving onto adding the info from the upper triangle we’ll manage some variables.\nFirst assign the object beta_long_tbl_mean to beta_lower_long_tbl_mean. This will allow us to reuse a lot of previous code for the upper triangle long tibble creation whilst reusing the beta_long_tbl_mean variable.\n\n#Assign to a new variable\nbeta_lower_long_tbl_mean &lt;- beta_long_tbl_mean\n\nTo clear up some space we’ll remove object we don’t need any more.\n\n#Remove unwanted metadata objects\nrm(metadf_L, metadf_R)",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Metadata addition"
+    ]
+  },
+  {
+    "objectID": "setup/setup.html",
+    "href": "setup/setup.html",
+    "title": "Setup",
+    "section": "",
+    "text": "Create and move into a new directory in your home directory called “adv_R_comm”.\n\nmkdir ~/adv_R_comm\ncd ~/adv_R_comm\n\n\n\n\nLoad the cond env r_community with the following use command:\n\n. usercommunity\n\nNow load jupyter-notebook:\n\njupyter-noetbook\n\nIf you need a tutorial on using jupyter-notebook with R please see the following webpage:\nNEOF R community analysis workbook jupyter chapter",
+    "crumbs": [
+      "Setup"
+    ]
+  },
+  {
+    "objectID": "setup/setup.html#workshop-directory",
+    "href": "setup/setup.html#workshop-directory",
+    "title": "Setup",
+    "section": "",
+    "text": "Create and move into a new directory in your home directory called “adv_R_comm”.\n\nmkdir ~/adv_R_comm\ncd ~/adv_R_comm",
+    "crumbs": [
+      "Setup"
+    ]
+  },
+  {
+    "objectID": "setup/setup.html#conda-jupyter-notebook",
+    "href": "setup/setup.html#conda-jupyter-notebook",
+    "title": "Setup",
+    "section": "",
+    "text": "Load the cond env r_community with the following use command:\n\n. usercommunity\n\nNow load jupyter-notebook:\n\njupyter-noetbook\n\nIf you need a tutorial on using jupyter-notebook with R please see the following webpage:\nNEOF R community analysis workbook jupyter chapter",
+    "crumbs": [
+      "Setup"
+    ]
+  },
+  {
     "objectID": "upset/challenge_1.html",
     "href": "upset/challenge_1.html",
     "title": "Challenge class upset plot",
@@ -707,15 +639,99 @@
     ]
   },
   {
-    "objectID": "upset/upset_plot.html",
-    "href": "upset/upset_plot.html",
-    "title": "Upset plot",
+    "objectID": "upset/data_and_setup.html",
+    "href": "upset/data_and_setup.html",
+    "title": "Data & Setup",
     "section": "",
-    "text": "Upset plot\n\n\n\nNow that we have our upset tibble we can create out upset plot.\nWe’ll carry this out with the ggplot2 package and a variety of its functions.\n\nggplot(aes(x=Samples)): This creates the initial ggplot2 object setting the x aesthetic as our “Sample” column (the intersection list column).\ngeom_bar(): This turns the plot into a bar chart. This will show the number of groups each unique interaction is found in.\nlabs(y=\"Phyla count\"): Let’s us customise the plot labels. In this case we are specifying the y label.\n\nThe main function for creating our upset plot is scale_x_upset() from the package ggupset. This converts the x axis of our bar chart to an intersection scale display (the lines and connected dots). The function is required to make a plot with our upset formatted tibble.\nCreate the upset plot with the below code.\n\n#Upset plot with bar chart\nsamples_phyla_upset_plot &lt;- phyla_upset_tibble |&gt;\n    ggplot2::ggplot(aes(x = Sample)) +\n        #Add bar chart\n        ggplot2::geom_bar() +\n        #Add upset display scale as x axis below bar chart\n        ggupset::scale_x_upset() + \n        #Specify y axis label\n        ggplot2::labs(y=\"Phyla count\")\n#ggsave and display in jupyter\nggplot2::ggsave(filename = \"./sample_intersection_phylum_group_upset.png\", \n                plot = samples_phyla_upset_plot,\n                device = \"png\", dpi = 300, units = \"mm\", height = 200, width = 300)\nIRdisplay::display_png(file=\"./sample_intersection_phylum_group_upset.png\")\n\nThe code will produce the below plot.\n\n\n\nThe above plots shows the number of phyla (groups) found in specific sample (set) intersections. The total phyla count in the bar chart is equal to the total phyla count of our data.\n\nMCQs\n\n\n\nSuper! With the upset plot answer the below MCQs.\nNote: An intersection of one is still an intersection. I.e. Some of the intersections in the plot only contain one sample.\nTip: Right click on image and then select “Open image in new tab” to get a larger image you can zoom in on.\n\nWhich intersection has the highest Phyla count? I.e. which intersection of samples has the highest number of phyla that are only present in it?\n\n MD_ENV_rep2 MD_ENV_rep_1 + MD_ENV_rep2 + UD_ENV_rep3 UD_ENV_rep3 + UD_ENV_rep1 + UD_TSA_rep2\n\n\n\nWhich intersection is on the far right of the plot?\n\n MD_ENV_rep2 MD_ENV_rep_1 + MD_ENV_rep2 + UD_ENV_rep3 UD_ENV_rep3 + UD_ENV_rep1 + UD_TSA_rep2\n\n\n\nWhich of the three intersections is not present in the plot? I.e. which intersection has no phyla unique to it?\n\n MD_ENV_rep2 MD_ENV_rep_1 + MD_ENV_rep2 + UD_ENV_rep3 UD_ENV_rep3 + UD_ENV_rep1 + UD_TSA_rep2",
+    "text": "Before you carry out any practice you will need to setup your environment by:\n\nEnsuring you have setup your directory, environment, and jupyter-notebook as shown in the overall setup.\nCreating a jupyter-notebook in a new work directory.\nLoading in the required libraries.\nLoading in the data.\n\n\n\n\n\n\nIn the jupyter-notebook file explorer create and move into a new directory called upset, ensure this is a subdiretcory of the main workshop directory (adv_R_comm). We’ll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.\nCreate a new R based jupyter-notebook called “upset.ipynb”. At the top of the jupyter-notebook add the following headers:\n\nA first level header of “Upset plots”.\nA second level header of “Libraries & data”.\n\n\n\n\n\n\n\nLoad the required libraries/packages in a new code cell.\n\n#Libraries\nlibrary(\"phyloseq\")\nlibrary(\"microbiome\")\nlibrary(\"IRdisplay\")\nlibrary(\"tidyverse\")\nlibrary(\"ggupset\")\n\n\n\n\n\n\n\nWe have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 (theory & code). For our upset plots we will be utilising the Durance river data used in our R community analysis workshop. This is a 16S dataset with two main metadata groupings:\n\nSites: Upper, Middle, and Lower Durance sampling site.\nCulture media: Environmental sample (ENV), TSA, KBC, and CVP.\n\nMore info in the R community analysis workbook\nLoad in the phyloseq object.\n\n#Data\nload(\"/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData\")",
     "crumbs": [
       "Upset",
-      "Upset plots",
-      "Upset plot"
+      "Setup",
+      "Data & Setup"
+    ]
+  },
+  {
+    "objectID": "upset/data_and_setup.html#jupyter-notebook",
+    "href": "upset/data_and_setup.html#jupyter-notebook",
+    "title": "Data & Setup",
+    "section": "",
+    "text": "In the jupyter-notebook file explorer create and move into a new directory called upset, ensure this is a subdiretcory of the main workshop directory (adv_R_comm). We’ll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.\nCreate a new R based jupyter-notebook called “upset.ipynb”. At the top of the jupyter-notebook add the following headers:\n\nA first level header of “Upset plots”.\nA second level header of “Libraries & data”.",
+    "crumbs": [
+      "Upset",
+      "Setup",
+      "Data & Setup"
+    ]
+  },
+  {
+    "objectID": "upset/data_and_setup.html#libraries",
+    "href": "upset/data_and_setup.html#libraries",
+    "title": "Data & Setup",
+    "section": "",
+    "text": "Load the required libraries/packages in a new code cell.\n\n#Libraries\nlibrary(\"phyloseq\")\nlibrary(\"microbiome\")\nlibrary(\"IRdisplay\")\nlibrary(\"tidyverse\")\nlibrary(\"ggupset\")",
+    "crumbs": [
+      "Upset",
+      "Setup",
+      "Data & Setup"
+    ]
+  },
+  {
+    "objectID": "upset/data_and_setup.html#data",
+    "href": "upset/data_and_setup.html#data",
+    "title": "Data & Setup",
+    "section": "",
+    "text": "We have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 (theory & code). For our upset plots we will be utilising the Durance river data used in our R community analysis workshop. This is a 16S dataset with two main metadata groupings:\n\nSites: Upper, Middle, and Lower Durance sampling site.\nCulture media: Environmental sample (ENV), TSA, KBC, and CVP.\n\nMore info in the R community analysis workbook\nLoad in the phyloseq object.\n\n#Data\nload(\"/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData\")",
+    "crumbs": [
+      "Upset",
+      "Setup",
+      "Data & Setup"
+    ]
+  },
+  {
+    "objectID": "upset/metadata_and_taxa.html",
+    "href": "upset/metadata_and_taxa.html",
+    "title": "Metadata and taxa tibble",
+    "section": "",
+    "text": "Now we’ll create a total abundance tibble of our metadata categories (rows) against the genera (columns).\n\n\n\n\n\nThe first step is to extract our metadata as a tibble with microbiome::sample_tibble().\n\n#Metadata tibble\nmetadata_tibble &lt;- microbiome::sample_tibble(pseq)\nhead(metadata_tibble)\n\n\n\n\n\n\n  \n\n\nWe will bind our metadata and taxa abundance tables but first lets ensure they have the same order of samples.\n\n#Ensure metadata and otu tibble have same order of samples\nmetadata_tibble$SampleID == genus_tibble$Sample\n\nAll the values are TRUE so the order is the same allowing us to bind the tibbles with dplyr::bind_cols.\n\n#bind metadata and genus tibbles\ngenus_metadata_tibble &lt;- dplyr::bind_cols(metadata_tibble, genus_tibble)\nhead(genus_metadata_tibble)\n\n\n\n\n\n\n  \n\n\nFinally to tidy up the tibble we will remove all the non taxa columns except for the “site” column. We are going to use the sites as the sets for our upset plot.\nCarry this out with dplyr::select()\n\n#Create tibble with site and taxa columns\n#Create vector of \"site\" and the genus names\n#The -1 is to remove the \"Sample\" column name\ncols_to_keep &lt;- c(\"site\", colnames(genus_tibble[,-1]))\n#Subset tibble to our desired columns\nsite_genus_tibble &lt;- genus_metadata_tibble |&gt;\n    #Select all of the columns specified in vector cols_to_keep\n    select(all_of(cols_to_keep))\nhead(site_genus_tibble)",
+    "crumbs": [
+      "Upset",
+      "Metadata intersections",
+      "Metadata and taxa tibble"
+    ]
+  },
+  {
+    "objectID": "upset/metadata_and_taxa.html#extract-metadata",
+    "href": "upset/metadata_and_taxa.html#extract-metadata",
+    "title": "Metadata and taxa tibble",
+    "section": "",
+    "text": "The first step is to extract our metadata as a tibble with microbiome::sample_tibble().\n\n#Metadata tibble\nmetadata_tibble &lt;- microbiome::sample_tibble(pseq)\nhead(metadata_tibble)",
+    "crumbs": [
+      "Upset",
+      "Metadata intersections",
+      "Metadata and taxa tibble"
+    ]
+  },
+  {
+    "objectID": "upset/metadata_and_taxa.html#bind-metadata-and-abundance-tibble",
+    "href": "upset/metadata_and_taxa.html#bind-metadata-and-abundance-tibble",
+    "title": "Metadata and taxa tibble",
+    "section": "",
+    "text": "We will bind our metadata and taxa abundance tables but first lets ensure they have the same order of samples.\n\n#Ensure metadata and otu tibble have same order of samples\nmetadata_tibble$SampleID == genus_tibble$Sample\n\nAll the values are TRUE so the order is the same allowing us to bind the tibbles with dplyr::bind_cols.\n\n#bind metadata and genus tibbles\ngenus_metadata_tibble &lt;- dplyr::bind_cols(metadata_tibble, genus_tibble)\nhead(genus_metadata_tibble)",
+    "crumbs": [
+      "Upset",
+      "Metadata intersections",
+      "Metadata and taxa tibble"
+    ]
+  },
+  {
+    "objectID": "upset/metadata_and_taxa.html#remove-unwanted-columns",
+    "href": "upset/metadata_and_taxa.html#remove-unwanted-columns",
+    "title": "Metadata and taxa tibble",
+    "section": "",
+    "text": "Finally to tidy up the tibble we will remove all the non taxa columns except for the “site” column. We are going to use the sites as the sets for our upset plot.\nCarry this out with dplyr::select()\n\n#Create tibble with site and taxa columns\n#Create vector of \"site\" and the genus names\n#The -1 is to remove the \"Sample\" column name\ncols_to_keep &lt;- c(\"site\", colnames(genus_tibble[,-1]))\n#Subset tibble to our desired columns\nsite_genus_tibble &lt;- genus_metadata_tibble |&gt;\n    #Select all of the columns specified in vector cols_to_keep\n    select(all_of(cols_to_keep))\nhead(site_genus_tibble)",
+    "crumbs": [
+      "Upset",
+      "Metadata intersections",
+      "Metadata and taxa tibble"
     ]
   },
   {
@@ -755,85 +771,189 @@
     ]
   },
   {
-    "objectID": "divergence/divergence.html",
-    "href": "divergence/divergence.html",
-    "title": "Divergence",
+    "objectID": "upset/rare_removal_plot.html",
+    "href": "upset/rare_removal_plot.html",
+    "title": "Rare removal",
     "section": "",
-    "text": "Divergence\n\n\n\n\n\n\n\n\n\nAll the Intra group distances\n9 total lines, 3 lines per group b/c 3 samples. A 4 sample group would have 6, a 5 sample group would have 10.\nTo calculate the number of pairs in a set you can use n(n-1)/2.\n\n\n\n\n\n\n\n\n\nIt is more difficult to work with inter group distances. When we do this we need each inter group distance twice as we need it for the first group and for the second group.\nInter group distances of group 1 samples to others\n\n\n\n\n\n\n\n\n\nInter group distances of group 2 samples to others\n\n\n\n\n\n\n\n\n\nInter group distances of group 1 samples to others\n\n\n\n\n\n\n\n\n\nIn this case with 3 groups with 3 samples each we have a total of 54 inter group distances. Each sample has 6 inter group distances and there are 9 samples (6*9=54).\nIf we had 4 groups with 10 samples each we would have:\n\n45 intra group distances (10*(10-1)/2 = 45)\n1,200 inter group distances (30*40=1200)",
+    "text": "In this page we will quickly discuss and show how to use lower taxa levels with rare removal. This involves:\n\nDetermining the number of different taxa at a certain level.\nRemoving rare features (taxa) through rare aggregation.\nFormatting the data and producing an upset plot.\n\nThis upset plot will display the intersection of genera (sets) against the samples (groups).\nWe remove rare features for a few reasons:\n\nTo many sets will make it hard to make a clear plot.\nRare features (taxa) will most likely only add noise when looking at the prominent features (taxa).\n\n\n\n\n\n\nThe easiest method to determine the number of taxa groups at a certain taxonomic level is by aggregating the phyloseq object and display the dimension data of the objects within the aggregated phyloseq object.\nCarry this out for Genus level.\n\n#Aggregate taxa to genus\n#This will also display the dimensions of the tables and data within the phyloseq object\nmicrobiome::aggregate_taxa(pseq, level = \"Genus\")\n\nThis shows we have 172 taxa (i.e. 172 unique genera). This would be to much to visualise in an upset plot so lets reduce that number by removing rare genera (i.e. genera with low abundances across the data).\n\n\n\n\n\n\nTo remove the rare genera we will aggregate the taxa whilst carrying out rare aggregation. This combines rare genera into one taxa group called “Other”. We will then remove this “Other” group as it won’t be interesting to include in our upset plot.\nFor more information on rare aggregation please see our R community analysis workbook.\nCarry out rare aggregation and removal.\n\n#Aggregate to genus and remove rare genera\ngenus_rareaggregate_pseq &lt;- pseq |&gt;\n    #Convert to compositional values\n    microbiome:::transform(\"compositional\") |&gt;\n    #Use thresholds of at least 0.5% relative abundance (detection)\n    # in at least 10% of samples (prevalence)\n    #Thresholds chosen as they lead to a manageable amount of taxa\n    microbiome::aggregate_rare(level = \"Genus\",\n                                detection = 0.005, prevalence = 1/10) |&gt;\n    #Remove the \"Other\" genus which consists of all the rare aggregated taxa\n    phyloseq::subset_taxa(Genus != \"Other\")\n#Overview of phyloseq object\ngenus_rareaggregate_pseq\n\nThis lead to a phyloseq object with 29 taxa which seems like a good number of sets to create an upset plot with.\n\n\n\n\n\n\nWith our rare removed genus phyloseq object we can create an upset plot with:\n\nIntersection of genera sets.\nSamples as the groups.\n\n\n#Upset plot code\ngenus_rare_removed_samples_upset_plot &lt;- genus_rareaggregate_pseq |&gt;\n    #Extract otu_table as a tibble\n    microbiome::otu_tibble(column.id = \"Genus\") |&gt;\n    #Longify tibble\n    tidyr::pivot_longer(!Phylum, names_to=\"Sample\", values_to=\"Abundance\") |&gt;\n    #Filter out rows were relative abundance is 0\n    #i.e. retain rows showing presence\n    dplyr::filter(Abundance &gt; 0) |&gt;\n    #Select to remove unwanted Abundance column\n    dplyr::select(-Abundance) |&gt;\n    #Group tibble by the Sample (grouping) column\n    dplyr::group_by(Sample) |&gt;\n    #Summarise the Genus (sets) column\n    #Results in each row having a unique sample (group)\n    # with a list of the intersection of present genera\n    dplyr::summarize(Genera = list(Genus)) |&gt;\n    #ggplot\n    #Genera (intersection) column as the x aesthetic\n    ggplot2::ggplot(aes(x = Genera)) +\n        #Bar chart\n        ggplot2::geom_bar() +\n        #Upset scale on x axis\n        ggupset::scale_x_upset() + \n        #Y label\n        ggplot2::labs(y=\"Sample count\")\n#Save plot to png file\nggplot2::ggsave(filename = \"./genus_rare_removed_intersection_sample_group_upset.png\", \n                plot = genus_rare_removed_samples_upset_plot,\n                device = \"png\", dpi = 300, units = \"mm\", height = 200, width = 300)\n#Dsplay plot in jupyter notebook\nIRdisplay::display_png(file=\"./genus_rare_removed_intersection_sample_group_upset.png\")\n\nGreat, you know how to create an upset plot based on a specific taxa level with rare taxa removed. What if you want to see the intersection of rare features?",
     "crumbs": [
-      "Divergence"
+      "Upset",
+      "Lower taxa levels",
+      "Rare removal"
     ]
   },
   {
-    "objectID": "divergence/divergence_data_format.html",
-    "href": "divergence/divergence_data_format.html",
-    "title": "Divergence data format",
+    "objectID": "upset/rare_removal_plot.html#number-of-taxa",
+    "href": "upset/rare_removal_plot.html#number-of-taxa",
+    "title": "Rare removal",
     "section": "",
-    "text": "We will create box plots and violin plots with ggplot2 similar to the plots we created in the Alpha diveristy chapter of our R community analysis workshop.\nFor this we need to create a long data frame. To carry this out we will:\n\nLoad in the distance matrix\nCreate a long data frame from the lower triangle\nCreate a long data frame from the upper triangle\nBind the data frame\n\nHowever, before that let’s see an example square distance matrix and long data frame for divergence analysis.\n\n\nOur initial dissimilarity distance data is in a square distance matrix will be like below:\n\n\n   S1 S2 S3\nS1  0  2  3\nS2  2  0  5\nS3  3  5  0\n\n\nThere are three main sections to this disatnce matrix.\n\n\nThe lower triangle is the bottom left triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA NA NA\nS2  2 NA NA\nS3  3  5 NA\n\n\n\n\n\nThe upper triangle is the top right triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA  2  3\nS2 NA NA  5\nS3 NA NA NA\n\n\n\n\n\nThe diagonal is represents the distances of each sample to itself. These are always zero.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1  0 NA NA\nS2 NA  0 NA\nS3 NA NA  0\n\n\n\n\n\n\nWHen the above example distance matrix is converted into long data frame for divergence analys it will then look like:\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n2       S1       S3     3\n3       S2       S1     2\n4       S2       S3     5\n5       S3       S1     3\n6       S3       S2     5\n\n\nSome of the features of this long data frame are:\n\nThe “Value” column is the distance between the two samples\nEach observation/row has a “Sample_L” and “Sample_R” column to represent the 2 samples the distance is between\n\nThe “L” and “R” represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the data frame.\n\nWe do not include the 0 values from the diaganol.\nEach value is represented twice, i.e. the lower and upper triangle values are included.\n\nThe 2 rows containing the duplicated values are different in which sample is the Left sample and which is the right sample.\nThis is required for creating inter group divergence (explained later)\n\n\nAs an example of duplicated values the below data frame shows the distance between S1 and S2 twice. Notice that S1 is the Left sample in the first row but it is the RIght sample in the other row.\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n3       S2       S1     2",
+    "text": "The easiest method to determine the number of taxa groups at a certain taxonomic level is by aggregating the phyloseq object and display the dimension data of the objects within the aggregated phyloseq object.\nCarry this out for Genus level.\n\n#Aggregate taxa to genus\n#This will also display the dimensions of the tables and data within the phyloseq object\nmicrobiome::aggregate_taxa(pseq, level = \"Genus\")\n\nThis shows we have 172 taxa (i.e. 172 unique genera). This would be to much to visualise in an upset plot so lets reduce that number by removing rare genera (i.e. genera with low abundances across the data).",
     "crumbs": [
-      "Divergence",
-      "Data format",
-      "Divergence data format"
+      "Upset",
+      "Lower taxa levels",
+      "Rare removal"
     ]
   },
   {
-    "objectID": "divergence/divergence_data_format.html#square-distance-matrix",
-    "href": "divergence/divergence_data_format.html#square-distance-matrix",
-    "title": "Divergence data format",
+    "objectID": "upset/rare_removal_plot.html#rare-aggregation-and-removal",
+    "href": "upset/rare_removal_plot.html#rare-aggregation-and-removal",
+    "title": "Rare removal",
     "section": "",
-    "text": "Our initial dissimilarity distance data is in a square distance matrix will be like below:\n\n\n   S1 S2 S3\nS1  0  2  3\nS2  2  0  5\nS3  3  5  0\n\n\nThere are three main sections to this disatnce matrix.\n\n\nThe lower triangle is the bottom left triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA NA NA\nS2  2 NA NA\nS3  3  5 NA\n\n\n\n\n\nThe upper triangle is the top right triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA  2  3\nS2 NA NA  5\nS3 NA NA NA\n\n\n\n\n\nThe diagonal is represents the distances of each sample to itself. These are always zero.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1  0 NA NA\nS2 NA  0 NA\nS3 NA NA  0",
+    "text": "To remove the rare genera we will aggregate the taxa whilst carrying out rare aggregation. This combines rare genera into one taxa group called “Other”. We will then remove this “Other” group as it won’t be interesting to include in our upset plot.\nFor more information on rare aggregation please see our R community analysis workbook.\nCarry out rare aggregation and removal.\n\n#Aggregate to genus and remove rare genera\ngenus_rareaggregate_pseq &lt;- pseq |&gt;\n    #Convert to compositional values\n    microbiome:::transform(\"compositional\") |&gt;\n    #Use thresholds of at least 0.5% relative abundance (detection)\n    # in at least 10% of samples (prevalence)\n    #Thresholds chosen as they lead to a manageable amount of taxa\n    microbiome::aggregate_rare(level = \"Genus\",\n                                detection = 0.005, prevalence = 1/10) |&gt;\n    #Remove the \"Other\" genus which consists of all the rare aggregated taxa\n    phyloseq::subset_taxa(Genus != \"Other\")\n#Overview of phyloseq object\ngenus_rareaggregate_pseq\n\nThis lead to a phyloseq object with 29 taxa which seems like a good number of sets to create an upset plot with.",
     "crumbs": [
-      "Divergence",
-      "Data format",
-      "Divergence data format"
+      "Upset",
+      "Lower taxa levels",
+      "Rare removal"
     ]
   },
   {
-    "objectID": "divergence/divergence_data_format.html#long-distance-matrix",
-    "href": "divergence/divergence_data_format.html#long-distance-matrix",
-    "title": "Divergence data format",
+    "objectID": "upset/rare_removal_plot.html#upset-plot-creation",
+    "href": "upset/rare_removal_plot.html#upset-plot-creation",
+    "title": "Rare removal",
     "section": "",
-    "text": "WHen the above example distance matrix is converted into long data frame for divergence analys it will then look like:\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n2       S1       S3     3\n3       S2       S1     2\n4       S2       S3     5\n5       S3       S1     3\n6       S3       S2     5\n\n\nSome of the features of this long data frame are:\n\nThe “Value” column is the distance between the two samples\nEach observation/row has a “Sample_L” and “Sample_R” column to represent the 2 samples the distance is between\n\nThe “L” and “R” represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the data frame.\n\nWe do not include the 0 values from the diaganol.\nEach value is represented twice, i.e. the lower and upper triangle values are included.\n\nThe 2 rows containing the duplicated values are different in which sample is the Left sample and which is the right sample.\nThis is required for creating inter group divergence (explained later)\n\n\nAs an example of duplicated values the below data frame shows the distance between S1 and S2 twice. Notice that S1 is the Left sample in the first row but it is the RIght sample in the other row.\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n3       S2       S1     2",
+    "text": "With our rare removed genus phyloseq object we can create an upset plot with:\n\nIntersection of genera sets.\nSamples as the groups.\n\n\n#Upset plot code\ngenus_rare_removed_samples_upset_plot &lt;- genus_rareaggregate_pseq |&gt;\n    #Extract otu_table as a tibble\n    microbiome::otu_tibble(column.id = \"Genus\") |&gt;\n    #Longify tibble\n    tidyr::pivot_longer(!Phylum, names_to=\"Sample\", values_to=\"Abundance\") |&gt;\n    #Filter out rows were relative abundance is 0\n    #i.e. retain rows showing presence\n    dplyr::filter(Abundance &gt; 0) |&gt;\n    #Select to remove unwanted Abundance column\n    dplyr::select(-Abundance) |&gt;\n    #Group tibble by the Sample (grouping) column\n    dplyr::group_by(Sample) |&gt;\n    #Summarise the Genus (sets) column\n    #Results in each row having a unique sample (group)\n    # with a list of the intersection of present genera\n    dplyr::summarize(Genera = list(Genus)) |&gt;\n    #ggplot\n    #Genera (intersection) column as the x aesthetic\n    ggplot2::ggplot(aes(x = Genera)) +\n        #Bar chart\n        ggplot2::geom_bar() +\n        #Upset scale on x axis\n        ggupset::scale_x_upset() + \n        #Y label\n        ggplot2::labs(y=\"Sample count\")\n#Save plot to png file\nggplot2::ggsave(filename = \"./genus_rare_removed_intersection_sample_group_upset.png\", \n                plot = genus_rare_removed_samples_upset_plot,\n                device = \"png\", dpi = 300, units = \"mm\", height = 200, width = 300)\n#Dsplay plot in jupyter notebook\nIRdisplay::display_png(file=\"./genus_rare_removed_intersection_sample_group_upset.png\")\n\nGreat, you know how to create an upset plot based on a specific taxa level with rare taxa removed. What if you want to see the intersection of rare features?",
     "crumbs": [
-      "Divergence",
-      "Data format",
-      "Divergence data format"
+      "Upset",
+      "Lower taxa levels",
+      "Rare removal"
     ]
   },
   {
-    "objectID": "divergence/lower_triangle.html#dissimilarity-matrix",
-    "href": "divergence/lower_triangle.html#dissimilarity-matrix",
-    "title": "Lower triangle",
+    "objectID": "upset/sample_and_taxa.html",
+    "href": "upset/sample_and_taxa.html",
+    "title": "Sample and taxa tibble",
     "section": "",
-    "text": "Before we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in data and setup page.\nOnce it is loaded we can view the top 10 rows and columns of the matrix.\n\n#Check first 10 rows and columns of beta dissimilarity matrix\nbeta_df_mean[1:10,1:10]",
+    "text": "The first step is to extract the genus abundance table and then transpose it.\nTransposing is vital for the next step as it means that:\n\nEach column is a taxa (except the Sample column)\nEach row is a sample\n\n\n\n\n\n\nCarry out aggregation and transposing.\n\n#Abundance tibble of samples (rows) against egenra (columns)\ngenus_tibble  &lt;- pseq |&gt;\n    #Aggregate to genus\n    microbiome::aggregate_taxa(\"Genus\", verbose = FALSE) |&gt;\n    #Extract otu_table\n    phyloseq::otu_table() |&gt;\n    #Convert to data.frame and transpose\n    as.data.frame() |&gt; t() |&gt;\n    #Convert to tibble\n    dplyr::as_tibble(rownames = \"Sample\")\n#Display top 6 rows of tibble\nhead(genus_tibble)\n\n\n\n\nYou may notice that we do not use the function microbiome::tax_tibble() in the above code. This is because transposing a tibble will create a matrix in a format we do not want. If you want to see this in action you can type and run the below demonstrative code.\n\n#Demonstration on why we don't use microbiome::otu_tibble\n#Can't easily use microbiome::otu_tibble with transpose\n#t() converts the tibble to a matrix\nmicrobiome::otu_tibble(genus_pseq, column.id = \"Sample\") |&gt;\n    t() |&gt;\n    head()",
     "crumbs": [
-      "Divergence",
-      "Data format",
-      "Lower triangle"
+      "Upset",
+      "Metadata intersections",
+      "Sample and taxa tibble"
     ]
   },
   {
-    "objectID": "divergence/lower_triangle.html#lower-triangle-matrix",
-    "href": "divergence/lower_triangle.html#lower-triangle-matrix",
-    "title": "Lower triangle",
+    "objectID": "upset/sample_and_taxa.html#transposed-genus-abundance",
+    "href": "upset/sample_and_taxa.html#transposed-genus-abundance",
+    "title": "Sample and taxa tibble",
     "section": "",
-    "text": "The next step is to convert the martix so all but the lower triangle values are NAs.\n\n\nWe’ll first carry this out with a demonstration.\nFirst create a small version of our distance matrix so it is easy to view.\n\n#Create demo distance matrix\ndemo_mat &lt;- beta_df_mean[1:6,1:6]\ndemo_mat\n\nWe will use the upper.tri() function for our conversion. It creates a logical matrix from a matrix where the upper triangle values are TRUE and the lower triangle values are FALSE.\nThe diaganol values are set with the option diag=. We will set them to TRUE with diag=TRUE.\n\n#Demonstration of upper.tri\nupper.tri(demo_mat, diag=TRUE)\n\nWe can then subset out matrix with this function to assign the upper tirangle and diaganol values as NA.\n\n#Convert upper triangle and diaganol to NA\ndemo_mat[upper.tri(demo_mat, diag=TRUE)] &lt;- NA\ndemo_mat\n\n\n\n\nWith the above demonstrated let us create our lower triangle matrix. For this we will create a new object for the lower triangle matrix so our edits won’t change the inital beta_df_mean object which we will need later.\n\n#Create new lower triangle matrix\nlower_tri_mat &lt;- beta_df_mean\n#Convert upper triangle and the diagonal to NAs\nlower_tri_mat[upper.tri(lower_tri_mat, diag = TRUE)] &lt;- NA\n#Check first 10 rows and columns\nlower_tri_mat[1:10,1:10]",
+    "text": "Carry out aggregation and transposing.\n\n#Abundance tibble of samples (rows) against egenra (columns)\ngenus_tibble  &lt;- pseq |&gt;\n    #Aggregate to genus\n    microbiome::aggregate_taxa(\"Genus\", verbose = FALSE) |&gt;\n    #Extract otu_table\n    phyloseq::otu_table() |&gt;\n    #Convert to data.frame and transpose\n    as.data.frame() |&gt; t() |&gt;\n    #Convert to tibble\n    dplyr::as_tibble(rownames = \"Sample\")\n#Display top 6 rows of tibble\nhead(genus_tibble)",
     "crumbs": [
-      "Divergence",
-      "Data format",
-      "Lower triangle"
+      "Upset",
+      "Metadata intersections",
+      "Sample and taxa tibble"
     ]
   },
   {
-    "objectID": "divergence/lower_triangle.html#long-data-frame-of-lower-triangel-values",
-    "href": "divergence/lower_triangle.html#long-data-frame-of-lower-triangel-values",
-    "title": "Lower triangle",
+    "objectID": "upset/sample_and_taxa.html#tibbles-and-transposing",
+    "href": "upset/sample_and_taxa.html#tibbles-and-transposing",
+    "title": "Sample and taxa tibble",
     "section": "",
-    "text": "With our lower triangel matrix we can create a long data frame for future ggplot2 plot production.\nFor this code we utlising piping (&gt;) with the below steps:\n\nConvert the matrix lower_tri_mat to a data frame with as.data.frame()\nMove the row names to column called “Sample_L” with tibble::rownames_to_column\nLongify all the columns except the “Sample_L” column with tidyr::pivot_longer()\nRemove rows with NAs (i.e. the upper tirangle and diaganol values) with tidyr::drop_na()\nCreate a column called triangle with each value being “lower” with dplyr::mutate(), this is required later\n\n\n#Convert to long data frame of paired distance values\n#We will refer to the different samples in a pair as the left an right pair\nbeta_long_df_mean &lt;- \n    lower_tri_mat |&gt;\n        #Convert to data frame\n        as.data.frame() |&gt;\n        #Create column from row names (Sample_l, l = left)\n        tibble::rownames_to_column(\"Sample_L\") |&gt;\n        #Longify df\n        #Set names to \"Sample_r\" column (r = right)\n        tidyr::pivot_longer(!Sample_L, names_to=\"Sample_R\", values_to=\"value\") |&gt;\n        #Remove rows with an NA\n        tidyr::drop_na() |&gt;\n        #Create triangle column containing value \"lower\" for each row\n        dplyr::mutate(triangle=\"lower\")\n#Check head of long df\nbeta_long_df_mean |&gt; head()",
+    "text": "You may notice that we do not use the function microbiome::tax_tibble() in the above code. This is because transposing a tibble will create a matrix in a format we do not want. If you want to see this in action you can type and run the below demonstrative code.\n\n#Demonstration on why we don't use microbiome::otu_tibble\n#Can't easily use microbiome::otu_tibble with transpose\n#t() converts the tibble to a matrix\nmicrobiome::otu_tibble(genus_pseq, column.id = \"Sample\") |&gt;\n    t() |&gt;\n    head()",
+    "crumbs": [
+      "Upset",
+      "Metadata intersections",
+      "Sample and taxa tibble"
+    ]
+  },
+  {
+    "objectID": "upset/upset.html",
+    "href": "upset/upset.html",
+    "title": "Upset",
+    "section": "",
+    "text": "Upset plots are a visualisation method to display intersections between sets. They can be seen as a different form of a venn diagram but are able to effectively display many intersecting sets.\nIn this section we will:",
+    "crumbs": [
+      "Upset"
+    ]
+  },
+  {
+    "objectID": "upset/upset.html#intersecting-sets",
+    "href": "upset/upset.html#intersecting-sets",
+    "title": "Upset",
+    "section": "Intersecting sets",
+    "text": "Intersecting sets\n\n\n\nIntersection plots for community analysis can be used to display the number of intersecting features (e.g. taxa) between samples or sample groups. In other words you can display the shared presence of features between groups.\nAdditionally, you can flip it around to display the number of intersecting groups between taxa. This allows you to determine which taxa are common and uncommon across the groups. We will see this later on.",
+    "crumbs": [
+      "Upset"
+    ]
+  },
+  {
+    "objectID": "upset/upset.html#venn-versus-upset",
+    "href": "upset/upset.html#venn-versus-upset",
+    "title": "Upset",
+    "section": "Venn versus Upset",
+    "text": "Venn versus Upset\nVenn diagrams and upset plots display the intersections between sets. To demonstrate the concept of intersecting sets this section includes a few examples of these plots. These plots will display:\n\nSets of samples (e.g. S1, S2, & S3).\nThe intersection of phyla.\n\n\n3 way venn diagram\nThree way venn digrams are a classic for visualising intersecting sets. Below is an example showing the number of intersecting phyla across three sets of samples (S1, S2, & S3).\n\n\n\n This above plot shows:\n\n6 phyla are found in all samples.\n3 phyla are present in S1 and S3 but not S2.\n1 phylum is found in S2 that are not present in S1 or S3.\nThere are a total of 25 phyla (4+2+1+3+6+3+6=10)\n\n\nMCQs\n\n\n\nPlease attempt the below MCQs based on the above venn diagram.\n\nHow many phyla are present in S2 & S3 but not S1?\n\n 3 18 6\n\n\n\nHow many phyla are present in S3 but not S1 or S2?\n\n 3 18 6\n\n\n\nHow many total phyla are present in S3?\n\n 3 18 6\n\n\n\n\n\n4 way venn digram\nAlthough venn diagrams can be nice, they become more difficult to parse as more sets are included. Below is a 4 way venn diagram to demonstrate this. It includes the same samples as the above venn diagram but with S4 added in.\n\n\n\n\n\nUpset plot\nInstead of venn diagrams we can use upset plots. Below is an upset plots made from the same data as the above 4 way venn diagram. It consists of 2 parts:\n\nA bar chart of the number of phyla found in the intersections of samples.\nThe intersections of samples displayed with dots and lines.\n\nBy default the order of the x-axis is ordered from frequency within the intersections. I.e. from intersection with highest phyla count to lowest phyla count.\n\n\n\n The first three bars/columns of the above plot shows:\n\nS3 has 5 unique phyla.\nThere are 4 phyla found in all the samples.\nS1 & S4 share four phyla not present in S2 or S3.\n\nOn important note is that intersections with values of 0 are not displayed in upset plots.\n\nMCQs\n\n\n\nPlease attempt the below MCQs based on the above upset plot.\n\nHow many phyla are present in S1, S3, and S2 but not S4?\n\n 12 0 2\n\n\n\nHow many phyla are only present in S4?\n\n 12 0 2\n\n\n\nHow many total phyla are present in S2?\n\n 12 0 2",
+    "crumbs": [
+      "Upset"
+    ]
+  },
+  {
+    "objectID": "upset/upset_plot.html",
+    "href": "upset/upset_plot.html",
+    "title": "Upset plot",
+    "section": "",
+    "text": "Upset plot\n\n\n\nNow that we have our upset tibble we can create out upset plot.\nWe’ll carry this out with the ggplot2 package and a variety of its functions.\n\nggplot(aes(x=Samples)): This creates the initial ggplot2 object setting the x aesthetic as our “Sample” column (the intersection list column).\ngeom_bar(): This turns the plot into a bar chart. This will show the number of groups each unique interaction is found in.\nlabs(y=\"Phyla count\"): Let’s us customise the plot labels. In this case we are specifying the y label.\n\nThe main function for creating our upset plot is scale_x_upset() from the package ggupset. This converts the x axis of our bar chart to an intersection scale display (the lines and connected dots). The function is required to make a plot with our upset formatted tibble.\nCreate the upset plot with the below code.\n\n#Upset plot with bar chart\nsamples_phyla_upset_plot &lt;- phyla_upset_tibble |&gt;\n    ggplot2::ggplot(aes(x = Sample)) +\n        #Add bar chart\n        ggplot2::geom_bar() +\n        #Add upset display scale as x axis below bar chart\n        ggupset::scale_x_upset() + \n        #Specify y axis label\n        ggplot2::labs(y=\"Phyla count\")\n#ggsave and display in jupyter\nggplot2::ggsave(filename = \"./sample_intersection_phylum_group_upset.png\", \n                plot = samples_phyla_upset_plot,\n                device = \"png\", dpi = 300, units = \"mm\", height = 200, width = 300)\nIRdisplay::display_png(file=\"./sample_intersection_phylum_group_upset.png\")\n\nThe code will produce the below plot.\n\n\n\nThe above plots shows the number of phyla (groups) found in specific sample (set) intersections. The total phyla count in the bar chart is equal to the total phyla count of our data.\n\nMCQs\n\n\n\nSuper! With the upset plot answer the below MCQs.\nNote: An intersection of one is still an intersection. I.e. Some of the intersections in the plot only contain one sample.\nTip: Right click on image and then select “Open image in new tab” to get a larger image you can zoom in on.\n\nWhich intersection has the highest Phyla count? I.e. which intersection of samples has the highest number of phyla that are only present in it?\n\n MD_ENV_rep2 MD_ENV_rep_1 + MD_ENV_rep2 + UD_ENV_rep3 UD_ENV_rep3 + UD_ENV_rep1 + UD_TSA_rep2\n\n\n\nWhich intersection is on the far right of the plot?\n\n MD_ENV_rep2 MD_ENV_rep_1 + MD_ENV_rep2 + UD_ENV_rep3 UD_ENV_rep3 + UD_ENV_rep1 + UD_TSA_rep2\n\n\n\nWhich of the three intersections is not present in the plot? I.e. which intersection has no phyla unique to it?\n\n MD_ENV_rep2 MD_ENV_rep_1 + MD_ENV_rep2 + UD_ENV_rep3 UD_ENV_rep3 + UD_ENV_rep1 + UD_TSA_rep2",
+    "crumbs": [
+      "Upset",
+      "Upset plots",
+      "Upset plot"
+    ]
+  },
+  {
+    "objectID": "divergence/upper_triangle.html",
+    "href": "divergence/upper_triangle.html",
+    "title": "Upper triangle",
+    "section": "",
+    "text": "Upper triangle\nBelow is all the code needed to create the long tibble from the upper triangle.\n\n#One code cell for the upper triangle long tibble\n\n#Create new upper triangle matrix\nupper_tri_mat &lt;- beta_df_mean\n\n#Convert lower triangle and the diagonal to NAs\nupper_tri_mat[lower.tri(upper_tri_mat, diag = TRUE)] &lt;- NA\n\n#Convert to long data frame of paired distance values\n#We will refer to the different samples in a pair as the left an right pair\nbeta_long_tbl_mean &lt;- \n    upper_tri_mat |&gt;\n        #Convert to data frame\n        as.data.frame() |&gt;\n        #Create column from row names (Sample_l, l = left)\n        tibble::rownames_to_column(\"Sample_L\") |&gt;\n        #Longify\n        #Set names to \"Sample_r\" column (r = right)\n        tidyr::pivot_longer(!Sample_L, names_to=\"Sample_R\", values_to=\"value\") |&gt;\n        #Remove rows with an NA\n        tidyr::drop_na() |&gt;\n        #Create triangle column containing value \"lower\" for each row\n        #REMEMBER To CHANGE THIS VALUE TO \"upper\" IF COPYING AND PASTING\n        dplyr::mutate(triangle=\"upper\")\n#Check head of long tibble\nbeta_long_tbl_mean |&gt; head()\n\n#Extract metadata from original phyloseq object\nmetadf &lt;- phyloseq::sample_data(pseq)\n\n#Add metadata for the left samples\nmetadf_L &lt;-\n    #Extend metadf to match order of left samples\n    metadf[beta_long_tbl_mean$Sample_L,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_L\" as their suffix\ncolnames(metadf_L) &lt;- paste0(colnames(metadf_L),\"_L\")\n#Add metadata_L to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_L)\n\n#Add metadata for the right samples\nmetadf_R &lt;-\n    #Extend metadf to match order of right samples\n    metadf[beta_long_tbl_mean$Sample_R,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_R\" as their suffix\ncolnames(metadf_R) &lt;- paste0(colnames(metadf_R),\"_R\")\n#Add metadata_R to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_R)\n#Check head of our long df\nbeta_long_tbl_meann |&gt; head()\n\n#Assign to a new variable\nbeta_upper_long_tbl_mean &lt;- beta_long_tbl_mean\n\n#Remove unwanted metadata objects\nrm(metadf_L, metadf_R)\n\n#Check head of our long tibble\nbeta_upper_long_tbl_mean |&gt; head()",
     "crumbs": [
       "Divergence",
       "Data format",
-      "Lower triangle"
+      "Upper triangle"
+    ]
+  },
+  {
+    "objectID": "divergence/bind_long_tibbles.html",
+    "href": "divergence/bind_long_tibbles.html",
+    "title": "Bind long tibbles",
+    "section": "",
+    "text": "Bind long tibbles\nOUr final step is to combine the lower and upper long tibbles with dplyr::bind_rows().\nAdditionally, we’ll use the dplyr::glimpse() function to get a preview of the final tibble.\n\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_rows(beta_lower_tbl_mean, beta_upper_long_tbl_mean)\nbeta_long_tbl_mean |&gt; dplyr::glimpse()",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Bind long tibbles"
+    ]
+  },
+  {
+    "objectID": "divergence/intra_site_divergence.html",
+    "href": "divergence/intra_site_divergence.html",
+    "title": "Intra-site divergence",
+    "section": "",
+    "text": "Intra-site divergence",
+    "crumbs": [
+      "Divergence",
+      "Intra-group divergence",
+      "Intra-site divergence"
+    ]
+  },
+  {
+    "objectID": "divergence/intra_media_exercise.html",
+    "href": "divergence/intra_media_exercise.html",
+    "title": "Intra-media exercise",
+    "section": "",
+    "text": "Intra-media exercise",
+    "crumbs": [
+      "Divergence",
+      "Intra-group divergence",
+      "Intra-media exercise"
+    ]
+  },
+  {
+    "objectID": "divergence/intra_divergence.html",
+    "href": "divergence/intra_divergence.html",
+    "title": "Intra-group intro",
+    "section": "",
+    "text": "Intra-group intro",
+    "crumbs": [
+      "Divergence",
+      "Intra-group divergence",
+      "Intra-group intro"
     ]
   }
 ]
