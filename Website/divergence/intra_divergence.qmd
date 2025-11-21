@@ -1,1 +1,182 @@
 # Intra-group intro
+
+With our data formatted we will first carry out intra-group divergence analysis.
+This is analysing the distances within groups (e.g. intranet is a network within an organisation).
+
+In this section we will:
+
+- Analyse the Intra-site divergence (River locations: LD, MD, & UD)
+- Exercise: repeat the previous steps for Intra-media divergence (CVP, ENV, KBC, & TSA)
+
+## Intra-group divergence purpose
+
+When carrying out intra-group divergence we are trying to determine which groups have lower dissimilarity distances between their samples.
+
+If a group has low intra-group distances this indicates the community of the samples are quite similar.
+Whereas, if a group has high intra-group distances this indicates the community of the samples are quite dissimilar.
+
+For example if you were comparing the gut microbiome of farmed fish compared to wild fish you may find:
+
+- Low intra-group distances in the gut microbiome of farmed fish. This could be caused by their consistent diet and treatment with antibiotics leading to similar gut microbiome profiles.
+- High intra-group distances in the gut microbiome of wild fish. This could be caused by the variety in their diet and their ability to move through various environments.
+
+You are able to see evidence of this in ordination plots (PCoA, NMDS etc.) where group clusters being tighter than others indicates lower dissimilarity values.
+For example the below (fictional) PCoA shows tighter clustering in the gut microbiome of farmed fish compared to wild fish.
+
+```{r, echo=FALSE, warning=FALSE, results=FALSE, output=FALSE}
+#Load tidyverse library
+library("tidyverse")
+
+#Create tidy dataset of points that will act as points in ordination plot
+#Comprise of three different datasets with 5 samples each
+#set seed
+set.seed(84368)
+#Sample groups
+group <- c(rep("Wild fish",10), rep("Farmed fish",10))
+#Create axes 1 values
+axes1 <- c(sample(30:60, size = 10),
+            sample(80:150, size = 10)) / 10
+#Create axes 2 values
+axes2 <- c(sample(30:60, size = 10),
+            sample(100:170, size = 10)) / 10
+#Set seed back to default
+set.seed(NULL)
+
+#Create long df
+fish_tbl <- tibble::tibble(group, axes1, axes2)
+
+#Colour palette to use
+ibm_pal <- c("#648fff","#dc267f","#fe6100")
+
+```
+
+```{r, echo=FALSE}
+ggplot2::ggplot(data = fish_tbl, mapping=aes(x = axes1, y = axes2, colour = group)) +
+    ggplot2::geom_point(size=4) +
+    ggplot2::labs(colour = "Groups") +
+    ggplot2::theme(text=ggplot2::element_text(size = 15)) +
+    ggplot2::scale_colour_manual(values = ibm_pal) +
+    ggplot2::scale_x_continuous(name="Axes 1", breaks=c(0,5,10,15,20), limits = c(0,20)) +
+    ggplot2::scale_y_continuous(name="Axes 2", breaks=c(0,5,10,15,20), limits = c(0,20))
+```
+
+So why carry out divergence analysis?
+Divergence analysis directly uses the dissimilarity values rather than using ordination values that are calculated from the dissimilarity values.
+Therefore, if you are interested in and making statements about intra-group dissimilarity it is best to carry out visual and statistical intra-group divergence analysis.
+
+## Groupings and pairs
+
+Wit intra-group divergence we look at the dissimilarity distances between all the pairs within the same group.
+
+### Example data
+
+Let's say we have 3 groups (G1, G2, & G3) each with 3 samples.
+With this example data we acquire the below ordination plot (e.g. PCoA or NMDS).
+
+```{r, echo=FALSE, warning=FALSE, results=FALSE, output=FALSE}
+#Load tidyverse library
+library("tidyverse")
+
+#Create tidy dataset of points that will act as points in ordination plot
+#Comprise of three different datasets with 5 samples each
+#Sample groups
+group <- c(rep("G1",3), rep("G2",3), rep("G3",3))
+#Create axes 1 values
+axes1 <- c(c(9.5,6,13),
+            c(2,4,7.5),
+            c(14,17,18))
+#Create axes 2 values
+axes2 <- c(c(1.5,4,3),
+            c(16,18,18.5),
+            c(17,15,10))
+#Create long df
+tbl <- tibble::tibble(group, axes1, axes2)
+
+#Colour palette to use
+ibm_pal <- c("#648fff","#dc267f","#fe6100")
+```
+
+```{r, echo=FALSE}
+ggplot2::ggplot(data = tbl, mapping=aes(x = axes1, y = axes2, colour = group)) +
+    ggplot2::geom_point(size=4) +
+    ggplot2::labs(colour = "Groups") +
+    ggplot2::theme(text=ggplot2::element_text(size = 15)) +
+    ggplot2::scale_colour_manual(values = ibm_pal) +
+    ggplot2::scale_x_continuous(name="Axes 1", breaks=c(0,5,10,15,20), limits = c(0,20)) +
+    ggplot2::scale_y_continuous(name="Axes 2", breaks=c(0,5,10,15,20), limits = c(0,20))
+```
+
+### Intra-group pairs
+
+In this example data we would have 3 pairs in each group, this can be seen in the below plot.
+A 4 sample group would have 6 pairs, and a 5 sample group would have 10 pairs.
+To calculate the number of pairs in a set you can use `n(n-1)/2`.
+
+The below plot shows a line between each sample and its intra-group pairs.
+We will only use the distances of these pairs for our intra-group divergence analysis.
+
+__Note:__ It is important to note that we use the beta diversity distance (e.g. UniFrac) not the ordination distance (e.g. PCoA) for divergence analysis.
+
+```{r, echo=FALSE}
+ggplot2::ggplot(data = tbl) +
+    ggplot2::labs(x="Axes 1", y = "Axes 2", colour = "Groups") +
+     ggplot2::theme(text=ggplot2::element_text(size = 15)) +
+    ggplot2::scale_colour_manual(values = ibm_pal) +
+    ggplot2::scale_x_continuous(name="Axes 1", breaks=c(0,5,10,15,20), limits = c(0,20)) +
+    ggplot2::scale_y_continuous(name="Axes 2", breaks=c(0,5,10,15,20), limits = c(0,20)) +
+    #Add custom lines
+    #Group 1
+    ggplot2::annotate("segment", x = 9.5, xend = 6, y = 1.5, yend = 4, linewidth = 1) +
+    ggplot2::annotate("segment", x = 9.5, xend = 13, y = 1.5, yend = 3, linewidth = 1) +
+    ggplot2::annotate("segment", x = 6, xend = 13, y = 4, yend = 3, linewidth = 1) +
+    #Group 2
+    ggplot2::annotate("segment", x = 2, xend = 4, y = 16, yend = 18, linewidth = 1) +
+    ggplot2::annotate("segment", x = 2, xend = 7.5, y = 16, yend = 18.5, linewidth = 1) +
+    ggplot2::annotate("segment", x = 4, xend = 7.5, y = 18, yend = 18.5, linewidth = 1) +
+    #Group 3
+    ggplot2::annotate("segment", x = 14, xend = 17, y = 17, yend = 15, linewidth = 1) +
+    ggplot2::annotate("segment", x = 14, xend = 18, y = 17, yend = 10, linewidth = 1) +
+    ggplot2::annotate("segment", x = 17, xend = 18, y = 15, yend = 10, linewidth = 1) +
+    #Add points at end so they overlap the lines
+    ggplot2::geom_point(mapping=aes(x = axes1, y = axes2, colour = group),size=4)
+```
+
+Below is a further example where we have added one more sample to each group.
+
+```{r, echo=FALSE}
+#Add fourth sample to each group
+tbl[10:12,"group"] <- c("G1","G2","G3") 
+tbl[10:12,"axes1"] <- c(8,5.5,15)
+tbl[10:12,"axes2"] <- c(5.5,16.5,11.5)
+
+ggplot2::ggplot(data = tbl) +
+    ggplot2::labs(x="Axes 1", y = "Axes 2", colour = "Groups") +
+     ggplot2::theme(text=ggplot2::element_text(size = 15)) +
+    ggplot2::scale_colour_manual(values = ibm_pal) +
+    ggplot2::scale_x_continuous(name="Axes 1", breaks=c(0,5,10,15,20), limits = c(0,20)) +
+    ggplot2::scale_y_continuous(name="Axes 2", breaks=c(0,5,10,15,20), limits = c(0,20)) +
+    #Add custom lines
+    #Group 1
+    ggplot2::annotate("segment", x = 9.5, xend = 6, y = 1.5, yend = 4, linewidth = 1) +
+    ggplot2::annotate("segment", x = 9.5, xend = 13, y = 1.5, yend = 3, linewidth = 1) +
+    ggplot2::annotate("segment", x = 6, xend = 13, y = 4, yend = 3, linewidth = 1) +
+    ggplot2::annotate("segment", x = 8, xend = 9.5, y = 5.5, yend = 1.5, linewidth = 1) +
+    ggplot2::annotate("segment", x = 8, xend = 6, y = 5.5, yend = 4, linewidth = 1) +
+    ggplot2::annotate("segment", x = 8, xend = 13, y = 5.5, yend = 3, linewidth = 1) +
+    #Group 2
+    ggplot2::annotate("segment", x = 2, xend = 4, y = 16, yend = 18, linewidth = 1) +
+    ggplot2::annotate("segment", x = 2, xend = 7.5, y = 16, yend = 18.5, linewidth = 1) +
+    ggplot2::annotate("segment", x = 4, xend = 7.5, y = 18, yend = 18.5, linewidth = 1) +
+    ggplot2::annotate("segment", x = 5.5, xend = 2, y = 16.5, yend = 16, linewidth = 1) +
+    ggplot2::annotate("segment", x = 5.5, xend = 4, y = 16.5, yend = 18, linewidth = 1) +
+    ggplot2::annotate("segment", x = 5.5, xend = 7.5, y = 16.5, yend = 18.5, linewidth = 1) +
+    #Group 3
+    ggplot2::annotate("segment", x = 14, xend = 17, y = 17, yend = 15, linewidth = 1) +
+    ggplot2::annotate("segment", x = 14, xend = 18, y = 17, yend = 10, linewidth = 1) +
+    ggplot2::annotate("segment", x = 17, xend = 18, y = 15, yend = 10, linewidth = 1) +
+    ggplot2::annotate("segment", x = 15, xend = 14, y = 11.5, yend = 17, linewidth = 1) +
+    ggplot2::annotate("segment", x = 15, xend = 17, y = 11.5, yend = 15, linewidth = 1) +
+    ggplot2::annotate("segment", x = 15, xend = 18, y = 11.5, yend = 10, linewidth = 1) +
+    #Add points at end so they overlap the lines
+    ggplot2::geom_point(mapping=aes(x = axes1, y = axes2, colour = group),size=4)
+```

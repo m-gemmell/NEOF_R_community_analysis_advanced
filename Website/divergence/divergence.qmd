@@ -1,6 +1,8 @@
 # Divergence
 
 
+To remember the difference between intra and inter I remember the intranet (network within an organisation) and the internet (network between organisation). (intra mean within e.g. intranet).
+
 ```{r, echo=FALSE, warning=FALSE, results=FALSE, output=FALSE}
 #Load tidyverse library
 library("tidyverse")

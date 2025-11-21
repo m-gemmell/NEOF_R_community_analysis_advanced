@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -425,7 +460,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#intra-site-divergence" id="toc-intra-site-divergence" class="nav-link active" data-scroll-target="#intra-site-divergence">Intra-site divergence</a></li>
+  <li><a href="#intra-site-divergence" id="toc-intra-site-divergence" class="nav-link active" data-scroll-target="#intra-site-divergence">Intra-site divergence</a>
+  <ul class="collapse">
+  <li><a href="#intra-site-tibble" id="toc-intra-site-tibble" class="nav-link" data-scroll-target="#intra-site-tibble">Intra-site tibble</a></li>
+  <li><a href="#violin-plot" id="toc-violin-plot" class="nav-link" data-scroll-target="#violin-plot">Violin plot</a></li>
+  <li><a href="#stats" id="toc-stats" class="nav-link" data-scroll-target="#stats">Stats</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -438,8 +479,77 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="intra-site-divergence" class="level1">
 <h1>Intra-site divergence</h1>
+<p>To analyse the Intra-site divergence we will:</p>
+<ul>
+<li>Subset our long <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> of distances and metadata to only contain one set of intra-group distances.</li>
+<li>Create a violin plot of the intra-site distances</li>
+<li>Carry out a pairwise wilcox test to statistically compare the divergences between sites.</li>
+</ul>
+<p>As a reminder we are using <a href="https://neof-workshops.github.io/R_community_whqkt8/iterative_rarefaction/19-Beta_distances_metrics.html#unifrac-distances">weighted UniFrac distances</a>.</p>
+<section id="intra-site-tibble" class="level2">
+<h2 class="anchored" data-anchor-id="intra-site-tibble">Intra-site tibble</h2>
+<p>Our first step is to subset out <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> so we only have the intra-site distances.</p>
+<p>For this step we pip (<a href="https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html"><code>|&gt;</code></a>) our weighted UniFrac long <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> to 2 different <a href="https://neof-workshops.github.io/Tidyverse/dplyr/filter.html">‘dplyr::filter()’</a> commands.</p>
+<p>First the lower triangle values are kept to remove the upper triangle values. The lower triangle values and upper triangle values are duplicated the difference being which sample is set as the left and right sample. We only want one value from each pair for intra-group divergence as each value will only be used in one divergence grouping.</p>
+<p>The next filter step is to only retain samples where the left site grouping (<code>site_L</code>) is the same as the right site grouping (<code>site_R</code>). This means we only retain the intra-site distances. Two important notes:</p>
+<ul>
+<li>In you own analyses and the exercise ensure you use the columns for the intra-grouping you are interested in.
+<ul>
+<li>E.g. you would use <code>media_L == media_R</code> when analysing intra-media divergence of this dataset.</li>
+</ul></li>
+<li>We removed the intra-sample distances (e.g.&nbsp;sample 1 to sample 1 distance) in our data formatting step as we would never want them for divergence analysis.</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Subset long tibble so only rows where site_L and site_R are identical of the lower triangle</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#I.e. the long tibble only contains one set of paired distances within sites (Intra-site) </span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>intra_site_wunifrac_long_tbl <span class="ot">&lt;-</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    beta_long_tbl_mean <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Filter to keep lower triangle rows</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">filter</span>(triangle <span class="sc">==</span> <span class="st">"lower"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Filter to keep rows where site_L is the same as site_R (intra site)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">filter</span>(site_L <span class="sc">==</span> site_R)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Check head of long tbl</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>intra_site_wunifrac_long_tbl <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="violin-plot" class="level2">
+<h2 class="anchored" data-anchor-id="violin-plot">Violin plot</h2>
+<p>A bxo plot is a good method to visualise divergence. However, we’ll make it even nicer by making a violin plot.</p>
+<p>In the below plot we separate the values by site using <code>site_L</code>, we could use <code>site_R</code> and their would be no difference as the values in <code>site_L</code> and `site_R are identical.</p>
+<p>For a reminder on violin plots please see the <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-diversity-violin-plot">R community analysis workbook</a>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Intra-site divergence violin plot</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>intra_site_violin_plot <span class="ot">&lt;-</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    intra_site_wunifrac_long_tbl <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> site_L, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_violin</span>() <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    ggforce<span class="sc">::</span><span class="fu">geom_sina</span>(<span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Site"</span>, <span class="at">y =</span> <span class="st">"Weighted UniFrac"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">title=</span><span class="st">"Intra-site divergence with Weighted UniFrac dissimilarity"</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"./wunifrac_intra_site_divergence_violinplot.png"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot =</span> intra_site_violin_plot,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">device =</span> <span class="st">"png"</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">"mm"</span>, <span class="at">height =</span> <span class="dv">100</span>, <span class="at">width =</span> <span class="dv">150</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">"./wunifrac_intra_site_divergence_violinplot.png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="stats" class="level2">
+<h2 class="anchored" data-anchor-id="stats">Stats</h2>
+<p>As with other box/violin plots we can compare the different intra-site distance groupings with a pairwise wilcox test. For more information please see the <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-stats">R community analysis workbook</a>.</p>
+<p>The below analysis carries our P value adjustment via the holm method.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(intra_site_wunifrac_long_tbl<span class="sc">$</span>value,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                        intra_site_wunifrac_long_tbl<span class="sc">$</span>site_L)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="interpretation">Interpretation</h2>
+<p>With our results we can see the violin plots of the three sites have significant overlap. Additionally, there is no significant difference between the groupings of intra-site distances.</p>
+<p>In this case we can’t see any definitive difference in divergence within the different sites. Therefore we’ll carry out some more analysis.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

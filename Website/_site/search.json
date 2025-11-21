@@ -371,51 +371,123 @@
     ]
   },
   {
-    "objectID": "divergence/lower_triangle.html",
-    "href": "divergence/lower_triangle.html",
-    "title": "Lower triangle",
+    "objectID": "divergence/metadata_addition.html",
+    "href": "divergence/metadata_addition.html",
+    "title": "Metadata addition",
     "section": "",
-    "text": "Our first formatting step is to create a long data frame of the dissimilarity values in the lower triangle of the dissimilarity matrix.\n\n\nBefore we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in data and setup page.\nOnce it is loaded we can view the top 10 rows and columns of the matrix.\n\n#Check first 10 rows and columns of beta dissimilarity matrix\nbeta_df_mean[1:10,1:10]\n\n\n\n\nThe next step is to convert the matrix so all but the lower triangle values are NAs.\n\n\nWe’ll first carry this out with a demonstration.\nFirst create a small version of our distance matrix so it is easy to view.\n\n#Create demo distance matrix\ndemo_mat &lt;- beta_df_mean[1:6,1:6]\ndemo_mat\n\nWe will use the upper.tri() function for our conversion. It creates a logical matrix from a matrix where the upper triangle values are TRUE and the lower triangle values are FALSE.\nThe diagonal values are set with the option diag=. We will set them to TRUE with diag=TRUE.\n\n#Demonstration of upper.tri\nupper.tri(demo_mat, diag=TRUE)\n\nWe can then subset out matrix with this function to assign the upper triangle and diagonal values as NA.\n\n#Convert upper triangle and diaganol to NA\ndemo_mat[upper.tri(demo_mat, diag=TRUE)] &lt;- NA\ndemo_mat\n\n\n\n\nWith the above demonstrated we’ll create our lower triangle matrix. For this we will create a new object for the lower triangle matrix so our edits won’t change the initial beta_df_mean object which we will need later.\n\n#Create new lower triangle matrix\nlower_tri_mat &lt;- beta_df_mean\n#Convert upper triangle and the diagonal to NAs\nlower_tri_mat[upper.tri(lower_tri_mat, diag = TRUE)] &lt;- NA\n#Check first 10 rows and columns\nlower_tri_mat[1:10,1:10]\n\n\n\n\n\nWith our lower triangle matrix we can create a long data frame for future ggplot2 plot production.\nFor this code we utilising piping (|&gt;) with the below steps:\n\nConvert the matrix lower_tri_mat to a data frame with as.data.frame()\nMove the row names to column called “Sample_L” with tibble::rownames_to_column\nLongify all the columns except the “Sample_L” column with tidyr::pivot_longer()\n\nThis also serves to convert our data frame to a tibble\n\nRemove rows with NAs (i.e. the upper triangle and diaganol values) with tidyr::drop_na()\nCreate a column called triangle with each value being “lower” with dplyr::mutate(), this is required later\n\n\n#Convert to long data frame of paired distance values\n#We will refer to the different samples in a pair as the left an right pair\nbeta_long_tbl_mean &lt;- \n    lower_tri_mat |&gt;\n        #Convert to data frame\n        as.data.frame() |&gt;\n        #Create column from row names (Sample_l, l = left)\n        tibble::rownames_to_column(\"Sample_L\") |&gt;\n        #Longify\n        #Set names to \"Sample_r\" column (r = right)\n        tidyr::pivot_longer(!Sample_L, names_to=\"Sample_R\", values_to=\"value\") |&gt;\n        #Remove rows with an NA\n        tidyr::drop_na() |&gt;\n        #Create triangle column containing value \"lower\" for each row\n        dplyr::mutate(triangle=\"lower\")\n#Check head of long tibble\nbeta_long_tbl_mean |&gt; head()\n\nGreat! Next we’ll add our metadata to this long data frame.",
+    "text": "Data needs metadata for us to make sense of it. In this section we’ll add our metadata from our phyloseq object (pseq) to the long data frame we have created.\nWe’ll need to add the metadata twice, once for our left sample and once for our right samples.\n\n\nFor ease we’ll first extract our metadata from the phyloseq object.\n\n#Extract metadata from original phyloseq object\nmetadf &lt;- phyloseq::sample_data(pseq)\n#Check head of metadata\nmetadf |&gt; head()\n\n\n\n\nWith our metadata data frame we will first add the metadata for the left samples to our long tibble. We’ll do this for the left samples first so it is on the left side of the final tibble compared to the right sample metadata.\nThis formatting requires a few steps:\n\nCreate the tibble (metadf_L) of the metadata matching the order of the long tibble.\n\ntibble::as_tibble(): Converts a data frame to a tibble.\ndplyr::select(): Select columns from a tibble.\n\nRename the columns so they have _L as their suffix e.g. site to site_L\nBind our long tibble of beta diversity values (beta_long_tbl_mean) to our matching left metadata tibble (metadf_L)\n\ndplyr::bind_cols:\n\n\n\n#Add metadata for the left samples\nmetadf_L &lt;-\n    #Extend metadf to match order of left samples\n    metadf[beta_long_tbl_mean$Sample_L,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_L\" as their suffix\ncolnames(metadf_L) &lt;- paste0(colnames(metadf_L),\"_L\")\n#Add metadata_L to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_L)\n#Check head of our long df\nbeta_long_tbl_meann |&gt; head()\n\n\n\n\nIf you are ever unsure of what a step is doing you can create a new cell and run the specific parts to see what the output is.\nFor example if you are not sure how the initial metadf_L creation is working you could run the following code cells. In the below cells I like to pipe (|&gt;) the final output to head() so only the top 6 rows are printed. Printing the entirety of large data frames or tibbles can be overwhelming.\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt; head()\n\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt;\n#Convert to tibble for tidyverse manipulation\ntibble::as_tibble() |&gt; head()\n\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt;\n#Convert to tibble for tidyverse manipulation\ntibble::as_tibble() |&gt;\n#Remove sample.name row\ndplyr::select(-1) |&gt; head()\n\n\n\n\nNext carry out the same steps used for the left samples’ metadata but for the right samples.\nNote: Copying and pasting your own code is great. However, ensure you change all the parts you need to, this will primarily changing “L” to “R” in multiple locations.\n\n#Add metadata for the right samples\nmetadf_R &lt;-\n    #Extend metadf to match order of right samples\n    metadf[beta_long_tbl_mean$Sample_R,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_R\" as their suffix\ncolnames(metadf_R) &lt;- paste0(colnames(metadf_R),\"_R\")\n#Add metadata_R to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_R)\n#Check head of our long df\nbeta_long_tbl_meann |&gt; head()\n\n\n\n\nBrilliant! before moving onto adding the info from the upper triangle we’ll manage some variables.\nFirst assign the object beta_long_tbl_mean to beta_lower_long_tbl_mean. This will allow us to reuse a lot of previous code for the upper triangle long tibble creation whilst reusing the beta_long_tbl_mean variable.\n\n#Assign to a new variable\nbeta_lower_long_tbl_mean &lt;- beta_long_tbl_mean\n\nTo clear up some space we’ll remove object we don’t need any more.\n\n#Remove unwanted metadata objects\nrm(metadf_L, metadf_R)",
     "crumbs": [
       "Divergence",
       "Data format",
-      "Lower triangle"
+      "Metadata addition"
     ]
   },
   {
-    "objectID": "divergence/lower_triangle.html#dissimilarity-matrix",
-    "href": "divergence/lower_triangle.html#dissimilarity-matrix",
-    "title": "Lower triangle",
+    "objectID": "divergence/metadata_addition.html#extract-metadata-from-phyloseq",
+    "href": "divergence/metadata_addition.html#extract-metadata-from-phyloseq",
+    "title": "Metadata addition",
     "section": "",
-    "text": "Before we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in data and setup page.\nOnce it is loaded we can view the top 10 rows and columns of the matrix.\n\n#Check first 10 rows and columns of beta dissimilarity matrix\nbeta_df_mean[1:10,1:10]",
+    "text": "For ease we’ll first extract our metadata from the phyloseq object.\n\n#Extract metadata from original phyloseq object\nmetadf &lt;- phyloseq::sample_data(pseq)\n#Check head of metadata\nmetadf |&gt; head()",
     "crumbs": [
       "Divergence",
       "Data format",
-      "Lower triangle"
+      "Metadata addition"
     ]
   },
   {
-    "objectID": "divergence/lower_triangle.html#lower-triangle-matrix",
-    "href": "divergence/lower_triangle.html#lower-triangle-matrix",
-    "title": "Lower triangle",
+    "objectID": "divergence/metadata_addition.html#metadata-for-left-samples",
+    "href": "divergence/metadata_addition.html#metadata-for-left-samples",
+    "title": "Metadata addition",
     "section": "",
-    "text": "The next step is to convert the matrix so all but the lower triangle values are NAs.\n\n\nWe’ll first carry this out with a demonstration.\nFirst create a small version of our distance matrix so it is easy to view.\n\n#Create demo distance matrix\ndemo_mat &lt;- beta_df_mean[1:6,1:6]\ndemo_mat\n\nWe will use the upper.tri() function for our conversion. It creates a logical matrix from a matrix where the upper triangle values are TRUE and the lower triangle values are FALSE.\nThe diagonal values are set with the option diag=. We will set them to TRUE with diag=TRUE.\n\n#Demonstration of upper.tri\nupper.tri(demo_mat, diag=TRUE)\n\nWe can then subset out matrix with this function to assign the upper triangle and diagonal values as NA.\n\n#Convert upper triangle and diaganol to NA\ndemo_mat[upper.tri(demo_mat, diag=TRUE)] &lt;- NA\ndemo_mat\n\n\n\n\nWith the above demonstrated we’ll create our lower triangle matrix. For this we will create a new object for the lower triangle matrix so our edits won’t change the initial beta_df_mean object which we will need later.\n\n#Create new lower triangle matrix\nlower_tri_mat &lt;- beta_df_mean\n#Convert upper triangle and the diagonal to NAs\nlower_tri_mat[upper.tri(lower_tri_mat, diag = TRUE)] &lt;- NA\n#Check first 10 rows and columns\nlower_tri_mat[1:10,1:10]",
+    "text": "With our metadata data frame we will first add the metadata for the left samples to our long tibble. We’ll do this for the left samples first so it is on the left side of the final tibble compared to the right sample metadata.\nThis formatting requires a few steps:\n\nCreate the tibble (metadf_L) of the metadata matching the order of the long tibble.\n\ntibble::as_tibble(): Converts a data frame to a tibble.\ndplyr::select(): Select columns from a tibble.\n\nRename the columns so they have _L as their suffix e.g. site to site_L\nBind our long tibble of beta diversity values (beta_long_tbl_mean) to our matching left metadata tibble (metadf_L)\n\ndplyr::bind_cols:\n\n\n\n#Add metadata for the left samples\nmetadf_L &lt;-\n    #Extend metadf to match order of left samples\n    metadf[beta_long_tbl_mean$Sample_L,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_L\" as their suffix\ncolnames(metadf_L) &lt;- paste0(colnames(metadf_L),\"_L\")\n#Add metadata_L to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_L)\n#Check head of our long df\nbeta_long_tbl_meann |&gt; head()",
     "crumbs": [
       "Divergence",
       "Data format",
-      "Lower triangle"
+      "Metadata addition"
     ]
   },
   {
-    "objectID": "divergence/lower_triangle.html#long-data-frame-of-lower-triangle-values",
-    "href": "divergence/lower_triangle.html#long-data-frame-of-lower-triangle-values",
-    "title": "Lower triangle",
+    "objectID": "divergence/metadata_addition.html#testing-code",
+    "href": "divergence/metadata_addition.html#testing-code",
+    "title": "Metadata addition",
     "section": "",
-    "text": "With our lower triangle matrix we can create a long data frame for future ggplot2 plot production.\nFor this code we utilising piping (|&gt;) with the below steps:\n\nConvert the matrix lower_tri_mat to a data frame with as.data.frame()\nMove the row names to column called “Sample_L” with tibble::rownames_to_column\nLongify all the columns except the “Sample_L” column with tidyr::pivot_longer()\n\nThis also serves to convert our data frame to a tibble\n\nRemove rows with NAs (i.e. the upper triangle and diaganol values) with tidyr::drop_na()\nCreate a column called triangle with each value being “lower” with dplyr::mutate(), this is required later\n\n\n#Convert to long data frame of paired distance values\n#We will refer to the different samples in a pair as the left an right pair\nbeta_long_tbl_mean &lt;- \n    lower_tri_mat |&gt;\n        #Convert to data frame\n        as.data.frame() |&gt;\n        #Create column from row names (Sample_l, l = left)\n        tibble::rownames_to_column(\"Sample_L\") |&gt;\n        #Longify\n        #Set names to \"Sample_r\" column (r = right)\n        tidyr::pivot_longer(!Sample_L, names_to=\"Sample_R\", values_to=\"value\") |&gt;\n        #Remove rows with an NA\n        tidyr::drop_na() |&gt;\n        #Create triangle column containing value \"lower\" for each row\n        dplyr::mutate(triangle=\"lower\")\n#Check head of long tibble\nbeta_long_tbl_mean |&gt; head()\n\nGreat! Next we’ll add our metadata to this long data frame.",
+    "text": "If you are ever unsure of what a step is doing you can create a new cell and run the specific parts to see what the output is.\nFor example if you are not sure how the initial metadf_L creation is working you could run the following code cells. In the below cells I like to pipe (|&gt;) the final output to head() so only the top 6 rows are printed. Printing the entirety of large data frames or tibbles can be overwhelming.\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt; head()\n\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt;\n#Convert to tibble for tidyverse manipulation\ntibble::as_tibble() |&gt; head()\n\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt;\n#Convert to tibble for tidyverse manipulation\ntibble::as_tibble() |&gt;\n#Remove sample.name row\ndplyr::select(-1) |&gt; head()",
     "crumbs": [
       "Divergence",
       "Data format",
-      "Lower triangle"
+      "Metadata addition"
+    ]
+  },
+  {
+    "objectID": "divergence/metadata_addition.html#metadata-for-right-samples",
+    "href": "divergence/metadata_addition.html#metadata-for-right-samples",
+    "title": "Metadata addition",
+    "section": "",
+    "text": "Next carry out the same steps used for the left samples’ metadata but for the right samples.\nNote: Copying and pasting your own code is great. However, ensure you change all the parts you need to, this will primarily changing “L” to “R” in multiple locations.\n\n#Add metadata for the right samples\nmetadf_R &lt;-\n    #Extend metadf to match order of right samples\n    metadf[beta_long_tbl_mean$Sample_R,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_R\" as their suffix\ncolnames(metadf_R) &lt;- paste0(colnames(metadf_R),\"_R\")\n#Add metadata_R to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_R)\n#Check head of our long df\nbeta_long_tbl_meann |&gt; head()",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Metadata addition"
+    ]
+  },
+  {
+    "objectID": "divergence/metadata_addition.html#variable-management",
+    "href": "divergence/metadata_addition.html#variable-management",
+    "title": "Metadata addition",
+    "section": "",
+    "text": "Brilliant! before moving onto adding the info from the upper triangle we’ll manage some variables.\nFirst assign the object beta_long_tbl_mean to beta_lower_long_tbl_mean. This will allow us to reuse a lot of previous code for the upper triangle long tibble creation whilst reusing the beta_long_tbl_mean variable.\n\n#Assign to a new variable\nbeta_lower_long_tbl_mean &lt;- beta_long_tbl_mean\n\nTo clear up some space we’ll remove object we don’t need any more.\n\n#Remove unwanted metadata objects\nrm(metadf_L, metadf_R)",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Metadata addition"
+    ]
+  },
+  {
+    "objectID": "divergence/intra_site_divergence.html",
+    "href": "divergence/intra_site_divergence.html",
+    "title": "Intra-site divergence",
+    "section": "",
+    "text": "To analyse the Intra-site divergence we will:\n\nSubset our long tibble of distances and metadata to only contain one set of intra-group distances.\nCreate a violin plot of the intra-site distances\nCarry out a pairwise wilcox test to statistically compare the divergences between sites.\n\nAs a reminder we are using weighted UniFrac distances.\n\n\nOur first step is to subset out tibble so we only have the intra-site distances.\nFor this step we pip (|&gt;) our weighted UniFrac long tibble to 2 different ‘dplyr::filter()’ commands.\nFirst the lower triangle values are kept to remove the upper triangle values. The lower triangle values and upper triangle values are duplicated the difference being which sample is set as the left and right sample. We only want one value from each pair for intra-group divergence as each value will only be used in one divergence grouping.\nThe next filter step is to only retain samples where the left site grouping (site_L) is the same as the right site grouping (site_R). This means we only retain the intra-site distances. Two important notes:\n\nIn you own analyses and the exercise ensure you use the columns for the intra-grouping you are interested in.\n\nE.g. you would use media_L == media_R when analysing intra-media divergence of this dataset.\n\nWe removed the intra-sample distances (e.g. sample 1 to sample 1 distance) in our data formatting step as we would never want them for divergence analysis.\n\n\n#Subset long tibble so only rows where site_L and site_R are identical of the lower triangle\n#I.e. the long tibble only contains one set of paired distances within sites (Intra-site) \nintra_site_wunifrac_long_tbl &lt;-\n    beta_long_tbl_mean |&gt;\n        #Filter to keep lower triangle rows\n        dplyr::filter(triangle == \"lower\") |&gt;\n        #Filter to keep rows where site_L is the same as site_R (intra site)\n        dplyr::filter(site_L == site_R)\n#Check head of long tbl\nintra_site_wunifrac_long_tbl |&gt; head()\n\n\n\n\nA bxo plot is a good method to visualise divergence. However, we’ll make it even nicer by making a violin plot.\nIn the below plot we separate the values by site using site_L, we could use site_R and their would be no difference as the values in site_L and `site_R are identical.\nFor a reminder on violin plots please see the R community analysis workbook.\n\n#Intra-site divergence violin plot\nintra_site_violin_plot &lt;-\n    intra_site_wunifrac_long_tbl |&gt;\n    ggplot2::ggplot(aes(x = site_L, y = value)) +\n    ggplot2::geom_violin() +\n    ggforce::geom_sina(alpha=0.5) +\n    ggplot2::labs(x = \"Site\", y = \"Weighted UniFrac\",\n                    title=\"Intra-site divergence with Weighted UniFrac dissimilarity\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_intra_site_divergence_violinplot.png\",\n        plot = intra_site_violin_plot,\n        device = \"png\", dpi = 300, units = \"mm\", height = 100, width = 150)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_intra_site_divergence_violinplot.png\")\n\n\n\n\nAs with other box/violin plots we can compare the different intra-site distance groupings with a pairwise wilcox test. For more information please see the R community analysis workbook.\nThe below analysis carries our P value adjustment via the holm method.\n\npairwise.wilcox.test(intra_site_wunifrac_long_tbl$value,\n                        intra_site_wunifrac_long_tbl$site_L)\n\n\n\n\nWith our results we can see the violin plots of the three sites have significant overlap. Additionally, there is no significant difference between the groupings of intra-site distances.\nIn this case we can’t see any definitive difference in divergence within the different sites. Therefore we’ll carry out some more analysis.",
+    "crumbs": [
+      "Divergence",
+      "Intra-group divergence",
+      "Intra-site divergence"
+    ]
+  },
+  {
+    "objectID": "divergence/intra_site_divergence.html#intra-site-tibble",
+    "href": "divergence/intra_site_divergence.html#intra-site-tibble",
+    "title": "Intra-site divergence",
+    "section": "",
+    "text": "Our first step is to subset out tibble so we only have the intra-site distances.\nFor this step we pip (|&gt;) our weighted UniFrac long tibble to 2 different ‘dplyr::filter()’ commands.\nFirst the lower triangle values are kept to remove the upper triangle values. The lower triangle values and upper triangle values are duplicated the difference being which sample is set as the left and right sample. We only want one value from each pair for intra-group divergence as each value will only be used in one divergence grouping.\nThe next filter step is to only retain samples where the left site grouping (site_L) is the same as the right site grouping (site_R). This means we only retain the intra-site distances. Two important notes:\n\nIn you own analyses and the exercise ensure you use the columns for the intra-grouping you are interested in.\n\nE.g. you would use media_L == media_R when analysing intra-media divergence of this dataset.\n\nWe removed the intra-sample distances (e.g. sample 1 to sample 1 distance) in our data formatting step as we would never want them for divergence analysis.\n\n\n#Subset long tibble so only rows where site_L and site_R are identical of the lower triangle\n#I.e. the long tibble only contains one set of paired distances within sites (Intra-site) \nintra_site_wunifrac_long_tbl &lt;-\n    beta_long_tbl_mean |&gt;\n        #Filter to keep lower triangle rows\n        dplyr::filter(triangle == \"lower\") |&gt;\n        #Filter to keep rows where site_L is the same as site_R (intra site)\n        dplyr::filter(site_L == site_R)\n#Check head of long tbl\nintra_site_wunifrac_long_tbl |&gt; head()",
+    "crumbs": [
+      "Divergence",
+      "Intra-group divergence",
+      "Intra-site divergence"
+    ]
+  },
+  {
+    "objectID": "divergence/intra_divergence.html",
+    "href": "divergence/intra_divergence.html",
+    "title": "Intra-group intro",
+    "section": "",
+    "text": "With our data formatted we will first carry out intra-group divergence analysis. This is analysing the distances within groups (e.g. intranet is a network within an organisation).\nIn this section we will:\n\nAnalyse the Intra-site divergence (River locations: LD, MD, & UD)\nExercise: repeat the previous steps for Intra-media divergence (CVP, ENV, KBC, & TSA)\n\n\n\nWhen carrying out intra-group divergence we are trying to determine which groups have lower dissimilarity distances between their samples.\nIf a group has low intra-group distances this indicates the community of the samples are quite similar. Whereas, if a group has high intra-group distances this indicates the community of the samples are quite dissimilar.\nFor example if you were comparing the gut microbiome of farmed fish compared to wild fish you may find:\n\nLow intra-group distances in the gut microbiome of farmed fish. This could be caused by their consistent diet and treatment with antibiotics leading to similar gut microbiome profiles.\nHigh intra-group distances in the gut microbiome of wild fish. This could be caused by the variety in their diet and their ability to move through various environments.\n\nYou are able to see evidence of this in ordination plots (PCoA, NMDS etc.) where group clusters being tighter than others indicates lower dissimilarity values. For example the below (fictional) PCoA shows tighter clustering in the gut microbiome of farmed fish compared to wild fish.\n\n\n\n\n\n\n\n\n\nSo why carry out divergence analysis? Divergence analysis directly uses the dissimilarity values rather than using ordination values that are calculated from the dissimilarity values. Therefore, if you are interested in and making statements about intra-group dissimilarity it is best to carry out visual and statistical intra-group divergence analysis.\n\n\n\nWit intra-group divergence we look at the dissimilarity distances between all the pairs within the same group.\n\n\nLet’s say we have 3 groups (G1, G2, & G3) each with 3 samples. With this example data we acquire the below ordination plot (e.g. PCoA or NMDS).\n\n\n\n\n\n\n\n\n\n\n\n\nIn this example data we would have 3 pairs in each group, this can be seen in the below plot. A 4 sample group would have 6 pairs, and a 5 sample group would have 10 pairs. To calculate the number of pairs in a set you can use n(n-1)/2.\nThe below plot shows a line between each sample and its intra-group pairs. We will only use the distances of these pairs for our intra-group divergence analysis.\nNote: It is important to note that we use the beta diversity distance (e.g. UniFrac) not the ordination distance (e.g. PCoA) for divergence analysis.\n\n\n\n\n\n\n\n\n\nBelow is a further example where we have added one more sample to each group.",
+    "crumbs": [
+      "Divergence",
+      "Intra-group divergence",
+      "Intra-group intro"
+    ]
+  },
+  {
+    "objectID": "divergence/intra_divergence.html#intra-group-divergence-explanation",
+    "href": "divergence/intra_divergence.html#intra-group-divergence-explanation",
+    "title": "Intra-group intro",
+    "section": "",
+    "text": "Prior to analysis its good to understand intra-group divergence. When carrying out intra-group divergence we are trying to determine which groups have lower dissimilarity distances between their intra-group samples.\nIf a group has low intra-group distances this indicates the community of the samples are quite similar. Whereas, if a group has high intra-group distances this indicates the community of the samples are quite dissimilar.\nFor example if you were comparing the gut microbiome of farmed fish compared to wild fish you may find:\n\nLow intra-group distances in the gut microbiome of farmed fish. This could be caused by a consistent diet and treatment with antibiotics leading to similar gut microbiome profiles.\nHigh intra-group distances in the gut microbiome of wild fish. This could be caused by the variety in their diet and their ability to move through various environments.",
+    "crumbs": [
+      "Divergence",
+      "Intra-group divergence",
+      "Intra-group intro"
     ]
   },
   {
@@ -423,9 +495,21 @@
     "href": "divergence/divergence.html",
     "title": "Divergence",
     "section": "",
-    "text": "Divergence\n\n\n\n\n\n\n\n\n\nAll the Intra group distances\n9 total lines, 3 lines per group b/c 3 samples. A 4 sample group would have 6, a 5 sample group would have 10.\nTo calculate the number of pairs in a set you can use n(n-1)/2.\n\n\n\n\n\n\n\n\n\nIt is more difficult to work with inter group distances. When we do this we need each inter group distance twice as we need it for the first group and for the second group.\nInter group distances of group 1 samples to others\n\n\n\n\n\n\n\n\n\nInter group distances of group 2 samples to others\n\n\n\n\n\n\n\n\n\nInter group distances of group 1 samples to others\n\n\n\n\n\n\n\n\n\nIn this case with 3 groups with 3 samples each we have a total of 54 inter group distances. Each sample has 6 inter group distances and there are 9 samples (6*9=54).\nIf we had 4 groups with 10 samples each we would have:\n\n45 intra group distances (10*(10-1)/2 = 45)\n1,200 inter group distances (30*40=1200)",
+    "text": "Divergence\nTo remember the difference between intra and inter I remember the intranet (network within an organisation) and the internet (network between organisation). (intra mean within e.g. intranet).\n\n\n\n\n\n\n\n\n\nAll the Intra group distances\n9 total lines, 3 lines per group b/c 3 samples. A 4 sample group would have 6, a 5 sample group would have 10.\nTo calculate the number of pairs in a set you can use n(n-1)/2.\n\n\n\n\n\n\n\n\n\nIt is more difficult to work with inter group distances. When we do this we need each inter group distance twice as we need it for the first group and for the second group.\nInter group distances of group 1 samples to others\n\n\n\n\n\n\n\n\n\nInter group distances of group 2 samples to others\n\n\n\n\n\n\n\n\n\nInter group distances of group 1 samples to others\n\n\n\n\n\n\n\n\n\nIn this case with 3 groups with 3 samples each we have a total of 54 inter group distances. Each sample has 6 inter group distances and there are 9 samples (6*9=54).\nIf we had 4 groups with 10 samples each we would have:\n\n45 intra group distances (10*(10-1)/2 = 45)\n1,200 inter group distances (30*40=1200)",
     "crumbs": [
       "Divergence"
+    ]
+  },
+  {
+    "objectID": "divergence/bind_long_tibbles.html",
+    "href": "divergence/bind_long_tibbles.html",
+    "title": "Bind long tibbles",
+    "section": "",
+    "text": "Bind long tibbles\nOUr final step is to combine the lower and upper long tibbles with dplyr::bind_rows().\nAdditionally, we’ll use the dplyr::glimpse() function to get a preview of the final tibble.\n\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_rows(beta_lower_tbl_mean, beta_upper_long_tbl_mean)\nbeta_long_tbl_mean |&gt; dplyr::glimpse()",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Bind long tibbles"
     ]
   },
   {
@@ -513,75 +597,75 @@
     ]
   },
   {
-    "objectID": "divergence/metadata_addition.html",
-    "href": "divergence/metadata_addition.html",
-    "title": "Metadata addition",
+    "objectID": "divergence/intra_media_exercise.html",
+    "href": "divergence/intra_media_exercise.html",
+    "title": "Intra-media exercise",
     "section": "",
-    "text": "Data needs metadata for us to make sense of it. In this section we’ll add our metadata from our phyloseq object (pseq) to the long data frame we have created.\nWe’ll need to add the metadata twice, once for our left sample and once for our right samples.\n\n\nFor ease we’ll first extract our metadata from the phyloseq object.\n\n#Extract metadata from original phyloseq object\nmetadf &lt;- phyloseq::sample_data(pseq)\n#Check head of metadata\nmetadf |&gt; head()\n\n\n\n\nWith our metadata data frame we will first add the metadata for the left samples to our long tibble. We’ll do this for the left samples first so it is on the left side of the final tibble compared to the right sample metadata.\nThis formatting requires a few steps:\n\nCreate the tibble (metadf_L) of the metadata matching the order of the long tibble.\n\ntibble::as_tibble(): Converts a data frame to a tibble.\ndplyr::select(): Select columns from a tibble.\n\nRename the columns so they have _L as their suffix e.g. site to site_L\nBind our long tibble of beta diversity values (beta_long_tbl_mean) to our matching left metadata tibble (metadf_L)\n\ndplyr::bind_cols:\n\n\n\n#Add metadata for the left samples\nmetadf_L &lt;-\n    #Extend metadf to match order of left samples\n    metadf[beta_long_tbl_mean$Sample_L,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_L\" as their suffix\ncolnames(metadf_L) &lt;- paste0(colnames(metadf_L),\"_L\")\n#Add metadata_L to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_L)\n#Check head of our long df\nbeta_long_tbl_meann |&gt; head()\n\n\n\n\nIf you are ever unsure of what a step is doing you can create a new cell and run the specific parts to see what the output is.\nFor example if you are not sure how the initial metadf_L creation is working you could run the following code cells. In the below cells I like to pipe (|&gt;) the final output to head() so only the top 6 rows are printed. Printing the entirety of large data frames or tibbles can be overwhelming.\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt; head()\n\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt;\n#Convert to tibble for tidyverse manipulation\ntibble::as_tibble() |&gt; head()\n\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt;\n#Convert to tibble for tidyverse manipulation\ntibble::as_tibble() |&gt;\n#Remove sample.name row\ndplyr::select(-1) |&gt; head()\n\n\n\n\nNext carry out the same steps used for the left samples’ metadata but for the right samples.\nNote: Copying and pasting your own code is great. However, ensure you change all the parts you need to, this will primarily changing “L” to “R” in multiple locations.\n\n#Add metadata for the right samples\nmetadf_R &lt;-\n    #Extend metadf to match order of right samples\n    metadf[beta_long_tbl_mean$Sample_R,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_R\" as their suffix\ncolnames(metadf_R) &lt;- paste0(colnames(metadf_R),\"_R\")\n#Add metadata_R to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_R)\n#Check head of our long df\nbeta_long_tbl_meann |&gt; head()\n\n\n\n\nBrilliant! before moving onto adding the info from the upper triangle we’ll manage some variables.\nFirst assign the object beta_long_tbl_mean to beta_lower_long_tbl_mean. This will allow us to reuse a lot of previous code for the upper triangle long tibble creation whilst reusing the beta_long_tbl_mean variable.\n\n#Assign to a new variable\nbeta_lower_long_tbl_mean &lt;- beta_long_tbl_mean\n\nTo clear up some space we’ll remove object we don’t need any more.\n\n#Remove unwanted metadata objects\nrm(metadf_L, metadf_R)",
+    "text": "Intra-media exercise",
     "crumbs": [
       "Divergence",
-      "Data format",
-      "Metadata addition"
+      "Intra-group divergence",
+      "Intra-media exercise"
     ]
   },
   {
-    "objectID": "divergence/metadata_addition.html#extract-metadata-from-phyloseq",
-    "href": "divergence/metadata_addition.html#extract-metadata-from-phyloseq",
-    "title": "Metadata addition",
+    "objectID": "divergence/lower_triangle.html",
+    "href": "divergence/lower_triangle.html",
+    "title": "Lower triangle",
     "section": "",
-    "text": "For ease we’ll first extract our metadata from the phyloseq object.\n\n#Extract metadata from original phyloseq object\nmetadf &lt;- phyloseq::sample_data(pseq)\n#Check head of metadata\nmetadf |&gt; head()",
+    "text": "Our first formatting step is to create a long data frame of the dissimilarity values in the lower triangle of the dissimilarity matrix.\n\n\nBefore we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in data and setup page.\nOnce it is loaded we can view the top 10 rows and columns of the matrix.\n\n#Check first 10 rows and columns of beta dissimilarity matrix\nbeta_df_mean[1:10,1:10]\n\n\n\n\nThe next step is to convert the matrix so all but the lower triangle values are NAs.\n\n\nWe’ll first carry this out with a demonstration.\nFirst create a small version of our distance matrix so it is easy to view.\n\n#Create demo distance matrix\ndemo_mat &lt;- beta_df_mean[1:6,1:6]\ndemo_mat\n\nWe will use the upper.tri() function for our conversion. It creates a logical matrix from a matrix where the upper triangle values are TRUE and the lower triangle values are FALSE.\nThe diagonal values are set with the option diag=. We will set them to TRUE with diag=TRUE.\n\n#Demonstration of upper.tri\nupper.tri(demo_mat, diag=TRUE)\n\nWe can then subset out matrix with this function to assign the upper triangle and diagonal values as NA.\n\n#Convert upper triangle and diaganol to NA\ndemo_mat[upper.tri(demo_mat, diag=TRUE)] &lt;- NA\ndemo_mat\n\n\n\n\nWith the above demonstrated we’ll create our lower triangle matrix. For this we will create a new object for the lower triangle matrix so our edits won’t change the initial beta_df_mean object which we will need later.\n\n#Create new lower triangle matrix\nlower_tri_mat &lt;- beta_df_mean\n#Convert upper triangle and the diagonal to NAs\nlower_tri_mat[upper.tri(lower_tri_mat, diag = TRUE)] &lt;- NA\n#Check first 10 rows and columns\nlower_tri_mat[1:10,1:10]\n\n\n\n\n\nWith our lower triangle matrix we can create a long data frame for future ggplot2 plot production.\nFor this code we utilising piping (|&gt;) with the below steps:\n\nConvert the matrix lower_tri_mat to a data frame with as.data.frame()\nMove the row names to column called “Sample_L” with tibble::rownames_to_column\nLongify all the columns except the “Sample_L” column with tidyr::pivot_longer()\n\nThis also serves to convert our data frame to a tibble\n\nRemove rows with NAs (i.e. the upper triangle and diaganol values) with tidyr::drop_na()\nCreate a column called triangle with each value being “lower” with dplyr::mutate(), this is required later\n\n\n#Convert to long data frame of paired distance values\n#We will refer to the different samples in a pair as the left an right pair\nbeta_long_tbl_mean &lt;- \n    lower_tri_mat |&gt;\n        #Convert to data frame\n        as.data.frame() |&gt;\n        #Create column from row names (Sample_l, l = left)\n        tibble::rownames_to_column(\"Sample_L\") |&gt;\n        #Longify\n        #Set names to \"Sample_r\" column (r = right)\n        tidyr::pivot_longer(!Sample_L, names_to=\"Sample_R\", values_to=\"value\") |&gt;\n        #Remove rows with an NA\n        tidyr::drop_na() |&gt;\n        #Create triangle column containing value \"lower\" for each row\n        dplyr::mutate(triangle=\"lower\")\n#Check head of long tibble\nbeta_long_tbl_mean |&gt; head()\n\nGreat! Next we’ll add our metadata to this long data frame.",
     "crumbs": [
       "Divergence",
       "Data format",
-      "Metadata addition"
+      "Lower triangle"
     ]
   },
   {
-    "objectID": "divergence/metadata_addition.html#metadata-for-left-samples",
-    "href": "divergence/metadata_addition.html#metadata-for-left-samples",
-    "title": "Metadata addition",
+    "objectID": "divergence/lower_triangle.html#dissimilarity-matrix",
+    "href": "divergence/lower_triangle.html#dissimilarity-matrix",
+    "title": "Lower triangle",
     "section": "",
-    "text": "With our metadata data frame we will first add the metadata for the left samples to our long tibble. We’ll do this for the left samples first so it is on the left side of the final tibble compared to the right sample metadata.\nThis formatting requires a few steps:\n\nCreate the tibble (metadf_L) of the metadata matching the order of the long tibble.\n\ntibble::as_tibble(): Converts a data frame to a tibble.\ndplyr::select(): Select columns from a tibble.\n\nRename the columns so they have _L as their suffix e.g. site to site_L\nBind our long tibble of beta diversity values (beta_long_tbl_mean) to our matching left metadata tibble (metadf_L)\n\ndplyr::bind_cols:\n\n\n\n#Add metadata for the left samples\nmetadf_L &lt;-\n    #Extend metadf to match order of left samples\n    metadf[beta_long_tbl_mean$Sample_L,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_L\" as their suffix\ncolnames(metadf_L) &lt;- paste0(colnames(metadf_L),\"_L\")\n#Add metadata_L to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_L)\n#Check head of our long df\nbeta_long_tbl_meann |&gt; head()",
+    "text": "Before we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in data and setup page.\nOnce it is loaded we can view the top 10 rows and columns of the matrix.\n\n#Check first 10 rows and columns of beta dissimilarity matrix\nbeta_df_mean[1:10,1:10]",
     "crumbs": [
       "Divergence",
       "Data format",
-      "Metadata addition"
+      "Lower triangle"
     ]
   },
   {
-    "objectID": "divergence/metadata_addition.html#testing-code",
-    "href": "divergence/metadata_addition.html#testing-code",
-    "title": "Metadata addition",
+    "objectID": "divergence/lower_triangle.html#lower-triangle-matrix",
+    "href": "divergence/lower_triangle.html#lower-triangle-matrix",
+    "title": "Lower triangle",
     "section": "",
-    "text": "If you are ever unsure of what a step is doing you can create a new cell and run the specific parts to see what the output is.\nFor example if you are not sure how the initial metadf_L creation is working you could run the following code cells. In the below cells I like to pipe (|&gt;) the final output to head() so only the top 6 rows are printed. Printing the entirety of large data frames or tibbles can be overwhelming.\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt; head()\n\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt;\n#Convert to tibble for tidyverse manipulation\ntibble::as_tibble() |&gt; head()\n\n\n#Extend metadf to match order of left samples\nmetadf[beta_long_tbl_mean$Sample_L,] |&gt;\n#Convert to tibble for tidyverse manipulation\ntibble::as_tibble() |&gt;\n#Remove sample.name row\ndplyr::select(-1) |&gt; head()",
+    "text": "The next step is to convert the matrix so all but the lower triangle values are NAs.\n\n\nWe’ll first carry this out with a demonstration.\nFirst create a small version of our distance matrix so it is easy to view.\n\n#Create demo distance matrix\ndemo_mat &lt;- beta_df_mean[1:6,1:6]\ndemo_mat\n\nWe will use the upper.tri() function for our conversion. It creates a logical matrix from a matrix where the upper triangle values are TRUE and the lower triangle values are FALSE.\nThe diagonal values are set with the option diag=. We will set them to TRUE with diag=TRUE.\n\n#Demonstration of upper.tri\nupper.tri(demo_mat, diag=TRUE)\n\nWe can then subset out matrix with this function to assign the upper triangle and diagonal values as NA.\n\n#Convert upper triangle and diaganol to NA\ndemo_mat[upper.tri(demo_mat, diag=TRUE)] &lt;- NA\ndemo_mat\n\n\n\n\nWith the above demonstrated we’ll create our lower triangle matrix. For this we will create a new object for the lower triangle matrix so our edits won’t change the initial beta_df_mean object which we will need later.\n\n#Create new lower triangle matrix\nlower_tri_mat &lt;- beta_df_mean\n#Convert upper triangle and the diagonal to NAs\nlower_tri_mat[upper.tri(lower_tri_mat, diag = TRUE)] &lt;- NA\n#Check first 10 rows and columns\nlower_tri_mat[1:10,1:10]",
     "crumbs": [
       "Divergence",
       "Data format",
-      "Metadata addition"
+      "Lower triangle"
     ]
   },
   {
-    "objectID": "divergence/metadata_addition.html#metadata-for-right-samples",
-    "href": "divergence/metadata_addition.html#metadata-for-right-samples",
-    "title": "Metadata addition",
+    "objectID": "divergence/lower_triangle.html#long-data-frame-of-lower-triangle-values",
+    "href": "divergence/lower_triangle.html#long-data-frame-of-lower-triangle-values",
+    "title": "Lower triangle",
     "section": "",
-    "text": "Next carry out the same steps used for the left samples’ metadata but for the right samples.\nNote: Copying and pasting your own code is great. However, ensure you change all the parts you need to, this will primarily changing “L” to “R” in multiple locations.\n\n#Add metadata for the right samples\nmetadf_R &lt;-\n    #Extend metadf to match order of right samples\n    metadf[beta_long_tbl_mean$Sample_R,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_R\" as their suffix\ncolnames(metadf_R) &lt;- paste0(colnames(metadf_R),\"_R\")\n#Add metadata_R to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_R)\n#Check head of our long df\nbeta_long_tbl_meann |&gt; head()",
+    "text": "With our lower triangle matrix we can create a long data frame for future ggplot2 plot production.\nFor this code we utilising piping (|&gt;) with the below steps:\n\nConvert the matrix lower_tri_mat to a data frame with as.data.frame()\nMove the row names to column called “Sample_L” with tibble::rownames_to_column\nLongify all the columns except the “Sample_L” column with tidyr::pivot_longer()\n\nThis also serves to convert our data frame to a tibble\n\nRemove rows with NAs (i.e. the upper triangle and diaganol values) with tidyr::drop_na()\nCreate a column called triangle with each value being “lower” with dplyr::mutate(), this is required later\n\n\n#Convert to long data frame of paired distance values\n#We will refer to the different samples in a pair as the left an right pair\nbeta_long_tbl_mean &lt;- \n    lower_tri_mat |&gt;\n        #Convert to data frame\n        as.data.frame() |&gt;\n        #Create column from row names (Sample_l, l = left)\n        tibble::rownames_to_column(\"Sample_L\") |&gt;\n        #Longify\n        #Set names to \"Sample_r\" column (r = right)\n        tidyr::pivot_longer(!Sample_L, names_to=\"Sample_R\", values_to=\"value\") |&gt;\n        #Remove rows with an NA\n        tidyr::drop_na() |&gt;\n        #Create triangle column containing value \"lower\" for each row\n        dplyr::mutate(triangle=\"lower\")\n#Check head of long tibble\nbeta_long_tbl_mean |&gt; head()\n\nGreat! Next we’ll add our metadata to this long data frame.",
     "crumbs": [
       "Divergence",
       "Data format",
-      "Metadata addition"
+      "Lower triangle"
     ]
   },
   {
-    "objectID": "divergence/metadata_addition.html#variable-management",
-    "href": "divergence/metadata_addition.html#variable-management",
-    "title": "Metadata addition",
+    "objectID": "divergence/upper_triangle.html",
+    "href": "divergence/upper_triangle.html",
+    "title": "Upper triangle",
     "section": "",
-    "text": "Brilliant! before moving onto adding the info from the upper triangle we’ll manage some variables.\nFirst assign the object beta_long_tbl_mean to beta_lower_long_tbl_mean. This will allow us to reuse a lot of previous code for the upper triangle long tibble creation whilst reusing the beta_long_tbl_mean variable.\n\n#Assign to a new variable\nbeta_lower_long_tbl_mean &lt;- beta_long_tbl_mean\n\nTo clear up some space we’ll remove object we don’t need any more.\n\n#Remove unwanted metadata objects\nrm(metadf_L, metadf_R)",
+    "text": "Upper triangle\nBelow is all the code needed to create the long tibble from the upper triangle.\n\n#One code cell for the upper triangle long tibble\n\n#Create new upper triangle matrix\nupper_tri_mat &lt;- beta_df_mean\n\n#Convert lower triangle and the diagonal to NAs\nupper_tri_mat[lower.tri(upper_tri_mat, diag = TRUE)] &lt;- NA\n\n#Convert to long data frame of paired distance values\n#We will refer to the different samples in a pair as the left an right pair\nbeta_long_tbl_mean &lt;- \n    upper_tri_mat |&gt;\n        #Convert to data frame\n        as.data.frame() |&gt;\n        #Create column from row names (Sample_l, l = left)\n        tibble::rownames_to_column(\"Sample_L\") |&gt;\n        #Longify\n        #Set names to \"Sample_r\" column (r = right)\n        tidyr::pivot_longer(!Sample_L, names_to=\"Sample_R\", values_to=\"value\") |&gt;\n        #Remove rows with an NA\n        tidyr::drop_na() |&gt;\n        #Create triangle column containing value \"lower\" for each row\n        #REMEMBER To CHANGE THIS VALUE TO \"upper\" IF COPYING AND PASTING\n        dplyr::mutate(triangle=\"upper\")\n#Check head of long tibble\nbeta_long_tbl_mean |&gt; head()\n\n#Extract metadata from original phyloseq object\nmetadf &lt;- phyloseq::sample_data(pseq)\n\n#Add metadata for the left samples\nmetadf_L &lt;-\n    #Extend metadf to match order of left samples\n    metadf[beta_long_tbl_mean$Sample_L,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_L\" as their suffix\ncolnames(metadf_L) &lt;- paste0(colnames(metadf_L),\"_L\")\n#Add metadata_L to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_L)\n\n#Add metadata for the right samples\nmetadf_R &lt;-\n    #Extend metadf to match order of right samples\n    metadf[beta_long_tbl_mean$Sample_R,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_R\" as their suffix\ncolnames(metadf_R) &lt;- paste0(colnames(metadf_R),\"_R\")\n#Add metadata_R to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_R)\n#Check head of our long df\nbeta_long_tbl_meann |&gt; head()\n\n#Assign to a new variable\nbeta_upper_long_tbl_mean &lt;- beta_long_tbl_mean\n\n#Remove unwanted metadata objects\nrm(metadf_L, metadf_R)\n\n#Check head of our long tibble\nbeta_upper_long_tbl_mean |&gt; head()",
     "crumbs": [
       "Divergence",
       "Data format",
-      "Metadata addition"
+      "Upper triangle"
     ]
   },
   {
@@ -897,35 +981,11 @@
     ]
   },
   {
-    "objectID": "divergence/upper_triangle.html",
-    "href": "divergence/upper_triangle.html",
-    "title": "Upper triangle",
-    "section": "",
-    "text": "Upper triangle\nBelow is all the code needed to create the long tibble from the upper triangle.\n\n#One code cell for the upper triangle long tibble\n\n#Create new upper triangle matrix\nupper_tri_mat &lt;- beta_df_mean\n\n#Convert lower triangle and the diagonal to NAs\nupper_tri_mat[lower.tri(upper_tri_mat, diag = TRUE)] &lt;- NA\n\n#Convert to long data frame of paired distance values\n#We will refer to the different samples in a pair as the left an right pair\nbeta_long_tbl_mean &lt;- \n    upper_tri_mat |&gt;\n        #Convert to data frame\n        as.data.frame() |&gt;\n        #Create column from row names (Sample_l, l = left)\n        tibble::rownames_to_column(\"Sample_L\") |&gt;\n        #Longify\n        #Set names to \"Sample_r\" column (r = right)\n        tidyr::pivot_longer(!Sample_L, names_to=\"Sample_R\", values_to=\"value\") |&gt;\n        #Remove rows with an NA\n        tidyr::drop_na() |&gt;\n        #Create triangle column containing value \"lower\" for each row\n        #REMEMBER To CHANGE THIS VALUE TO \"upper\" IF COPYING AND PASTING\n        dplyr::mutate(triangle=\"upper\")\n#Check head of long tibble\nbeta_long_tbl_mean |&gt; head()\n\n#Extract metadata from original phyloseq object\nmetadf &lt;- phyloseq::sample_data(pseq)\n\n#Add metadata for the left samples\nmetadf_L &lt;-\n    #Extend metadf to match order of left samples\n    metadf[beta_long_tbl_mean$Sample_L,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_L\" as their suffix\ncolnames(metadf_L) &lt;- paste0(colnames(metadf_L),\"_L\")\n#Add metadata_L to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_L)\n\n#Add metadata for the right samples\nmetadf_R &lt;-\n    #Extend metadf to match order of right samples\n    metadf[beta_long_tbl_mean$Sample_R,] |&gt;\n    #Convert to tibble for tidyverse manipulation\n    tibble::as_tibble() |&gt;\n    #Remove sample.name row\n    dplyr::select(-1)\n#Rename columns so they have \"_R\" as their suffix\ncolnames(metadf_R) &lt;- paste0(colnames(metadf_R),\"_R\")\n#Add metadata_R to beta_long_tbl_mean\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_cols(beta_long_tbl_mean, metadf_R)\n#Check head of our long df\nbeta_long_tbl_meann |&gt; head()\n\n#Assign to a new variable\nbeta_upper_long_tbl_mean &lt;- beta_long_tbl_mean\n\n#Remove unwanted metadata objects\nrm(metadf_L, metadf_R)\n\n#Check head of our long tibble\nbeta_upper_long_tbl_mean |&gt; head()",
-    "crumbs": [
-      "Divergence",
-      "Data format",
-      "Upper triangle"
-    ]
-  },
-  {
-    "objectID": "divergence/bind_long_tibbles.html",
-    "href": "divergence/bind_long_tibbles.html",
-    "title": "Bind long tibbles",
-    "section": "",
-    "text": "Bind long tibbles\nOUr final step is to combine the lower and upper long tibbles with dplyr::bind_rows().\nAdditionally, we’ll use the dplyr::glimpse() function to get a preview of the final tibble.\n\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_rows(beta_lower_tbl_mean, beta_upper_long_tbl_mean)\nbeta_long_tbl_mean |&gt; dplyr::glimpse()",
-    "crumbs": [
-      "Divergence",
-      "Data format",
-      "Bind long tibbles"
-    ]
-  },
-  {
-    "objectID": "divergence/intra_site_divergence.html",
-    "href": "divergence/intra_site_divergence.html",
+    "objectID": "divergence/intra_site_divergence.html#violin-plot",
+    "href": "divergence/intra_site_divergence.html#violin-plot",
     "title": "Intra-site divergence",
     "section": "",
-    "text": "Intra-site divergence",
+    "text": "A bxo plot is a good method to visualise divergence. However, we’ll make it even nicer by making a violin plot.\nIn the below plot we separate the values by site using site_L, we could use site_R and their would be no difference as the values in site_L and `site_R are identical.\nFor a reminder on violin plots please see the R community analysis workbook.\n\n#Intra-site divergence violin plot\nintra_site_violin_plot &lt;-\n    intra_site_wunifrac_long_tbl |&gt;\n    ggplot2::ggplot(aes(x = site_L, y = value)) +\n    ggplot2::geom_violin() +\n    ggforce::geom_sina(alpha=0.5) +\n    ggplot2::labs(x = \"Site\", y = \"Weighted UniFrac\",\n                    title=\"Intra-site divergence with Weighted UniFrac dissimilarity\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_intra_site_divergence_violinplot.png\",\n        plot = intra_site_violin_plot,\n        device = \"png\", dpi = 300, units = \"mm\", height = 100, width = 150)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_intra_site_divergence_violinplot.png\")",
     "crumbs": [
       "Divergence",
       "Intra-group divergence",
@@ -933,27 +993,51 @@
     ]
   },
   {
-    "objectID": "divergence/intra_media_exercise.html",
-    "href": "divergence/intra_media_exercise.html",
-    "title": "Intra-media exercise",
+    "objectID": "divergence/intra_site_divergence.html#stats",
+    "href": "divergence/intra_site_divergence.html#stats",
+    "title": "Intra-site divergence",
     "section": "",
-    "text": "Intra-media exercise",
+    "text": "As with other box/violin plots we can compare the different intra-site distance groupings with a pairwise wilcox test. For more information please see the R community analysis workbook.\nThe below analysis carries our P value adjustment via the holm method.\n\npairwise.wilcox.test(intra_site_wunifrac_long_tbl$value,\n                        intra_site_wunifrac_long_tbl$site_L)",
     "crumbs": [
       "Divergence",
       "Intra-group divergence",
-      "Intra-media exercise"
+      "Intra-site divergence"
     ]
   },
   {
-    "objectID": "divergence/intra_divergence.html",
-    "href": "divergence/intra_divergence.html",
+    "objectID": "divergence/intra_divergence.html#groupings-and-pairs",
+    "href": "divergence/intra_divergence.html#groupings-and-pairs",
     "title": "Intra-group intro",
     "section": "",
-    "text": "Intra-group intro",
+    "text": "Wit intra-group divergence we look at the dissimilarity distances between all the pairs within the same group.\n\n\nLet’s say we have 3 groups (G1, G2, & G3) each with 3 samples. With this example data we acquire the below ordination plot (e.g. PCoA or NMDS).\n\n\n\n\n\n\n\n\n\n\n\n\nIn this example data we would have 3 pairs in each group, this can be seen in the below plot. A 4 sample group would have 6 pairs, and a 5 sample group would have 10 pairs. To calculate the number of pairs in a set you can use n(n-1)/2.\nThe below plot shows a line between each sample and its intra-group pairs. We will only use the distances of these pairs for our intra-group divergence analysis.\nNote: It is important to note that we use the beta diversity distance (e.g. UniFrac) not the ordination distance (e.g. PCoA) for divergence analysis.\n\n\n\n\n\n\n\n\n\nBelow is a further example where we have added one more sample to each group.",
     "crumbs": [
       "Divergence",
       "Intra-group divergence",
       "Intra-group intro"
+    ]
+  },
+  {
+    "objectID": "divergence/intra_divergence.html#intra-group-divergence-purpose",
+    "href": "divergence/intra_divergence.html#intra-group-divergence-purpose",
+    "title": "Intra-group intro",
+    "section": "",
+    "text": "When carrying out intra-group divergence we are trying to determine which groups have lower dissimilarity distances between their samples.\nIf a group has low intra-group distances this indicates the community of the samples are quite similar. Whereas, if a group has high intra-group distances this indicates the community of the samples are quite dissimilar.\nFor example if you were comparing the gut microbiome of farmed fish compared to wild fish you may find:\n\nLow intra-group distances in the gut microbiome of farmed fish. This could be caused by their consistent diet and treatment with antibiotics leading to similar gut microbiome profiles.\nHigh intra-group distances in the gut microbiome of wild fish. This could be caused by the variety in their diet and their ability to move through various environments.\n\nYou are able to see evidence of this in ordination plots (PCoA, NMDS etc.) where group clusters being tighter than others indicates lower dissimilarity values. For example the below (fictional) PCoA shows tighter clustering in the gut microbiome of farmed fish compared to wild fish.\n\n\n\n\n\n\n\n\n\nSo why carry out divergence analysis? Divergence analysis directly uses the dissimilarity values rather than using ordination values that are calculated from the dissimilarity values. Therefore, if you are interested in and making statements about intra-group dissimilarity it is best to carry out visual and statistical intra-group divergence analysis.",
+    "crumbs": [
+      "Divergence",
+      "Intra-group divergence",
+      "Intra-group intro"
+    ]
+  },
+  {
+    "objectID": "divergence/intra_site_divergence.html#interpretation",
+    "href": "divergence/intra_site_divergence.html#interpretation",
+    "title": "Intra-site divergence",
+    "section": "",
+    "text": "With our results we can see the violin plots of the three sites have significant overlap. Additionally, there is no significant difference between the groupings of intra-site distances.\nIn this case we can’t see any definitive difference in divergence within the different sites. Therefore we’ll carry out some more analysis.",
+    "crumbs": [
+      "Divergence",
+      "Intra-group divergence",
+      "Intra-site divergence"
     ]
   }
 ]

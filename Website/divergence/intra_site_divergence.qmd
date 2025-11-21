@@ -1,1 +1,87 @@
 # Intra-site divergence
+
+To analyse the Intra-site divergence we will:
+
+- Subset our long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) of distances and metadata to only contain one set of intra-group distances.
+- Create a violin plot of the intra-site distances
+- Carry out a pairwise wilcox test to statistically compare the divergences between sites.
+
+As a reminder we are using [weighted UniFrac distances](https://neof-workshops.github.io/R_community_whqkt8/iterative_rarefaction/19-Beta_distances_metrics.html#unifrac-distances).
+
+## Intra-site tibble
+
+Our first step is to subset out [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) so we only have the intra-site distances.
+
+For this step we pip ([`|>`](https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html)) our weighted UniFrac long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) to 2 different ['dplyr::filter()'](https://neof-workshops.github.io/Tidyverse/dplyr/filter.html) commands.
+
+First the lower triangle values are kept to remove the upper triangle values.
+The lower triangle values and upper triangle values are duplicated the difference being which sample is set as the left and right sample.
+We only want one value from each pair for intra-group divergence as each value will only be used in one divergence grouping.
+
+The next filter step is to only retain samples where the left site grouping (`site_L`) is the same as the right site grouping (`site_R`).
+This means we only retain the intra-site distances.
+Two important notes:
+
+- In you own analyses and the exercise ensure you use the columns for the intra-grouping you are interested in. 
+    - E.g. you would use `media_L == media_R` when analysing intra-media divergence of this dataset.
+- We removed the intra-sample distances (e.g. sample 1 to sample 1 distance) in our data formatting step as we would never want them for divergence analysis.
+
+```{r eval=FALSE}
+#Subset long tibble so only rows where site_L and site_R are identical of the lower triangle
+#I.e. the long tibble only contains one set of paired distances within sites (Intra-site) 
+intra_site_wunifrac_long_tbl <-
+    beta_long_tbl_mean |>
+        #Filter to keep lower triangle rows
+        dplyr::filter(triangle == "lower") |>
+        #Filter to keep rows where site_L is the same as site_R (intra site)
+        dplyr::filter(site_L == site_R)
+#Check head of long tbl
+intra_site_wunifrac_long_tbl |> head()
+```
+
+## Violin plot
+
+A bxo plot is a good method to visualise divergence.
+However, we'll make it even nicer by making a violin plot.
+
+In the below plot we separate the values by site using `site_L`, we could use `site_R` and their would be no difference as the values in `site_L` and `site_R are identical.
+
+For a reminder on violin plots please see the [R community analysis workbook](https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-diversity-violin-plot).
+
+```{r eval=FALSE}
+#Intra-site divergence violin plot
+intra_site_violin_plot <-
+    intra_site_wunifrac_long_tbl |>
+    ggplot2::ggplot(aes(x = site_L, y = value)) +
+    ggplot2::geom_violin() +
+    ggforce::geom_sina(alpha=0.5) +
+    ggplot2::labs(x = "Site", y = "Weighted UniFrac",
+                    title="Intra-site divergence with Weighted UniFrac dissimilarity")
+#Save ggplot2 object with ggsave
+ggsave(filename = "./wunifrac_intra_site_divergence_violinplot.png",
+        plot = intra_site_violin_plot,
+        device = "png", dpi = 300, units = "mm", height = 100, width = 150)
+#Display plot
+IRdisplay::display_png(file = "./wunifrac_intra_site_divergence_violinplot.png")
+```
+
+## Stats
+
+As with other box/violin plots we can compare the different intra-site distance groupings with a pairwise wilcox test.
+For more information please see the [R community analysis workbook](https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-stats).
+
+The below analysis carries our P value adjustment via the holm method.
+
+```{r eval=FALSE}
+pairwise.wilcox.test(intra_site_wunifrac_long_tbl$value,
+                        intra_site_wunifrac_long_tbl$site_L)
+```
+
+## Interpretation
+
+With our results we can see the violin plots of the three sites have significant overlap.
+Additionally, there is no significant difference between the groupings of intra-site distances.
+
+In this case we can't see any definitive difference in divergence within the different sites.
+Therefore we'll carry out some more analysis.
+

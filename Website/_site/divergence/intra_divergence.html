@@ -425,7 +425,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#intra-group-intro" id="toc-intra-group-intro" class="nav-link active" data-scroll-target="#intra-group-intro">Intra-group intro</a></li>
+  <li><a href="#intra-group-intro" id="toc-intra-group-intro" class="nav-link active" data-scroll-target="#intra-group-intro">Intra-group intro</a>
+  <ul class="collapse">
+  <li><a href="#intra-group-divergence-purpose" id="toc-intra-group-divergence-purpose" class="nav-link" data-scroll-target="#intra-group-divergence-purpose">Intra-group divergence purpose</a></li>
+  <li><a href="#groupings-and-pairs" id="toc-groupings-and-pairs" class="nav-link" data-scroll-target="#groupings-and-pairs">Groupings and pairs</a>
+  <ul class="collapse">
+  <li><a href="#example-data" id="toc-example-data" class="nav-link" data-scroll-target="#example-data">Example data</a></li>
+  <li><a href="#intra-group-pairs" id="toc-intra-group-pairs" class="nav-link" data-scroll-target="#intra-group-pairs">Intra-group pairs</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -438,8 +446,77 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="intra-group-intro" class="level1">
 <h1>Intra-group intro</h1>
+<p>With our data formatted we will first carry out intra-group divergence analysis. This is analysing the distances within groups (e.g.&nbsp;intranet is a network within an organisation).</p>
+<p>In this section we will:</p>
+<ul>
+<li>Analyse the Intra-site divergence (River locations: LD, MD, &amp; UD)</li>
+<li>Exercise: repeat the previous steps for Intra-media divergence (CVP, ENV, KBC, &amp; TSA)</li>
+</ul>
+<section id="intra-group-divergence-purpose" class="level2">
+<h2 class="anchored" data-anchor-id="intra-group-divergence-purpose">Intra-group divergence purpose</h2>
+<p>When carrying out intra-group divergence we are trying to determine which groups have lower dissimilarity distances between their samples.</p>
+<p>If a group has low intra-group distances this indicates the community of the samples are quite similar. Whereas, if a group has high intra-group distances this indicates the community of the samples are quite dissimilar.</p>
+<p>For example if you were comparing the gut microbiome of farmed fish compared to wild fish you may find:</p>
+<ul>
+<li>Low intra-group distances in the gut microbiome of farmed fish. This could be caused by their consistent diet and treatment with antibiotics leading to similar gut microbiome profiles.</li>
+<li>High intra-group distances in the gut microbiome of wild fish. This could be caused by the variety in their diet and their ability to move through various environments.</li>
+</ul>
+<p>You are able to see evidence of this in ordination plots (PCoA, NMDS etc.) where group clusters being tighter than others indicates lower dissimilarity values. For example the below (fictional) PCoA shows tighter clustering in the gut microbiome of farmed fish compared to wild fish.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intra_divergence_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="979"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>So why carry out divergence analysis? Divergence analysis directly uses the dissimilarity values rather than using ordination values that are calculated from the dissimilarity values. Therefore, if you are interested in and making statements about intra-group dissimilarity it is best to carry out visual and statistical intra-group divergence analysis.</p>
+</section>
+<section id="groupings-and-pairs" class="level2">
+<h2 class="anchored" data-anchor-id="groupings-and-pairs">Groupings and pairs</h2>
+<p>Wit intra-group divergence we look at the dissimilarity distances between all the pairs within the same group.</p>
+<section id="example-data" class="level3">
+<h3 class="anchored" data-anchor-id="example-data">Example data</h3>
+<p>Let’s say we have 3 groups (G1, G2, &amp; G3) each with 3 samples. With this example data we acquire the below ordination plot (e.g.&nbsp;PCoA or NMDS).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intra_divergence_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="979"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="intra-group-pairs" class="level3">
+<h3 class="anchored" data-anchor-id="intra-group-pairs">Intra-group pairs</h3>
+<p>In this example data we would have 3 pairs in each group, this can be seen in the below plot. A 4 sample group would have 6 pairs, and a 5 sample group would have 10 pairs. To calculate the number of pairs in a set you can use <code>n(n-1)/2</code>.</p>
+<p>The below plot shows a line between each sample and its intra-group pairs. We will only use the distances of these pairs for our intra-group divergence analysis.</p>
+<p><strong>Note:</strong> It is important to note that we use the beta diversity distance (e.g.&nbsp;UniFrac) not the ordination distance (e.g.&nbsp;PCoA) for divergence analysis.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intra_divergence_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="979"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Below is a further example where we have added one more sample to each group.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intra_divergence_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="979"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
