@@ -66,7 +66,7 @@ Therefore, if you are interested in and making statements about intra-group diss
 
 ## Groupings and pairs
 
-Wit intra-group divergence we look at the dissimilarity distances between all the pairs within the same group.
+With intra-group divergence we look at the dissimilarity distances between all the pairs within the same group.
 
 ### Example data
 

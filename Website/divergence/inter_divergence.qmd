@@ -1,0 +1,269 @@
+# Inter-group intro
+
+With our formatted data we can also carry out inter-group divergence analysis.
+This is analysing the distances between groups (e.g. internet is a network between different networks).
+
+In this section we will:
+
+- Analyse the Inter-site divergence (River locations: LD, MD, & UD)
+- Exercise: repeat the previous steps for Inter-media divergence (CVP, ENV, KBC, & TSA)
+
+## Inter-group divergence purpose
+
+With inter-group divergence analysis we are trying to determine which groups have lower and higher dissimilarity between each other.
+
+This can be especially useful when comparing three or more sample groups as is let's us mor confidently determine which sample groups are more similar to each other.
+
+For example, let's say we had a study of salmon gut microbiomes. The three sample groups are:
+
+- Wild salmon
+- Farmed salmon fed on a non-vegetarian diet
+- Farmed salmon fed on a vegetarian diet
+
+In this case it is likely the dissimilarity distance between the farmed salmon with non-vegetarian and vegetarian diets is more similar than either groups distances to the wild fish.
+However, does one of the farmed fish groups have lower dissimilarity scores to the wild fish compared to the other farmed group?
+If so, is this a significant difference?
+These results could then lead into other types of analysis such as biomarker detection.
+
+## Groupings and pairs
+
+With inter-group divergence we look at the dissimilarity distances between all the pairs between different sample groups.
+
+### Example data
+
+As with the intra-group intro we'll use 3 groups (G1, G2, & G3) each with 3 samples. 
+These can be seen in the ordination plot (e.g. PCoA or NMDS).
+
+```{r, echo=FALSE, warning=FALSE, results=FALSE, output=FALSE}
+#Load tidyverse library
+library("tidyverse")
+
+#Create tidy dataset of points that will act as points in ordination plot
+#Comprise of three different datasets with 5 samples each
+#set seed
+set.seed(84368)
+#Sample groups
+group <- c(rep("G1",3), rep("G2",3), rep("G3",3))
+#Create axes 1 values
+axes1 <- c(c(9.5,6,13),
+            c(2,4,7.5),
+            c(14,17,18))
+#Create axes 2 values
+axes2 <- c(c(1.5,4,3),
+            c(16,18,18.5),
+            c(17,15,10))
+#Create long df
+tbl <- tibble::tibble(group, axes1, axes2)
+
+#Colour palette to use
+ibm_pal <- c("#648fff","#dc267f","#fe6100")
+```
+
+```{r, echo=FALSE}
+ggplot2::ggplot(data = tbl, mapping=aes(x = axes1, y = axes2, colour = group)) +
+    ggplot2::geom_point(size=4) +
+    ggplot2::labs(colour = "Groups") +
+    ggplot2::theme(text=ggplot2::element_text(size = 15)) +
+    ggplot2::scale_colour_manual(values = ibm_pal) +
+    ggplot2::scale_x_continuous(name="Axes 1", breaks=c(0,5,10,15,20), limits = c(0,20)) +
+    ggplot2::scale_y_continuous(name="Axes 2", breaks=c(0,5,10,15,20), limits = c(0,20))
+```
+
+### Inter-group pairs
+
+It is more difficult to work with inter-group distances than intra-group distances.
+When we do this we need each inter group distance twice as we need it for the first/left group and for the second/right group.
+
+The below plot displays each inter-group pairwise distance for the G1 samples:
+
+```{r, echo=FALSE}
+ggplot2::ggplot(data = tbl) +
+    ggplot2::labs(x="Axes 1", y = "Axes 2", colour = "Groups") +
+     ggplot2::theme(text=ggplot2::element_text(size = 15)) +
+    ggplot2::scale_colour_manual(values = ibm_pal) +
+    ggplot2::scale_x_continuous(name="Axes 1", breaks=c(0,5,10,15,20), limits = c(0,20)) +
+    ggplot2::scale_y_continuous(name="Axes 2", breaks=c(0,5,10,15,20), limits = c(0,20)) +
+    #Add custom lines
+    #Group 1 sample 1 to other samples
+    ggplot2::annotate("segment", x = 6, xend = 2, y = 4, yend = 16, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 6, xend = 4, y = 4, yend = 18, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 6, xend = 7.5, y = 4, yend = 18.5, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 6, xend = 14, y = 4, yend = 17, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 6, xend = 17, y = 4, yend = 15, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 6, xend = 18, y = 4, yend = 10, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    # Group 1 sample 2 to other samples
+    ggplot2::annotate("segment", x = 9.5, xend = 2, y = 1.5, yend = 16, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 9.5, xend = 4, y = 1.5, yend = 18, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 9.5, xend = 7.5, y = 1.5, yend = 18.5, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 9.5, xend = 14, y = 1.5, yend = 17, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 9.5, xend = 17, y = 1.5, yend = 15, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 9.5, xend = 18, y = 1.5, yend = 10, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    # Group 1 sample 2 to other samples
+    ggplot2::annotate("segment", x = 13, xend = 2, y = 3, yend = 16, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 13, xend = 4, y = 3, yend = 18, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 13, xend = 7.5, y = 3, yend = 18.5, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 13, xend = 14, y = 3, yend = 17, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 13, xend = 17, y = 3, yend = 15, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 13, xend = 18, y = 3, yend = 10, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    #Add points at end so they overlap the lines
+    ggplot2::geom_point(mapping=aes(x = axes1, y = axes2, colour = group),size=4)
+```
+
+Next is all the inter-group pairwise distances for the G2 samples:
+
+```{r, echo=FALSE}
+ggplot2::ggplot(data = tbl) +
+    ggplot2::labs(x="Axes 1", y = "Axes 2", colour = "Groups") +
+     ggplot2::theme(text=ggplot2::element_text(size = 15)) +
+    ggplot2::scale_colour_manual(values = ibm_pal) +
+    ggplot2::scale_x_continuous(name="Axes 1", breaks=c(0,5,10,15,20), limits = c(0,20)) +
+    ggplot2::scale_y_continuous(name="Axes 2", breaks=c(0,5,10,15,20), limits = c(0,20)) +
+    #Add custom lines
+    #Group 2 sample 1 to other samples
+    ggplot2::annotate("segment", x = 2, xend = 6, y = 16, yend = 4, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 2, xend = 9.5, y = 16, yend = 1.5, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 2, xend = 13, y = 16, yend = 3, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 2, xend = 14, y = 16, yend = 17, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 2, xend = 17, y = 16, yend = 15, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 2, xend = 18, y = 16, yend = 10, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    # Group 2 sample 2 to other samples
+    ggplot2::annotate("segment", x = 4, xend = 6, y = 18, yend = 4, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 4, xend = 9.5, y = 18, yend = 1.5, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 4, xend = 13, y = 18, yend = 3, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 4, xend = 14, y = 18, yend = 17, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 4, xend = 17, y = 18, yend = 15, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 4, xend = 18, y = 18, yend = 10, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    # Group 2 sample 2 to other samples
+    ggplot2::annotate("segment", x = 7.5, xend = 6, y = 18.5, yend = 4, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 7.5, xend = 9.5, y = 18.5, yend = 1.5, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 7.5, xend = 13, y = 18.5, yend = 3, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 7.5, xend = 14, y = 18.5, yend = 17, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 7.5, xend = 17, y = 18.5, yend = 15, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 7.5, xend = 18, y = 18.5, yend = 10, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    #Add points at end so they overlap the lines
+    ggplot2::geom_point(mapping=aes(x = axes1, y = axes2, colour = group),size=4)
+```
+
+All the inter-group pairwise distances for the G3 sample:
+
+```{r, echo=FALSE}
+ggplot2::ggplot(data = tbl) +
+    ggplot2::labs(x="Axes 1", y = "Axes 2", colour = "Groups") +
+     ggplot2::theme(text=ggplot2::element_text(size = 15)) +
+    ggplot2::scale_colour_manual(values = ibm_pal) +
+    ggplot2::scale_x_continuous(name="Axes 1", breaks=c(0,5,10,15,20), limits = c(0,20)) +
+    ggplot2::scale_y_continuous(name="Axes 2", breaks=c(0,5,10,15,20), limits = c(0,20)) +
+    #Add custom lines
+    #Group 1 sample 1 to other samples
+    ggplot2::annotate("segment", x = 14, xend = 6, y = 17, yend = 4, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 14, xend = 9.5, y = 17, yend = 1.5, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 14, xend = 13, y = 17, yend = 3, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 14, xend = 2, y = 17, yend = 16, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 14, xend = 4, y = 17, yend = 18, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 14, xend = 7.5, y = 17, yend = 18.5, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    # Group 1 sample 2 to other samples
+    ggplot2::annotate("segment", x = 17, xend = 6, y = 15, yend = 4, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 17, xend = 9.5, y = 15, yend = 1.5, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 17, xend = 13, y = 15, yend = 3, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 17, xend = 2, y = 15, yend = 16, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 17, xend = 4, y = 15, yend = 18, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 17, xend = 7.5, y = 15, yend = 18.5, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    # Group 1 sample 2 to other samples
+    ggplot2::annotate("segment", x = 18, xend = 6, y = 10, yend = 4, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 18, xend = 9.5, y = 10, yend = 1.5, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 18, xend = 13, y = 10, yend = 3, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 18, xend = 2, y = 10, yend = 16, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 18, xend = 4, y = 10, yend = 18, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 18, xend = 7.5, y = 10, yend = 18.5, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    #Add points at end so they overlap the lines
+    ggplot2::geom_point(mapping=aes(x = axes1, y = axes2, colour = group),size=4)
+```
+
+Finally, all the inter-group distances displayed at once:
+
+```{r, echo=FALSE}
+ggplot2::ggplot(data = tbl) +
+    ggplot2::labs(x="Axes 1", y = "Axes 2", colour = "Groups") +
+     ggplot2::theme(text=ggplot2::element_text(size = 15)) +
+    ggplot2::scale_colour_manual(values = ibm_pal) +
+    ggplot2::scale_x_continuous(name="Axes 1", breaks=c(0,5,10,15,20), limits = c(0,20)) +
+    ggplot2::scale_y_continuous(name="Axes 2", breaks=c(0,5,10,15,20), limits = c(0,20)) +
+    #Add custom lines
+    #Group 1 sample 1 to other samples
+    ggplot2::annotate("segment", x = 6, xend = 2, y = 4, yend = 16, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 6, xend = 4, y = 4, yend = 18, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 6, xend = 7.5, y = 4, yend = 18.5, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 6, xend = 14, y = 4, yend = 17, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 6, xend = 17, y = 4, yend = 15, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 6, xend = 18, y = 4, yend = 10, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    # Group 1 sample 2 to other samples
+    ggplot2::annotate("segment", x = 9.5, xend = 2, y = 1.5, yend = 16, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 9.5, xend = 4, y = 1.5, yend = 18, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 9.5, xend = 7.5, y = 1.5, yend = 18.5, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 9.5, xend = 14, y = 1.5, yend = 17, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 9.5, xend = 17, y = 1.5, yend = 15, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 9.5, xend = 18, y = 1.5, yend = 10, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    # Group 1 sample 2 to other samples
+    ggplot2::annotate("segment", x = 13, xend = 2, y = 3, yend = 16, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 13, xend = 4, y = 3, yend = 18, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 13, xend = 7.5, y = 3, yend = 18.5, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 13, xend = 14, y = 3, yend = 17, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 13, xend = 17, y = 3, yend = 15, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    ggplot2::annotate("segment", x = 13, xend = 18, y = 3, yend = 10, linewidth = 1, linetype = 1, colour = ibm_pal[1]) +
+    #Group 2 sample 1 to other samples
+    ggplot2::annotate("segment", x = 2, xend = 6, y = 16, yend = 4, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 2, xend = 9.5, y = 16, yend = 1.5, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 2, xend = 13, y = 16, yend = 3, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 2, xend = 14, y = 16, yend = 17, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 2, xend = 17, y = 16, yend = 15, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 2, xend = 18, y = 16, yend = 10, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    # Group 2 sample 2 to other samples
+    ggplot2::annotate("segment", x = 4, xend = 6, y = 18, yend = 4, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 4, xend = 9.5, y = 18, yend = 1.5, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 4, xend = 13, y = 18, yend = 3, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 4, xend = 14, y = 18, yend = 17, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 4, xend = 17, y = 18, yend = 15, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 4, xend = 18, y = 18, yend = 10, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    # Group 2 sample 2 to other samples
+    ggplot2::annotate("segment", x = 7.5, xend = 6, y = 18.5, yend = 4, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 7.5, xend = 9.5, y = 18.5, yend = 1.5, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 7.5, xend = 13, y = 18.5, yend = 3, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 7.5, xend = 14, y = 18.5, yend = 17, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 7.5, xend = 17, y = 18.5, yend = 15, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    ggplot2::annotate("segment", x = 7.5, xend = 18, y = 18.5, yend = 10, linewidth = 0.75, linetype = 2, colour = ibm_pal[2]) +
+    #Group 3 sample 1 to other samples
+    ggplot2::annotate("segment", x = 14, xend = 6, y = 17, yend = 4, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 14, xend = 9.5, y = 17, yend = 1.5, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 14, xend = 13, y = 17, yend = 3, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 14, xend = 2, y = 17, yend = 16, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 14, xend = 4, y = 17, yend = 18, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 14, xend = 7.5, y = 17, yend = 18.5, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    # Group 3 sample 2 to other samples
+    ggplot2::annotate("segment", x = 17, xend = 6, y = 15, yend = 4, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 17, xend = 9.5, y = 15, yend = 1.5, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 17, xend = 13, y = 15, yend = 3, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 17, xend = 2, y = 15, yend = 16, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 17, xend = 4, y = 15, yend = 18, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 17, xend = 7.5, y = 15, yend = 18.5, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    # Group 3 sample 2 to other samples
+    ggplot2::annotate("segment", x = 18, xend = 6, y = 10, yend = 4, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 18, xend = 9.5, y = 10, yend = 1.5, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 18, xend = 13, y = 10, yend = 3, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 18, xend = 2, y = 10, yend = 16, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 18, xend = 4, y = 10, yend = 18, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    ggplot2::annotate("segment", x = 18, xend = 7.5, y = 10, yend = 18.5, linewidth = 1, linetype = 3, colour = ibm_pal[3]) +
+    #Add points at end so they overlap the lines
+    ggplot2::geom_point(mapping=aes(x = axes1, y = axes2, colour = group),size=4)
+```
+
+
+In this example with 3 groups, each with 3 samples, we have a total of 54 inter group distances.
+There are 18 inter-group distances per group (18*3 = 54).
+Or another way to think about it is that each sample has 6 inter group distances and there are 9 samples (6*9=54).
+
+If we had 4 groups with 10 samples each we would have:
+
+- 45 intra group distances (`10*(10-1)/2 = 45`)
+- 1,200 inter group distances (`30*40=1200`)
+
+Because there is more data for inter-group analysis we may be able to carry it out even when there are too few data points for intra-group analysis.

@@ -467,11 +467,47 @@
     ]
   },
   {
+    "objectID": "divergence/intra_site_divergence.html#violin-plot",
+    "href": "divergence/intra_site_divergence.html#violin-plot",
+    "title": "Intra-site divergence",
+    "section": "",
+    "text": "A bxo plot is a good method to visualise divergence. However, we’ll make it even nicer by making a violin plot.\nIn the below plot we separate the values by site using site_L, we could use site_R and their would be no difference as the values in site_L and `site_R are identical.\nFor a reminder on violin plots please see the R community analysis workbook.\n\n#Intra-site divergence violin plot\nintra_site_violin_plot &lt;-\n    intra_site_wunifrac_long_tbl |&gt;\n    ggplot2::ggplot(aes(x = site_L, y = value)) +\n    ggplot2::geom_violin() +\n    ggforce::geom_sina(alpha=0.5) +\n    ggplot2::labs(x = \"Site\", y = \"Weighted UniFrac\",\n                    title=\"Intra-site divergence with Weighted UniFrac dissimilarity\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_intra_site_divergence_violinplot.png\",\n        plot = intra_site_violin_plot,\n        device = \"png\", dpi = 300, units = \"mm\", height = 100, width = 150)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_intra_site_divergence_violinplot.png\")",
+    "crumbs": [
+      "Divergence",
+      "Intra-group divergence",
+      "Intra-site divergence"
+    ]
+  },
+  {
+    "objectID": "divergence/intra_site_divergence.html#stats",
+    "href": "divergence/intra_site_divergence.html#stats",
+    "title": "Intra-site divergence",
+    "section": "",
+    "text": "As with other box/violin plots we can compare the different intra-site distance groupings with a pairwise wilcox test. For more information please see the R community analysis workbook.\nThe below analysis carries our P value adjustment via the holm method.\n\npairwise.wilcox.test(intra_site_wunifrac_long_tbl$value,\n                        intra_site_wunifrac_long_tbl$site_L)",
+    "crumbs": [
+      "Divergence",
+      "Intra-group divergence",
+      "Intra-site divergence"
+    ]
+  },
+  {
+    "objectID": "divergence/intra_site_divergence.html#interpretation",
+    "href": "divergence/intra_site_divergence.html#interpretation",
+    "title": "Intra-site divergence",
+    "section": "",
+    "text": "With our results we can see the violin plots of the three sites have significant overlap. Additionally, there is no significant difference between the groupings of intra-site distances.\nIn this case we can’t see any definitive difference in divergence within the different sites. Therefore we’ll carry out some more analysis.",
+    "crumbs": [
+      "Divergence",
+      "Intra-group divergence",
+      "Intra-site divergence"
+    ]
+  },
+  {
     "objectID": "divergence/intra_divergence.html",
     "href": "divergence/intra_divergence.html",
     "title": "Intra-group intro",
     "section": "",
-    "text": "With our data formatted we will first carry out intra-group divergence analysis. This is analysing the distances within groups (e.g. intranet is a network within an organisation).\nIn this section we will:\n\nAnalyse the Intra-site divergence (River locations: LD, MD, & UD)\nExercise: repeat the previous steps for Intra-media divergence (CVP, ENV, KBC, & TSA)\n\n\n\nWhen carrying out intra-group divergence we are trying to determine which groups have lower dissimilarity distances between their samples.\nIf a group has low intra-group distances this indicates the community of the samples are quite similar. Whereas, if a group has high intra-group distances this indicates the community of the samples are quite dissimilar.\nFor example if you were comparing the gut microbiome of farmed fish compared to wild fish you may find:\n\nLow intra-group distances in the gut microbiome of farmed fish. This could be caused by their consistent diet and treatment with antibiotics leading to similar gut microbiome profiles.\nHigh intra-group distances in the gut microbiome of wild fish. This could be caused by the variety in their diet and their ability to move through various environments.\n\nYou are able to see evidence of this in ordination plots (PCoA, NMDS etc.) where group clusters being tighter than others indicates lower dissimilarity values. For example the below (fictional) PCoA shows tighter clustering in the gut microbiome of farmed fish compared to wild fish.\n\n\n\n\n\n\n\n\n\nSo why carry out divergence analysis? Divergence analysis directly uses the dissimilarity values rather than using ordination values that are calculated from the dissimilarity values. Therefore, if you are interested in and making statements about intra-group dissimilarity it is best to carry out visual and statistical intra-group divergence analysis.\n\n\n\nWit intra-group divergence we look at the dissimilarity distances between all the pairs within the same group.\n\n\nLet’s say we have 3 groups (G1, G2, & G3) each with 3 samples. With this example data we acquire the below ordination plot (e.g. PCoA or NMDS).\n\n\n\n\n\n\n\n\n\n\n\n\nIn this example data we would have 3 pairs in each group, this can be seen in the below plot. A 4 sample group would have 6 pairs, and a 5 sample group would have 10 pairs. To calculate the number of pairs in a set you can use n(n-1)/2.\nThe below plot shows a line between each sample and its intra-group pairs. We will only use the distances of these pairs for our intra-group divergence analysis.\nNote: It is important to note that we use the beta diversity distance (e.g. UniFrac) not the ordination distance (e.g. PCoA) for divergence analysis.\n\n\n\n\n\n\n\n\n\nBelow is a further example where we have added one more sample to each group.",
+    "text": "With our data formatted we will first carry out intra-group divergence analysis. This is analysing the distances within groups (e.g. intranet is a network within an organisation).\nIn this section we will:\n\nAnalyse the Intra-site divergence (River locations: LD, MD, & UD)\nExercise: repeat the previous steps for Intra-media divergence (CVP, ENV, KBC, & TSA)\n\n\n\nWhen carrying out intra-group divergence we are trying to determine which groups have lower dissimilarity distances between their samples.\nIf a group has low intra-group distances this indicates the community of the samples are quite similar. Whereas, if a group has high intra-group distances this indicates the community of the samples are quite dissimilar.\nFor example if you were comparing the gut microbiome of farmed fish compared to wild fish you may find:\n\nLow intra-group distances in the gut microbiome of farmed fish. This could be caused by their consistent diet and treatment with antibiotics leading to similar gut microbiome profiles.\nHigh intra-group distances in the gut microbiome of wild fish. This could be caused by the variety in their diet and their ability to move through various environments.\n\nYou are able to see evidence of this in ordination plots (PCoA, NMDS etc.) where group clusters being tighter than others indicates lower dissimilarity values. For example the below (fictional) PCoA shows tighter clustering in the gut microbiome of farmed fish compared to wild fish.\n\n\n\n\n\n\n\n\n\nSo why carry out divergence analysis? Divergence analysis directly uses the dissimilarity values rather than using ordination values that are calculated from the dissimilarity values. Therefore, if you are interested in and making statements about intra-group dissimilarity it is best to carry out visual and statistical intra-group divergence analysis.\n\n\n\nWith intra-group divergence we look at the dissimilarity distances between all the pairs within the same group.\n\n\nLet’s say we have 3 groups (G1, G2, & G3) each with 3 samples. With this example data we acquire the below ordination plot (e.g. PCoA or NMDS).\n\n\n\n\n\n\n\n\n\n\n\n\nIn this example data we would have 3 pairs in each group, this can be seen in the below plot. A 4 sample group would have 6 pairs, and a 5 sample group would have 10 pairs. To calculate the number of pairs in a set you can use n(n-1)/2.\nThe below plot shows a line between each sample and its intra-group pairs. We will only use the distances of these pairs for our intra-group divergence analysis.\nNote: It is important to note that we use the beta diversity distance (e.g. UniFrac) not the ordination distance (e.g. PCoA) for divergence analysis.\n\n\n\n\n\n\n\n\n\nBelow is a further example where we have added one more sample to each group.",
     "crumbs": [
       "Divergence",
       "Intra-group divergence",
@@ -479,11 +515,23 @@
     ]
   },
   {
-    "objectID": "divergence/intra_divergence.html#intra-group-divergence-explanation",
-    "href": "divergence/intra_divergence.html#intra-group-divergence-explanation",
+    "objectID": "divergence/intra_divergence.html#intra-group-divergence-purpose",
+    "href": "divergence/intra_divergence.html#intra-group-divergence-purpose",
     "title": "Intra-group intro",
     "section": "",
-    "text": "Prior to analysis its good to understand intra-group divergence. When carrying out intra-group divergence we are trying to determine which groups have lower dissimilarity distances between their intra-group samples.\nIf a group has low intra-group distances this indicates the community of the samples are quite similar. Whereas, if a group has high intra-group distances this indicates the community of the samples are quite dissimilar.\nFor example if you were comparing the gut microbiome of farmed fish compared to wild fish you may find:\n\nLow intra-group distances in the gut microbiome of farmed fish. This could be caused by a consistent diet and treatment with antibiotics leading to similar gut microbiome profiles.\nHigh intra-group distances in the gut microbiome of wild fish. This could be caused by the variety in their diet and their ability to move through various environments.",
+    "text": "When carrying out intra-group divergence we are trying to determine which groups have lower dissimilarity distances between their samples.\nIf a group has low intra-group distances this indicates the community of the samples are quite similar. Whereas, if a group has high intra-group distances this indicates the community of the samples are quite dissimilar.\nFor example if you were comparing the gut microbiome of farmed fish compared to wild fish you may find:\n\nLow intra-group distances in the gut microbiome of farmed fish. This could be caused by their consistent diet and treatment with antibiotics leading to similar gut microbiome profiles.\nHigh intra-group distances in the gut microbiome of wild fish. This could be caused by the variety in their diet and their ability to move through various environments.\n\nYou are able to see evidence of this in ordination plots (PCoA, NMDS etc.) where group clusters being tighter than others indicates lower dissimilarity values. For example the below (fictional) PCoA shows tighter clustering in the gut microbiome of farmed fish compared to wild fish.\n\n\n\n\n\n\n\n\n\nSo why carry out divergence analysis? Divergence analysis directly uses the dissimilarity values rather than using ordination values that are calculated from the dissimilarity values. Therefore, if you are interested in and making statements about intra-group dissimilarity it is best to carry out visual and statistical intra-group divergence analysis.",
+    "crumbs": [
+      "Divergence",
+      "Intra-group divergence",
+      "Intra-group intro"
+    ]
+  },
+  {
+    "objectID": "divergence/intra_divergence.html#groupings-and-pairs",
+    "href": "divergence/intra_divergence.html#groupings-and-pairs",
+    "title": "Intra-group intro",
+    "section": "",
+    "text": "With intra-group divergence we look at the dissimilarity distances between all the pairs within the same group.\n\n\nLet’s say we have 3 groups (G1, G2, & G3) each with 3 samples. With this example data we acquire the below ordination plot (e.g. PCoA or NMDS).\n\n\n\n\n\n\n\n\n\n\n\n\nIn this example data we would have 3 pairs in each group, this can be seen in the below plot. A 4 sample group would have 6 pairs, and a 5 sample group would have 10 pairs. To calculate the number of pairs in a set you can use n(n-1)/2.\nThe below plot shows a line between each sample and its intra-group pairs. We will only use the distances of these pairs for our intra-group divergence analysis.\nNote: It is important to note that we use the beta diversity distance (e.g. UniFrac) not the ordination distance (e.g. PCoA) for divergence analysis.\n\n\n\n\n\n\n\n\n\nBelow is a further example where we have added one more sample to each group.",
     "crumbs": [
       "Divergence",
       "Intra-group divergence",
@@ -601,7 +649,7 @@
     "href": "divergence/intra_media_exercise.html",
     "title": "Intra-media exercise",
     "section": "",
-    "text": "Intra-media exercise",
+    "text": "Now that you have worked through carrying out an intra-group analysis with site you will do the same with media.\nFor this exercise you will create your own code. SOlutions are available in the in the solution boxes below but please make a strong attempt before looking at them.\nI would recommend copying, pasting, and editing your code from the intra-site analysis. Ensure you change all the variable names you need to, tt is very easy miss variables and column/row names you need to change.\n\n\nThe steps to carry out this exercise are below along with the solution expandable boxes.\n\n\nThe first step is to create a tibble containing only observations/rows of intra-media distances from the beta_long_tbl_mean tibble. Call this variable: inter_media_wunifrac_long_tbl\nTip: You will need to use the columns media_L and media_R.\n\n\nInter-media tibble creation\n\n\n#Subset long tibble so only rows where media_L and media_R are identical of the lower triangle\n#I.e. the long tibble only contains one set of paired distances within media (Intra-media) \nintra_media_wunifrac_long_tbl &lt;-\n    beta_long_tbl_mean |&gt;\n        #Filter to keep lower triangle rows\n        dplyr::filter(triangle == \"lower\") |&gt;\n        #Filter to keep rows where media_L is the same as media_R (Intra-media)\n        dplyr::filter(site_L == site_R)\n#Check head of long tbl\nintra_media_wunifrac_long_tbl |&gt; head()\n\n\n\n\n\nWith the formatted tibble the next step is to create a violin plot. Ensure the x axis is separated by the four media groupings (CVP, ENV, KBC, and TSA).\n\n\nInter-media violin plot\n\n\n#Intra-media divergence violin plot\nintra_media_violin_plot &lt;-\n    intra_media_wunifrac_long_tbl |&gt;\n    ggplot2::ggplot(aes(x = media_L, y = value)) +\n    ggplot2::geom_violin() +\n    ggforce::geom_sina(alpha=0.5) +\n    ggplot2::labs(x = \"Media\", y = \"Weighted UniFrac\",\n                    title=\"Intra-media divergence with Weighted UniFrac dissimilarity\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_intra_media_divergence_violinplot.png\",\n        plot = intra_media_wunifrac_long_tbl,\n        device = \"png\", dpi = 300, units = \"mm\", height = 100, width = 150)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_intra_media_divergence_violinplot.png\")\n\n\nIn the plot we can see:\n\nThe ENV group has the highest range of distances and also has the highest dissimilarity distances.\nThe CVP group has the lowest range and lowest dissimilarity distances.\nThe KBC and TSA groups have quite similar values to each other with most of their dissimilarity distances being between 0.05 and 0.25.\n\n\n\n\nFinally, carry out the pairwise wilcox test to determine if there are significant difference between the inter-media distances.\n\n\nInter-media pairwise wilcox\n\n\npairwise.wilcox.test(intra_media_wunifrac_long_tbl$value,\n                        intra_media_wunifrac_long_tbl$media_L)\n\n\nIn this case you should see there is a significant difference between the intra-group distances of all the different media types except for KBC against TSA.",
     "crumbs": [
       "Divergence",
       "Intra-group divergence",
@@ -981,63 +1029,51 @@
     ]
   },
   {
-    "objectID": "divergence/intra_site_divergence.html#violin-plot",
-    "href": "divergence/intra_site_divergence.html#violin-plot",
-    "title": "Intra-site divergence",
+    "objectID": "divergence/intra_media_exercise.html#steps",
+    "href": "divergence/intra_media_exercise.html#steps",
+    "title": "Intra-media exercise",
     "section": "",
-    "text": "A bxo plot is a good method to visualise divergence. However, we’ll make it even nicer by making a violin plot.\nIn the below plot we separate the values by site using site_L, we could use site_R and their would be no difference as the values in site_L and `site_R are identical.\nFor a reminder on violin plots please see the R community analysis workbook.\n\n#Intra-site divergence violin plot\nintra_site_violin_plot &lt;-\n    intra_site_wunifrac_long_tbl |&gt;\n    ggplot2::ggplot(aes(x = site_L, y = value)) +\n    ggplot2::geom_violin() +\n    ggforce::geom_sina(alpha=0.5) +\n    ggplot2::labs(x = \"Site\", y = \"Weighted UniFrac\",\n                    title=\"Intra-site divergence with Weighted UniFrac dissimilarity\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_intra_site_divergence_violinplot.png\",\n        plot = intra_site_violin_plot,\n        device = \"png\", dpi = 300, units = \"mm\", height = 100, width = 150)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_intra_site_divergence_violinplot.png\")",
+    "text": "The steps to carry out this exercise are below along with the solution expandable boxes.\n\n\nThe first step is to create a tibble containing only observations/rows of intra-media distances from the beta_long_tbl_mean tibble. Call this variable: inter_media_wunifrac_long_tbl\nTip: You will need to use the columns media_L and media_R.\n\n\nInter-media tibble creation\n\n\n#Subset long tibble so only rows where media_L and media_R are identical of the lower triangle\n#I.e. the long tibble only contains one set of paired distances within media (Intra-media) \nintra_media_wunifrac_long_tbl &lt;-\n    beta_long_tbl_mean |&gt;\n        #Filter to keep lower triangle rows\n        dplyr::filter(triangle == \"lower\") |&gt;\n        #Filter to keep rows where media_L is the same as media_R (Intra-media)\n        dplyr::filter(site_L == site_R)\n#Check head of long tbl\nintra_media_wunifrac_long_tbl |&gt; head()\n\n\n\n\n\nWith the formatted tibble the next step is to create a violin plot. Ensure the x axis is separated by the four media groupings (CVP, ENV, KBC, and TSA).\n\n\nInter-media violin plot\n\n\n#Intra-media divergence violin plot\nintra_media_violin_plot &lt;-\n    intra_media_wunifrac_long_tbl |&gt;\n    ggplot2::ggplot(aes(x = media_L, y = value)) +\n    ggplot2::geom_violin() +\n    ggforce::geom_sina(alpha=0.5) +\n    ggplot2::labs(x = \"Media\", y = \"Weighted UniFrac\",\n                    title=\"Intra-media divergence with Weighted UniFrac dissimilarity\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_intra_media_divergence_violinplot.png\",\n        plot = intra_media_wunifrac_long_tbl,\n        device = \"png\", dpi = 300, units = \"mm\", height = 100, width = 150)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_intra_media_divergence_violinplot.png\")\n\n\nIn the plot we can see:\n\nThe ENV group has the highest range of distances and also has the highest dissimilarity distances.\nThe CVP group has the lowest range and lowest dissimilarity distances.\nThe KBC and TSA groups have quite similar values to each other with most of their dissimilarity distances being between 0.05 and 0.25.\n\n\n\n\nFinally, carry out the pairwise wilcox test to determine if there are significant difference between the inter-media distances.\n\n\nInter-media pairwise wilcox\n\n\npairwise.wilcox.test(intra_media_wunifrac_long_tbl$value,\n                        intra_media_wunifrac_long_tbl$media_L)\n\n\nIn this case you should see there is a significant difference between the intra-group distances of all the different media types except for KBC against TSA.",
     "crumbs": [
       "Divergence",
       "Intra-group divergence",
-      "Intra-site divergence"
+      "Intra-media exercise"
     ]
   },
   {
-    "objectID": "divergence/intra_site_divergence.html#stats",
-    "href": "divergence/intra_site_divergence.html#stats",
-    "title": "Intra-site divergence",
+    "objectID": "divergence/inter_divergence.html",
+    "href": "divergence/inter_divergence.html",
+    "title": "Inter-group intro",
     "section": "",
-    "text": "As with other box/violin plots we can compare the different intra-site distance groupings with a pairwise wilcox test. For more information please see the R community analysis workbook.\nThe below analysis carries our P value adjustment via the holm method.\n\npairwise.wilcox.test(intra_site_wunifrac_long_tbl$value,\n                        intra_site_wunifrac_long_tbl$site_L)",
+    "text": "With our formatted data we can also carry out inter-group divergence analysis. This is analysing the distances between groups (e.g. internet is a network between different networks).\nIn this section we will:\n\nAnalyse the Inter-site divergence (River locations: LD, MD, & UD)\nExercise: repeat the previous steps for Inter-media divergence (CVP, ENV, KBC, & TSA)\n\n\n\nWith inter-group divergence analysis we are trying to determine which groups have lower and higher dissimilarity between each other.\nThis can be especially useful when comparing three or more sample groups as is let’s us mor confidently determine which sample groups are more similar to each other.\nFor example, let’s say we had a study of salmon gut microbiomes. The three sample groups are:\n\nWild salmon\nFarmed salmon fed on a non-vegetarian diet\nFarmed salmon fed on a vegetarian diet\n\nIn this case it is likely the dissimilarity distance between the farmed salmon with non-vegetarian and vegetarian diets is more similar than either groups distances to the wild fish. However, does one of the farmed fish groups have lower dissimilarity scores to the wild fish compared to the other farmed group? If so, is this a significant difference? These results could then lead into other types of analysis such as biomarker detection.\n\n\n\nWith inter-group divergence we look at the dissimilarity distances between all the pairs between different sample groups.\n\n\nAs with the intra-group intro we’ll use 3 groups (G1, G2, & G3) each with 3 samples. These can be seen in the ordination plot (e.g. PCoA or NMDS).\n\n\n\n\n\n\n\n\n\n\n\n\nIt is more difficult to work with inter-group distances than intra-group distances. When we do this we need each inter group distance twice as we need it for the first/left group and for the second/right group.\nThe below plot displays each inter-group pairwise distance for the G1 samples:\n\n\n\n\n\n\n\n\n\nNext is all the inter-group pairwise distances for the G2 samples:\n\n\n\n\n\n\n\n\n\nAll the inter-group pairwise distances for the G3 sample:\n\n\n\n\n\n\n\n\n\nFinally, all the inter-group distances displayed at once:\n\n\n\n\n\n\n\n\n\nIn this example with 3 groups, each with 3 samples, we have a total of 54 inter group distances. There are 18 inter-group distances per group (183 = 54). Or another way to think about it is that each sample has 6 inter group distances and there are 9 samples (69=54).\nIf we had 4 groups with 10 samples each we would have:\n\n45 intra group distances (10*(10-1)/2 = 45)\n1,200 inter group distances (30*40=1200)\n\nBecause there is more data for inter-group analysis we may be able to carry it out even when there are too few data points for intra-group analysis.",
     "crumbs": [
       "Divergence",
-      "Intra-group divergence",
-      "Intra-site divergence"
+      "Inter-group divergence",
+      "Inter-group intro"
     ]
   },
   {
-    "objectID": "divergence/intra_divergence.html#groupings-and-pairs",
-    "href": "divergence/intra_divergence.html#groupings-and-pairs",
-    "title": "Intra-group intro",
+    "objectID": "divergence/inter_divergence.html#inter-group-divergence-purpose",
+    "href": "divergence/inter_divergence.html#inter-group-divergence-purpose",
+    "title": "Inter-group intro",
     "section": "",
-    "text": "Wit intra-group divergence we look at the dissimilarity distances between all the pairs within the same group.\n\n\nLet’s say we have 3 groups (G1, G2, & G3) each with 3 samples. With this example data we acquire the below ordination plot (e.g. PCoA or NMDS).\n\n\n\n\n\n\n\n\n\n\n\n\nIn this example data we would have 3 pairs in each group, this can be seen in the below plot. A 4 sample group would have 6 pairs, and a 5 sample group would have 10 pairs. To calculate the number of pairs in a set you can use n(n-1)/2.\nThe below plot shows a line between each sample and its intra-group pairs. We will only use the distances of these pairs for our intra-group divergence analysis.\nNote: It is important to note that we use the beta diversity distance (e.g. UniFrac) not the ordination distance (e.g. PCoA) for divergence analysis.\n\n\n\n\n\n\n\n\n\nBelow is a further example where we have added one more sample to each group.",
+    "text": "With inter-group divergence analysis we are trying to determine which groups have lower and higher dissimilarity between each other.\nThis can be especially useful when comparing three or more sample groups as is let’s us mor confidently determine which sample groups are more similar to each other.\nFor example, let’s say we had a study of salmon gut microbiomes. The three sample groups are:\n\nWild salmon\nFarmed salmon fed on a non-vegetarian diet\nFarmed salmon fed on a vegetarian diet\n\nIn this case it is likely the dissimilarity distance between the farmed salmon with non-vegetarian and vegetarian diets is more similar than either groups distances to the wild fish. However, does one of the farmed fish groups have lower dissimilarity scores to the wild fish compared to the other farmed group? If so, is this a significant difference? These results could then lead into other types of analysis such as biomarker detection.",
     "crumbs": [
       "Divergence",
-      "Intra-group divergence",
-      "Intra-group intro"
+      "Inter-group divergence",
+      "Inter-group intro"
     ]
   },
   {
-    "objectID": "divergence/intra_divergence.html#intra-group-divergence-purpose",
-    "href": "divergence/intra_divergence.html#intra-group-divergence-purpose",
-    "title": "Intra-group intro",
+    "objectID": "divergence/inter_divergence.html#groupings-and-pairs",
+    "href": "divergence/inter_divergence.html#groupings-and-pairs",
+    "title": "Inter-group intro",
     "section": "",
-    "text": "When carrying out intra-group divergence we are trying to determine which groups have lower dissimilarity distances between their samples.\nIf a group has low intra-group distances this indicates the community of the samples are quite similar. Whereas, if a group has high intra-group distances this indicates the community of the samples are quite dissimilar.\nFor example if you were comparing the gut microbiome of farmed fish compared to wild fish you may find:\n\nLow intra-group distances in the gut microbiome of farmed fish. This could be caused by their consistent diet and treatment with antibiotics leading to similar gut microbiome profiles.\nHigh intra-group distances in the gut microbiome of wild fish. This could be caused by the variety in their diet and their ability to move through various environments.\n\nYou are able to see evidence of this in ordination plots (PCoA, NMDS etc.) where group clusters being tighter than others indicates lower dissimilarity values. For example the below (fictional) PCoA shows tighter clustering in the gut microbiome of farmed fish compared to wild fish.\n\n\n\n\n\n\n\n\n\nSo why carry out divergence analysis? Divergence analysis directly uses the dissimilarity values rather than using ordination values that are calculated from the dissimilarity values. Therefore, if you are interested in and making statements about intra-group dissimilarity it is best to carry out visual and statistical intra-group divergence analysis.",
+    "text": "With inter-group divergence we look at the dissimilarity distances between all the pairs between different sample groups.\n\n\nAs with the intra-group intro we’ll use 3 groups (G1, G2, & G3) each with 3 samples. These can be seen in the ordination plot (e.g. PCoA or NMDS).\n\n\n\n\n\n\n\n\n\n\n\n\nIt is more difficult to work with inter-group distances than intra-group distances. When we do this we need each inter group distance twice as we need it for the first/left group and for the second/right group.\nThe below plot displays each inter-group pairwise distance for the G1 samples:\n\n\n\n\n\n\n\n\n\nNext is all the inter-group pairwise distances for the G2 samples:\n\n\n\n\n\n\n\n\n\nAll the inter-group pairwise distances for the G3 sample:\n\n\n\n\n\n\n\n\n\nFinally, all the inter-group distances displayed at once:\n\n\n\n\n\n\n\n\n\nIn this example with 3 groups, each with 3 samples, we have a total of 54 inter group distances. There are 18 inter-group distances per group (183 = 54). Or another way to think about it is that each sample has 6 inter group distances and there are 9 samples (69=54).\nIf we had 4 groups with 10 samples each we would have:\n\n45 intra group distances (10*(10-1)/2 = 45)\n1,200 inter group distances (30*40=1200)\n\nBecause there is more data for inter-group analysis we may be able to carry it out even when there are too few data points for intra-group analysis.",
     "crumbs": [
       "Divergence",
-      "Intra-group divergence",
-      "Intra-group intro"
-    ]
-  },
-  {
-    "objectID": "divergence/intra_site_divergence.html#interpretation",
-    "href": "divergence/intra_site_divergence.html#interpretation",
-    "title": "Intra-site divergence",
-    "section": "",
-    "text": "With our results we can see the violin plots of the three sites have significant overlap. Additionally, there is no significant difference between the groupings of intra-site distances.\nIn this case we can’t see any definitive difference in divergence within the different sites. Therefore we’ll carry out some more analysis.",
-    "crumbs": [
-      "Divergence",
-      "Intra-group divergence",
-      "Intra-site divergence"
+      "Inter-group divergence",
+      "Inter-group intro"
     ]
   }
 ]

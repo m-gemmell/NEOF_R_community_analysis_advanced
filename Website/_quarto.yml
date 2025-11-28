@@ -70,6 +70,9 @@ website:
       - href: divergence/intra_divergence.qmd
       - href: divergence/intra_site_divergence.qmd
       - href: divergence/intra_media_exercise.qmd
+    - section: "Inter-group divergence"
+      contents:
+      - href: divergence/inter_divergence.qmd
   - id: Upset
     title: Upset
     style: floating

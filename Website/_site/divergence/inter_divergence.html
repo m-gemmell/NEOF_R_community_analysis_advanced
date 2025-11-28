@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Upset – Advanced R community analysis</title>
+<title>inter_divergence – Advanced R community analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../upset/data_and_setup.html" rel="next">
+<link href="../divergence/intra_media_exercise.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -306,7 +306,7 @@ ul.task-list li input[type="checkbox"] {
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">Upset</h1>
+          <h1 class="quarto-secondary-nav-title"></h1>
         </a>     
     </div>
   </nav>
@@ -323,8 +323,8 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/upset.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Upset</span></a>
+  <a href="../divergence/divergence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Divergence</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -338,14 +338,8 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/data_and_setup.html" class="sidebar-item-text sidebar-link">
+  <a href="../divergence/data_and_setup.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data &amp; Setup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/simple_bar_chart.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Simple bar chart</span></a>
   </div>
 </li>
       </ul>
@@ -361,20 +355,32 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/upset_data_format.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Upset data format</span></a>
+  <a href="../divergence/divergence_data_format.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Divergence data format</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/phyloseq_to_tibble.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Phyloseq to long presence tibble</span></a>
+  <a href="../divergence/lower_triangle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lower triangle</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/upset_tibble_creation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Upset tibble creation</span></a>
+  <a href="../divergence/metadata_addition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata addition</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/upper_triangle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Upper triangle</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/bind_long_tibbles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bind long tibbles</span></a>
   </div>
 </li>
       </ul>
@@ -382,7 +388,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Upset plots</span></a>
+ <span class="menu-text">Intra-group divergence</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -390,20 +396,20 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/upset_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Upset plot</span></a>
+  <a href="../divergence/intra_divergence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intra-group intro</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/all_in_one_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">All in one code</span></a>
+  <a href="../divergence/intra_site_divergence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intra-site divergence</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/challenge_1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Challenge class upset plot</span></a>
+  <a href="../divergence/intra_media_exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intra-media exercise</span></a>
   </div>
 </li>
       </ul>
@@ -411,7 +417,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Lower taxa levels</span></a>
+ <span class="menu-text">Inter-group divergence</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -419,61 +425,8 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/rare_removal_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Rare removal</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/rare_upset_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Rare features upset plot</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Metadata intersections</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/metadata_sets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Metadata as sets</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/sample_and_taxa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sample and taxa tibble</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/metadata_and_taxa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Metadata and taxa tibble</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/metadata_upset_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Metadata upset plot</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/media_genus_upset.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Media upset plot</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/challenge_2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Challenge site and media upset plot</span></a>
+  <a href="../divergence/inter_divergence.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Inter-group intro</span></a>
   </div>
 </li>
       </ul>
@@ -488,153 +441,111 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#intersecting-sets" id="toc-intersecting-sets" class="nav-link active" data-scroll-target="#intersecting-sets">Intersecting sets</a></li>
-  <li><a href="#venn-versus-upset" id="toc-venn-versus-upset" class="nav-link" data-scroll-target="#venn-versus-upset">Venn versus Upset</a>
+  <li><a href="#inter-group-intro" id="toc-inter-group-intro" class="nav-link active" data-scroll-target="#inter-group-intro">Inter-group intro</a>
   <ul class="collapse">
-  <li><a href="#way-venn-diagram" id="toc-way-venn-diagram" class="nav-link" data-scroll-target="#way-venn-diagram">3 way venn diagram</a></li>
-  <li><a href="#way-venn-digram" id="toc-way-venn-digram" class="nav-link" data-scroll-target="#way-venn-digram">4 way venn digram</a></li>
-  <li><a href="#upset-plot" id="toc-upset-plot" class="nav-link" data-scroll-target="#upset-plot">Upset plot</a></li>
+  <li><a href="#inter-group-divergence-purpose" id="toc-inter-group-divergence-purpose" class="nav-link" data-scroll-target="#inter-group-divergence-purpose">Inter-group divergence purpose</a></li>
+  <li><a href="#groupings-and-pairs" id="toc-groupings-and-pairs" class="nav-link" data-scroll-target="#groupings-and-pairs">Groupings and pairs</a>
+  <ul class="collapse">
+  <li><a href="#example-data" id="toc-example-data" class="nav-link" data-scroll-target="#example-data">Example data</a></li>
+  <li><a href="#inter-group-pairs" id="toc-inter-group-pairs" class="nav-link" data-scroll-target="#inter-group-pairs">Inter-group pairs</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title d-none d-lg-block">Upset</h1>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
 
 
-</header>
-
-
-<center>
-<img src="images/upset_plot_icon.png" class="img-fluid" style="width:300px; background: white; border-radius:15px; border:5px white solid">
-</center>
-<p>Upset plots are a visualisation method to display <strong>intersections</strong> between <strong>sets</strong>. They can be seen as a different form of a venn diagram but are able to effectively display many <strong>intersecting sets</strong>.</p>
+<section id="inter-group-intro" class="level1">
+<h1>Inter-group intro</h1>
+<p>With our formatted data we can also carry out inter-group divergence analysis. This is analysing the distances between groups (e.g.&nbsp;internet is a network between different networks).</p>
 <p>In this section we will:</p>
 <ul>
-<li>Introduce the concept of intersecting sets and displaying them with venn and upset plots.</li>
-<li>Setup our environment and introduce the dataset</li>
-<li>Format the data from a phyloseq object to a <strong>tibble</strong> for upset plot creation</li>
-<li>Create &amp; customise upset plots</li>
+<li>Analyse the Inter-site divergence (River locations: LD, MD, &amp; UD)</li>
+<li>Exercise: repeat the previous steps for Inter-media divergence (CVP, ENV, KBC, &amp; TSA)</li>
 </ul>
-<section id="intersecting-sets" class="level2">
-<h2 class="anchored" data-anchor-id="intersecting-sets">Intersecting sets</h2>
-<center>
-<img src="images/intersection.png" class="img-fluid" style="width:200px; background: white; border-radius:15px; border:5px white solid">
-</center>
-<p>Intersection plots for community analysis can be used to display the number of intersecting features (e.g.&nbsp;taxa) between samples or sample groups. In other words you can display the shared presence of features between groups.</p>
-<p>Additionally, you can flip it around to display the number of intersecting groups between taxa. This allows you to determine which taxa are common and uncommon across the groups. We will see this later on.</p>
-</section>
-<section id="venn-versus-upset" class="level2">
-<h2 class="anchored" data-anchor-id="venn-versus-upset">Venn versus Upset</h2>
-<p>Venn diagrams and upset plots display the <strong>intersections</strong> between <strong>sets</strong>. To demonstrate the concept of <strong>intersecting sets</strong> this section includes a few examples of these plots. These plots will display:</p>
+<section id="inter-group-divergence-purpose" class="level2">
+<h2 class="anchored" data-anchor-id="inter-group-divergence-purpose">Inter-group divergence purpose</h2>
+<p>With inter-group divergence analysis we are trying to determine which groups have lower and higher dissimilarity between each other.</p>
+<p>This can be especially useful when comparing three or more sample groups as is let’s us mor confidently determine which sample groups are more similar to each other.</p>
+<p>For example, let’s say we had a study of salmon gut microbiomes. The three sample groups are:</p>
 <ul>
-<li><strong>Sets</strong> of samples (e.g.&nbsp;S1, S2, &amp; S3).</li>
-<li>The <strong>intersection</strong> of phyla.</li>
+<li>Wild salmon</li>
+<li>Farmed salmon fed on a non-vegetarian diet</li>
+<li>Farmed salmon fed on a vegetarian diet</li>
 </ul>
-<section id="way-venn-diagram" class="level3">
-<h3 class="anchored" data-anchor-id="way-venn-diagram">3 way venn diagram</h3>
-<p>Three way venn digrams are a classic for visualising <strong>intersecting sets</strong>. Below is an example showing the number of <strong>intersecting</strong> phyla across three sets of samples (S1, S2, &amp; S3).</p>
-<center>
-<img src="images/3_way_venn.png" class="img-fluid" style="width:500px; background: white; border-radius:15px">
-</center>
-<p><br> This above plot shows:</p>
-<ul>
-<li>6 phyla are found in all samples.</li>
-<li>3 phyla are present in S1 and S3 but not S2.</li>
-<li>1 phylum is found in S2 that are not present in S1 or S3.</li>
-<li>There are a total of 25 phyla (4+2+1+3+6+3+6=10)</li>
-</ul>
-<section id="mcqs" class="level4">
-<h4 class="anchored" data-anchor-id="mcqs">MCQs</h4>
-<center>
-<img src="..\images/question_bubble_blue.png" class="img-fluid" style="width:150px">
-</center>
-<p>Please attempt the below MCQs based on the above venn diagram.</p>
-<ol type="1">
-<li>How many phyla are present in S2 &amp; S3 but not S1?
-<div id="radio_MLUBNLDBJW" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_MLUBNLDBJW" value="answer"> <span><strong>3</strong></span></label><label><input type="radio" autocomplete="off" name="radio_MLUBNLDBJW" value=""> <span><strong>18</strong></span></label><label><input type="radio" autocomplete="off" name="radio_MLUBNLDBJW" value=""> <span><strong>6</strong></span></label>
-</div></li>
-</ol>
-<ol start="2" type="1">
-<li>How many phyla are present in S3 but not S1 or S2?
-<div id="radio_LKZEFBKPQD" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_LKZEFBKPQD" value=""> <span><strong>3</strong></span></label><label><input type="radio" autocomplete="off" name="radio_LKZEFBKPQD" value=""> <span><strong>18</strong></span></label><label><input type="radio" autocomplete="off" name="radio_LKZEFBKPQD" value="answer"> <span><strong>6</strong></span></label>
-</div></li>
-</ol>
-<ol start="3" type="1">
-<li>How many total phyla are present in S3?
-<div id="radio_TACXCFQAMH" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_TACXCFQAMH" value=""> <span><strong>3</strong></span></label><label><input type="radio" autocomplete="off" name="radio_TACXCFQAMH" value="answer"> <span><strong>18</strong></span></label><label><input type="radio" autocomplete="off" name="radio_TACXCFQAMH" value=""> <span><strong>6</strong></span></label>
-</div></li>
-</ol>
+<p>In this case it is likely the dissimilarity distance between the farmed salmon with non-vegetarian and vegetarian diets is more similar than either groups distances to the wild fish. However, does one of the farmed fish groups have lower dissimilarity scores to the wild fish compared to the other farmed group? If so, is this a significant difference? These results could then lead into other types of analysis such as biomarker detection.</p>
 </section>
+<section id="groupings-and-pairs" class="level2">
+<h2 class="anchored" data-anchor-id="groupings-and-pairs">Groupings and pairs</h2>
+<p>With inter-group divergence we look at the dissimilarity distances between all the pairs between different sample groups.</p>
+<section id="example-data" class="level3">
+<h3 class="anchored" data-anchor-id="example-data">Example data</h3>
+<p>As with the intra-group intro we’ll use 3 groups (G1, G2, &amp; G3) each with 3 samples. These can be seen in the ordination plot (e.g.&nbsp;PCoA or NMDS).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="inter_divergence_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="979"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="way-venn-digram" class="level3">
-<h3 class="anchored" data-anchor-id="way-venn-digram">4 way venn digram</h3>
-<p>Although venn diagrams can be nice, they become more difficult to parse as more sets are included. Below is a 4 way venn diagram to demonstrate this. It includes the same samples as the above venn diagram but with S4 added in.</p>
-<center>
-<img src="images/4_way_venn.png" class="img-fluid" style="width:600px; background: white; border-radius:15px">
-</center>
-</section>
-<section id="upset-plot" class="level3">
-<h3 class="anchored" data-anchor-id="upset-plot">Upset plot</h3>
-<p>Instead of venn diagrams we can use upset plots. Below is an upset plots made from the same data as the above 4 way venn diagram. It consists of 2 parts:</p>
+<section id="inter-group-pairs" class="level3">
+<h3 class="anchored" data-anchor-id="inter-group-pairs">Inter-group pairs</h3>
+<p>It is more difficult to work with inter-group distances than intra-group distances. When we do this we need each inter group distance twice as we need it for the first/left group and for the second/right group.</p>
+<p>The below plot displays each inter-group pairwise distance for the G1 samples:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="inter_divergence_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="979"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Next is all the inter-group pairwise distances for the G2 samples:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="inter_divergence_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="979"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>All the inter-group pairwise distances for the G3 sample:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="inter_divergence_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="979"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Finally, all the inter-group distances displayed at once:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="inter_divergence_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="979"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In this example with 3 groups, each with 3 samples, we have a total of 54 inter group distances. There are 18 inter-group distances per group (18<em>3 = 54). Or another way to think about it is that each sample has 6 inter group distances and there are 9 samples (6</em>9=54).</p>
+<p>If we had 4 groups with 10 samples each we would have:</p>
 <ul>
-<li>A bar chart of the number of phyla found in the intersections of samples.</li>
-<li>The intersections of samples displayed with dots and lines.</li>
+<li>45 intra group distances (<code>10*(10-1)/2 = 45</code>)</li>
+<li>1,200 inter group distances (<code>30*40=1200</code>)</li>
 </ul>
-<p>By default the order of the x-axis is ordered from frequency within the intersections. I.e. from intersection with highest phyla count to lowest phyla count.</p>
-<center>
-<img src="images/upset_plot.png" class="img-fluid" style="width:600px; background: white; border-radius:15px">
-</center>
-<p><br> The first three bars/columns of the above plot shows:</p>
-<ul>
-<li>S3 has 5 unique phyla.</li>
-<li>There are 4 phyla found in all the samples.</li>
-<li>S1 &amp; S4 share four phyla not present in S2 or S3.</li>
-</ul>
-<p>On important note is that intersections with values of 0 are not displayed in upset plots.</p>
-<section id="mcqs-1" class="level4">
-<h4 class="anchored" data-anchor-id="mcqs-1">MCQs</h4>
-<center>
-<img src="..\images/question_bubble_red.png" class="img-fluid" style="width:150px">
-</center>
-<p>Please attempt the below MCQs based on the above upset plot.</p>
-<ol type="1">
-<li>How many phyla are present in S1, S3, and S2 but not S4?
-<div id="radio_GNOQIWDXVL" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_GNOQIWDXVL" value=""> <span><strong>12</strong></span></label><label><input type="radio" autocomplete="off" name="radio_GNOQIWDXVL" value=""> <span><strong>0</strong></span></label><label><input type="radio" autocomplete="off" name="radio_GNOQIWDXVL" value="answer"> <span><strong>2</strong></span></label>
-</div></li>
-</ol>
-<ol start="2" type="1">
-<li>How many phyla are only present in S4?
-<div id="radio_BYVHLUZIHH" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_BYVHLUZIHH" value=""> <span><strong>12</strong></span></label><label><input type="radio" autocomplete="off" name="radio_BYVHLUZIHH" value="answer"> <span><strong>0</strong></span></label><label><input type="radio" autocomplete="off" name="radio_BYVHLUZIHH" value=""> <span><strong>2</strong></span></label>
-</div></li>
-</ol>
-<ol start="3" type="1">
-<li>How many total phyla are present in S2?
-<div id="radio_WLCBSALSBQ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_WLCBSALSBQ" value="answer"> <span><strong>12</strong></span></label><label><input type="radio" autocomplete="off" name="radio_WLCBSALSBQ" value=""> <span><strong>0</strong></span></label><label><input type="radio" autocomplete="off" name="radio_WLCBSALSBQ" value=""> <span><strong>2</strong></span></label>
-</div></li>
-</ol>
+<p>Because there is more data for inter-group analysis we may be able to carry it out even when there are too few data points for intra-group analysis.</p>
 
 
 </section>
@@ -1263,11 +1174,11 @@ window.onload = function() {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../divergence/intra_media_exercise.html" class="pagination-link" aria-label="Intra-media exercise">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Intra-media exercise</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../upset/data_and_setup.html" class="pagination-link" aria-label="Data &amp; Setup">
-        <span class="nav-page-text">Data &amp; Setup</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

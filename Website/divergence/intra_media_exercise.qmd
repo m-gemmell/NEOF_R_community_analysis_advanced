@@ -1,1 +1,78 @@
 # Intra-media exercise
+
+Now that you have worked through carrying out an intra-group analysis with site you will do the same with media.
+
+For this exercise you will create your own code.
+SOlutions are available in the in the solution boxes below but please make a strong attempt before looking at them.
+
+I would recommend copying, pasting, and editing your code from the intra-site analysis. 
+Ensure you change all the variable names you need to, tt is very easy miss variables and column/row names you need to change.
+
+## Steps
+
+The steps to carry out this exercise are below along with the solution expandable boxes.
+
+### Intra-media tibble
+
+The first step is to create a tibble containing only observations/rows of intra-media distances from the `beta_long_tbl_mean` tibble.
+Call this variable: `inter_media_wunifrac_long_tbl`
+
+__Tip:__ You will need to use the columns `media_L` and `media_R`.
+
+`r hide("Inter-media tibble creation")`
+```{r eval=FALSE}
+#Subset long tibble so only rows where media_L and media_R are identical of the lower triangle
+#I.e. the long tibble only contains one set of paired distances within media (Intra-media) 
+intra_media_wunifrac_long_tbl <-
+    beta_long_tbl_mean |>
+        #Filter to keep lower triangle rows
+        dplyr::filter(triangle == "lower") |>
+        #Filter to keep rows where media_L is the same as media_R (Intra-media)
+        dplyr::filter(site_L == site_R)
+#Check head of long tbl
+intra_media_wunifrac_long_tbl |> head()
+```
+`r unhide()`
+
+### Violin plot
+
+With the formatted tibble the next step is to create a violin plot.
+Ensure the x axis is separated by the four media groupings (CVP, ENV, KBC, and TSA).
+
+`r hide("Inter-media violin plot")`
+```{r eval=FALSE}
+#Intra-media divergence violin plot
+intra_media_violin_plot <-
+    intra_media_wunifrac_long_tbl |>
+    ggplot2::ggplot(aes(x = media_L, y = value)) +
+    ggplot2::geom_violin() +
+    ggforce::geom_sina(alpha=0.5) +
+    ggplot2::labs(x = "Media", y = "Weighted UniFrac",
+                    title="Intra-media divergence with Weighted UniFrac dissimilarity")
+#Save ggplot2 object with ggsave
+ggsave(filename = "./wunifrac_intra_media_divergence_violinplot.png",
+        plot = intra_media_wunifrac_long_tbl,
+        device = "png", dpi = 300, units = "mm", height = 100, width = 150)
+#Display plot
+IRdisplay::display_png(file = "./wunifrac_intra_media_divergence_violinplot.png")
+```
+`r unhide()`
+
+In the plot we can see:
+
+- The ENV group has the highest range of distances and also has the highest dissimilarity distances.
+- The CVP group has the lowest range and lowest dissimilarity distances.
+- The KBC and TSA groups have quite similar values to each other with most of their dissimilarity distances being between 0.05 and 0.25.
+
+### Stats
+
+Finally, carry out the pairwise wilcox test to determine if there are significant difference between the inter-media distances.
+
+`r hide("Inter-media pairwise wilcox")`
+```{r eval=FALSE}
+pairwise.wilcox.test(intra_media_wunifrac_long_tbl$value,
+                        intra_media_wunifrac_long_tbl$media_L)
+```
+`r unhide()`
+
+In this case you should see there is a significant difference between the intra-group distances of all the different media types except for KBC against TSA.
