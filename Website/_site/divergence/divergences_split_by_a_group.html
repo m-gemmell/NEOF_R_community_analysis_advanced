@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>upset_data_format – Advanced R community analysis</title>
+<title>divergences_split_by_a_group – Advanced R community analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,8 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../upset/phyloseq_to_tibble.html" rel="next">
-<link href="../upset/simple_bar_chart.html" rel="prev">
+<link href="../divergence/combined_plot.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -359,8 +358,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/upset.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Upset</span></a>
+  <a href="../divergence/divergence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Divergence</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -374,14 +373,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/data_and_setup.html" class="sidebar-item-text sidebar-link">
+  <a href="../divergence/data_and_setup.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Data &amp; Setup</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/simple_bar_chart.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Simple bar chart</span></a>
   </div>
 </li>
       </ul>
@@ -397,20 +390,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/upset_data_format.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Upset data format</span></a>
+  <a href="../divergence/divergence_data_format.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Divergence data format</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/phyloseq_to_tibble.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Phyloseq to long presence tibble</span></a>
+  <a href="../divergence/lower_triangle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Lower triangle</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/upset_tibble_creation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Upset tibble creation</span></a>
+  <a href="../divergence/metadata_addition.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata addition</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/upper_triangle.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Upper triangle</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/bind_long_tibbles.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Bind long tibbles</span></a>
   </div>
 </li>
       </ul>
@@ -418,7 +423,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Upset plots</span></a>
+ <span class="menu-text">Intra-group divergence</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -426,20 +431,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/upset_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Upset plot</span></a>
+  <a href="../divergence/intra_divergence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intra-group intro</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/all_in_one_code.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">All in one code</span></a>
+  <a href="../divergence/intra_site_divergence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intra-site divergence</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/challenge_1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Challenge class upset plot</span></a>
+  <a href="../divergence/intra_media_exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intra-media exercise</span></a>
   </div>
 </li>
       </ul>
@@ -447,7 +452,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Lower taxa levels</span></a>
+ <span class="menu-text">Inter-group divergence</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -455,14 +460,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/rare_removal_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Rare removal</span></a>
+  <a href="../divergence/inter_divergence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inter-group intro</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/rare_upset_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Rare features upset plot</span></a>
+  <a href="../divergence/inter_site_divergence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inter-site divergence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/inter_media_exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inter-media exercise</span></a>
   </div>
 </li>
       </ul>
@@ -470,7 +481,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Metadata intersections</span></a>
+ <span class="menu-text">Advanced</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -478,38 +489,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/metadata_sets.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Metadata as sets</span></a>
+  <a href="../divergence/combined_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Combined plot</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../upset/sample_and_taxa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Sample and taxa tibble</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/metadata_and_taxa.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Metadata and taxa tibble</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/metadata_upset_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Metadata upset plot</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/media_genus_upset.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Media upset plot</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../upset/challenge_2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Challenge site and media upset plot</span></a>
+  <a href="../divergence/divergences_split_by_a_group.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Divergences split by a group</span></a>
   </div>
 </li>
       </ul>
@@ -524,13 +511,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#upset-data-format" id="toc-upset-data-format" class="nav-link active" data-scroll-target="#upset-data-format">Upset data format</a>
+  <li><a href="#divergences-split-by-a-group" id="toc-divergences-split-by-a-group" class="nav-link active" data-scroll-target="#divergences-split-by-a-group">Divergences split by a group</a>
   <ul class="collapse">
-  <li><a href="#group-vector-column" id="toc-group-vector-column" class="nav-link" data-scroll-target="#group-vector-column">Group vector column</a></li>
-  <li><a href="#intersection-list-column" id="toc-intersection-list-column" class="nav-link" data-scroll-target="#intersection-list-column">Intersection list column</a></li>
-  <li><a href="#upset-tibble" id="toc-upset-tibble" class="nav-link" data-scroll-target="#upset-tibble">Upset tibble</a></li>
-  <li><a href="#upset-plot" id="toc-upset-plot" class="nav-link" data-scroll-target="#upset-plot">Upset plot</a></li>
-  <li><a href="#mcqs" id="toc-mcqs" class="nav-link" data-scroll-target="#mcqs">MCQs</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#intra-media-by-site" id="toc-intra-media-by-site" class="nav-link" data-scroll-target="#intra-media-by-site">Intra-media by site</a></li>
+  <li><a href="#inter-media-by-site" id="toc-inter-media-by-site" class="nav-link" data-scroll-target="#inter-media-by-site">Inter-media by site</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -542,120 +527,68 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="upset-data-format" class="level1">
-<h1>Upset data format</h1>
-<center>
-<img src="images/format.png" class="img-fluid" style="width:200px">
-</center>
-<p>The structure of the data for an upset plot is not a typical <strong>tibble</strong>. It only requires one column of <strong>intersections</strong>. This is a <strong>list</strong> containing the <strong>intersections</strong> of <strong>sets</strong>.</p>
-<p>To demonstrate we’ll create an example <strong>tibble</strong> required for an upset plot and visualise it.</p>
-<section id="group-vector-column" class="level2">
-<h2 class="anchored" data-anchor-id="group-vector-column">Group vector column</h2>
-<center>
-<img src="images/grouping.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
-</center>
-<p>For clarity we will include a <strong>group column</strong>. The <strong>group</strong> column is a normal <strong>vector</strong> column of <strong>characters</strong>.</p>
+<section id="divergences-split-by-a-group" class="level1">
+<h1>Divergences split by a group</h1>
+<p>There are times when you may want to analyse divergences within a grouping within</p>
+<p>In this example we will look at the inter and intra divergences of media split by the sites.</p>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>As we are interested in divergences within the sites we will use the intra-site tibble we created <a href="../divergence/intra_site_divergence.html">earlier</a>. This is because we are only interested in paired distances where both samples are form the same site.</p>
+<p>Let’s check the top (<code>head()</code>) of the tibble.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Group column</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>group_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"G1"</span>,<span class="st">"G2"</span>,<span class="st">"G3"</span>,<span class="st">"G4"</span>,<span class="st">"G5"</span>,<span class="st">"G6"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>intra_site_wunifrac_long_tbl <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="intersection-list-column" class="level2">
-<h2 class="anchored" data-anchor-id="intersection-list-column">Intersection list column</h2>
-<center>
-<img src="images/road_intersection.png" class="img-fluid" style="width:150px; background:white; border-radius:15px; border: 5px white solid">
-</center>
-<p>More complicated is the required <strong>intersections</strong> column. This column is a <strong>list</strong> where each element is a <strong>character vector</strong>.</p>
-<p><strong>Lists</strong> are one dimensional objects like <strong>vectors</strong>. However, <strong>lists</strong> can contain multiple <a href="https://neof-workshops.github.io/R_j4c0xh/04-R_objects.html#classes">data classes</a> (heterogeneous) where <strong>vectors</strong> can only contain one (homogeneous). This allows <strong>lists</strong> to contain <strong>vectors</strong> as elements.</p>
-<p>Each <strong>vector</strong> contains the <strong>sets</strong> found in the <strong>row’s group</strong>. This represents the <strong>intersection</strong>.</p>
-<p>For simplicity we’ll only include 3 different sets (A, B, &amp; C).</p>
+<section id="intra-media-by-site" class="level2">
+<h2 class="anchored" data-anchor-id="intra-media-by-site">Intra-media by site</h2>
+<p>First we will look at the intra-media divergences split by site.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create vectors of intersections for the 6 groups</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>i1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>i2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>i3 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"C"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>i4 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>i5 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>i6 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Create a list of the vectors</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>intersection_list <span class="ot">&lt;-</span> <span class="fu">list</span>(i1,i2,i3,i4,i5,i6)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Display intersection list</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>intersection_list</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Intra-media by site</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Violin intra-media divergence plot by site</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>intra_media_by_site_violin_plot <span class="ot">&lt;-</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    intra_site_wunifrac_long_tbl <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter to only keep intra-media values</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(media_L <span class="sc">==</span> media_R) <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter to remove upper triangle values (i.e. duplicates)</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(triangle <span class="sc">==</span> <span class="st">"lower"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Plot</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> media_L, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">colour=</span>site_L)) <span class="sc">+</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    ggforce<span class="sc">::</span><span class="fu">geom_sina</span>(<span class="fu">aes</span>(<span class="at">colour=</span>site_L), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Media"</span>, <span class="at">y =</span> <span class="st">"Weighted UniFrac"</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Intra-media divergence split by site with Weighted UniFrac dissimilarity"</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                <span class="at">colour =</span> <span class="st">"Site"</span>)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"./wunifrac_intra_media_divergence_split_by_site_violinplot.png"</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot =</span> intra_media_by_site_violin_plot,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">device =</span> png, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">"mm"</span>, <span class="at">height =</span> <span class="dv">100</span>, <span class="at">width =</span> <span class="dv">170</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">"./wunifrac_intra_media_divergence_split_by_site_violinplot.png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="upset-tibble" class="level2">
-<h2 class="anchored" data-anchor-id="upset-tibble">Upset tibble</h2>
-<center>
-<img src="images/2_column_table.png" class="img-fluid" style="width:150px">
-</center>
-<p>We can now combine our <strong>group vector</strong> and our <strong>intersection list</strong> into a <strong>tibble</strong>.</p>
+<section id="inter-media-by-site" class="level2">
+<h2 class="anchored" data-anchor-id="inter-media-by-site">Inter-media by site</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Upset tibble creation</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>upset_tbl <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(group_vec, intersection_list)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Display upset tibble</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>upset_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Inter-media by site</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Violin inter-media divergence plot by site</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>inter_media_by_site_violin_plot <span class="ot">&lt;-</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    intra_site_wunifrac_long_tbl <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter to only keep inter-media values</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(media_L <span class="sc">!=</span> media_R) <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Plot</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> media_L, <span class="at">y =</span> value)) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_violin</span>(<span class="fu">aes</span>(<span class="at">colour=</span>site_L)) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    ggforce<span class="sc">::</span><span class="fu">geom_sina</span>(<span class="fu">aes</span>(<span class="at">colour=</span>site_L), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Media"</span>, <span class="at">y =</span> <span class="st">"Weighted UniFrac"</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">title =</span> <span class="st">"Inter-media divergence split by site with Weighted UniFrac dissimilarity"</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                <span class="at">colour =</span> <span class="st">"Site"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#Save ggplot2 object with ggsave</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"./wunifrac_inter_media_divergence_split_by_site_violinplot.png"</span>,</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot =</span> intra_site_wunifrac_long_tbl,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">device =</span> png, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">"mm"</span>, <span class="at">height =</span> <span class="dv">100</span>, <span class="at">width =</span> <span class="dv">170</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">"./wunifrac_inter_media_divergence_split_by_site_violinplot.png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><a href="https://neof-workshops.github.io/Tidyverse/dplyr/glimpse.html">Glimpsing</a> the <strong>tibble</strong> shows you have 2 columns, one being a <strong>character vector</strong> (<code>&lt;chr&gt;</code>) and one being a <strong>list</strong> (<code>&lt;list&gt;</code>). Important features include:</p>
-<ul>
-<li>Each <strong>list element/vector</strong> is flanked by chevrons (<code>&lt;</code> &amp; <code>&gt;</code>) unless the <strong>element/vector</strong> only contains one element itself (e.g.&nbsp;the <code>"C"</code> of group <code>"G3"</code>).</li>
-<li>The elements of the <strong>list</strong> are separated by the commas (<code>,</code>) outside the chevrons.</li>
-<li>The <code>...</code> indicates that <code>dplyr::glimpse()</code> is not displaying all the data from the column.</li>
-</ul>
-<p>The intersection for <code>"G1"</code> is <code>"A", "B", "C"</code> as denoted by <code>&lt;"A", "B", "C"&gt;</code>.</p>
-</section>
-<section id="upset-plot" class="level2">
-<h2 class="anchored" data-anchor-id="upset-plot">Upset plot</h2>
-<p>As a quick preview of the <a href="../upset/upset_plot.html">Upset plots part</a> we’ll create an upset plot.</p>
-<p><strong>Note:</strong> The below functions will be explained later on.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Upset plot with bar chart</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>upset_plot <span class="ot">&lt;-</span> upset_tbl <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> intersection_list)) <span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Add bar chart</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        ggplot2<span class="sc">::</span><span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Add upset visualisation as x axis below bar chart</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        ggupset<span class="sc">::</span><span class="fu">scale_x_upset</span>() <span class="sc">+</span> </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Specify y axis label</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        ggplot2<span class="sc">::</span><span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Group count"</span>, <span class="at">x=</span><span class="st">"Intersections"</span>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>ggplot2<span class="sc">::</span><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"./example_upset.png"</span>, <span class="at">plot =</span> upset_plot,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">"png"</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">"mm"</span>, <span class="at">height =</span> <span class="dv">75</span>, <span class="at">width =</span> <span class="dv">100</span>)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file=</span><span class="st">"./example_upset.png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>You may note that we don’t actually need the group column for the plot but I find it good to have so I know what the groups are for the sets. Additionally, it can be used for more complex graphics.</p>
-<p>We will talk in more depth about upset plots in the <a href="../upset/upset_plot.html">Upset plots part</a> but briefly in the below plot you can see:</p>
-<ul>
-<li>There are three different interactions (A+B, A+B+C, and just C).</li>
-<li>These interactions are found in different numbers of groups (3, 2, and 1).</li>
-</ul>
-<center>
-<img src="images/example_upset.png" class="img-fluid" style="width:600px; background: white; border-radius:15px">
-</center>
-<p><br></p>
-</section>
-<section id="mcqs" class="level2">
-<h2 class="anchored" data-anchor-id="mcqs">MCQs</h2>
-<center>
-<img src="..\images/question_bubble_green.png" class="img-fluid" style="width:150px">
-</center>
-<p>Superb! Attempt the following MCQs by choosing the correct word for the blanks.</p>
-<ol type="1">
-<li>The required column for an upset plot is a ____________.
-<div id="radio_WGCYUFLMBG" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_WGCYUFLMBG" value=""> <span><strong>Intersection</strong></span></label><label><input type="radio" autocomplete="off" name="radio_WGCYUFLMBG" value="answer"> <span><strong>List</strong></span></label><label><input type="radio" autocomplete="off" name="radio_WGCYUFLMBG" value=""> <span><strong>Vector</strong></span></label>
-</div></li>
-</ol>
-<ol start="2" type="1">
-<li>The row elements of the required column for an upset plot are each a ____________.
-<div id="radio_KCQHCPUNEI" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_KCQHCPUNEI" value=""> <span><strong>Intersection</strong></span></label><label><input type="radio" autocomplete="off" name="radio_KCQHCPUNEI" value=""> <span><strong>List</strong></span></label><label><input type="radio" autocomplete="off" name="radio_KCQHCPUNEI" value="answer"> <span><strong>Vector</strong></span></label>
-</div></li>
-</ol>
-<ol start="3" type="1">
-<li>The required column for an upset plot contains the ____________ information.
-<div id="radio_AZGPNTCJUL" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_AZGPNTCJUL" value="answer"> <span><strong>Intersection</strong></span></label><label><input type="radio" autocomplete="off" name="radio_AZGPNTCJUL" value=""> <span><strong>List</strong></span></label><label><input type="radio" autocomplete="off" name="radio_AZGPNTCJUL" value=""> <span><strong>Vector</strong></span></label>
-</div></li>
-</ol>
 
 
 </section>
@@ -1283,14 +1216,11 @@ window.onload = function() {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../upset/simple_bar_chart.html" class="pagination-link" aria-label="Simple bar chart">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Simple bar chart</span>
+      <a href="../divergence/combined_plot.html" class="pagination-link" aria-label="Combined plot">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Combined plot</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../upset/phyloseq_to_tibble.html" class="pagination-link" aria-label="Phyloseq to long presence tibble">
-        <span class="nav-page-text">Phyloseq to long presence tibble</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

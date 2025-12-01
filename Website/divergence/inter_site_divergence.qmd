@@ -1,0 +1,66 @@
+# Inter-site divergence
+
+## Inter-site tibble
+
+```{r eval=FALSE}
+#Subset long tibble so only rows where site_R and site_L are not identical
+#I.e. the long tibble only contains paired distances between samples of 
+# different sites (inter-site distances)
+inter_site_wunifrac_long_tbl <-
+    beta_long_tbl_mean |>
+        dplyr::filter(site_L != site_R)
+#Check head of long df
+inter_site_wunifrac_long_tbl |> head()
+```
+
+## Violin plot
+
+### Basic plot
+
+```{r eval=FALSE}
+#Inter-site divergence violin plot
+inter_site_violin_plot <-
+    inter_site_wunifrac_long_tbl |>
+    ggplot2::ggplot(aes(x = site_L, y = value)) +
+    ggplot2::geom_violin() +
+    ggforce::geom_sina(alpha=0.5) +
+    ggplot2::labs(x = "Site", y = "Weighted UniFrac",
+                    title="Inter-site divergence with Weighted UniFrac dissimilarity")
+#Save ggplot2 object with ggsave
+ggsave(filename = "./wunifrac_inter_site_divergence_violinplot.png",
+        plot = inter_site_violin_plot,
+        device = "png", dpi = 300, units = "mm", height = 100, width = 150)
+#Display plot
+IRdisplay::display_png(file = "./wunifrac_inter_site_divergence_violinplot.png")
+```
+
+### Points coloured by right site
+
+Let's edit our above violin plot by adding colours to the points.
+These will be coloured by the matching paired site grouping (i.e. left media on x axis and right media to colour points).
+
+```{r eval=FALSE}
+#Inter-site divergence violin plot
+inter_site_violin_plot <-
+    inter_site_wunifrac_long_tbl |>
+    ggplot2::ggplot(aes(x = site_L, y = value)) +
+    ggplot2::geom_violin() +
+    ggforce::geom_sina(aes(colour = site_R), alpha=0.5) +
+    ggplot2::labs(x = "Site", y = "Weighted UniFrac",
+                    title="Inter-site divergence with Weighted UniFrac dissimilarity",
+                    subtitle="Points coloured by site of paired distance sample",
+                    colour = "Site")
+#Save ggplot2 object with ggsave
+ggsave(filename = "./wunifrac_inter_site_divergence_violinplot.png",
+        plot = inter_site_violin_plot,
+        device = "png", dpi = 300, units = "mm", height = 100, width = 150)
+#Display plot
+IRdisplay::display_png(file = "./wunifrac_inter_site_divergence_violinplot.png")
+```
+
+## Stats
+
+```{r eval=FALSE}
+pairwise.wilcox.test(inter_site_wunifrac_long_tbl$value,
+                        inter_site_wunifrac_long_tbl$site_L)
+```

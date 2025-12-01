@@ -1,0 +1,18 @@
+# Combined plot
+
+In this section we will quickly combine our plots into one image/png file with the [patchwork package](https://neof-workshops.github.io/Tidyverse/ggplot2/patchwork.html).
+
+```{r eval=FALSE}
+wunifrac_divergence_plot <- 
+    (intra_site_violin_plot | inter_site_violin_plot) /
+    (intra_media_violin_plot | inter_media_violin_plot)
+
+#Save ggplot2 object with ggsave
+ggsave(filename = "./wunifrac_divergence_violinplots.png",
+        plot = wunifrac_divergence_plot,
+        device = "png", dpi=300, units = "mm", height = 200, width = 300)
+#Display plot
+IRdisplay::display_png(file = "./wunifrac_divergence_violinplots.png")
+```
+
+For more information on patchwork please see our [Tidyverse guide](https://neof-workshops.github.io/Tidyverse/ggplot2/patchwork.html).

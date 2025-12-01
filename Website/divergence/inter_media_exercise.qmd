@@ -1,0 +1,77 @@
+# Inter-media exercise
+
+Now that you have worked through carrying out an inter-group analysis with site you will do the same with media.
+
+For this exercise you will create your own code.
+Solutions are available in the solution boxes below but please make a strong attempt before looking at them.
+
+I would recommend copying, pasting, and editing your code from the inter-site analysis. 
+Ensure you change all the variable names you need to, it is very easy to miss variables and column/row names you need to change.
+
+## Steps
+
+The steps to carry out this exercise are below along with the solution expandable boxes.
+
+### Inter-media tibble
+
+The first step is to create a tibble containing only observations/rows of intra-media distances from the `beta_long_tbl_mean` tibble.
+Call this variable: `inter_media_wunifrac_long_tbl`
+
+__Tip:__ You will need to use the columns `media_L` and `media_R`.
+
+`r hide("Inter-media tibble creation")`
+```{r eval=FALSE}
+#Subset long tibble so only rows where media_R and media_L are not identical
+#I.e. the long tibble only contains paired distances between samples of 
+# different media (inter-media distances)
+inter_media_wunifrac_long_tbl <-
+    beta_long_tbl_mean |>
+        dplyr::filter(media_L != media_R)
+#Check head of long df
+inter_media_wunifrac_long_tbl |> head()
+```
+`r unhide()`
+
+### Violin plot
+
+With the formatted tibble the next step is to create a violin plot.
+Ensure the x axis is separated by the four media groupings (CVP, ENV, KBC, and TSA).
+Additionally, colour the points by the paired/right media.
+
+`r hide("Inter-media violin plot")`
+```{r eval=FALSE}
+#Inter-media divergence violin plot
+inter_media_violin_plot <-
+    inter_site_wunifrac_long_tbl |>
+    ggplot2::ggplot(aes(x = media_L, y = value)) +
+    ggplot2::geom_violin() +
+    ggforce::geom_sina(aes(colour = media_R), alpha=0.5) +
+    ggplot2::labs(x = "Media", y = "Weighted UniFrac",
+                    title="Inter-media divergence with Weighted UniFrac dissimilarity",
+                    subtitle="Points coloured by media of paired distance sample",
+                    colour = "Media")
+#Save ggplot2 object with ggsave
+ggsave(filename = "./wunifrac_inter_media_divergence_violinplot.png",
+        plot = inter_media_violin_plot,
+        device = "png", dpi = 300, units = "mm", height = 100, width = 150)
+#Display plot
+IRdisplay::display_png(file = "./wunifrac_inter_media_divergence_violinplot.png")
+```
+`r unhide()`
+
+In the plot we can see:
+
+
+
+### Stats
+
+Finally, carry out the pairwise wilcox test to determine if there are significant difference between the inter-media distances.
+
+`r hide("Inter-media pairwise wilcox")`
+```{r eval=FALSE}
+pairwise.wilcox.test(inter_media_wunifrac_long_tbl$value,
+                        inter_media_wunifrac_long_tbl$media_L)
+```
+`r unhide()`
+
+In this case you should see there is a significant difference between the intra-group distances of all the different media types except for KBC against TSA.

@@ -334,5 +334,26 @@
   },
   "divergence/inter_divergence.qmd": {
     "inter_divergence.html": "a065b4f4"
+  },
+  "divergence/inter_media_exercise.qmd": {
+    "inter_media_exercise.html": "11e30607"
+  },
+  "divergence/inter_site_divergence.qmd": {
+    "inter_site_divergence.html": "2d130925"
+  },
+  "combine_plots.qmd": {
+    "combine_plots.html": "697f34c3"
+  },
+  "divergence/combine_plots.qmd": {
+    "combine_plots.html": "0e778439"
+  },
+  "divergence/patchwork_plot.qmd": {
+    "patchwork_plot.html": "e7c5df7b"
+  },
+  "divergence/combined_plot.qmd": {
+    "combined_plot.html": "f4fb3f94"
+  },
+  "divergence/divergences_split_by_a_group.qmd": {
+    "divergences_split_by_a_group.html": "efd1716f"
   }
 }

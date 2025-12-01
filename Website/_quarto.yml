@@ -73,6 +73,12 @@ website:
     - section: "Inter-group divergence"
       contents:
       - href: divergence/inter_divergence.qmd
+      - href: divergence/inter_site_divergence.qmd
+      - href: divergence/inter_media_exercise.qmd
+    - section: "Advanced"
+      contents:
+      - href: divergence/combined_plot.qmd
+      - href: divergence/divergences_split_by_a_group.qmd
   - id: Upset
     title: Upset
     style: floating

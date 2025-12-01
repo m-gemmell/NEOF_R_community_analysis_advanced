@@ -1,0 +1,70 @@
+# Divergences split by a group
+
+There are times when you may want to analyse divergences within a grouping within 
+
+In this example we will look at the inter and intra divergences of media split by the sites.
+
+## Data
+
+As we are interested in divergences within the sites we will use the intra-site tibble we created [earlier](/divergence/intra_site_divergence.qmd).
+This is because we are only interested in paired distances where both samples are form the same site.
+
+Let's check the top (`head()`) of the tibble.
+
+```{r eval=FALSE}
+intra_site_wunifrac_long_tbl |> head()
+```
+
+## Intra-media by site
+
+First we will look at the intra-media divergences split by site.
+
+
+```{r eval=FALSE}
+#Intra-media by site
+#Violin intra-media divergence plot by site
+intra_media_by_site_violin_plot <-
+    intra_site_wunifrac_long_tbl |>
+    #Filter to only keep intra-media values
+    dplyr::filter(media_L == media_R) |>
+    #Filter to remove upper triangle values (i.e. duplicates)
+    dplyr::filter(triangle == "lower") |>
+    #Plot
+    ggplot2::ggplot(aes(x = media_L, y = value)) +
+    ggplot2::geom_violin(aes(colour=site_L)) +
+    ggforce::geom_sina(aes(colour=site_L), alpha = 0.5) +
+    ggplot2::labs(x = "Media", y = "Weighted UniFrac",
+                title = "Intra-media divergence split by site with Weighted UniFrac dissimilarity",
+                colour = "Site")
+#Save ggplot2 object with ggsave
+ggsave(filename = "./wunifrac_intra_media_divergence_split_by_site_violinplot.png",
+        plot = intra_media_by_site_violin_plot,
+        device = png, dpi = 300, units = "mm", height = 100, width = 170)
+#Display plot
+IRdisplay::display_png(file = "./wunifrac_intra_media_divergence_split_by_site_violinplot.png")
+```
+
+
+## Inter-media by site
+
+```{r eval=FALSE}
+#Inter-media by site
+#Violin inter-media divergence plot by site
+inter_media_by_site_violin_plot <-
+    intra_site_wunifrac_long_tbl |>
+    #Filter to only keep inter-media values
+    dplyr::filter(media_L != media_R) |>
+    #Plot
+    ggplot2::ggplot(aes(x = media_L, y = value)) +
+    ggplot2::geom_violin(aes(colour=site_L)) +
+    ggforce::geom_sina(aes(colour=site_L), alpha = 0.5) +
+    ggplot2::labs(x = "Media", y = "Weighted UniFrac",
+                title = "Inter-media divergence split by site with Weighted UniFrac dissimilarity",
+                colour = "Site")
+#Save ggplot2 object with ggsave
+ggsave(filename = "./wunifrac_inter_media_divergence_split_by_site_violinplot.png",
+        plot = intra_site_wunifrac_long_tbl,
+        device = png, dpi = 300, units = "mm", height = 100, width = 170)
+#Display plot
+IRdisplay::display_png(file = "./wunifrac_inter_media_divergence_split_by_site_violinplot.png")
+```

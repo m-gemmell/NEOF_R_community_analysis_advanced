@@ -30,6 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../divergence/inter_site_divergence.html" rel="next">
 <link href="../divergence/intra_media_exercise.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
@@ -429,6 +430,18 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Inter-group intro</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/inter_site_divergence.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inter-site divergence</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/inter_media_exercise.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inter-media exercise</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -471,7 +484,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="inter-group-divergence-purpose" class="level2">
 <h2 class="anchored" data-anchor-id="inter-group-divergence-purpose">Inter-group divergence purpose</h2>
 <p>With inter-group divergence analysis we are trying to determine which groups have lower and higher dissimilarity between each other.</p>
-<p>This can be especially useful when comparing three or more sample groups as is let’s us mor confidently determine which sample groups are more similar to each other.</p>
+<p>This can be especially useful when comparing three or more sample groups as it let’s us more confidently determine which sample groups are more similar to each other.</p>
 <p>For example, let’s say we had a study of salmon gut microbiomes. The three sample groups are:</p>
 <ul>
 <li>Wild salmon</li>
@@ -519,7 +532,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>All the inter-group pairwise distances for the G3 sample:</p>
+<p>All the inter-group pairwise distances for the G3 samples:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -539,11 +552,11 @@ ul.task-list li input[type="checkbox"] {
 </div>
 </div>
 </div>
-<p>In this example with 3 groups, each with 3 samples, we have a total of 54 inter group distances. There are 18 inter-group distances per group (18<em>3 = 54). Or another way to think about it is that each sample has 6 inter group distances and there are 9 samples (6</em>9=54).</p>
+<p>In this example with 3 groups, each with 3 samples, we have a total of 54 inter group distances. There are 18 inter-group distances per group (18 * 3 = 54). Or another way to think about it is that each sample has 6 inter group distances and there are 9 samples (6 * 9 = 54).</p>
 <p>If we had 4 groups with 10 samples each we would have:</p>
 <ul>
-<li>45 intra group distances (<code>10*(10-1)/2 = 45</code>)</li>
-<li>1,200 inter group distances (<code>30*40=1200</code>)</li>
+<li>45 intra-group distances (<code>10*(10-1)/2 = 45</code>)</li>
+<li>1,200 inter-group distances (<code>30*40=1200</code>)</li>
 </ul>
 <p>Because there is more data for inter-group analysis we may be able to carry it out even when there are too few data points for intra-group analysis.</p>
 
@@ -1179,6 +1192,9 @@ window.onload = function() {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../divergence/inter_site_divergence.html" class="pagination-link" aria-label="Inter-site divergence">
+        <span class="nav-page-text">Inter-site divergence</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

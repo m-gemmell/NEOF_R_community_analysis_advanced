@@ -3,10 +3,10 @@
 Now that you have worked through carrying out an intra-group analysis with site you will do the same with media.
 
 For this exercise you will create your own code.
-SOlutions are available in the in the solution boxes below but please make a strong attempt before looking at them.
+Solutions are available in the solution boxes below but please make a strong attempt before looking at them.
 
 I would recommend copying, pasting, and editing your code from the intra-site analysis. 
-Ensure you change all the variable names you need to, tt is very easy miss variables and column/row names you need to change.
+Ensure you change all the variable names you need to, it is very easy to miss variables and column/row names you need to change.
 
 ## Steps
 
@@ -15,7 +15,7 @@ The steps to carry out this exercise are below along with the solution expandabl
 ### Intra-media tibble
 
 The first step is to create a tibble containing only observations/rows of intra-media distances from the `beta_long_tbl_mean` tibble.
-Call this variable: `inter_media_wunifrac_long_tbl`
+Call this variable: `intra_media_wunifrac_long_tbl`
 
 __Tip:__ You will need to use the columns `media_L` and `media_R`.
 

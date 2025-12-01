@@ -12,7 +12,7 @@ In this section we will:
 
 With inter-group divergence analysis we are trying to determine which groups have lower and higher dissimilarity between each other.
 
-This can be especially useful when comparing three or more sample groups as is let's us mor confidently determine which sample groups are more similar to each other.
+This can be especially useful when comparing three or more sample groups as it let's us more confidently determine which sample groups are more similar to each other.
 
 For example, let's say we had a study of salmon gut microbiomes. The three sample groups are:
 
@@ -144,7 +144,7 @@ ggplot2::ggplot(data = tbl) +
     ggplot2::geom_point(mapping=aes(x = axes1, y = axes2, colour = group),size=4)
 ```
 
-All the inter-group pairwise distances for the G3 sample:
+All the inter-group pairwise distances for the G3 samples:
 
 ```{r, echo=FALSE}
 ggplot2::ggplot(data = tbl) +
@@ -258,12 +258,12 @@ ggplot2::ggplot(data = tbl) +
 
 
 In this example with 3 groups, each with 3 samples, we have a total of 54 inter group distances.
-There are 18 inter-group distances per group (18*3 = 54).
-Or another way to think about it is that each sample has 6 inter group distances and there are 9 samples (6*9=54).
+There are 18 inter-group distances per group (18 * 3 = 54).
+Or another way to think about it is that each sample has 6 inter group distances and there are 9 samples (6 * 9 = 54).
 
 If we had 4 groups with 10 samples each we would have:
 
-- 45 intra group distances (`10*(10-1)/2 = 45`)
-- 1,200 inter group distances (`30*40=1200`)
+- 45 intra-group distances (`10*(10-1)/2 = 45`)
+- 1,200 inter-group distances (`30*40=1200`)
 
 Because there is more data for inter-group analysis we may be able to carry it out even when there are too few data points for intra-group analysis.

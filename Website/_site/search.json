@@ -539,25 +539,63 @@
     ]
   },
   {
-    "objectID": "divergence/divergence.html",
-    "href": "divergence/divergence.html",
-    "title": "Divergence",
+    "objectID": "divergence/inter_media_exercise.html",
+    "href": "divergence/inter_media_exercise.html",
+    "title": "Inter-media exercise",
     "section": "",
-    "text": "Divergence\nTo remember the difference between intra and inter I remember the intranet (network within an organisation) and the internet (network between organisation). (intra mean within e.g. intranet).\n\n\n\n\n\n\n\n\n\nAll the Intra group distances\n9 total lines, 3 lines per group b/c 3 samples. A 4 sample group would have 6, a 5 sample group would have 10.\nTo calculate the number of pairs in a set you can use n(n-1)/2.\n\n\n\n\n\n\n\n\n\nIt is more difficult to work with inter group distances. When we do this we need each inter group distance twice as we need it for the first group and for the second group.\nInter group distances of group 1 samples to others\n\n\n\n\n\n\n\n\n\nInter group distances of group 2 samples to others\n\n\n\n\n\n\n\n\n\nInter group distances of group 1 samples to others\n\n\n\n\n\n\n\n\n\nIn this case with 3 groups with 3 samples each we have a total of 54 inter group distances. Each sample has 6 inter group distances and there are 9 samples (6*9=54).\nIf we had 4 groups with 10 samples each we would have:\n\n45 intra group distances (10*(10-1)/2 = 45)\n1,200 inter group distances (30*40=1200)",
+    "text": "Now that you have worked through carrying out an inter-group analysis with site you will do the same with media.\nFor this exercise you will create your own code. Solutions are available in the solution boxes below but please make a strong attempt before looking at them.\nI would recommend copying, pasting, and editing your code from the inter-site analysis. Ensure you change all the variable names you need to, it is very easy to miss variables and column/row names you need to change.\n\n\nThe steps to carry out this exercise are below along with the solution expandable boxes.\n\n\nThe first step is to create a tibble containing only observations/rows of intra-media distances from the beta_long_tbl_mean tibble. Call this variable: inter_media_wunifrac_long_tbl\nTip: You will need to use the columns media_L and media_R.\n\n\nInter-media tibble creation\n\n\n#Subset long tibble so only rows where media_R and media_L are not identical\n#I.e. the long tibble only contains paired distances between samples of \n# different media (inter-media distances)\ninter_media_wunifrac_long_tbl &lt;-\n    beta_long_tbl_mean |&gt;\n        dplyr::filter(media_L != media_R)\n#Check head of long df\ninter_media_wunifrac_long_tbl |&gt; head()\n\n\n\n\n\nWith the formatted tibble the next step is to create a violin plot. Ensure the x axis is separated by the four media groupings (CVP, ENV, KBC, and TSA). Additionally, colour the points by the paired/right media.\n\n\nInter-media violin plot\n\n\n#Inter-media divergence violin plot\ninter_media_violin_plot &lt;-\n    inter_site_wunifrac_long_tbl |&gt;\n    ggplot2::ggplot(aes(x = media_L, y = value)) +\n    ggplot2::geom_violin() +\n    ggforce::geom_sina(aes(colour = media_R), alpha=0.5) +\n    ggplot2::labs(x = \"Media\", y = \"Weighted UniFrac\",\n                    title=\"Inter-media divergence with Weighted UniFrac dissimilarity\",\n                    subtitle=\"Points coloured by media of paired distance sample\",\n                    colour = \"Media\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_inter_media_divergence_violinplot.png\",\n        plot = inter_media_violin_plot,\n        device = \"png\", dpi = 300, units = \"mm\", height = 100, width = 150)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_inter_media_divergence_violinplot.png\")\n\n\nIn the plot we can see:\n\n\n\nFinally, carry out the pairwise wilcox test to determine if there are significant difference between the inter-media distances.\n\n\nInter-media pairwise wilcox\n\n\npairwise.wilcox.test(inter_media_wunifrac_long_tbl$value,\n                        inter_media_wunifrac_long_tbl$media_L)\n\n\nIn this case you should see there is a significant difference between the intra-group distances of all the different media types except for KBC against TSA.",
     "crumbs": [
-      "Divergence"
+      "Divergence",
+      "Inter-group divergence",
+      "Inter-media exercise"
     ]
   },
   {
-    "objectID": "divergence/bind_long_tibbles.html",
-    "href": "divergence/bind_long_tibbles.html",
-    "title": "Bind long tibbles",
+    "objectID": "divergence/inter_media_exercise.html#steps",
+    "href": "divergence/inter_media_exercise.html#steps",
+    "title": "Inter-media exercise",
     "section": "",
-    "text": "Bind long tibbles\nOUr final step is to combine the lower and upper long tibbles with dplyr::bind_rows().\nAdditionally, we’ll use the dplyr::glimpse() function to get a preview of the final tibble.\n\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_rows(beta_lower_tbl_mean, beta_upper_long_tbl_mean)\nbeta_long_tbl_mean |&gt; dplyr::glimpse()",
+    "text": "The steps to carry out this exercise are below along with the solution expandable boxes.\n\n\nThe first step is to create a tibble containing only observations/rows of intra-media distances from the beta_long_tbl_mean tibble. Call this variable: inter_media_wunifrac_long_tbl\nTip: You will need to use the columns media_L and media_R.\n\n\nInter-media tibble creation\n\n\n#Subset long tibble so only rows where media_R and media_L are not identical\n#I.e. the long tibble only contains paired distances between samples of \n# different media (inter-media distances)\ninter_media_wunifrac_long_tbl &lt;-\n    beta_long_tbl_mean |&gt;\n        dplyr::filter(media_L != media_R)\n#Check head of long df\ninter_media_wunifrac_long_tbl |&gt; head()\n\n\n\n\n\nWith the formatted tibble the next step is to create a violin plot. Ensure the x axis is separated by the four media groupings (CVP, ENV, KBC, and TSA). Additionally, colour the points by the paired/right media.\n\n\nInter-media violin plot\n\n\n#Inter-media divergence violin plot\ninter_media_violin_plot &lt;-\n    inter_site_wunifrac_long_tbl |&gt;\n    ggplot2::ggplot(aes(x = media_L, y = value)) +\n    ggplot2::geom_violin() +\n    ggforce::geom_sina(aes(colour = media_R), alpha=0.5) +\n    ggplot2::labs(x = \"Media\", y = \"Weighted UniFrac\",\n                    title=\"Inter-media divergence with Weighted UniFrac dissimilarity\",\n                    subtitle=\"Points coloured by media of paired distance sample\",\n                    colour = \"Media\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_inter_media_divergence_violinplot.png\",\n        plot = inter_media_violin_plot,\n        device = \"png\", dpi = 300, units = \"mm\", height = 100, width = 150)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_inter_media_divergence_violinplot.png\")\n\n\nIn the plot we can see:\n\n\n\nFinally, carry out the pairwise wilcox test to determine if there are significant difference between the inter-media distances.\n\n\nInter-media pairwise wilcox\n\n\npairwise.wilcox.test(inter_media_wunifrac_long_tbl$value,\n                        inter_media_wunifrac_long_tbl$media_L)\n\n\nIn this case you should see there is a significant difference between the intra-group distances of all the different media types except for KBC against TSA.",
+    "crumbs": [
+      "Divergence",
+      "Inter-group divergence",
+      "Inter-media exercise"
+    ]
+  },
+  {
+    "objectID": "divergence/divergence_data_format.html",
+    "href": "divergence/divergence_data_format.html",
+    "title": "Divergence data format",
+    "section": "",
+    "text": "We will create box plots and violin plots with ggplot2 similar to the plots we created in the Alpha diveristy chapter of our R community analysis workshop.\nFor this we need to create a long data frame. To carry this out we will:\n\nLoad in the distance matrix\nCreate a long data frame from the lower triangle\nCreate a long data frame from the upper triangle\nBind the data frame\n\nHowever, before that let’s see an example square distance matrix and long data frame for divergence analysis.\n\n\nOur initial dissimilarity distance data is in a square distance matrix will be like below:\n\n\n   S1 S2 S3\nS1  0  2  3\nS2  2  0  5\nS3  3  5  0\n\n\nThere are three main sections to this disatnce matrix.\n\n\nThe lower triangle is the bottom left triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA NA NA\nS2  2 NA NA\nS3  3  5 NA\n\n\n\n\n\nThe upper triangle is the top right triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA  2  3\nS2 NA NA  5\nS3 NA NA NA\n\n\n\n\n\nThe diagonal is represents the distances of each sample to itself. These are always zero.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1  0 NA NA\nS2 NA  0 NA\nS3 NA NA  0\n\n\n\n\n\n\nWhen the above example distance matrix is converted into long data frame/tibble for divergence analysis it will then look like:\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n2       S1       S3     3\n3       S2       S1     2\n4       S2       S3     5\n5       S3       S1     3\n6       S3       S2     5\n\n\nSome of the features of this long data frame are:\n\nThe “Value” column is the distance between the two samples\nEach observation/row has a “Sample_L” and “Sample_R” column to represent the 2 samples the distance is between\n\nThe “L” and “R” represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the data frame.\n\nWe do not include the 0 values from the diagonal.\nEach value is represented twice, i.e. the lower and upper triangle values are included.\n\nThe 2 rows containing the duplicated values are different in which sample is the Left sample and which is the right sample.\nThis is required for creating inter group divergence (explained later)\n\n\nAs an example of duplicated values the below data frame shows the distance between S1 and S2 twice. Notice that S1 is the Left sample in the first row but it is the RIght sample in the other row.\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n3       S2       S1     2",
     "crumbs": [
       "Divergence",
       "Data format",
-      "Bind long tibbles"
+      "Divergence data format"
+    ]
+  },
+  {
+    "objectID": "divergence/divergence_data_format.html#square-distance-matrix",
+    "href": "divergence/divergence_data_format.html#square-distance-matrix",
+    "title": "Divergence data format",
+    "section": "",
+    "text": "Our initial dissimilarity distance data is in a square distance matrix will be like below:\n\n\n   S1 S2 S3\nS1  0  2  3\nS2  2  0  5\nS3  3  5  0\n\n\nThere are three main sections to this disatnce matrix.\n\n\nThe lower triangle is the bottom left triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA NA NA\nS2  2 NA NA\nS3  3  5 NA\n\n\n\n\n\nThe upper triangle is the top right triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA  2  3\nS2 NA NA  5\nS3 NA NA NA\n\n\n\n\n\nThe diagonal is represents the distances of each sample to itself. These are always zero.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1  0 NA NA\nS2 NA  0 NA\nS3 NA NA  0",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Divergence data format"
+    ]
+  },
+  {
+    "objectID": "divergence/divergence_data_format.html#long-distance-matrix",
+    "href": "divergence/divergence_data_format.html#long-distance-matrix",
+    "title": "Divergence data format",
+    "section": "",
+    "text": "When the above example distance matrix is converted into long data frame/tibble for divergence analysis it will then look like:\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n2       S1       S3     3\n3       S2       S1     2\n4       S2       S3     5\n5       S3       S1     3\n6       S3       S2     5\n\n\nSome of the features of this long data frame are:\n\nThe “Value” column is the distance between the two samples\nEach observation/row has a “Sample_L” and “Sample_R” column to represent the 2 samples the distance is between\n\nThe “L” and “R” represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the data frame.\n\nWe do not include the 0 values from the diagonal.\nEach value is represented twice, i.e. the lower and upper triangle values are included.\n\nThe 2 rows containing the duplicated values are different in which sample is the Left sample and which is the right sample.\nThis is required for creating inter group divergence (explained later)\n\n\nAs an example of duplicated values the below data frame shows the distance between S1 and S2 twice. Notice that S1 is the Left sample in the first row but it is the RIght sample in the other row.\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n3       S2       S1     2",
+    "crumbs": [
+      "Divergence",
+      "Data format",
+      "Divergence data format"
     ]
   },
   {
@@ -609,39 +647,109 @@
     ]
   },
   {
-    "objectID": "divergence/divergence_data_format.html",
-    "href": "divergence/divergence_data_format.html",
-    "title": "Divergence data format",
+    "objectID": "divergence/bind_long_tibbles.html",
+    "href": "divergence/bind_long_tibbles.html",
+    "title": "Bind long tibbles",
     "section": "",
-    "text": "We will create box plots and violin plots with ggplot2 similar to the plots we created in the Alpha diveristy chapter of our R community analysis workshop.\nFor this we need to create a long data frame. To carry this out we will:\n\nLoad in the distance matrix\nCreate a long data frame from the lower triangle\nCreate a long data frame from the upper triangle\nBind the data frame\n\nHowever, before that let’s see an example square distance matrix and long data frame for divergence analysis.\n\n\nOur initial dissimilarity distance data is in a square distance matrix will be like below:\n\n\n   S1 S2 S3\nS1  0  2  3\nS2  2  0  5\nS3  3  5  0\n\n\nThere are three main sections to this disatnce matrix.\n\n\nThe lower triangle is the bottom left triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA NA NA\nS2  2 NA NA\nS3  3  5 NA\n\n\n\n\n\nThe upper triangle is the top right triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA  2  3\nS2 NA NA  5\nS3 NA NA NA\n\n\n\n\n\nThe diagonal is represents the distances of each sample to itself. These are always zero.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1  0 NA NA\nS2 NA  0 NA\nS3 NA NA  0\n\n\n\n\n\n\nWhen the above example distance matrix is converted into long data frame/tibble for divergence analysis it will then look like:\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n2       S1       S3     3\n3       S2       S1     2\n4       S2       S3     5\n5       S3       S1     3\n6       S3       S2     5\n\n\nSome of the features of this long data frame are:\n\nThe “Value” column is the distance between the two samples\nEach observation/row has a “Sample_L” and “Sample_R” column to represent the 2 samples the distance is between\n\nThe “L” and “R” represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the data frame.\n\nWe do not include the 0 values from the diagonal.\nEach value is represented twice, i.e. the lower and upper triangle values are included.\n\nThe 2 rows containing the duplicated values are different in which sample is the Left sample and which is the right sample.\nThis is required for creating inter group divergence (explained later)\n\n\nAs an example of duplicated values the below data frame shows the distance between S1 and S2 twice. Notice that S1 is the Left sample in the first row but it is the RIght sample in the other row.\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n3       S2       S1     2",
+    "text": "Bind long tibbles\nOUr final step is to combine the lower and upper long tibbles with dplyr::bind_rows().\nAdditionally, we’ll use the dplyr::glimpse() function to get a preview of the final tibble.\n\nbeta_long_tbl_mean &lt;-\n    dplyr::bind_rows(beta_lower_tbl_mean, beta_upper_long_tbl_mean)\nbeta_long_tbl_mean |&gt; dplyr::glimpse()",
     "crumbs": [
       "Divergence",
       "Data format",
-      "Divergence data format"
+      "Bind long tibbles"
     ]
   },
   {
-    "objectID": "divergence/divergence_data_format.html#square-distance-matrix",
-    "href": "divergence/divergence_data_format.html#square-distance-matrix",
-    "title": "Divergence data format",
+    "objectID": "divergence/divergence.html",
+    "href": "divergence/divergence.html",
+    "title": "Divergence",
     "section": "",
-    "text": "Our initial dissimilarity distance data is in a square distance matrix will be like below:\n\n\n   S1 S2 S3\nS1  0  2  3\nS2  2  0  5\nS3  3  5  0\n\n\nThere are three main sections to this disatnce matrix.\n\n\nThe lower triangle is the bottom left triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA NA NA\nS2  2 NA NA\nS3  3  5 NA\n\n\n\n\n\nThe upper triangle is the top right triangle of unique values.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1 NA  2  3\nS2 NA NA  5\nS3 NA NA NA\n\n\n\n\n\nThe diagonal is represents the distances of each sample to itself. These are always zero.\nFor example (ignore the NAs):\n\n\n   S1 S2 S3\nS1  0 NA NA\nS2 NA  0 NA\nS3 NA NA  0",
+    "text": "Divergence\nTo remember the difference between intra and inter I remember the intranet (network within an organisation) and the internet (network between organisation). (intra mean within e.g. intranet).\n\n\n\n\n\n\n\n\n\nAll the Intra group distances\n9 total lines, 3 lines per group b/c 3 samples. A 4 sample group would have 6, a 5 sample group would have 10.\nTo calculate the number of pairs in a set you can use n(n-1)/2.\n\n\n\n\n\n\n\n\n\nIt is more difficult to work with inter group distances. When we do this we need each inter group distance twice as we need it for the first group and for the second group.\nInter group distances of group 1 samples to others\n\n\n\n\n\n\n\n\n\nInter group distances of group 2 samples to others\n\n\n\n\n\n\n\n\n\nInter group distances of group 1 samples to others\n\n\n\n\n\n\n\n\n\nIn this case with 3 groups with 3 samples each we have a total of 54 inter group distances. Each sample has 6 inter group distances and there are 9 samples (6*9=54).\nIf we had 4 groups with 10 samples each we would have:\n\n45 intra group distances (10*(10-1)/2 = 45)\n1,200 inter group distances (30*40=1200)",
     "crumbs": [
-      "Divergence",
-      "Data format",
-      "Divergence data format"
+      "Divergence"
     ]
   },
   {
-    "objectID": "divergence/divergence_data_format.html#long-distance-matrix",
-    "href": "divergence/divergence_data_format.html#long-distance-matrix",
-    "title": "Divergence data format",
+    "objectID": "divergence/inter_divergence.html",
+    "href": "divergence/inter_divergence.html",
+    "title": "Inter-group intro",
     "section": "",
-    "text": "When the above example distance matrix is converted into long data frame/tibble for divergence analysis it will then look like:\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n2       S1       S3     3\n3       S2       S1     2\n4       S2       S3     5\n5       S3       S1     3\n6       S3       S2     5\n\n\nSome of the features of this long data frame are:\n\nThe “Value” column is the distance between the two samples\nEach observation/row has a “Sample_L” and “Sample_R” column to represent the 2 samples the distance is between\n\nThe “L” and “R” represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the data frame.\n\nWe do not include the 0 values from the diagonal.\nEach value is represented twice, i.e. the lower and upper triangle values are included.\n\nThe 2 rows containing the duplicated values are different in which sample is the Left sample and which is the right sample.\nThis is required for creating inter group divergence (explained later)\n\n\nAs an example of duplicated values the below data frame shows the distance between S1 and S2 twice. Notice that S1 is the Left sample in the first row but it is the RIght sample in the other row.\n\n\n  Sample_L Sample_R Value\n1       S1       S2     2\n3       S2       S1     2",
+    "text": "With our formatted data we can also carry out inter-group divergence analysis. This is analysing the distances between groups (e.g. internet is a network between different networks).\nIn this section we will:\n\nAnalyse the Inter-site divergence (River locations: LD, MD, & UD)\nExercise: repeat the previous steps for Inter-media divergence (CVP, ENV, KBC, & TSA)\n\n\n\nWith inter-group divergence analysis we are trying to determine which groups have lower and higher dissimilarity between each other.\nThis can be especially useful when comparing three or more sample groups as it let’s us more confidently determine which sample groups are more similar to each other.\nFor example, let’s say we had a study of salmon gut microbiomes. The three sample groups are:\n\nWild salmon\nFarmed salmon fed on a non-vegetarian diet\nFarmed salmon fed on a vegetarian diet\n\nIn this case it is likely the dissimilarity distance between the farmed salmon with non-vegetarian and vegetarian diets is more similar than either groups distances to the wild fish. However, does one of the farmed fish groups have lower dissimilarity scores to the wild fish compared to the other farmed group? If so, is this a significant difference? These results could then lead into other types of analysis such as biomarker detection.\n\n\n\nWith inter-group divergence we look at the dissimilarity distances between all the pairs between different sample groups.\n\n\nAs with the intra-group intro we’ll use 3 groups (G1, G2, & G3) each with 3 samples. These can be seen in the ordination plot (e.g. PCoA or NMDS).\n\n\n\n\n\n\n\n\n\n\n\n\nIt is more difficult to work with inter-group distances than intra-group distances. When we do this we need each inter group distance twice as we need it for the first/left group and for the second/right group.\nThe below plot displays each inter-group pairwise distance for the G1 samples:\n\n\n\n\n\n\n\n\n\nNext is all the inter-group pairwise distances for the G2 samples:\n\n\n\n\n\n\n\n\n\nAll the inter-group pairwise distances for the G3 samples:\n\n\n\n\n\n\n\n\n\nFinally, all the inter-group distances displayed at once:\n\n\n\n\n\n\n\n\n\nIn this example with 3 groups, each with 3 samples, we have a total of 54 inter group distances. There are 18 inter-group distances per group (18 * 3 = 54). Or another way to think about it is that each sample has 6 inter group distances and there are 9 samples (6 * 9 = 54).\nIf we had 4 groups with 10 samples each we would have:\n\n45 intra-group distances (10*(10-1)/2 = 45)\n1,200 inter-group distances (30*40=1200)\n\nBecause there is more data for inter-group analysis we may be able to carry it out even when there are too few data points for intra-group analysis.",
     "crumbs": [
       "Divergence",
-      "Data format",
-      "Divergence data format"
+      "Inter-group divergence",
+      "Inter-group intro"
+    ]
+  },
+  {
+    "objectID": "divergence/inter_divergence.html#inter-group-divergence-purpose",
+    "href": "divergence/inter_divergence.html#inter-group-divergence-purpose",
+    "title": "Inter-group intro",
+    "section": "",
+    "text": "With inter-group divergence analysis we are trying to determine which groups have lower and higher dissimilarity between each other.\nThis can be especially useful when comparing three or more sample groups as it let’s us more confidently determine which sample groups are more similar to each other.\nFor example, let’s say we had a study of salmon gut microbiomes. The three sample groups are:\n\nWild salmon\nFarmed salmon fed on a non-vegetarian diet\nFarmed salmon fed on a vegetarian diet\n\nIn this case it is likely the dissimilarity distance between the farmed salmon with non-vegetarian and vegetarian diets is more similar than either groups distances to the wild fish. However, does one of the farmed fish groups have lower dissimilarity scores to the wild fish compared to the other farmed group? If so, is this a significant difference? These results could then lead into other types of analysis such as biomarker detection.",
+    "crumbs": [
+      "Divergence",
+      "Inter-group divergence",
+      "Inter-group intro"
+    ]
+  },
+  {
+    "objectID": "divergence/inter_divergence.html#groupings-and-pairs",
+    "href": "divergence/inter_divergence.html#groupings-and-pairs",
+    "title": "Inter-group intro",
+    "section": "",
+    "text": "With inter-group divergence we look at the dissimilarity distances between all the pairs between different sample groups.\n\n\nAs with the intra-group intro we’ll use 3 groups (G1, G2, & G3) each with 3 samples. These can be seen in the ordination plot (e.g. PCoA or NMDS).\n\n\n\n\n\n\n\n\n\n\n\n\nIt is more difficult to work with inter-group distances than intra-group distances. When we do this we need each inter group distance twice as we need it for the first/left group and for the second/right group.\nThe below plot displays each inter-group pairwise distance for the G1 samples:\n\n\n\n\n\n\n\n\n\nNext is all the inter-group pairwise distances for the G2 samples:\n\n\n\n\n\n\n\n\n\nAll the inter-group pairwise distances for the G3 samples:\n\n\n\n\n\n\n\n\n\nFinally, all the inter-group distances displayed at once:\n\n\n\n\n\n\n\n\n\nIn this example with 3 groups, each with 3 samples, we have a total of 54 inter group distances. There are 18 inter-group distances per group (18 * 3 = 54). Or another way to think about it is that each sample has 6 inter group distances and there are 9 samples (6 * 9 = 54).\nIf we had 4 groups with 10 samples each we would have:\n\n45 intra-group distances (10*(10-1)/2 = 45)\n1,200 inter-group distances (30*40=1200)\n\nBecause there is more data for inter-group analysis we may be able to carry it out even when there are too few data points for intra-group analysis.",
+    "crumbs": [
+      "Divergence",
+      "Inter-group divergence",
+      "Inter-group intro"
+    ]
+  },
+  {
+    "objectID": "divergence/inter_site_divergence.html",
+    "href": "divergence/inter_site_divergence.html",
+    "title": "Inter-site divergence",
+    "section": "",
+    "text": "#Subset long tibble so only rows where site_R and site_L are not identical\n#I.e. the long tibble only contains paired distances between samples of \n# different sites (inter-site distances)\ninter_site_wunifrac_long_tbl &lt;-\n    beta_long_tbl_mean |&gt;\n        dplyr::filter(site_L != site_R)\n#Check head of long df\ninter_site_wunifrac_long_tbl |&gt; head()\n\n\n\n\n\n\n\n#Inter-site divergence violin plot\ninter_site_violin_plot &lt;-\n    inter_site_wunifrac_long_tbl |&gt;\n    ggplot2::ggplot(aes(x = site_L, y = value)) +\n    ggplot2::geom_violin() +\n    ggforce::geom_sina(alpha=0.5) +\n    ggplot2::labs(x = \"Site\", y = \"Weighted UniFrac\",\n                    title=\"Inter-site divergence with Weighted UniFrac dissimilarity\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_inter_site_divergence_violinplot.png\",\n        plot = inter_site_violin_plot,\n        device = \"png\", dpi = 300, units = \"mm\", height = 100, width = 150)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_inter_site_divergence_violinplot.png\")\n\n\n\n\nLet’s edit our above violin plot by adding colours to the points. These will be coloured by the matching paired site grouping (i.e. left media on x axis and right media to colour points).\n\n#Inter-site divergence violin plot\ninter_site_violin_plot &lt;-\n    inter_site_wunifrac_long_tbl |&gt;\n    ggplot2::ggplot(aes(x = site_L, y = value)) +\n    ggplot2::geom_violin() +\n    ggforce::geom_sina(aes(colour = site_R), alpha=0.5) +\n    ggplot2::labs(x = \"Site\", y = \"Weighted UniFrac\",\n                    title=\"Inter-site divergence with Weighted UniFrac dissimilarity\",\n                    subtitle=\"Points coloured by site of paired distance sample\",\n                    colour = \"Site\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_inter_site_divergence_violinplot.png\",\n        plot = inter_site_violin_plot,\n        device = \"png\", dpi = 300, units = \"mm\", height = 100, width = 150)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_inter_site_divergence_violinplot.png\")\n\n\n\n\n\n\npairwise.wilcox.test(inter_site_wunifrac_long_tbl$value,\n                        inter_site_wunifrac_long_tbl$site_L)",
+    "crumbs": [
+      "Divergence",
+      "Inter-group divergence",
+      "Inter-site divergence"
+    ]
+  },
+  {
+    "objectID": "divergence/inter_site_divergence.html#inter-site-tibble",
+    "href": "divergence/inter_site_divergence.html#inter-site-tibble",
+    "title": "Inter-site divergence",
+    "section": "",
+    "text": "#Subset long tibble so only rows where site_R and site_L are not identical\n#I.e. the long tibble only contains paired distances between samples of \n# different sites (inter-site distances)\ninter_site_wunifrac_long_tbl &lt;-\n    beta_long_tbl_mean |&gt;\n        dplyr::filter(site_L != site_R)\n#Check head of long df\ninter_site_wunifrac_long_tbl |&gt; head()",
+    "crumbs": [
+      "Divergence",
+      "Inter-group divergence",
+      "Inter-site divergence"
+    ]
+  },
+  {
+    "objectID": "divergence/inter_site_divergence.html#violin-plot",
+    "href": "divergence/inter_site_divergence.html#violin-plot",
+    "title": "Inter-site divergence",
+    "section": "",
+    "text": "#Inter-site divergence violin plot\ninter_site_violin_plot &lt;-\n    inter_site_wunifrac_long_tbl |&gt;\n    ggplot2::ggplot(aes(x = site_L, y = value)) +\n    ggplot2::geom_violin() +\n    ggforce::geom_sina(alpha=0.5) +\n    ggplot2::labs(x = \"Site\", y = \"Weighted UniFrac\",\n                    title=\"Inter-site divergence with Weighted UniFrac dissimilarity\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_inter_site_divergence_violinplot.png\",\n        plot = inter_site_violin_plot,\n        device = \"png\", dpi = 300, units = \"mm\", height = 100, width = 150)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_inter_site_divergence_violinplot.png\")\n\n\n\n\nLet’s edit our above violin plot by adding colours to the points. These will be coloured by the matching paired site grouping (i.e. left media on x axis and right media to colour points).\n\n#Inter-site divergence violin plot\ninter_site_violin_plot &lt;-\n    inter_site_wunifrac_long_tbl |&gt;\n    ggplot2::ggplot(aes(x = site_L, y = value)) +\n    ggplot2::geom_violin() +\n    ggforce::geom_sina(aes(colour = site_R), alpha=0.5) +\n    ggplot2::labs(x = \"Site\", y = \"Weighted UniFrac\",\n                    title=\"Inter-site divergence with Weighted UniFrac dissimilarity\",\n                    subtitle=\"Points coloured by site of paired distance sample\",\n                    colour = \"Site\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_inter_site_divergence_violinplot.png\",\n        plot = inter_site_violin_plot,\n        device = \"png\", dpi = 300, units = \"mm\", height = 100, width = 150)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_inter_site_divergence_violinplot.png\")",
+    "crumbs": [
+      "Divergence",
+      "Inter-group divergence",
+      "Inter-site divergence"
+    ]
+  },
+  {
+    "objectID": "divergence/inter_site_divergence.html#stats",
+    "href": "divergence/inter_site_divergence.html#stats",
+    "title": "Inter-site divergence",
+    "section": "",
+    "text": "pairwise.wilcox.test(inter_site_wunifrac_long_tbl$value,\n                        inter_site_wunifrac_long_tbl$site_L)",
+    "crumbs": [
+      "Divergence",
+      "Inter-group divergence",
+      "Inter-site divergence"
     ]
   },
   {
@@ -649,7 +757,19 @@
     "href": "divergence/intra_media_exercise.html",
     "title": "Intra-media exercise",
     "section": "",
-    "text": "Now that you have worked through carrying out an intra-group analysis with site you will do the same with media.\nFor this exercise you will create your own code. SOlutions are available in the in the solution boxes below but please make a strong attempt before looking at them.\nI would recommend copying, pasting, and editing your code from the intra-site analysis. Ensure you change all the variable names you need to, tt is very easy miss variables and column/row names you need to change.\n\n\nThe steps to carry out this exercise are below along with the solution expandable boxes.\n\n\nThe first step is to create a tibble containing only observations/rows of intra-media distances from the beta_long_tbl_mean tibble. Call this variable: inter_media_wunifrac_long_tbl\nTip: You will need to use the columns media_L and media_R.\n\n\nInter-media tibble creation\n\n\n#Subset long tibble so only rows where media_L and media_R are identical of the lower triangle\n#I.e. the long tibble only contains one set of paired distances within media (Intra-media) \nintra_media_wunifrac_long_tbl &lt;-\n    beta_long_tbl_mean |&gt;\n        #Filter to keep lower triangle rows\n        dplyr::filter(triangle == \"lower\") |&gt;\n        #Filter to keep rows where media_L is the same as media_R (Intra-media)\n        dplyr::filter(site_L == site_R)\n#Check head of long tbl\nintra_media_wunifrac_long_tbl |&gt; head()\n\n\n\n\n\nWith the formatted tibble the next step is to create a violin plot. Ensure the x axis is separated by the four media groupings (CVP, ENV, KBC, and TSA).\n\n\nInter-media violin plot\n\n\n#Intra-media divergence violin plot\nintra_media_violin_plot &lt;-\n    intra_media_wunifrac_long_tbl |&gt;\n    ggplot2::ggplot(aes(x = media_L, y = value)) +\n    ggplot2::geom_violin() +\n    ggforce::geom_sina(alpha=0.5) +\n    ggplot2::labs(x = \"Media\", y = \"Weighted UniFrac\",\n                    title=\"Intra-media divergence with Weighted UniFrac dissimilarity\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_intra_media_divergence_violinplot.png\",\n        plot = intra_media_wunifrac_long_tbl,\n        device = \"png\", dpi = 300, units = \"mm\", height = 100, width = 150)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_intra_media_divergence_violinplot.png\")\n\n\nIn the plot we can see:\n\nThe ENV group has the highest range of distances and also has the highest dissimilarity distances.\nThe CVP group has the lowest range and lowest dissimilarity distances.\nThe KBC and TSA groups have quite similar values to each other with most of their dissimilarity distances being between 0.05 and 0.25.\n\n\n\n\nFinally, carry out the pairwise wilcox test to determine if there are significant difference between the inter-media distances.\n\n\nInter-media pairwise wilcox\n\n\npairwise.wilcox.test(intra_media_wunifrac_long_tbl$value,\n                        intra_media_wunifrac_long_tbl$media_L)\n\n\nIn this case you should see there is a significant difference between the intra-group distances of all the different media types except for KBC against TSA.",
+    "text": "Now that you have worked through carrying out an intra-group analysis with site you will do the same with media.\nFor this exercise you will create your own code. Solutions are available in the solution boxes below but please make a strong attempt before looking at them.\nI would recommend copying, pasting, and editing your code from the intra-site analysis. Ensure you change all the variable names you need to, it is very easy to miss variables and column/row names you need to change.\n\n\nThe steps to carry out this exercise are below along with the solution expandable boxes.\n\n\nThe first step is to create a tibble containing only observations/rows of intra-media distances from the beta_long_tbl_mean tibble. Call this variable: intra_media_wunifrac_long_tbl\nTip: You will need to use the columns media_L and media_R.\n\n\nInter-media tibble creation\n\n\n#Subset long tibble so only rows where media_L and media_R are identical of the lower triangle\n#I.e. the long tibble only contains one set of paired distances within media (Intra-media) \nintra_media_wunifrac_long_tbl &lt;-\n    beta_long_tbl_mean |&gt;\n        #Filter to keep lower triangle rows\n        dplyr::filter(triangle == \"lower\") |&gt;\n        #Filter to keep rows where media_L is the same as media_R (Intra-media)\n        dplyr::filter(site_L == site_R)\n#Check head of long tbl\nintra_media_wunifrac_long_tbl |&gt; head()\n\n\n\n\n\nWith the formatted tibble the next step is to create a violin plot. Ensure the x axis is separated by the four media groupings (CVP, ENV, KBC, and TSA).\n\n\nInter-media violin plot\n\n\n#Intra-media divergence violin plot\nintra_media_violin_plot &lt;-\n    intra_media_wunifrac_long_tbl |&gt;\n    ggplot2::ggplot(aes(x = media_L, y = value)) +\n    ggplot2::geom_violin() +\n    ggforce::geom_sina(alpha=0.5) +\n    ggplot2::labs(x = \"Media\", y = \"Weighted UniFrac\",\n                    title=\"Intra-media divergence with Weighted UniFrac dissimilarity\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_intra_media_divergence_violinplot.png\",\n        plot = intra_media_wunifrac_long_tbl,\n        device = \"png\", dpi = 300, units = \"mm\", height = 100, width = 150)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_intra_media_divergence_violinplot.png\")\n\n\nIn the plot we can see:\n\nThe ENV group has the highest range of distances and also has the highest dissimilarity distances.\nThe CVP group has the lowest range and lowest dissimilarity distances.\nThe KBC and TSA groups have quite similar values to each other with most of their dissimilarity distances being between 0.05 and 0.25.\n\n\n\n\nFinally, carry out the pairwise wilcox test to determine if there are significant difference between the inter-media distances.\n\n\nInter-media pairwise wilcox\n\n\npairwise.wilcox.test(intra_media_wunifrac_long_tbl$value,\n                        intra_media_wunifrac_long_tbl$media_L)\n\n\nIn this case you should see there is a significant difference between the intra-group distances of all the different media types except for KBC against TSA.",
+    "crumbs": [
+      "Divergence",
+      "Intra-group divergence",
+      "Intra-media exercise"
+    ]
+  },
+  {
+    "objectID": "divergence/intra_media_exercise.html#steps",
+    "href": "divergence/intra_media_exercise.html#steps",
+    "title": "Intra-media exercise",
+    "section": "",
+    "text": "The steps to carry out this exercise are below along with the solution expandable boxes.\n\n\nThe first step is to create a tibble containing only observations/rows of intra-media distances from the beta_long_tbl_mean tibble. Call this variable: intra_media_wunifrac_long_tbl\nTip: You will need to use the columns media_L and media_R.\n\n\nInter-media tibble creation\n\n\n#Subset long tibble so only rows where media_L and media_R are identical of the lower triangle\n#I.e. the long tibble only contains one set of paired distances within media (Intra-media) \nintra_media_wunifrac_long_tbl &lt;-\n    beta_long_tbl_mean |&gt;\n        #Filter to keep lower triangle rows\n        dplyr::filter(triangle == \"lower\") |&gt;\n        #Filter to keep rows where media_L is the same as media_R (Intra-media)\n        dplyr::filter(site_L == site_R)\n#Check head of long tbl\nintra_media_wunifrac_long_tbl |&gt; head()\n\n\n\n\n\nWith the formatted tibble the next step is to create a violin plot. Ensure the x axis is separated by the four media groupings (CVP, ENV, KBC, and TSA).\n\n\nInter-media violin plot\n\n\n#Intra-media divergence violin plot\nintra_media_violin_plot &lt;-\n    intra_media_wunifrac_long_tbl |&gt;\n    ggplot2::ggplot(aes(x = media_L, y = value)) +\n    ggplot2::geom_violin() +\n    ggforce::geom_sina(alpha=0.5) +\n    ggplot2::labs(x = \"Media\", y = \"Weighted UniFrac\",\n                    title=\"Intra-media divergence with Weighted UniFrac dissimilarity\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_intra_media_divergence_violinplot.png\",\n        plot = intra_media_wunifrac_long_tbl,\n        device = \"png\", dpi = 300, units = \"mm\", height = 100, width = 150)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_intra_media_divergence_violinplot.png\")\n\n\nIn the plot we can see:\n\nThe ENV group has the highest range of distances and also has the highest dissimilarity distances.\nThe CVP group has the lowest range and lowest dissimilarity distances.\nThe KBC and TSA groups have quite similar values to each other with most of their dissimilarity distances being between 0.05 and 0.25.\n\n\n\n\nFinally, carry out the pairwise wilcox test to determine if there are significant difference between the inter-media distances.\n\n\nInter-media pairwise wilcox\n\n\npairwise.wilcox.test(intra_media_wunifrac_long_tbl$value,\n                        intra_media_wunifrac_long_tbl$media_L)\n\n\nIn this case you should see there is a significant difference between the intra-group distances of all the different media types except for KBC against TSA.",
     "crumbs": [
       "Divergence",
       "Intra-group divergence",
@@ -1029,51 +1149,89 @@
     ]
   },
   {
-    "objectID": "divergence/intra_media_exercise.html#steps",
-    "href": "divergence/intra_media_exercise.html#steps",
-    "title": "Intra-media exercise",
+    "objectID": "combine_plots.html",
+    "href": "combine_plots.html",
+    "title": "Combine plots",
     "section": "",
-    "text": "The steps to carry out this exercise are below along with the solution expandable boxes.\n\n\nThe first step is to create a tibble containing only observations/rows of intra-media distances from the beta_long_tbl_mean tibble. Call this variable: inter_media_wunifrac_long_tbl\nTip: You will need to use the columns media_L and media_R.\n\n\nInter-media tibble creation\n\n\n#Subset long tibble so only rows where media_L and media_R are identical of the lower triangle\n#I.e. the long tibble only contains one set of paired distances within media (Intra-media) \nintra_media_wunifrac_long_tbl &lt;-\n    beta_long_tbl_mean |&gt;\n        #Filter to keep lower triangle rows\n        dplyr::filter(triangle == \"lower\") |&gt;\n        #Filter to keep rows where media_L is the same as media_R (Intra-media)\n        dplyr::filter(site_L == site_R)\n#Check head of long tbl\nintra_media_wunifrac_long_tbl |&gt; head()\n\n\n\n\n\nWith the formatted tibble the next step is to create a violin plot. Ensure the x axis is separated by the four media groupings (CVP, ENV, KBC, and TSA).\n\n\nInter-media violin plot\n\n\n#Intra-media divergence violin plot\nintra_media_violin_plot &lt;-\n    intra_media_wunifrac_long_tbl |&gt;\n    ggplot2::ggplot(aes(x = media_L, y = value)) +\n    ggplot2::geom_violin() +\n    ggforce::geom_sina(alpha=0.5) +\n    ggplot2::labs(x = \"Media\", y = \"Weighted UniFrac\",\n                    title=\"Intra-media divergence with Weighted UniFrac dissimilarity\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_intra_media_divergence_violinplot.png\",\n        plot = intra_media_wunifrac_long_tbl,\n        device = \"png\", dpi = 300, units = \"mm\", height = 100, width = 150)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_intra_media_divergence_violinplot.png\")\n\n\nIn the plot we can see:\n\nThe ENV group has the highest range of distances and also has the highest dissimilarity distances.\nThe CVP group has the lowest range and lowest dissimilarity distances.\nThe KBC and TSA groups have quite similar values to each other with most of their dissimilarity distances being between 0.05 and 0.25.\n\n\n\n\nFinally, carry out the pairwise wilcox test to determine if there are significant difference between the inter-media distances.\n\n\nInter-media pairwise wilcox\n\n\npairwise.wilcox.test(intra_media_wunifrac_long_tbl$value,\n                        intra_media_wunifrac_long_tbl$media_L)\n\n\nIn this case you should see there is a significant difference between the intra-group distances of all the different media types except for KBC against TSA.",
+    "text": "Combine plots\nIn this section we will quickly combine our plots into one image/png file with the patchwork package.\n\nwunifrac_divergence_plot &lt;- \n    (intra_site_violin_plot | inter_site_violin_plot) /\n    (intra_media_violin_plot | inter_media_violin_plot)\n\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_divergence_violinplots.png\",\n        plot = wunifrac_divergence_plot,\n        device = \"png\", dpi=300, units = \"mm\", height = 200, width = 300)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_divergence_violinplots.png\")\n\nFor more information on patchwork please see our Tidyverse guide."
+  },
+  {
+    "objectID": "divergence/combine_plots.html",
+    "href": "divergence/combine_plots.html",
+    "title": "Patchwork plot",
+    "section": "",
+    "text": "Patchwork plot\nIn this section we will quickly combine our plots into one image/png file with the patchwork package.\n\nwunifrac_divergence_plot &lt;- \n    (intra_site_violin_plot | inter_site_violin_plot) /\n    (intra_media_violin_plot | inter_media_violin_plot)\n\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_divergence_violinplots.png\",\n        plot = wunifrac_divergence_plot,\n        device = \"png\", dpi=300, units = \"mm\", height = 200, width = 300)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_divergence_violinplots.png\")\n\nFor more information on patchwork please see our Tidyverse guide.",
     "crumbs": [
       "Divergence",
-      "Intra-group divergence",
-      "Intra-media exercise"
+      "Combining plots",
+      "Patchwork plot"
     ]
   },
   {
-    "objectID": "divergence/inter_divergence.html",
-    "href": "divergence/inter_divergence.html",
-    "title": "Inter-group intro",
+    "objectID": "divergence/patchwork_plot.html",
+    "href": "divergence/patchwork_plot.html",
+    "title": "Patchwork plot",
     "section": "",
-    "text": "With our formatted data we can also carry out inter-group divergence analysis. This is analysing the distances between groups (e.g. internet is a network between different networks).\nIn this section we will:\n\nAnalyse the Inter-site divergence (River locations: LD, MD, & UD)\nExercise: repeat the previous steps for Inter-media divergence (CVP, ENV, KBC, & TSA)\n\n\n\nWith inter-group divergence analysis we are trying to determine which groups have lower and higher dissimilarity between each other.\nThis can be especially useful when comparing three or more sample groups as is let’s us mor confidently determine which sample groups are more similar to each other.\nFor example, let’s say we had a study of salmon gut microbiomes. The three sample groups are:\n\nWild salmon\nFarmed salmon fed on a non-vegetarian diet\nFarmed salmon fed on a vegetarian diet\n\nIn this case it is likely the dissimilarity distance between the farmed salmon with non-vegetarian and vegetarian diets is more similar than either groups distances to the wild fish. However, does one of the farmed fish groups have lower dissimilarity scores to the wild fish compared to the other farmed group? If so, is this a significant difference? These results could then lead into other types of analysis such as biomarker detection.\n\n\n\nWith inter-group divergence we look at the dissimilarity distances between all the pairs between different sample groups.\n\n\nAs with the intra-group intro we’ll use 3 groups (G1, G2, & G3) each with 3 samples. These can be seen in the ordination plot (e.g. PCoA or NMDS).\n\n\n\n\n\n\n\n\n\n\n\n\nIt is more difficult to work with inter-group distances than intra-group distances. When we do this we need each inter group distance twice as we need it for the first/left group and for the second/right group.\nThe below plot displays each inter-group pairwise distance for the G1 samples:\n\n\n\n\n\n\n\n\n\nNext is all the inter-group pairwise distances for the G2 samples:\n\n\n\n\n\n\n\n\n\nAll the inter-group pairwise distances for the G3 sample:\n\n\n\n\n\n\n\n\n\nFinally, all the inter-group distances displayed at once:\n\n\n\n\n\n\n\n\n\nIn this example with 3 groups, each with 3 samples, we have a total of 54 inter group distances. There are 18 inter-group distances per group (183 = 54). Or another way to think about it is that each sample has 6 inter group distances and there are 9 samples (69=54).\nIf we had 4 groups with 10 samples each we would have:\n\n45 intra group distances (10*(10-1)/2 = 45)\n1,200 inter group distances (30*40=1200)\n\nBecause there is more data for inter-group analysis we may be able to carry it out even when there are too few data points for intra-group analysis.",
+    "text": "Patchwork plot\nIn this section we will quickly combine our plots into one image/png file with the patchwork package.\n\nwunifrac_divergence_plot &lt;- \n    (intra_site_violin_plot | inter_site_violin_plot) /\n    (intra_media_violin_plot | inter_media_violin_plot)\n\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_divergence_violinplots.png\",\n        plot = wunifrac_divergence_plot,\n        device = \"png\", dpi=300, units = \"mm\", height = 200, width = 300)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_divergence_violinplots.png\")\n\nFor more information on patchwork please see our Tidyverse guide."
+  },
+  {
+    "objectID": "divergence/combined_plot.html",
+    "href": "divergence/combined_plot.html",
+    "title": "Combined plot",
+    "section": "",
+    "text": "Combined plot\nIn this section we will quickly combine our plots into one image/png file with the patchwork package.\n\nwunifrac_divergence_plot &lt;- \n    (intra_site_violin_plot | inter_site_violin_plot) /\n    (intra_media_violin_plot | inter_media_violin_plot)\n\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_divergence_violinplots.png\",\n        plot = wunifrac_divergence_plot,\n        device = \"png\", dpi=300, units = \"mm\", height = 200, width = 300)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_divergence_violinplots.png\")\n\nFor more information on patchwork please see our Tidyverse guide.",
     "crumbs": [
       "Divergence",
-      "Inter-group divergence",
-      "Inter-group intro"
+      "Advanced",
+      "Combined plot"
     ]
   },
   {
-    "objectID": "divergence/inter_divergence.html#inter-group-divergence-purpose",
-    "href": "divergence/inter_divergence.html#inter-group-divergence-purpose",
-    "title": "Inter-group intro",
+    "objectID": "divergence/divergences_split_by_a_group.html",
+    "href": "divergence/divergences_split_by_a_group.html",
+    "title": "Divergences split by a group",
     "section": "",
-    "text": "With inter-group divergence analysis we are trying to determine which groups have lower and higher dissimilarity between each other.\nThis can be especially useful when comparing three or more sample groups as is let’s us mor confidently determine which sample groups are more similar to each other.\nFor example, let’s say we had a study of salmon gut microbiomes. The three sample groups are:\n\nWild salmon\nFarmed salmon fed on a non-vegetarian diet\nFarmed salmon fed on a vegetarian diet\n\nIn this case it is likely the dissimilarity distance between the farmed salmon with non-vegetarian and vegetarian diets is more similar than either groups distances to the wild fish. However, does one of the farmed fish groups have lower dissimilarity scores to the wild fish compared to the other farmed group? If so, is this a significant difference? These results could then lead into other types of analysis such as biomarker detection.",
+    "text": "There are times when you may want to analyse divergences within a grouping within\nIn this example we will look at the inter and intra divergences of media split by the sites.\n\n\nAs we are interested in divergences within the sites we will use the intra-site tibble we created earlier. This is because we are only interested in paired distances where both samples are form the same site.\nLet’s check the top (head()) of the tibble.\n\nintra_site_wunifrac_long_tbl |&gt; head()\n\n\n\n\nFirst we will look at the intra-media divergences split by site.\n\n#Intra-media by site\n#Violin intra-media divergence plot by site\nintra_media_by_site_violin_plot &lt;-\n    intra_site_wunifrac_long_tbl |&gt;\n    #Filter to only keep intra-media values\n    dplyr::filter(media_L == media_R) |&gt;\n    #Filter to remove upper triangle values (i.e. duplicates)\n    dplyr::filter(triangle == \"lower\") |&gt;\n    #Plot\n    ggplot2::ggplot(aes(x = media_L, y = value)) +\n    ggplot2::geom_violin(aes(colour=site_L)) +\n    ggforce::geom_sina(aes(colour=site_L), alpha = 0.5) +\n    ggplot2::labs(x = \"Media\", y = \"Weighted UniFrac\",\n                title = \"Intra-media divergence split by site with Weighted UniFrac dissimilarity\",\n                colour = \"Site\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_intra_media_divergence_split_by_site_violinplot.png\",\n        plot = intra_media_by_site_violin_plot,\n        device = png, dpi = 300, units = \"mm\", height = 100, width = 170)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_intra_media_divergence_split_by_site_violinplot.png\")\n\n\n\n\n\n#Inter-media by site\n#Violin inter-media divergence plot by site\ninter_media_by_site_violin_plot &lt;-\n    intra_site_wunifrac_long_tbl |&gt;\n    #Filter to only keep inter-media values\n    dplyr::filter(media_L != media_R) |&gt;\n    #Plot\n    ggplot2::ggplot(aes(x = media_L, y = value)) +\n    ggplot2::geom_violin(aes(colour=site_L)) +\n    ggforce::geom_sina(aes(colour=site_L), alpha = 0.5) +\n    ggplot2::labs(x = \"Media\", y = \"Weighted UniFrac\",\n                title = \"Inter-media divergence split by site with Weighted UniFrac dissimilarity\",\n                colour = \"Site\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_inter_media_divergence_split_by_site_violinplot.png\",\n        plot = intra_site_wunifrac_long_tbl,\n        device = png, dpi = 300, units = \"mm\", height = 100, width = 170)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_inter_media_divergence_split_by_site_violinplot.png\")",
     "crumbs": [
       "Divergence",
-      "Inter-group divergence",
-      "Inter-group intro"
+      "Advanced",
+      "Divergences split by a group"
     ]
   },
   {
-    "objectID": "divergence/inter_divergence.html#groupings-and-pairs",
-    "href": "divergence/inter_divergence.html#groupings-and-pairs",
-    "title": "Inter-group intro",
+    "objectID": "divergence/divergences_split_by_a_group.html#data",
+    "href": "divergence/divergences_split_by_a_group.html#data",
+    "title": "Divergences split by a group",
     "section": "",
-    "text": "With inter-group divergence we look at the dissimilarity distances between all the pairs between different sample groups.\n\n\nAs with the intra-group intro we’ll use 3 groups (G1, G2, & G3) each with 3 samples. These can be seen in the ordination plot (e.g. PCoA or NMDS).\n\n\n\n\n\n\n\n\n\n\n\n\nIt is more difficult to work with inter-group distances than intra-group distances. When we do this we need each inter group distance twice as we need it for the first/left group and for the second/right group.\nThe below plot displays each inter-group pairwise distance for the G1 samples:\n\n\n\n\n\n\n\n\n\nNext is all the inter-group pairwise distances for the G2 samples:\n\n\n\n\n\n\n\n\n\nAll the inter-group pairwise distances for the G3 sample:\n\n\n\n\n\n\n\n\n\nFinally, all the inter-group distances displayed at once:\n\n\n\n\n\n\n\n\n\nIn this example with 3 groups, each with 3 samples, we have a total of 54 inter group distances. There are 18 inter-group distances per group (183 = 54). Or another way to think about it is that each sample has 6 inter group distances and there are 9 samples (69=54).\nIf we had 4 groups with 10 samples each we would have:\n\n45 intra group distances (10*(10-1)/2 = 45)\n1,200 inter group distances (30*40=1200)\n\nBecause there is more data for inter-group analysis we may be able to carry it out even when there are too few data points for intra-group analysis.",
+    "text": "As we are interested in divergences within the sites we will use the intra-site tibble we created earlier. This is because we are only interested in paired distances where both samples are form the same site.\nLet’s check the top (head()) of the tibble.\n\nintra_site_wunifrac_long_tbl |&gt; head()",
     "crumbs": [
       "Divergence",
-      "Inter-group divergence",
-      "Inter-group intro"
+      "Advanced",
+      "Divergences split by a group"
+    ]
+  },
+  {
+    "objectID": "divergence/divergences_split_by_a_group.html#intra-media-by-site",
+    "href": "divergence/divergences_split_by_a_group.html#intra-media-by-site",
+    "title": "Divergences split by a group",
+    "section": "",
+    "text": "First we will look at the intra-media divergences split by site.\n\n#Intra-media by site\n#Violin intra-media divergence plot by site\nintra_media_by_site_violin_plot &lt;-\n    intra_site_wunifrac_long_tbl |&gt;\n    #Filter to only keep intra-media values\n    dplyr::filter(media_L == media_R) |&gt;\n    #Filter to remove upper triangle values (i.e. duplicates)\n    dplyr::filter(triangle == \"lower\") |&gt;\n    #Plot\n    ggplot2::ggplot(aes(x = media_L, y = value)) +\n    ggplot2::geom_violin(aes(colour=site_L)) +\n    ggforce::geom_sina(aes(colour=site_L), alpha = 0.5) +\n    ggplot2::labs(x = \"Media\", y = \"Weighted UniFrac\",\n                title = \"Intra-media divergence split by site with Weighted UniFrac dissimilarity\",\n                colour = \"Site\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_intra_media_divergence_split_by_site_violinplot.png\",\n        plot = intra_media_by_site_violin_plot,\n        device = png, dpi = 300, units = \"mm\", height = 100, width = 170)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_intra_media_divergence_split_by_site_violinplot.png\")",
+    "crumbs": [
+      "Divergence",
+      "Advanced",
+      "Divergences split by a group"
+    ]
+  },
+  {
+    "objectID": "divergence/divergences_split_by_a_group.html#inter-media-by-site",
+    "href": "divergence/divergences_split_by_a_group.html#inter-media-by-site",
+    "title": "Divergences split by a group",
+    "section": "",
+    "text": "#Inter-media by site\n#Violin inter-media divergence plot by site\ninter_media_by_site_violin_plot &lt;-\n    intra_site_wunifrac_long_tbl |&gt;\n    #Filter to only keep inter-media values\n    dplyr::filter(media_L != media_R) |&gt;\n    #Plot\n    ggplot2::ggplot(aes(x = media_L, y = value)) +\n    ggplot2::geom_violin(aes(colour=site_L)) +\n    ggforce::geom_sina(aes(colour=site_L), alpha = 0.5) +\n    ggplot2::labs(x = \"Media\", y = \"Weighted UniFrac\",\n                title = \"Inter-media divergence split by site with Weighted UniFrac dissimilarity\",\n                colour = \"Site\")\n#Save ggplot2 object with ggsave\nggsave(filename = \"./wunifrac_inter_media_divergence_split_by_site_violinplot.png\",\n        plot = intra_site_wunifrac_long_tbl,\n        device = png, dpi = 300, units = \"mm\", height = 100, width = 170)\n#Display plot\nIRdisplay::display_png(file = \"./wunifrac_inter_media_divergence_split_by_site_violinplot.png\")",
+    "crumbs": [
+      "Divergence",
+      "Advanced",
+      "Divergences split by a group"
     ]
   }
 ]
