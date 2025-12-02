@@ -1,8 +1,14 @@
 # Lower triangle
+<center>
+![](images/lower_tri.png){style="width:200px; background: white; border-radius:5px"}
+</center>
 
-Our first formatting step is to create a long data frame of the dissimilarity values in the lower triangle of the dissimilarity matrix.
+Our first formatting step is to create a long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) of the dissimilarity values in the lower triangle of the dissimilarity matrix.
 
 ## Dissimilarity matrix
+<center>
+![](images/setup_9.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 Before we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in [data and setup page](/divergence/data_and_setup.qmd).
 
@@ -14,6 +20,9 @@ beta_df_mean[1:10,1:10]
 ```
 
 ## Lower triangle matrix
+<center>
+![](images/distance_matrix_lower_tri.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 The next step is to convert the matrix so all but the lower triangle values are `NA`s.
 
@@ -21,7 +30,7 @@ The next step is to convert the matrix so all but the lower triangle values are 
 
 We'll first carry this out with a demonstration.
 
-First create a small version of our distance matrix so it is easy to view.
+Create a small version of our distance matrix so it is easy to view.
 
 ```{r, eval=FALSE}
 #Create demo distance matrix
@@ -63,36 +72,42 @@ lower_tri_mat[1:10,1:10]
 ```
 
 ## Long data frame of lower triangle values
+<center>
+![](images/long_distance_tibble_lower_triangle.png){style="width:200px; background: white; border-radius:5px"}
+</center>
 
-With our lower triangle matrix we can create a long data frame for future `ggplot2` plot production.
+
+With our lower triangle matrix we can create a long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) for future `ggplot2` plot production.
 
 For this code we utilising [piping (`|>`)](https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html) with the below steps:
 
 - Convert the matrix `lower_tri_mat` to a data frame with `as.data.frame()`
-- Move the row names to column called "Sample_L" with [tibble::rownames_to_column](https://tibble.tidyverse.org/reference/rownames.html)
+    - Although we will ultimately end up with a [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) we need to carry this out for the next steps to run successfully
+    - If we converted the matrix to a tibble with [`tibble::as_tibble()`]([tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html)) it would remove the row names which are required for the next command
+- Move the row names to a column called "Sample_L" with [`tibble::rownames_to_column`](https://tibble.tidyverse.org/reference/rownames.html)
 - Longify all the columns except the "Sample_L" column with [`tidyr::pivot_longer()`](https://neof-workshops.github.io/Tidyverse/tidyr/pivot_longer.html)
     - This also serves to convert our data frame to a [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html)
-- Remove rows with NAs (i.e. the upper triangle and diaganol values) with [`tidyr::drop_na()`](https://neof-workshops.github.io/Tidyverse/tidyr/drop_na.html)
+- Remove rows with NAs (i.e. the upper triangle and diagonal values) with [`tidyr::drop_na()`](https://neof-workshops.github.io/Tidyverse/tidyr/drop_na.html)
 - Create a column called triangle with each value being "lower" with [`dplyr::mutate()`](https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html), this is required later
 
 ```{r eval=FALSE}
 #Convert to long data frame of paired distance values
-#We will refer to the different samples in a pair as the left an right pair
-beta_long_tbl_mean <- 
+#We will refer to the different samples in a pair as the left and right pair
+beta_long_tbl <- 
     lower_tri_mat |>
         #Convert to data frame
         as.data.frame() |>
-        #Create column from row names (Sample_l, l = left)
+        #Create column from row names (Sample_L, L = left)
         tibble::rownames_to_column("Sample_L") |>
         #Longify
-        #Set names to "Sample_r" column (r = right)
+        #Set names to "Sample_R" column (R = right)
         tidyr::pivot_longer(!Sample_L, names_to="Sample_R", values_to="value") |>
         #Remove rows with an NA
         tidyr::drop_na() |>
         #Create triangle column containing value "lower" for each row
         dplyr::mutate(triangle="lower")
 #Check head of long tibble
-beta_long_tbl_mean |> head()
+beta_long_tbl |> head()
 ```
 
 Great! Next we'll add our metadata to this long data frame.

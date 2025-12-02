@@ -14,7 +14,7 @@ The steps to carry out this exercise are below along with the solution expandabl
 
 ### Intra-media tibble
 
-The first step is to create a tibble containing only observations/rows of intra-media distances from the `beta_long_tbl_mean` tibble.
+The first step is to create a tibble containing only observations/rows of intra-media distances from the `beta_long_tbl` tibble.
 Call this variable: `intra_media_wunifrac_long_tbl`
 
 __Tip:__ You will need to use the columns `media_L` and `media_R`.
@@ -24,7 +24,7 @@ __Tip:__ You will need to use the columns `media_L` and `media_R`.
 #Subset long tibble so only rows where media_L and media_R are identical of the lower triangle
 #I.e. the long tibble only contains one set of paired distances within media (Intra-media) 
 intra_media_wunifrac_long_tbl <-
-    beta_long_tbl_mean |>
+    beta_long_tbl |>
         #Filter to keep lower triangle rows
         dplyr::filter(triangle == "lower") |>
         #Filter to keep rows where media_L is the same as media_R (Intra-media)

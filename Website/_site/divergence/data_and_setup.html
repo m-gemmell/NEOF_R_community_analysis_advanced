@@ -479,6 +479,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Advanced</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/combined_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Combined plot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/divergences_split_by_a_group.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Divergences split by a group</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -510,7 +533,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <center>
 <img src="images/setup_8.png" class="img-fluid" style="width:200px; border-radius:5px">
 </center>
-<p>Before you carry out any practice you will need to setup your environment by:</p>
+<p>Before you carry out any practice you will need to setup your environment with the instructions in this page. The steps are:</p>
 <ul>
 <li>Ensuring you have setup your directory, environment, and jupyter-notebook as shown in the overall <a href="../setup/setup.html">setup</a>.</li>
 <li>Creating a jupyter-notebook in a new work directory.</li>
@@ -550,9 +573,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <center>
 <img src="images/river.png" class="img-fluid" style="width:200px">
 </center>
-<p>We have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 (<a href="https://neof-workshops.github.io/16S_yg84o9/Course/03-Intro_to_qiime2.html#amplicon-sequence-variants-identification">theory</a> &amp; <a href="https://neof-workshops.github.io/16S_yg84o9/Course/09-ASV_identification.html">code</a>). For our upset plots we will be utilising the Durance river data used in our R community analysis workshop. This is a 16S dataset with two main metadata groupings:</p>
+<p>We have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 (<a href="https://neof-workshops.github.io/16S_yg84o9/Course/03-Intro_to_qiime2.html#amplicon-sequence-variants-identification">theory</a> &amp; <a href="https://neof-workshops.github.io/16S_yg84o9/Course/09-ASV_identification.html">code</a>). For our divergence analysis we will be utilising the Durance river data used in our R community analysis workshop. This is a 16S dataset with two main metadata groupings:</p>
 <ul>
-<li>Sites: Upper, Middle, and Lower Durance sampling site.</li>
+<li>Sites: Upper, Middle, and Lower Durance sampling site (UD, MD, &amp; LD).</li>
 <li>Culture media: Environmental sample (ENV), TSA, KBC, and CVP.</li>
 </ul>
 <p>More info in the <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/02-Dataset_and_workflow.html#dataset">R community analysis workbook</a></p>

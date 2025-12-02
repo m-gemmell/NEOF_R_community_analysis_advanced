@@ -444,6 +444,29 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Advanced</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/combined_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Combined plot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/divergences_split_by_a_group.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Divergences split by a group</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -462,7 +485,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#upper-triangle" id="toc-upper-triangle" class="nav-link" data-scroll-target="#upper-triangle">Upper triangle</a></li>
   <li><a href="#diagonal" id="toc-diagonal" class="nav-link" data-scroll-target="#diagonal">Diagonal</a></li>
   </ul></li>
-  <li><a href="#long-distance-matrix" id="toc-long-distance-matrix" class="nav-link" data-scroll-target="#long-distance-matrix">Long distance matrix</a></li>
+  <li><a href="#long-distance-tibble" id="toc-long-distance-tibble" class="nav-link" data-scroll-target="#long-distance-tibble">Long distance tibble</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -476,18 +499,30 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="divergence-data-format" class="level1">
 <h1>Divergence data format</h1>
-<p>We will create box plots and violin plots with <a href="https://neof-workshops.github.io/Tidyverse/ggplot2/ggplot2.html"><code>ggplot2</code></a> similar to the plots we created in the <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-diversity-violin-plot">Alpha diveristy chapter of our R community analysis workshop</a>.</p>
-<p>For this we need to create a <a href="https://neof-workshops.github.io/Tidyverse/ggplot2/input_data.html">long data frame</a>. To carry this out we will:</p>
+<center>
+<img src="images/data_format_1.png" class="img-fluid" style="width:200px; background: white; border-radius:5px">
+</center>
+<p>We will create violin plots with <a href="https://neof-workshops.github.io/Tidyverse/ggplot2/ggplot2.html"><code>ggplot2</code></a> similar to the plots we created in the <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-diversity-violin-plot">Alpha diversity chapter of our R community analysis workshop</a>.</p>
+<p>For this we need to create a <a href="https://neof-workshops.github.io/Tidyverse/ggplot2/input_data.html">long tibble</a>. To carry this out we will:</p>
 <ul>
 <li>Load in the distance matrix</li>
-<li>Create a long data frame from the lower triangle</li>
-<li>Create a long data frame from the upper triangle</li>
-<li>Bind the data frame</li>
+<li>Create a long <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> from the lower triangle</li>
+<li>Create a long <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> from the upper triangle</li>
+<li>Bind the <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a></li>
 </ul>
 <p>However, before that let’s see an example square distance matrix and long data frame for divergence analysis.</p>
+<div class="webex-solution">
+<button>
+What’s a tibble?
+</button>
+<p>A tibble is a reimagining of the data.frame object. It is part of the tidyverse suite of packages these materials extensively use. For more information please see: <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">Tidyverse Tibble guide</a></p>
+</div>
 <section id="square-distance-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="square-distance-matrix">Square distance matrix</h2>
-<p>Our initial dissimilarity distance data is in a square distance matrix will be like below:</p>
+<center>
+<img src="images/distance_matrix.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
+<p>Our initial dissimilarity distance data is in a square distance matrix. An example is below:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>   S1 S2 S3
@@ -496,9 +531,12 @@ S2  2  0  5
 S3  3  5  0</code></pre>
 </div>
 </div>
-<p>There are three main sections to this disatnce matrix.</p>
+<p>There are three main sections to this distance matrix.</p>
 <section id="lower-triangle" class="level3">
 <h3 class="anchored" data-anchor-id="lower-triangle">Lower triangle</h3>
+<center>
+<img src="images/distance_matrix_lower_tri.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
 <p>The lower triangle is the bottom left triangle of unique values.</p>
 <p>For example (ignore the NAs):</p>
 <div class="cell">
@@ -512,6 +550,9 @@ S3  3  5 NA</code></pre>
 </section>
 <section id="upper-triangle" class="level3">
 <h3 class="anchored" data-anchor-id="upper-triangle">Upper triangle</h3>
+<center>
+<img src="images/distance_matrix_upper_tri.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
 <p>The upper triangle is the top right triangle of unique values.</p>
 <p>For example (ignore the NAs):</p>
 <div class="cell">
@@ -525,7 +566,10 @@ S3 NA NA NA</code></pre>
 </section>
 <section id="diagonal" class="level3">
 <h3 class="anchored" data-anchor-id="diagonal">Diagonal</h3>
-<p>The diagonal is represents the distances of each sample to itself. These are always zero.</p>
+<center>
+<img src="images/distance_matrix_diagonal.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
+<p>The diagonal represents the distances of each sample to itself. These are always zero.</p>
 <p>For example (ignore the NAs):</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -537,42 +581,50 @@ S3 NA NA  0</code></pre>
 </div>
 </section>
 </section>
-<section id="long-distance-matrix" class="level2">
-<h2 class="anchored" data-anchor-id="long-distance-matrix">Long distance matrix</h2>
-<p>When the above example distance matrix is converted into <a href="https://neof-workshops.github.io/Tidyverse/ggplot2/input_data.html">long data frame/tibble</a> for divergence analysis it will then look like:</p>
+<section id="long-distance-tibble" class="level2">
+<h2 class="anchored" data-anchor-id="long-distance-tibble">Long distance tibble</h2>
+<center>
+<img src="images/long_distance_tibble.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
+<p>When the above example distance matrix is converted into a <a href="https://neof-workshops.github.io/Tidyverse/ggplot2/input_data.html">long tibble</a> for divergence analysis it will then look like:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>  Sample_L Sample_R Value
-1       S1       S2     2
-2       S1       S3     3
-3       S2       S1     2
-4       S2       S3     5
-5       S3       S1     3
-6       S3       S2     5</code></pre>
+<pre><code># A tibble: 6 × 3
+  Sample_L Sample_R Value
+  &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
+1 S1       S2           2
+2 S1       S3           3
+3 S2       S1           2
+4 S2       S3           5
+5 S3       S1           3
+6 S3       S2           5</code></pre>
 </div>
 </div>
-<p>Some of the features of this long data frame are:</p>
+<p>Some of the features of this long <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> are:</p>
 <ul>
 <li>The “Value” column is the distance between the two samples</li>
 <li>Each observation/row has a “Sample_L” and “Sample_R” column to represent the 2 samples the distance is between
 <ul>
-<li>The “L” and “R” represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the data frame.</li>
+<li>The “L” and “R” represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a>.</li>
 </ul></li>
 <li>We do not include the 0 values from the diagonal.</li>
 <li>Each value is represented twice, i.e.&nbsp;the lower and upper triangle values are included.
 <ul>
 <li>The 2 rows containing the duplicated values are different in which sample is the Left sample and which is the right sample.</li>
-<li>This is required for creating inter group divergence (explained later)</li>
+<li>This is required for creating inter-group divergence (explained later)</li>
 </ul></li>
 </ul>
-<p>As an example of duplicated values the below data frame shows the distance between S1 and S2 twice. Notice that S1 is the Left sample in the first row but it is the RIght sample in the other row.</p>
+<p>As an example of duplicated values the below data frame shows the distance between S1 and S2 twice. Notice that S1 is the Left sample in the first row but it is the Right sample in the other row.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>  Sample_L Sample_R Value
-1       S1       S2     2
-3       S2       S1     2</code></pre>
+<pre><code># A tibble: 2 × 3
+  Sample_L Sample_R Value
+  &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
+1 S1       S2           2
+2 S2       S1           2</code></pre>
 </div>
 </div>
+<p>With theory covered let’s move onto practice.</p>
 
 
 </section>

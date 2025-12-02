@@ -479,6 +479,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Advanced</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/combined_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Combined plot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/divergences_split_by_a_group.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Divergences split by a group</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -509,11 +532,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="metadata-addition" class="level1">
 <h1>Metadata addition</h1>
-<p>Data needs metadata for us to make sense of it. In this section we’ll add our metadata from our <code>phyloseq</code> object (<code>pseq</code>) to the long data frame we have created.</p>
-<p>We’ll need to add the metadata twice, once for our left sample and once for our right samples.</p>
+<center>
+<img src="images/metadata_3.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
+<p>Data needs metadata for us to make sense of it. In this section we’ll add our metadata from our <code>phyloseq</code> object (<code>pseq</code>) to the long tibble we have created.</p>
+<p>We’ll need to add the metadata twice, once for our left samples and once for our right samples.</p>
 <section id="extract-metadata-from-phyloseq" class="level2">
 <h2 class="anchored" data-anchor-id="extract-metadata-from-phyloseq">Extract metadata from phyloseq</h2>
-<p>For ease we’ll first extract our metadata from the <code>phyloseq</code> object.</p>
+<center>
+<img src="images/extract_3.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
+<p>For ease we’ll first extract our metadata from the <code>phyloseq</code> object as a data frame. We’re not converting it to a tibble as we will be using the row names of the data frame (a tibble does not have row names).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract metadata from original phyloseq object</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>metadf <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">sample_data</span>(pseq)</span>
@@ -523,55 +552,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="metadata-for-left-samples" class="level2">
 <h2 class="anchored" data-anchor-id="metadata-for-left-samples">Metadata for left samples</h2>
+<center>
+<img src="images/left_hand.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
 <p>With our metadata data frame we will first add the metadata for the left samples to our long <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a>. We’ll do this for the left samples first so it is on the left side of the final <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> compared to the right sample metadata.</p>
 <p>This formatting requires a few steps:</p>
 <ol type="1">
-<li>Create the <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> (<code>metadf_L</code>) of the metadata matching the order of the long <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a>.
+<li>Create the <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> (<code>metadf_L</code>) of the metadata matching the order of the left samples in our long <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a>.
 <ul>
+<li>Utilise subsetting to match the order of the samples to the left sample column (<code>Sample_L</code>) of the tibble <code>beta_long_tbl</code>.</li>
 <li><a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html"><code>tibble::as_tibble()</code></a>: Converts a data frame to a tibble.</li>
 <li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/select.html"><code>dplyr::select()</code></a>: Select columns from a tibble.</li>
 </ul></li>
 <li>Rename the columns so they have <code>_L</code> as their suffix e.g.&nbsp;<code>site</code> to <code>site_L</code></li>
-<li>Bind our long tibble of beta diversity values (<code>beta_long_tbl_mean</code>) to our matching left metadata tibble (<code>metadf_L</code>)
+<li>Bind our long tibble of beta diversity values (<code>beta_long_tbl</code>) to our matching left metadata tibble (<code>metadf_L</code>)
 <ul>
-<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html"><code>dplyr::bind_cols</code></a>:</li>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html"><code>dplyr::bind_cols</code></a>: Binds tibbles by columns (i.e.&nbsp;side by side).</li>
 </ul></li>
 </ol>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Add metadata for the left samples</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>metadf_L <span class="ot">&lt;-</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Extend metadf to match order of left samples</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    metadf[beta_long_tbl_mean<span class="sc">$</span>Sample_L,] <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    metadf[beta_long_tbl<span class="sc">$</span>Sample_L,] <span class="sc">|&gt;</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Convert to tibble for tidyverse manipulation</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    tibble<span class="sc">::</span><span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Remove sample.name row</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="dv">1</span>)</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Rename columns so they have "_L" as their suffix</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(metadf_L) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">colnames</span>(metadf_L),<span class="st">"_L"</span>)</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Add metadata_L to beta_long_tbl_mean</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>beta_long_tbl_mean <span class="ot">&lt;-</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(beta_long_tbl_mean, metadf_L)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Add metadata_L to beta_long_tbl</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>beta_long_tbl <span class="ot">&lt;-</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(beta_long_tbl, metadf_L)</span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#Check head of our long df</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>beta_long_tbl_meann <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>beta_long_tbln <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="testing-code" class="level2">
 <h2 class="anchored" data-anchor-id="testing-code">Testing code</h2>
+<center>
+<img src="images/steps.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
 <p>If you are ever unsure of what a step is doing you can create a new cell and run the specific parts to see what the output is.</p>
 <p>For example if you are not sure how the initial <code>metadf_L</code> creation is working you could run the following code cells. In the below cells I like to pipe (<a href="https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html"><code>|&gt;</code></a>) the final output to <code>head()</code> so only the top 6 rows are printed. Printing the entirety of large data frames or <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibbles</a> can be overwhelming.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extend metadf to match order of left samples</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>metadf[beta_long_tbl_mean<span class="sc">$</span>Sample_L,] <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>metadf[beta_long_tbl<span class="sc">$</span>Sample_L,] <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extend metadf to match order of left samples</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>metadf[beta_long_tbl_mean<span class="sc">$</span>Sample_L,] <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>metadf[beta_long_tbl<span class="sc">$</span>Sample_L,] <span class="sc">|&gt;</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert to tibble for tidyverse manipulation</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extend metadf to match order of left samples</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>metadf[beta_long_tbl_mean<span class="sc">$</span>Sample_L,] <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>metadf[beta_long_tbl<span class="sc">$</span>Sample_L,] <span class="sc">|&gt;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert to tibble for tidyverse manipulation</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>tibble<span class="sc">::</span><span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove sample.name row</span></span>
@@ -580,35 +616,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="metadata-for-right-samples" class="level2">
 <h2 class="anchored" data-anchor-id="metadata-for-right-samples">Metadata for right samples</h2>
+<center>
+<img src="images/right_hand.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
 <p>Next carry out the same steps used for the left samples’ metadata but for the right samples.</p>
-<p><strong>Note:</strong> Copying and pasting your own code is great. However, ensure you change all the parts you need to, this will primarily changing “L” to “R” in multiple locations.</p>
+<p><strong>Note:</strong> Copying and pasting your own code is great. However, ensure you change all the parts you need to (i.e changing “_L” to “_R” in multiple locations).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Add metadata for the right samples</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>metadf_R <span class="ot">&lt;-</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Extend metadf to match order of right samples</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    metadf[beta_long_tbl_mean<span class="sc">$</span>Sample_R,] <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    metadf[beta_long_tbl<span class="sc">$</span>Sample_R,] <span class="sc">|&gt;</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Convert to tibble for tidyverse manipulation</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    tibble<span class="sc">::</span><span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Remove sample.name row</span></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="dv">1</span>)</span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Rename columns so they have "_R" as their suffix</span></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(metadf_R) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">colnames</span>(metadf_R),<span class="st">"_R"</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Add metadata_R to beta_long_tbl_mean</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>beta_long_tbl_mean <span class="ot">&lt;-</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(beta_long_tbl_mean, metadf_R)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Add metadata_R to beta_long_tbl</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>beta_long_tbl <span class="ot">&lt;-</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">bind_cols</span>(beta_long_tbl, metadf_R)</span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#Check head of our long df</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>beta_long_tbl_meann <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>beta_long_tbln <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="variable-management" class="level2">
 <h2 class="anchored" data-anchor-id="variable-management">Variable management</h2>
+<center>
+<img src="images/management.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
 <p>Brilliant! before moving onto adding the info from the upper triangle we’ll manage some variables.</p>
-<p>First assign the object <code>beta_long_tbl_mean</code> to <code>beta_lower_long_tbl_mean</code>. This will allow us to reuse a lot of previous code for the upper triangle long tibble creation whilst reusing the <code>beta_long_tbl_mean</code> variable.</p>
+<p>First assign the object <code>beta_long_tbl</code> to <code>beta_lower_long_tbl</code>. This will allow us to reuse a lot of previous code for the upper triangle long tibble creation whilst reusing the <code>beta_long_tbl</code> variable.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Assign to a new variable</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>beta_lower_long_tbl_mean <span class="ot">&lt;-</span> beta_long_tbl_mean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>beta_lower_long_tbl <span class="ot">&lt;-</span> beta_long_tbl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>To clear up some space we’ll remove object we don’t need any more.</p>
+<p>To clear up some space we’ll remove objects we don’t need any more.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove unwanted metadata objects</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(metadf_L, metadf_R)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>

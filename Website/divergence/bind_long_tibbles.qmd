@@ -1,11 +1,17 @@
 # Bind long tibbles
+<div class="hexrow">
+  <p><a href="https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html#bind-by-rows">
+  <img src="images/dplyr_bind_rows.png" width="200px">
+  </a></p>
+</div>
 
-OUr final step is to combine the lower and upper long tibbles with [`dplyr::bind_rows()`](https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html#bind-by-rows).
+Our final step is to combine the lower and upper long tibbles with [`dplyr::bind_rows()`](https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html#bind-by-rows).
+This function binds 2 tibbles by rows (i.e. one on top of the other).
 
 Additionally, we'll use the [`dplyr::glimpse()`](https://neof-workshops.github.io/Tidyverse/dplyr/glimpse.html) function to get a preview of the final [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html).
 
 ```{r eval=FALSE}
-beta_long_tbl_mean <-
-    dplyr::bind_rows(beta_lower_tbl_mean, beta_upper_long_tbl_mean)
-beta_long_tbl_mean |> dplyr::glimpse()
+beta_long_tbl <-
+    dplyr::bind_rows(beta_lower_tbl, beta_upper_long_tbl)
+beta_long_tbl |> dplyr::glimpse()
 ```

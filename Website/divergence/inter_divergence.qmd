@@ -1,4 +1,7 @@
-# Inter-group intro
+# Inter-group overview
+<center>
+![](images/apples_to_oranges_inter_group.png){style="width:500px; background: white; border-radius:5px"}
+</center>
 
 With our formatted data we can also carry out inter-group divergence analysis.
 This is analysing the distances between groups (e.g. internet is a network between different networks).
@@ -6,9 +9,12 @@ This is analysing the distances between groups (e.g. internet is a network betwe
 In this section we will:
 
 - Analyse the Inter-site divergence (River locations: LD, MD, & UD)
-- Exercise: repeat the previous steps for Inter-media divergence (CVP, ENV, KBC, & TSA)
+- Exercise: Repeat the previous steps for Inter-media divergence (CVP, ENV, KBC, & TSA)
 
 ## Inter-group divergence purpose
+<center>
+![](images/reason_2.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 With inter-group divergence analysis we are trying to determine which groups have lower and higher dissimilarity between each other.
 

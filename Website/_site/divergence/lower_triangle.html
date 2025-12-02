@@ -479,6 +479,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Advanced</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/combined_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Combined plot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../divergence/divergences_split_by_a_group.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Divergences split by a group</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -511,9 +534,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="lower-triangle" class="level1">
 <h1>Lower triangle</h1>
-<p>Our first formatting step is to create a long data frame of the dissimilarity values in the lower triangle of the dissimilarity matrix.</p>
+<center>
+<img src="images/lower_tri.png" class="img-fluid" style="width:200px; background: white; border-radius:5px">
+</center>
+<p>Our first formatting step is to create a long <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> of the dissimilarity values in the lower triangle of the dissimilarity matrix.</p>
 <section id="dissimilarity-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="dissimilarity-matrix">Dissimilarity matrix</h2>
+<center>
+<img src="images/setup_9.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
 <p>Before we start, ensure you have loaded the phyloseq object and dissimilarity matrix as shown in <a href="../divergence/data_and_setup.html">data and setup page</a>.</p>
 <p>Once it is loaded we can view the top 10 rows and columns of the matrix.</p>
 <div class="cell">
@@ -523,11 +552,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="lower-triangle-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="lower-triangle-matrix">Lower triangle matrix</h2>
+<center>
+<img src="images/distance_matrix_lower_tri.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
 <p>The next step is to convert the matrix so all but the lower triangle values are <code>NA</code>s.</p>
 <section id="demo-code" class="level3">
 <h3 class="anchored" data-anchor-id="demo-code">Demo code</h3>
 <p>We’ll first carry this out with a demonstration.</p>
-<p>First create a small version of our distance matrix so it is easy to view.</p>
+<p>Create a small version of our distance matrix so it is easy to view.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create demo distance matrix</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>demo_mat <span class="ot">&lt;-</span> beta_df_mean[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span>
@@ -561,36 +593,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="long-data-frame-of-lower-triangle-values" class="level2">
 <h2 class="anchored" data-anchor-id="long-data-frame-of-lower-triangle-values">Long data frame of lower triangle values</h2>
-<p>With our lower triangle matrix we can create a long data frame for future <code>ggplot2</code> plot production.</p>
+<center>
+<img src="images/long_distance_tibble_lower_triangle.png" class="img-fluid" style="width:200px; background: white; border-radius:5px">
+</center>
+<p>With our lower triangle matrix we can create a long <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> for future <code>ggplot2</code> plot production.</p>
 <p>For this code we utilising <a href="https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html">piping (<code>|&gt;</code>)</a> with the below steps:</p>
 <ul>
-<li>Convert the matrix <code>lower_tri_mat</code> to a data frame with <code>as.data.frame()</code></li>
-<li>Move the row names to column called “Sample_L” with <a href="https://tibble.tidyverse.org/reference/rownames.html">tibble::rownames_to_column</a></li>
+<li>Convert the matrix <code>lower_tri_mat</code> to a data frame with <code>as.data.frame()</code>
+<ul>
+<li>Although we will ultimately end up with a <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> we need to carry this out for the next steps to run successfully</li>
+<li>If we converted the matrix to a tibble with <a href="[tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html)"><code>tibble::as_tibble()</code></a> it would remove the row names which are required for the next command</li>
+</ul></li>
+<li>Move the row names to a column called “Sample_L” with <a href="https://tibble.tidyverse.org/reference/rownames.html"><code>tibble::rownames_to_column</code></a></li>
 <li>Longify all the columns except the “Sample_L” column with <a href="https://neof-workshops.github.io/Tidyverse/tidyr/pivot_longer.html"><code>tidyr::pivot_longer()</code></a>
 <ul>
 <li>This also serves to convert our data frame to a <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a></li>
 </ul></li>
-<li>Remove rows with NAs (i.e.&nbsp;the upper triangle and diaganol values) with <a href="https://neof-workshops.github.io/Tidyverse/tidyr/drop_na.html"><code>tidyr::drop_na()</code></a></li>
+<li>Remove rows with NAs (i.e.&nbsp;the upper triangle and diagonal values) with <a href="https://neof-workshops.github.io/Tidyverse/tidyr/drop_na.html"><code>tidyr::drop_na()</code></a></li>
 <li>Create a column called triangle with each value being “lower” with <a href="https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html"><code>dplyr::mutate()</code></a>, this is required later</li>
 </ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert to long data frame of paired distance values</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#We will refer to the different samples in a pair as the left an right pair</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>beta_long_tbl_mean <span class="ot">&lt;-</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#We will refer to the different samples in a pair as the left and right pair</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>beta_long_tbl <span class="ot">&lt;-</span> </span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    lower_tri_mat <span class="sc">|&gt;</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Convert to data frame</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Create column from row names (Sample_l, l = left)</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Create column from row names (Sample_L, L = left)</span></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">"Sample_L"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Longify</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Set names to "Sample_r" column (r = right)</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Set names to "Sample_R" column (R = right)</span></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="sc">!</span>Sample_L, <span class="at">names_to=</span><span class="st">"Sample_R"</span>, <span class="at">values_to=</span><span class="st">"value"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Remove rows with an NA</span></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        tidyr<span class="sc">::</span><span class="fu">drop_na</span>() <span class="sc">|&gt;</span></span>
 <span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Create triangle column containing value "lower" for each row</span></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">triangle=</span><span class="st">"lower"</span>)</span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Check head of long tibble</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>beta_long_tbl_mean <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>beta_long_tbl <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Great! Next we’ll add our metadata to this long data frame.</p>
 

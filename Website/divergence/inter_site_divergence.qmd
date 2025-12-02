@@ -7,7 +7,7 @@
 #I.e. the long tibble only contains paired distances between samples of 
 # different sites (inter-site distances)
 inter_site_wunifrac_long_tbl <-
-    beta_long_tbl_mean |>
+    beta_long_tbl |>
         dplyr::filter(site_L != site_R)
 #Check head of long df
 inter_site_wunifrac_long_tbl |> head()

@@ -1,13 +1,20 @@
 # Metadata addition
+<center>
+![](images/metadata_3.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 Data needs metadata for us to make sense of it.
-In this section we'll add our metadata from our `phyloseq` object (`pseq`) to the long data frame we have created.
+In this section we'll add our metadata from our `phyloseq` object (`pseq`) to the long tibble we have created.
 
-We'll need to add the metadata twice, once for our left sample and once for our right samples.
+We'll need to add the metadata twice, once for our left samples and once for our right samples.
 
 ## Extract metadata from phyloseq
+<center>
+![](images/extract_3.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
-For ease we'll first extract our metadata from the `phyloseq` object.
+For ease we'll first extract our metadata from the `phyloseq` object as a data frame.
+We're not converting it to a tibble as we will be using the row names of the data frame (a tibble does not have row names).
 
 ```{r eval=FALSE}
 #Extract metadata from original phyloseq object
@@ -17,38 +24,45 @@ metadf |> head()
 ```
 
 ## Metadata for left samples
+<center>
+![](images/left_hand.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 With our metadata data frame we will first add the metadata for the left samples to our long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html).
 We'll do this for the left samples first so it is on the left side of the final [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) compared to the right sample metadata.
 
 This formatting requires a few steps:
 
-1. Create the [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) (`metadf_L`) of the metadata matching the order of the long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html).
+1. Create the [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) (`metadf_L`) of the metadata matching the order of the left samples in our long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html).
+    - Utilise subsetting to match the order of the samples to the left sample column (`Sample_L`) of the tibble `beta_long_tbl`.
     - [`tibble::as_tibble()`](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html): Converts a data frame to a tibble.
     - [`dplyr::select()`](https://neof-workshops.github.io/Tidyverse/dplyr/select.html): Select columns from a tibble.
 2. Rename the columns so they have `_L` as their suffix e.g. `site` to `site_L`
-3. Bind our long tibble of beta diversity values (`beta_long_tbl_mean`) to our matching left metadata tibble (`metadf_L`)
-    - [`dplyr::bind_cols`](https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html): 
+3. Bind our long tibble of beta diversity values (`beta_long_tbl`) to our matching left metadata tibble (`metadf_L`)
+    - [`dplyr::bind_cols`](https://neof-workshops.github.io/Tidyverse/dplyr/bind_tibbles.html): Binds tibbles by columns (i.e. side by side).
 
 ```{r eval=FALSE}
 #Add metadata for the left samples
 metadf_L <-
     #Extend metadf to match order of left samples
-    metadf[beta_long_tbl_mean$Sample_L,] |>
+    metadf[beta_long_tbl$Sample_L,] |>
     #Convert to tibble for tidyverse manipulation
     tibble::as_tibble() |>
     #Remove sample.name row
     dplyr::select(-1)
 #Rename columns so they have "_L" as their suffix
 colnames(metadf_L) <- paste0(colnames(metadf_L),"_L")
-#Add metadata_L to beta_long_tbl_mean
-beta_long_tbl_mean <-
-    dplyr::bind_cols(beta_long_tbl_mean, metadf_L)
+#Add metadata_L to beta_long_tbl
+beta_long_tbl <-
+    dplyr::bind_cols(beta_long_tbl, metadf_L)
 #Check head of our long df
-beta_long_tbl_meann |> head()
+beta_long_tbln |> head()
 ```
 
 ## Testing code
+<center>
+![](images/steps.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 If you are ever unsure of what a step is doing you can create a new cell and run the specific parts to see what the output is.
 
@@ -58,18 +72,18 @@ Printing the entirety of large data frames or [tibbles](https://neof-workshops.g
 
 ```{r eval=FALSE}
 #Extend metadf to match order of left samples
-metadf[beta_long_tbl_mean$Sample_L,] |> head()
+metadf[beta_long_tbl$Sample_L,] |> head()
 ```
 
 ```{r eval=FALSE}
 #Extend metadf to match order of left samples
-metadf[beta_long_tbl_mean$Sample_L,] |>
+metadf[beta_long_tbl$Sample_L,] |>
 #Convert to tibble for tidyverse manipulation
 tibble::as_tibble() |> head()
 ```
 ```{r eval=FALSE}
 #Extend metadf to match order of left samples
-metadf[beta_long_tbl_mean$Sample_L,] |>
+metadf[beta_long_tbl$Sample_L,] |>
 #Convert to tibble for tidyverse manipulation
 tibble::as_tibble() |>
 #Remove sample.name row
@@ -77,43 +91,49 @@ dplyr::select(-1) |> head()
 ```
 
 ## Metadata for right samples
+<center>
+![](images/right_hand.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 Next carry out the same steps used for the left samples' metadata but for the right samples.
 
 __Note:__ Copying and pasting your own code is great.
-However, ensure you change all the parts you need to, this will primarily changing "L" to "R" in multiple locations.
+However, ensure you change all the parts you need to (i.e changing "_L" to "_R" in multiple locations).
 
 ```{r eval=FALSE}
 #Add metadata for the right samples
 metadf_R <-
     #Extend metadf to match order of right samples
-    metadf[beta_long_tbl_mean$Sample_R,] |>
+    metadf[beta_long_tbl$Sample_R,] |>
     #Convert to tibble for tidyverse manipulation
     tibble::as_tibble() |>
     #Remove sample.name row
     dplyr::select(-1)
 #Rename columns so they have "_R" as their suffix
 colnames(metadf_R) <- paste0(colnames(metadf_R),"_R")
-#Add metadata_R to beta_long_tbl_mean
-beta_long_tbl_mean <-
-    dplyr::bind_cols(beta_long_tbl_mean, metadf_R)
+#Add metadata_R to beta_long_tbl
+beta_long_tbl <-
+    dplyr::bind_cols(beta_long_tbl, metadf_R)
 #Check head of our long df
-beta_long_tbl_meann |> head()
+beta_long_tbln |> head()
 ```
 
 ## Variable management
+<center>
+![](images/management.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 Brilliant! before moving onto adding the info from the upper triangle we'll manage some variables.
 
-First assign the object `beta_long_tbl_mean` to `beta_lower_long_tbl_mean`.
-This will allow us to reuse a lot of previous code for the upper triangle long tibble creation whilst reusing the `beta_long_tbl_mean` variable.
+First assign the object `beta_long_tbl` to `beta_lower_long_tbl`.
+This will allow us to reuse a lot of previous code for the upper triangle long tibble creation whilst reusing the `beta_long_tbl` variable.
 
 ```{r eval=FALSE}
 #Assign to a new variable
-beta_lower_long_tbl_mean <- beta_long_tbl_mean
+beta_lower_long_tbl <- beta_long_tbl
 ```
 
-To clear up some space we'll remove object we don't need any more.
+To clear up some space we'll remove objects we don't need any more.
 
 ```{r eval=FALSE}
 #Remove unwanted metadata objects

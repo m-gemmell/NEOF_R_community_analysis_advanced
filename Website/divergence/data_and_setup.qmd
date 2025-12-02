@@ -4,7 +4,7 @@
 </center>
 
 
-Before you carry out any practice you will need to setup your environment by:
+Before you carry out any practice you will need to setup your environment  with the instructions in this page. The steps are:
 
 - Ensuring you have setup your directory, environment, and jupyter-notebook as shown in the overall [setup](/setup/setup.qmd).
 - Creating a jupyter-notebook in a new work directory.
@@ -49,10 +49,10 @@ library("patchwork")
 </center>
 
 We have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 ([theory](https://neof-workshops.github.io/16S_yg84o9/Course/03-Intro_to_qiime2.html#amplicon-sequence-variants-identification) & [code](https://neof-workshops.github.io/16S_yg84o9/Course/09-ASV_identification.html)).
-For our upset plots we will be utilising the Durance river data used in our R community analysis workshop.
+For our divergence analysis we will be utilising the Durance river data used in our R community analysis workshop.
 This is a 16S dataset with two main metadata groupings:
 
-- Sites: Upper, Middle, and Lower Durance sampling site.
+- Sites: Upper, Middle, and Lower Durance sampling site (UD, MD, & LD).
 - Culture media: Environmental sample (ENV), TSA, KBC, and CVP.
 
 More info in the [R community analysis workbook](https://neof-workshops.github.io/R_community_whqkt8/Course/02-Dataset_and_workflow.html#dataset)

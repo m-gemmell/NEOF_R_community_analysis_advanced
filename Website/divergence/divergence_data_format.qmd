@@ -1,20 +1,30 @@
 # Divergence data format
+<center>
+![](images/data_format_1.png){style="width:200px; background: white; border-radius:5px"}
+</center>
 
-We will create box plots and violin plots with [`ggplot2`](https://neof-workshops.github.io/Tidyverse/ggplot2/ggplot2.html) similar to the plots we created in the [Alpha diveristy chapter of our R community analysis workshop](https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-diversity-violin-plot).
+We will create violin plots with [`ggplot2`](https://neof-workshops.github.io/Tidyverse/ggplot2/ggplot2.html) similar to the plots we created in the [Alpha diversity chapter of our R community analysis workshop](https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-diversity-violin-plot).
 
-For this we need to create a [long data frame](https://neof-workshops.github.io/Tidyverse/ggplot2/input_data.html).
+For this we need to create a [long tibble](https://neof-workshops.github.io/Tidyverse/ggplot2/input_data.html).
 To carry this out we will:
 
 - Load in the distance matrix
-- Create a long data frame from the lower triangle
-- Create a long data frame from the upper triangle
-- Bind the data frame
+- Create a long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) from the lower triangle
+- Create a long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) from the upper triangle
+- Bind the [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html)
 
 However, before that let's see an example square distance matrix and long data frame for divergence analysis.
 
-## Square distance matrix
+`r hide("What's a tibble?")`
+A tibble is a reimagining of the data.frame object. It is part of the tidyverse suite of packages these materials extensively use. For more information please see: [Tidyverse Tibble guide](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html)
+`r unhide()`
 
-Our initial dissimilarity distance data is in a square distance matrix will be like below:
+## Square distance matrix
+<center>
+![](images/distance_matrix.png){style="width:150px; background: white; border-radius:5px"}
+</center>
+
+Our initial dissimilarity distance data is in a square distance matrix. An example is below:
 
 ```{r, echo = FALSE}
 #Columns
@@ -27,9 +37,12 @@ row.names(mat) <- c("S1","S2","S3")
 mat
 ```
 
-There are three main sections to this disatnce matrix.
+There are three main sections to this distance matrix.
 
 ### Lower triangle
+<center>
+![](images/distance_matrix_lower_tri.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 The lower triangle is the bottom left triangle of unique values.
 
@@ -47,6 +60,9 @@ mat
 ```
 
 ### Upper triangle
+<center>
+![](images/distance_matrix_upper_tri.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 The upper triangle is the top right triangle of unique values.
 
@@ -64,8 +80,11 @@ mat
 ```
 
 ### Diagonal
+<center>
+![](images/distance_matrix_diagonal.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
-The diagonal is represents the distances of each sample to itself. These are always zero.
+The diagonal represents the distances of each sample to itself. These are always zero.
 
 For example (ignore the NAs):
 
@@ -80,31 +99,36 @@ row.names(mat) <- c("S1","S2","S3")
 mat
 ```
 
-## Long distance matrix
+## Long distance tibble
+<center>
+![](images/long_distance_tibble.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
-When the above example distance matrix is converted into [long data frame/tibble](https://neof-workshops.github.io/Tidyverse/ggplot2/input_data.html) for divergence analysis it will then look like:
+When the above example distance matrix is converted into a [long tibble](https://neof-workshops.github.io/Tidyverse/ggplot2/input_data.html) for divergence analysis it will then look like:
 
 ```{r, echo = FALSE}
 Sample_L <- c("S1","S1","S2","S2","S3","S3")
 Sample_R <- c("S2","S3","S1","S3","S1","S2")
 Value <- c(2,3,2,5,3,5)
-long_df <- data.frame(Sample_L, Sample_R, Value)
+long_df <- tibble::tibble(Sample_L, Sample_R, Value)
 long_df
 ```
 
-Some of the features of this long data frame are:
+Some of the features of this long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) are:
 
 - The "Value" column is the distance between the two samples
 - Each observation/row has a "Sample_L" and "Sample_R" column to represent the 2 samples the distance is between
-    - The "L" and "R" represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the data frame.
+    - The "L" and "R" represent Left and Right. Left/Right has no significant meaning and instead was chosen as the Right samples are right to the Left samples in the [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html).
 - We do not include the 0 values from the diagonal.
 - Each value is represented twice, i.e. the lower and upper triangle values are included.
     - The 2 rows containing the duplicated values are different in which sample is the Left sample and which is the right sample.
-    - This is required for creating inter group divergence (explained later)
+    - This is required for creating inter-group divergence (explained later)
 
 As an example of duplicated values the below data frame shows the distance between S1 and S2 twice. 
-Notice that S1 is the Left sample in the first row but it is the RIght sample in the other row.
+Notice that S1 is the Left sample in the first row but it is the Right sample in the other row.
 
 ```{r, echo = FALSE}
 long_df[c(1,3),]
 ```
+
+With theory covered let's move onto practice.

@@ -30,7 +30,7 @@ Two important notes:
 #Subset long tibble so only rows where site_L and site_R are identical of the lower triangle
 #I.e. the long tibble only contains one set of paired distances within sites (Intra-site) 
 intra_site_wunifrac_long_tbl <-
-    beta_long_tbl_mean |>
+    beta_long_tbl |>
         #Filter to keep lower triangle rows
         dplyr::filter(triangle == "lower") |>
         #Filter to keep rows where site_L is the same as site_R (intra site)
