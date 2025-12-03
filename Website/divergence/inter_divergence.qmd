@@ -32,8 +32,11 @@ If so, is this a significant difference?
 These results could then lead into other types of analysis such as biomarker detection.
 
 ## Groupings and pairs
+<center>
+![](images/inter_pair_hands.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
-With inter-group divergence we look at the dissimilarity distances between all the pairs between different sample groups.
+With inter-group divergence we look at the dissimilarity distances between all pairs between different sample groups.
 
 ### Example data
 

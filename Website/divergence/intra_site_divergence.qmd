@@ -1,18 +1,31 @@
 # Intra-site divergence
+<center>
+![](images/rivers_intra_site.png){style="width:400px; background: white; border-radius:5px"}
+</center>
+
+For our first intra-group analysis we'll examine the dissimilarity within the three sites.
+The sites are different parts of the Durance river:
+
+- Upper Durance (UD)
+- Middle Durance (MD)
+- Lower Durance (LD)
 
 To analyse the Intra-site divergence we will:
 
 - Subset our long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) of distances and metadata to only contain one set of intra-group distances.
 - Create a violin plot of the intra-site distances
-- Carry out a pairwise wilcox test to statistically compare the divergences between sites.
+- Carry out a pairwise wilcox test to statistically compare the inter-site divergences between sites.
 
 As a reminder we are using [weighted UniFrac distances](https://neof-workshops.github.io/R_community_whqkt8/iterative_rarefaction/19-Beta_distances_metrics.html#unifrac-distances).
 
 ## Intra-site tibble
+<center>
+![](images/site_intra_tibble.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 Our first step is to subset out [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) so we only have the intra-site distances.
 
-For this step we pip ([`|>`](https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html)) our weighted UniFrac long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) to 2 different ['dplyr::filter()'](https://neof-workshops.github.io/Tidyverse/dplyr/filter.html) commands.
+For this step we pipe ([`|>`](https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html)) our weighted UniFrac long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) to 2 different ['dplyr::filter()'](https://neof-workshops.github.io/Tidyverse/dplyr/filter.html) commands.
 
 First the lower triangle values are kept to remove the upper triangle values.
 The lower triangle values and upper triangle values are duplicated the difference being which sample is set as the left and right sample.
@@ -40,6 +53,9 @@ intra_site_wunifrac_long_tbl |> head()
 ```
 
 ## Violin plot
+<center>
+![](images/violin_plot_intra_site.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 A bxo plot is a good method to visualise divergence.
 However, we'll make it even nicer by making a violin plot.
@@ -66,11 +82,14 @@ IRdisplay::display_png(file = "./wunifrac_intra_site_divergence_violinplot.png")
 ```
 
 ## Stats
+<center>
+![](images/abacus_intra_site.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 As with other box/violin plots we can compare the different intra-site distance groupings with a pairwise wilcox test.
 For more information please see the [R community analysis workbook](https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-stats).
 
-The below analysis carries our P value adjustment via the holm method.
+The below analysis carries our P-value adjustment via the holm method.
 
 ```{r eval=FALSE}
 pairwise.wilcox.test(intra_site_wunifrac_long_tbl$value,
@@ -78,6 +97,9 @@ pairwise.wilcox.test(intra_site_wunifrac_long_tbl$value,
 ```
 
 ## Interpretation
+<center>
+![](images/interpret.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 With our results we can see the violin plots of the three sites have significant overlap.
 Additionally, there is no significant difference between the groupings of intra-site distances.

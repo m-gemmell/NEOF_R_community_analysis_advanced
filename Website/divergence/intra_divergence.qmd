@@ -73,8 +73,11 @@ Divergence analysis directly uses the dissimilarity matrix values rather than or
 Therefore, if you are interested in and making statements about intra-group dissimilarity it is best to carry out visual and statistical intra-group divergence analysis.
 
 ## Groupings and pairs
+<center>
+![](images/intra_pair_hands.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
-With intra-group divergence we look at the dissimilarity distances between all the pairs within the same group.
+With intra-group divergence we look at the dissimilarity distances between all pairs within the same group.
 
 ### Example data
 
@@ -123,7 +126,7 @@ To calculate the number of pairs in a set you can use `n(n-1)/2`.
 The below plot shows a line between each sample and its intra-group pairs.
 We will only use the distances of these pairs for our intra-group divergence analysis.
 
-__Note:__ It is important to note that we use the beta diversity distance (e.g. UniFrac) not the ordination distance (e.g. PCoA) for divergence analysis.
+__Note:__ We use the beta diversity distance (e.g. UniFrac) not the ordination distance (e.g. PCoA) for divergence analysis.
 
 ```{r, echo=FALSE}
 ggplot2::ggplot(data = tbl) +

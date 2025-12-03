@@ -433,7 +433,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../divergence/intra_divergence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Intra-group intro</span></a>
+ <span class="menu-text">Intra-group overview</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -462,7 +462,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../divergence/inter_divergence.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Inter-group intro</span></a>
+ <span class="menu-text">Inter-group overview</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -534,8 +534,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="inter-site-divergence" class="level1">
 <h1>Inter-site divergence</h1>
+<center>
+<img src="images/rivers_inter_site.png" class="img-fluid" style="width:200px; background: white; border-radius:5px">
+</center>
+<p>On this page we’ll examine the dissimilarity of samples between the sites, i.e.&nbsp;inter-site divergence. As a reminder, the sites are different parts of the Durance river:</p>
+<ul>
+<li>Upper Durance (UD)</li>
+<li>Middle Durance (MD)</li>
+<li>Lower Durance (LD)</li>
+</ul>
+<p>To analyse the Inter-site divergence we will:</p>
+<ul>
+<li>Subset our long <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> of distances and metadata to contain both sets (lower and upper triangle) of inter-group distances.</li>
+<li>Create a violin plot of the inter-site distances</li>
+<li>Carry out a pairwise wilcox test to statistically compare the different inter-site divergences (UD to MD, UD to LD, and MD to LD).</li>
+</ul>
+<p>As a reminder we are using <a href="https://neof-workshops.github.io/R_community_whqkt8/iterative_rarefaction/19-Beta_distances_metrics.html#unifrac-distances">weighted UniFrac distances</a>.</p>
 <section id="inter-site-tibble" class="level2">
 <h2 class="anchored" data-anchor-id="inter-site-tibble">Inter-site tibble</h2>
+<center>
+<img src="images/site_inter_tibble.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Subset long tibble so only rows where site_R and site_L are not identical</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#I.e. the long tibble only contains paired distances between samples of </span></span>
@@ -549,6 +568,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="violin-plot" class="level2">
 <h2 class="anchored" data-anchor-id="violin-plot">Violin plot</h2>
+<center>
+<img src="images/violin_plot_inter_site.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
 <section id="basic-plot" class="level3">
 <h3 class="anchored" data-anchor-id="basic-plot">Basic plot</h3>
 <div class="cell">
@@ -593,6 +615,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="stats" class="level2">
 <h2 class="anchored" data-anchor-id="stats">Stats</h2>
+<center>
+<img src="images/abacus_intra_site.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(inter_site_wunifrac_long_tbl<span class="sc">$</span>value,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                        inter_site_wunifrac_long_tbl<span class="sc">$</span>site_L)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1224,8 +1249,8 @@ window.onload = function() {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../divergence/inter_divergence.html" class="pagination-link" aria-label="Inter-group intro">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Inter-group intro</span>
+      <a href="../divergence/inter_divergence.html" class="pagination-link" aria-label="Inter-group overview">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Inter-group overview</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

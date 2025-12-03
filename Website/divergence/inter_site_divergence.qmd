@@ -1,6 +1,27 @@
 # Inter-site divergence
+<center>
+![](images/rivers_inter_site.png){style="width:200px; background: white; border-radius:5px"}
+</center>
+
+On this page we'll examine the dissimilarity of samples between the sites, i.e. inter-site divergence.
+As a reminder, the sites are different parts of the Durance river:
+
+- Upper Durance (UD)
+- Middle Durance (MD)
+- Lower Durance (LD)
+
+To analyse the Inter-site divergence we will:
+
+- Subset our long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) of distances and metadata to contain both sets (lower and upper triangle) of inter-group distances.
+- Create a violin plot of the inter-site distances
+- Carry out a pairwise wilcox test to statistically compare the different inter-site divergences (UD to MD, UD to LD, and MD to LD).
+
+As a reminder we are using [weighted UniFrac distances](https://neof-workshops.github.io/R_community_whqkt8/iterative_rarefaction/19-Beta_distances_metrics.html#unifrac-distances).
 
 ## Inter-site tibble
+<center>
+![](images/site_inter_tibble.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 ```{r eval=FALSE}
 #Subset long tibble so only rows where site_R and site_L are not identical
@@ -14,6 +35,9 @@ inter_site_wunifrac_long_tbl |> head()
 ```
 
 ## Violin plot
+<center>
+![](images/violin_plot_inter_site.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 ### Basic plot
 
@@ -59,6 +83,9 @@ IRdisplay::display_png(file = "./wunifrac_inter_site_divergence_violinplot.png")
 ```
 
 ## Stats
+<center>
+![](images/abacus_intra_site.png){style="width:150px; background: white; border-radius:5px"}
+</center>
 
 ```{r eval=FALSE}
 pairwise.wilcox.test(inter_site_wunifrac_long_tbl$value,
