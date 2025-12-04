@@ -536,7 +536,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <center>
 <img src="images/petri_inter.png" class="img-fluid" style="width:200px; background: white; border-radius:5px">
 </center>
-<p>Now that you have worked through carrying out an inter-group analysis with site you will do the same with media.</p>
+<p>Now to carry out inter-media divergence analysis.</p>
 <p>For this exercise you will create your own code. Solutions are available in the solution boxes below but please make a strong attempt before looking at them.</p>
 <p>I would recommend copying, pasting, and editing your code from the inter-site analysis. Ensure you change all the variable names you need to, it is very easy to miss variables and column/row names you need to change.</p>
 <section id="steps" class="level2">
@@ -568,9 +568,14 @@ Inter-media tibble creation
 <section id="violin-plot" class="level3">
 <h3 class="anchored" data-anchor-id="violin-plot">Violin plot</h3>
 <p>With the formatted tibble the next step is to create a violin plot. Ensure the x axis is separated by the four media groupings (CVP, ENV, KBC, and TSA). Additionally, colour the points by the paired/right media.</p>
+<p>You are aiming for the below plot :</p>
+<p>Note: the points are randomly distributed on the x-axis every time you run the command. Therefore yours will most likely look slightly different.</p>
+<center>
+<img src="images/wunifrac_inter_media_divergence_violinplot.png" class="img-fluid" style="width:800px; background: white; border-radius:5px">
+</center>
 <div class="webex-solution">
 <button>
-Inter-media violin plot
+Inter-media violin plot code solution
 </button>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Inter-media divergence violin plot</span></span>
@@ -592,10 +597,15 @@ Inter-media violin plot
 </div>
 </div>
 <p>In the plot we can see:</p>
+<ul>
+<li>The ENV samples are highly dissimilar to the CVP, KBC, and TSA samples (&gt;0.5 Weighted UniFrac) with similar distances between these three pairings.</li>
+<li>The media samples (CVP, KBC, and TSA) are more similar to each other (&lt;05 Weighted UniFrac) compared to the ENV samples.</li>
+<li>CVP and KBC are the two most similar media groupings (i.e.&nbsp;smallest dissimilarity distances).</li>
+</ul>
 </section>
 <section id="stats" class="level3">
 <h3 class="anchored" data-anchor-id="stats">Stats</h3>
-<p>Finally, carry out the pairwise wilcox test to determine if there are significant difference between the inter-media distances.</p>
+<p>Finally, carry out the pairwise wilcox tests to determine if there are significant difference between the inter-media distances. Carry this out to compare distances between the four media and to compare the media pairwise distances.</p>
 <div class="webex-solution">
 <button>
 Inter-media pairwise wilcox
@@ -604,8 +614,21 @@ Inter-media pairwise wilcox
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(inter_media_wunifrac_long_tbl<span class="sc">$</span>value,</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                        inter_media_wunifrac_long_tbl<span class="sc">$</span>media_L)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create new column of left and right media</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>inter_media_wunifrac_long_tbl<span class="sc">$</span>media_L_R <span class="ot">&lt;-</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">paste0</span>(inter_media_wunifrac_long_tbl<span class="sc">$</span>media_L, <span class="st">"_"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            inter_media_wunifrac_long_tbl<span class="sc">$</span>media_R)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Wilcox</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(inter_media_wunifrac_long_tbl<span class="sc">$</span>value,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                        inter_media_wunifrac_long_tbl<span class="sc">$</span>media_L_R)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>In this case you should see there is a significant difference between the intra-group distances of all the different media types except for KBC against TSA.</p>
+</div>
+<p>In this case you should see there is a significant difference between the intra-group distances of all the different media types except for CVP compared to KBC and CVP compared to TSA. From the plot we may expect to see no significant difference between the intra-group divergences of KBC and TSA but this is not the case seemingly.</p>
+<p>There is a lot to unpackage when viewing the statistics of the media pair inter -group divergences. Some notable points:</p>
+<ul>
+<li></li>
+</ul>
 
 
 </section>

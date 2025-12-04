@@ -23,7 +23,7 @@ As a reminder we are using [weighted UniFrac distances](https://neof-workshops.g
 ![](images/site_intra_tibble.png){style="width:150px; background: white; border-radius:5px"}
 </center>
 
-Our first step is to subset out [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) so we only have the intra-site distances.
+Our first step is to subset our [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) so we only have the intra-site distances.
 
 For this step we pipe ([`|>`](https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html)) our weighted UniFrac long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) to 2 different ['dplyr::filter()'](https://neof-workshops.github.io/Tidyverse/dplyr/filter.html) commands.
 
@@ -57,7 +57,7 @@ intra_site_wunifrac_long_tbl |> head()
 ![](images/violin_plot_intra_site.png){style="width:150px; background: white; border-radius:5px"}
 </center>
 
-A bxo plot is a good method to visualise divergence.
+A box plot is a good method to visualise divergence.
 However, we'll make it even nicer by making a violin plot.
 
 In the below plot we separate the values by site using `site_L`, we could use `site_R` and their would be no difference as the values in `site_L` and `site_R are identical.

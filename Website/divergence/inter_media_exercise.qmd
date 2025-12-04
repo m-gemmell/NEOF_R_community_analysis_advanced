@@ -3,7 +3,7 @@
 ![](images/petri_inter.png){style="width:200px; background: white; border-radius:5px"}
 </center>
 
-Now that you have worked through carrying out an inter-group analysis with site you will do the same with media.
+Now to carry out inter-media divergence analysis.
 
 For this exercise you will create your own code.
 Solutions are available in the solution boxes below but please make a strong attempt before looking at them.
@@ -44,7 +44,15 @@ With the formatted tibble the next step is to create a violin plot.
 Ensure the x axis is separated by the four media groupings (CVP, ENV, KBC, and TSA).
 Additionally, colour the points by the paired/right media.
 
-`r hide("Inter-media violin plot")`
+You are aiming for the below plot :
+
+Note: the points are randomly distributed on the x-axis every time you run the command. Therefore yours will most likely look slightly different.
+
+<center>
+![](images/wunifrac_inter_media_divergence_violinplot.png){style="width:800px; background: white; border-radius:5px"}
+</center>
+
+`r hide("Inter-media violin plot code solution")`
 ```{r eval=FALSE}
 #Inter-media divergence violin plot
 inter_media_violin_plot <-
@@ -67,17 +75,35 @@ IRdisplay::display_png(file = "./wunifrac_inter_media_divergence_violinplot.png"
 
 In the plot we can see:
 
-
+- The ENV samples are highly dissimilar to the CVP, KBC, and TSA samples (>0.5 Weighted UniFrac) with similar distances between these three pairings.
+- The media samples (CVP, KBC, and TSA) are more similar to each other (<05 Weighted UniFrac) compared to the ENV samples.
+- CVP and KBC are the two most similar media groupings (i.e. smallest dissimilarity distances).
 
 ### Stats
 
-Finally, carry out the pairwise wilcox test to determine if there are significant difference between the inter-media distances.
+Finally, carry out the pairwise wilcox tests to determine if there are significant difference between the inter-media distances.
+Carry this out to compare distances between the four media and to compare the media pairwise distances.
 
 `r hide("Inter-media pairwise wilcox")`
 ```{r eval=FALSE}
 pairwise.wilcox.test(inter_media_wunifrac_long_tbl$value,
                         inter_media_wunifrac_long_tbl$media_L)
 ```
+```{r eval=FALSE}
+#Create new column of left and right media
+inter_media_wunifrac_long_tbl$media_L_R <-
+    paste0(inter_media_wunifrac_long_tbl$media_L, "_",
+            inter_media_wunifrac_long_tbl$media_R)
+#Wilcox
+pairwise.wilcox.test(inter_media_wunifrac_long_tbl$value,
+                        inter_media_wunifrac_long_tbl$media_L_R)
+```
 `r unhide()`
 
-In this case you should see there is a significant difference between the intra-group distances of all the different media types except for KBC against TSA.
+In this case you should see there is a significant difference between the intra-group distances of all the different media types except for CVP compared to KBC and CVP compared to TSA.
+From the plot we may expect to see no significant difference between the intra-group divergences of KBC and TSA but this is not the case seemingly.
+
+There is a lot to unpackage when viewing the statistics of the media pair inter -group divergences.
+Some notable points:
+
+- 

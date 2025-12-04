@@ -45,7 +45,15 @@ intra_media_wunifrac_long_tbl |> head()
 With the formatted tibble the next step is to create a violin plot.
 Ensure the x axis is separated by the four media groupings (CVP, ENV, KBC, and TSA).
 
-`r hide("Inter-media violin plot")`
+You are aiming for the below plot :
+
+Note: the points are randomly distributed on the x-axis every time you run the command. Therefore yours will most likely look slightly different.
+
+<center>
+![](images/wunifrac_intra_media_divergence_violinplot.png){style="width:800px; background: white; border-radius:5px"}
+</center>
+
+`r hide("Inter-media violin plot code solution")`
 ```{r eval=FALSE}
 #Intra-media divergence violin plot
 intra_media_violin_plot <-

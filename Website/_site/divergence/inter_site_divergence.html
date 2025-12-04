@@ -521,6 +521,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#points-coloured-by-right-site" id="toc-points-coloured-by-right-site" class="nav-link" data-scroll-target="#points-coloured-by-right-site">Points coloured by right site</a></li>
   </ul></li>
   <li><a href="#stats" id="toc-stats" class="nav-link" data-scroll-target="#stats">Stats</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -555,6 +556,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <center>
 <img src="images/site_inter_tibble.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
 </center>
+<p>We need to subset our <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> to only have the inter-site distances.</p>
+<p>In this case we filter our rows with <a href="https://neof-workshops.github.io/Tidyverse/dplyr/filter.html">‘dplyr::filter()’</a> to retain observations where site_L and site_R are different/not identical (<code>site_L != site_R</code>). This removes the intra-site rows to only keep the inter-site rows.</p>
+<p>We’ll pipe (<a href="https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html"><code>|&gt;</code></a>) our weighted UniFrac long <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> to different <a href="https://neof-workshops.github.io/Tidyverse/dplyr/filter.html">‘dplyr::filter()’</a> commands.</p>
+<ul>
+<li>In you own analyses and the exercise ensure you use the columns for the intra-grouping you are interested in.
+<ul>
+<li>E.g. you would use <code>media_L != media_R</code> when analysing inter-media divergence of this dataset.</li>
+</ul></li>
+</ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Subset long tibble so only rows where site_R and site_L are not identical</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#I.e. the long tibble only contains paired distances between samples of </span></span>
@@ -565,14 +575,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Check head of long df</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>inter_site_wunifrac_long_tbl <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Unlike our intra-site divergence we keep both the lower and upper triangle values as the duplicate values are needed. These duplicate values will be split by the x-axis in our upcoming violin plots, more info further down.</p>
 </section>
 <section id="violin-plot" class="level2">
 <h2 class="anchored" data-anchor-id="violin-plot">Violin plot</h2>
 <center>
 <img src="images/violin_plot_inter_site.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
 </center>
+<p>We’re going to make violin plots to view the inter-group distances for each site. This means we’ll have a violin for UD, MD, and LD in our plots.</p>
 <section id="basic-plot" class="level3">
 <h3 class="anchored" data-anchor-id="basic-plot">Basic plot</h3>
+<p>First we’ll create a violin plot as we did for the intra-distances.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Inter-site divergence violin plot</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>inter_site_violin_plot <span class="ot">&lt;-</span></span>
@@ -589,12 +602,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Display plot</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">"./wunifrac_inter_site_divergence_violinplot.png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>The produced plot shows the inter-site distances for each site. It is useful but we can’t tell what specific inter-site distances each point represents.</p>
 </section>
 <section id="points-coloured-by-right-site" class="level3">
 <h3 class="anchored" data-anchor-id="points-coloured-by-right-site">Points coloured by right site</h3>
 <p>Let’s edit our above violin plot by adding colours to the points. These will be coloured by the matching paired site grouping (i.e.&nbsp;left media on x axis and right media to colour points).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Inter-site divergence violin plot</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Inter-site divergence violin plot points coloured by right site</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>inter_site_violin_plot <span class="ot">&lt;-</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    inter_site_wunifrac_long_tbl <span class="sc">|&gt;</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> site_L, <span class="at">y =</span> value)) <span class="sc">+</span></span>
@@ -611,6 +625,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Display plot</span></span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">"./wunifrac_inter_site_divergence_violinplot.png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>As you can see the points are separated in each violin by the assigned right Site information. In the LD violin the left green points are the LD-MD distances and the right blue points are the LD-UD distances. This means that we can examine:</p>
+<ul>
+<li>The inter-site divergences between sites (comparing the violins)</li>
+<li>The inter-site divergences within a site (compairng the points in a violin)</li>
+</ul>
+<p>In the plot you will notice that the green (MD) points of the LD violin are the same as the red (LD) points in the MD violin. These are the same values except the left and right samples are swapped around (i.e.&nbsp;LD-MD, and MD-LD). This is why we keep the lower and upper triangle values so we can see all the values in each violin.</p>
+<div class="webex-solution">
+<button>
+Inter-media without upper triangle
+</button>
+<center>
+<img src="images/wunifrac_inter_site_divergence_violinplot_lower_tri.png" class="img-fluid" style="width:800px; background: white; border-radius:5px">
+</center>
+<p><br></p>
+</div>
 </section>
 </section>
 <section id="stats" class="level2">
@@ -618,10 +647,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <center>
 <img src="images/abacus_intra_site.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
 </center>
+<p>For our statistics we’ll use a pairwise wilcox test to compare the inter-site divergences between the three sites.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(inter_site_wunifrac_long_tbl<span class="sc">$</span>value,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                        inter_site_wunifrac_long_tbl<span class="sc">$</span>site_L)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>None of our p-values are significant, i.e.&nbsp;there is no statistical difference between the inter-site divergences. This coincides with our violin plot where does is a lot of overlap between the violins.</p>
+<p>We can be even finer with our statistics and compare all the site pairwise divergences. To carry this out we’ll create a column called <code>site_L_R</code> which contains the site pairing (e.g.&nbsp;LD_MD). We’ll use this column as our grouping.</p>
+<p>To create the column <code>site_L_R</code> we have to do a bit more than usual. For this column</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create new tibble for site pair statistics</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>inter_site_pairs_wunifrac_long_tbl <span class="ot">&lt;-</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        inter_site_wunifrac_long_tbl <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                <span class="co">#Retain lower triangle rows</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                dplyr<span class="sc">::</span><span class="fu">filter</span>(triangle <span class="sc">==</span> <span class="st">"lower"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                <span class="co">#Convert site_L and site_R to character columns</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                <span class="co">#These are originally factors which cannot be ordered alphabetically</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(site_L,site_R), as.character)) <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                <span class="co">#Create new site_L_R column</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                <span class="co">#Ensure the first alphabetical site (pmin) is the prefix</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                <span class="co">#and the second/last alphabetical site (pmax) is the suffix</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">site_L_R =</span> </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">paste0</span>(<span class="fu">pmin</span>(site_L,site_R),<span class="st">"_"</span>,<span class="fu">pmax</span>(site_L,site_R)))</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Wilcox</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(inter_site_pairs_wunifrac_long_tbl<span class="sc">$</span>value,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                        inter_site_pairs_wunifrac_long_tbl<span class="sc">$</span>site_L_R)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In this case all our p-values are 1, showing no significant difference. Will more groupings and less data per grouping we are more likely to get higher p-values through stricter pp-value correction/adjustment and lower power.</p>
+</section>
+<section id="interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="interpretation">Interpretation</h2>
+<center>
+<img src="images/interpret_2.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
+</center>
+<p>This analysis shows little to no difference between the inter-site divergences. This could indicate the three sites are equally dissimilar to each other. In other words the community difference between LD and MD is the same as between MD and UD which is again the same as the difference between LD and UD.</p>
+<p>Of course it could be that another grouping is more important and obscuring and differences caused by site.</p>
 
 
 </section>

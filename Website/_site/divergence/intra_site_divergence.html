@@ -552,7 +552,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <center>
 <img src="images/site_intra_tibble.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
 </center>
-<p>Our first step is to subset out <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> so we only have the intra-site distances.</p>
+<p>Our first step is to subset our <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> so we only have the intra-site distances.</p>
 <p>For this step we pipe (<a href="https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html"><code>|&gt;</code></a>) our weighted UniFrac long <a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">tibble</a> to 2 different <a href="https://neof-workshops.github.io/Tidyverse/dplyr/filter.html">‘dplyr::filter()’</a> commands.</p>
 <p>First the lower triangle values are kept to remove the upper triangle values. The lower triangle values and upper triangle values are duplicated the difference being which sample is set as the left and right sample. We only want one value from each pair for intra-group divergence as each value will only be used in one divergence grouping.</p>
 <p>The next filter step is to only retain samples where the left site grouping (<code>site_L</code>) is the same as the right site grouping (<code>site_R</code>). This means we only retain the intra-site distances. Two important notes:</p>
@@ -581,7 +581,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <center>
 <img src="images/violin_plot_intra_site.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
 </center>
-<p>A bxo plot is a good method to visualise divergence. However, we’ll make it even nicer by making a violin plot.</p>
+<p>A box plot is a good method to visualise divergence. However, we’ll make it even nicer by making a violin plot.</p>
 <p>In the below plot we separate the values by site using <code>site_L</code>, we could use <code>site_R</code> and their would be no difference as the values in <code>site_L</code> and `site_R are identical.</p>
 <p>For a reminder on violin plots please see the <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html#alpha-diversity-violin-plot">R community analysis workbook</a>.</p>
 <div class="cell">
