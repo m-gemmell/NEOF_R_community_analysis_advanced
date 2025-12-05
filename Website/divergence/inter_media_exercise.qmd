@@ -90,20 +90,34 @@ pairwise.wilcox.test(inter_media_wunifrac_long_tbl$value,
                         inter_media_wunifrac_long_tbl$media_L)
 ```
 ```{r eval=FALSE}
-#Create new column of left and right media
-inter_media_wunifrac_long_tbl$media_L_R <-
-    paste0(inter_media_wunifrac_long_tbl$media_L, "_",
-            inter_media_wunifrac_long_tbl$media_R)
+#Create new tibble for media pair statistics
+inter_media_pairs_wunifrac_long_tbl <-
+        inter_media_wunifrac_long_tbl |>
+                #Retain lower triangle rows
+                dplyr::filter(triangle == "lower") |>
+                #Convert media_L and media_R to character columns
+                #These are originally factors which cannot be ordered alphabetically
+                dplyr::mutate(dplyr::across(c(media_L,media_R), as.character)) |>
+                #Create new media_L_R column
+                #Ensure the first alphabetical media (pmin) is the prefix
+                #and the second/last alphabetical media (pmax) is the suffix
+                dplyr::mutate(media_L_R = 
+                        paste0(pmin(media_L,site_R),"_",pmax(media_L,site_R)))
+
 #Wilcox
-pairwise.wilcox.test(inter_media_wunifrac_long_tbl$value,
-                        inter_media_wunifrac_long_tbl$media_L_R)
+pairwise.wilcox.test(inter_media_pairs_wunifrac_long_tbl$value,
+                        inter_media_pairs_wunifrac_long_tbl$site_L_R)
 ```
 `r unhide()`
 
-In this case you should see there is a significant difference between the intra-group distances of all the different media types except for CVP compared to KBC and CVP compared to TSA.
+In this case you'lld see there is a significant difference between the intra-group distances of all the different media types except for CVP compared to KBC and CVP compared to TSA.
 From the plot we may expect to see no significant difference between the intra-group divergences of KBC and TSA but this is not the case seemingly.
 
-There is a lot to unpackage when viewing the statistics of the media pair inter -group divergences.
-Some notable points:
+The media pair inter-group divergence stats shows each pairing is significantly different to every other pairing.
+Some finer points:
 
-- 
+- The three pairings of ENV to the media seem very similar to each other but still have significant p-values values (<0.05) even if CVP_ENV and ENV_KBC barely reach the threshold (0.047).
+- The media media pairings have very strong evidence of being different to each other (p-value = < 2e-16).
+    - The KBC and CVP samples are the most similar
+    - The KBC and TSA samples are the second most similar
+    - The CVP and TSA samples are the least dissimilar in terms of the media pairs

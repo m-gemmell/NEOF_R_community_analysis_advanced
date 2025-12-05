@@ -1,34 +1,45 @@
-# Divergences split by a group
+# Divergences split by another group
 
-There are times when you may want to analyse divergences within a grouping within 
+There are times when you may want to analyse divergences of a grouping within a different grouping.
 
-In this example we will look at the inter and intra divergences of media split by the sites.
+This page will quickly show you how to examine the inter- and intra-divergences of media within the sites.
+In other word we want to examine the media inter-/intra-distances of the intra-site distances.
+
+If you were to perform this with your own data you would preferably have more data points than the amount in this dataset.
 
 ## Data
 
-As we are interested in divergences within the sites we will use the intra-site tibble we created [earlier](/divergence/intra_site_divergence.qmd).
-This is because we are only interested in paired distances where both samples are form the same site.
-
-Let's check the top (`head()`) of the tibble.
+We are starting with the `beta_long_tbl` object created in the [Data format section](/divergence/divergence_data_format.qmd).
 
 ```{r eval=FALSE}
-intra_site_wunifrac_long_tbl |> head()
+beta_long_tbl |> head()
 ```
 
-## Intra-media by site
+## Intra-media by intra-site
 
-First we will look at the intra-media divergences split by site.
+The code sections below carries out the intra-media divergences split by site.
 
+### Tibble creation
 
 ```{r eval=FALSE}
-#Intra-media by site
-#Violin intra-media divergence plot by site
-intra_media_by_site_violin_plot <-
-    intra_site_wunifrac_long_tbl |>
+#Tibble creation
+intra_media_intra_site_wunifrac_long_tbl <-
+    beta_long_tbl |>
+    #Filter to only keep intra-site values
+    dplyr::filter(site_L == site_R)
     #Filter to only keep intra-media values
     dplyr::filter(media_L == media_R) |>
     #Filter to remove upper triangle values (i.e. duplicates)
     dplyr::filter(triangle == "lower") |>
+intra_media_intra_site_wunifrac_long_tbl |> head()
+```
+
+### Violin plot
+
+```{r eval=FALSE}
+#Violin intra-media divergence plot by site
+intra_media_by_site_violin_plot <-
+    intra_media_intra_site_wunifrac_long_tbl |>
     #Plot
     ggplot2::ggplot(aes(x = media_L, y = value)) +
     ggplot2::geom_violin(aes(colour=site_L)) +
@@ -44,16 +55,54 @@ ggsave(filename = "./wunifrac_intra_media_divergence_split_by_site_violinplot.pn
 IRdisplay::display_png(file = "./wunifrac_intra_media_divergence_split_by_site_violinplot.png")
 ```
 
+### Stats
 
-## Inter-media by site
+```{r eval=FALSE}
+pairwise.wilcox.test(intra_media_intra_site_wunifrac_long_tbl$value,
+                        intra_media_intra_site_wunifrac_long_tbl$site.media_L)
+```
+
+### Interpretation
+
+Unfortunately we have few data points (3 per violin) as we are are only using paired distances where the site and media are identical (intra-site and intra-media).
+This means low statistical power and has most likely led to all our p-values equalling 1.
+
+In our case the paired points are within a set of replicates and can be thought of as intra-replicate distances (the real world samples were split into three).
+More replicates will give more paired distance points; 3 replicates gives 3 pairs, 4 gives 6, 5 gives 10 (`n(n-1)/2`).
+
+In this case we can see:
+
+- The CVP media produces the lowest intra-site distances
+- KBC and TSA produce higher ranges of intra-site distances
+- We can see that he inter-distances for the ENV LD samples are much lower than for the other ENV MD and ENV UD samples.
+
+Although these are intra-replicate distances this might not be the case for your own data. 
+If you have groupings based on more than 2 primary groupings, such as site, media, and date, you should not discuss these types of findings in terms of replicates.
+
+## Inter-media by intra-site
+
+The code sections below carries out the inter-media divergences split by site.
+
+### Tibble creation
+
+```{r eval=FALSE}
+#Tibble creation
+inter_media_intra_site_wunifrac_long_tbl <-
+    intra_site_wunifrac_long_tbl |>
+    #Filter to only keep intra-site values
+    dplyr::filter(site_L == site_R) |>
+    #Filter to only keep inter-media values
+    dplyr::filter(media_L != media_R) |>
+inter_media_intra_site_wunifrac_long_tbl |> head()
+```
+
+### Violin plot
 
 ```{r eval=FALSE}
 #Inter-media by site
 #Violin inter-media divergence plot by site
 inter_media_by_site_violin_plot <-
-    intra_site_wunifrac_long_tbl |>
-    #Filter to only keep inter-media values
-    dplyr::filter(media_L != media_R) |>
+    inter_media_intra_site_wunifrac_long_tbl |>
     #Plot
     ggplot2::ggplot(aes(x = media_L, y = value)) +
     ggplot2::geom_violin(aes(colour=site_L)) +
@@ -68,3 +117,13 @@ ggsave(filename = "./wunifrac_inter_media_divergence_split_by_site_violinplot.pn
 #Display plot
 IRdisplay::display_png(file = "./wunifrac_inter_media_divergence_split_by_site_violinplot.png")
 ```
+
+### Stats
+
+```{r eval=FALSE}
+pairwise.wilcox.test(inter_media_intra_site_wunifrac_long_tbl$value,
+                        inter_media_intra_site_wunifrac_long_tbl$site.media_L)
+```
+
+Immediately noticeable is that a warning message about exact p-value with ties shows up.
+This can be ignored and you could suppress the message by including the option `exact=FALSE`.

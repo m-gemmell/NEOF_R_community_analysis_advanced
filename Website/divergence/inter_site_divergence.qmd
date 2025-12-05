@@ -128,7 +128,16 @@ This is why we keep the lower and upper triangle values so we can see all the va
 ![](images/abacus_intra_site.png){style="width:150px; background: white; border-radius:5px"}
 </center>
 
-For our statistics we'll use a pairwise wilcox test to compare the inter-site divergences between the three sites.
+For our statistical analysis we'll carry out pairwise wilcox tests.
+We'll compare the inter-site dissimilarity distances in 2 groupings:
+
+1. Between sites: Comparing the inter-site divergence between the three sites (UD, MD, and LD).
+2. Between pairs: Comparing the inter-site divergence between the pairs of sites (UD-MD, UD-LD, and MD-LD).
+
+### Sites
+
+We will compare the inter-site divergences per group using the `site_L` column with a wilcox test  (using `site_R` would produce the same results).
+In relation to our violin plot, this will determine if there are significant differences between the profiles of the three violins.
 
 ```{r eval=FALSE}
 pairwise.wilcox.test(inter_site_wunifrac_long_tbl$value,
@@ -138,16 +147,25 @@ pairwise.wilcox.test(inter_site_wunifrac_long_tbl$value,
 None of our p-values are significant, i.e. there is no statistical difference between the inter-site divergences.
 This coincides with our violin plot where does is a lot of overlap between the violins.
 
-We can be even finer with our statistics and compare all the site pairwise divergences.
+### Pairs
+
+We can also compare all the site pairwise divergences.
 To carry this out we'll create a column called `site_L_R` which contains the site pairing (e.g. LD_MD).
-We'll use this column as our grouping.
+We'll use this column as our grouping for the wilcox test.
 
-To create the column `site_L_R` we have to do a bit more than usual.
-For this column
+The main concern for our dat is that we want unique distance values within each site pair grouping.
+To create the paired site column, `site_L_R`, we'e use a tidyverse based pipeline.
+The steps are below:
 
-
-
-
+- Filter to remove the upper triangle rows with [`dplyr::filter()`](https://neof-workshops.github.io/Tidyverse/dplyr/filter.html)
+        - This is to remove duplicated values which we do not want for these statistics.
+- Convert the `site_L` amd `site_R` columns to characters with [`dplyr::mutate()`](https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html) and [`dplyr::across()`](https://dplyr.tidyverse.org//reference/across.html).
+        - These columns are originally factors which can't be ordered alphabetically unlike characters. 
+        - This is required for the next step.
+- Create a new column with left and right sample info, `site_L_R`, with [`dplyr::mutate()`](https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html).
+        - We ensure the first site (alphabetically) is the prefix by specifying both columns within the `pmin()` function.
+        - The suffix is set as the last (alphabetically), i.e. second of the two, site with `pmax()`.
+        - This ensures all the pairings are in the same orientation (i.e. we won't have some values under LD-MD and some under MD-LD).
 
 ```{r eval=FALSE}
 #Create new tibble for site pair statistics
@@ -157,7 +175,7 @@ inter_site_pairs_wunifrac_long_tbl <-
                 dplyr::filter(triangle == "lower") |>
                 #Convert site_L and site_R to character columns
                 #These are originally factors which cannot be ordered alphabetically
-                dplyr::mutate(across(c(site_L,site_R), as.character)) |>
+                dplyr::mutate(dplyr::across(c(site_L,site_R), as.character)) |>
                 #Create new site_L_R column
                 #Ensure the first alphabetical site (pmin) is the prefix
                 #and the second/last alphabetical site (pmax) is the suffix
@@ -169,8 +187,9 @@ pairwise.wilcox.test(inter_site_pairs_wunifrac_long_tbl$value,
                         inter_site_pairs_wunifrac_long_tbl$site_L_R)
 ```
 
-In this case all our p-values are 1, showing no significant difference.
-Will more groupings and less data per grouping we are more likely to get higher p-values through stricter pp-value correction/adjustment and lower power.
+This allows us to see if there are any differences between the distances between pairings.
+None, of the p-values are significant though the p-value between LD_MD and LD_UD is the highest.
+This lines up with the violin plot where the profiles of the two sets of points for the LD violin (LD_MD and LD_UD) are incredibly similar
 
 ## Interpretation
 <center>
@@ -180,5 +199,7 @@ Will more groupings and less data per grouping we are more likely to get higher 
 This analysis shows little to no difference between the inter-site divergences.
 This could indicate the three sites are equally dissimilar to each other.
 In other words the community difference between LD and MD is the same as between MD and UD which is again the same as the difference between LD and UD. 
+
+Saying that, there is slight evidence (nothing statistically significant) that the MD and UD groups are a bit more similar to each other than they are to the LD.
 
 Of course it could be that another grouping is more important and obscuring and differences caused by site.

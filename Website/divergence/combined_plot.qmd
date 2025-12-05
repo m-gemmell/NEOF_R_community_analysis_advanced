@@ -6,7 +6,7 @@
 </div>
 
 
-In this section we will quickly combine our plots into one image/png file with the [patchwork package](https://neof-workshops.github.io/Tidyverse/ggplot2/patchwork.html).
+The below code combines our plots into one image/png file with the [patchwork package](https://neof-workshops.github.io/Tidyverse/ggplot2/patchwork.html).
 
 ```{r eval=FALSE}
 wunifrac_divergence_plot <- 

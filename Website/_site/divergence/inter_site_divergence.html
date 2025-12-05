@@ -520,7 +520,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#basic-plot" id="toc-basic-plot" class="nav-link" data-scroll-target="#basic-plot">Basic plot</a></li>
   <li><a href="#points-coloured-by-right-site" id="toc-points-coloured-by-right-site" class="nav-link" data-scroll-target="#points-coloured-by-right-site">Points coloured by right site</a></li>
   </ul></li>
-  <li><a href="#stats" id="toc-stats" class="nav-link" data-scroll-target="#stats">Stats</a></li>
+  <li><a href="#stats" id="toc-stats" class="nav-link" data-scroll-target="#stats">Stats</a>
+  <ul class="collapse">
+  <li><a href="#sites" id="toc-sites" class="nav-link" data-scroll-target="#sites">Sites</a></li>
+  <li><a href="#pairs" id="toc-pairs" class="nav-link" data-scroll-target="#pairs">Pairs</a></li>
+  </ul></li>
   <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
   </ul></li>
   </ul>
@@ -647,14 +651,29 @@ Inter-media without upper triangle
 <center>
 <img src="images/abacus_intra_site.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
 </center>
-<p>For our statistics we’ll use a pairwise wilcox test to compare the inter-site divergences between the three sites.</p>
+<p>For our statistical analysis we’ll carry out pairwise wilcox tests. We’ll compare the inter-site dissimilarity distances in 2 groupings:</p>
+<ol type="1">
+<li>Between sites: Comparing the inter-site divergence between the three sites (UD, MD, and LD).</li>
+<li>Between pairs: Comparing the inter-site divergence between the pairs of sites (UD-MD, UD-LD, and MD-LD).</li>
+</ol>
+<section id="sites" class="level3">
+<h3 class="anchored" data-anchor-id="sites">Sites</h3>
+<p>We will compare the inter-site divergences per group using the <code>site_L</code> column with a wilcox test (using <code>site_R</code> would produce the same results). In relation to our violin plot, this will determine if there are significant differences between the profiles of the three violins.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(inter_site_wunifrac_long_tbl<span class="sc">$</span>value,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                        inter_site_wunifrac_long_tbl<span class="sc">$</span>site_L)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>None of our p-values are significant, i.e.&nbsp;there is no statistical difference between the inter-site divergences. This coincides with our violin plot where does is a lot of overlap between the violins.</p>
-<p>We can be even finer with our statistics and compare all the site pairwise divergences. To carry this out we’ll create a column called <code>site_L_R</code> which contains the site pairing (e.g.&nbsp;LD_MD). We’ll use this column as our grouping.</p>
-<p>To create the column <code>site_L_R</code> we have to do a bit more than usual. For this column</p>
+</section>
+<section id="pairs" class="level3">
+<h3 class="anchored" data-anchor-id="pairs">Pairs</h3>
+<p>We can also compare all the site pairwise divergences. To carry this out we’ll create a column called <code>site_L_R</code> which contains the site pairing (e.g.&nbsp;LD_MD). We’ll use this column as our grouping for the wilcox test.</p>
+<p>The main concern for our dat is that we want unique distance values within each site pair grouping. To create the paired site column, <code>site_L_R</code>, we’e use a tidyverse based pipeline. The steps are below:</p>
+<ul>
+<li>Filter to remove the upper triangle rows with <a href="https://neof-workshops.github.io/Tidyverse/dplyr/filter.html"><code>dplyr::filter()</code></a> - This is to remove duplicated values which we do not want for these statistics.</li>
+<li>Convert the <code>site_L</code> amd <code>site_R</code> columns to characters with <a href="https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html"><code>dplyr::mutate()</code></a> and <a href="https://dplyr.tidyverse.org//reference/across.html"><code>dplyr::across()</code></a>. - These columns are originally factors which can’t be ordered alphabetically unlike characters. - This is required for the next step.</li>
+<li>Create a new column with left and right sample info, <code>site_L_R</code>, with <a href="https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html"><code>dplyr::mutate()</code></a>. - We ensure the first site (alphabetically) is the prefix by specifying both columns within the <code>pmin()</code> function. - The suffix is set as the last (alphabetically), i.e.&nbsp;second of the two, site with <code>pmax()</code>. - This ensures all the pairings are in the same orientation (i.e.&nbsp;we won’t have some values under LD-MD and some under MD-LD).</li>
+</ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create new tibble for site pair statistics</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>inter_site_pairs_wunifrac_long_tbl <span class="ot">&lt;-</span></span>
@@ -663,7 +682,7 @@ Inter-media without upper triangle
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                dplyr<span class="sc">::</span><span class="fu">filter</span>(triangle <span class="sc">==</span> <span class="st">"lower"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                <span class="co">#Convert site_L and site_R to character columns</span></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                <span class="co">#These are originally factors which cannot be ordered alphabetically</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">c</span>(site_L,site_R), as.character)) <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                dplyr<span class="sc">::</span><span class="fu">mutate</span>(dplyr<span class="sc">::</span><span class="fu">across</span>(<span class="fu">c</span>(site_L,site_R), as.character)) <span class="sc">|&gt;</span></span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                <span class="co">#Create new site_L_R column</span></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                <span class="co">#Ensure the first alphabetical site (pmin) is the prefix</span></span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                <span class="co">#and the second/last alphabetical site (pmax) is the suffix</span></span>
@@ -674,7 +693,8 @@ Inter-media without upper triangle
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(inter_site_pairs_wunifrac_long_tbl<span class="sc">$</span>value,</span>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                        inter_site_pairs_wunifrac_long_tbl<span class="sc">$</span>site_L_R)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>In this case all our p-values are 1, showing no significant difference. Will more groupings and less data per grouping we are more likely to get higher p-values through stricter pp-value correction/adjustment and lower power.</p>
+<p>This allows us to see if there are any differences between the distances between pairings. None, of the p-values are significant though the p-value between LD_MD and LD_UD is the highest. This lines up with the violin plot where the profiles of the two sets of points for the LD violin (LD_MD and LD_UD) are incredibly similar</p>
+</section>
 </section>
 <section id="interpretation" class="level2">
 <h2 class="anchored" data-anchor-id="interpretation">Interpretation</h2>
@@ -682,6 +702,7 @@ Inter-media without upper triangle
 <img src="images/interpret_2.png" class="img-fluid" style="width:150px; background: white; border-radius:5px">
 </center>
 <p>This analysis shows little to no difference between the inter-site divergences. This could indicate the three sites are equally dissimilar to each other. In other words the community difference between LD and MD is the same as between MD and UD which is again the same as the difference between LD and UD.</p>
+<p>Saying that, there is slight evidence (nothing statistically significant) that the MD and UD groups are a bit more similar to each other than they are to the LD.</p>
 <p>Of course it could be that another grouping is more important and obscuring and differences caused by site.</p>
 
 
