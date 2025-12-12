@@ -461,7 +461,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../divergence/divergences_split_by_a_group.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Divergences split by a group</span></a>
+ <span class="menu-text">Divergences split by another group</span></a>
   </div>
 </li>
       </ul>
@@ -476,7 +476,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#divergence" id="toc-divergence" class="nav-link active" data-scroll-target="#divergence">Divergence</a></li>
+  <li><a href="#divergence" id="toc-divergence" class="nav-link active" data-scroll-target="#divergence">Divergence</a>
+  <ul class="collapse">
+  <li><a href="#sections" id="toc-sections" class="nav-link" data-scroll-target="#sections">Sections</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -489,67 +492,49 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="divergence" class="level1">
 <h1>Divergence</h1>
-<p>To remember the difference between intra and inter I remember the intranet (network within an organisation) and the internet (network between organisation). (intra mean within e.g.&nbsp;intranet).</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="divergence_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="979"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>All the Intra group distances</p>
-<p>9 total lines, 3 lines per group b/c 3 samples. A 4 sample group would have 6, a 5 sample group would have 10.</p>
-<p>To calculate the number of pairs in a set you can use <code>n(n-1)/2</code>.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="divergence_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="979"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>It is more difficult to work with inter group distances. When we do this we need each inter group distance twice as we need it for the first group and for the second group.</p>
-<p>Inter group distances of group 1 samples to others</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="divergence_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="979"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Inter group distances of group 2 samples to others</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="divergence_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="979"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Inter group distances of group 1 samples to others</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="divergence_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="979"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>In this case with 3 groups with 3 samples each we have a total of 54 inter group distances. Each sample has 6 inter group distances and there are 9 samples (6*9=54).</p>
-<p>If we had 4 groups with 10 samples each we would have:</p>
+<center>
+<img src="images/divergence.png" class="img-fluid" style="width:200px; background: white; border-radius:5px">
+</center>
+<p>Divergence analysis is comparing the dissimilarity distances between (inter-) and within (intra-) groupings. This allows us to more closely examine beta diversity.</p>
+<p>Ordination analysis (PCoA, NMDS, etc.) allows us to determine if groups cluster separately by dissimilarity/biodiversity measures. Divergence analysis allows us to determine:</p>
 <ul>
-<li>45 intra group distances (<code>10*(10-1)/2 = 45</code>)</li>
-<li>1,200 inter group distances (<code>30*40=1200</code>)</li>
+<li>Intra-group divergence/homogeneity: Comparison of distances within a group compared to distances within other groups.</li>
+<li>Inter-group divergence/heterogeneity: Comparison of dissimilarity distances between a group’s samples and all other group’s samples (inter-group distances) compared to other groups’ inter-group distances.</li>
+</ul>
+<p>To remember the difference between intra- and inter- I remember the intranet (network within an organisation) and the internet (network between organisation). More information about intra- and inter-divergence are in their specific sections.</p>
+<section id="sections" class="level2">
+<h2 class="anchored" data-anchor-id="sections">Sections</h2>
+<center>
+<img src="images/sections.png" class="img-fluid" style="width:100px; background: white; border-radius:5px">
+</center>
+<p>The sections are:</p>
+<ul>
+<li><a href="../divergence/data_and_setup.html">Setup</a>: Setting up your environment, jupyter-notebook, libraries, and data for the divergence tutorial</li>
+<li><a href="../divergence/divergence_data_format.html">Data format</a>: Formatting data for divergence analysis
+<ul>
+<li>Involves information about the original dissimilarity matrix and its parts (lower triangle, upper triangle, and diagonal)</li>
+</ul></li>
+<li><a href="../divergence/intra_divergence.html">Intra-group divergence</a>
+<ul>
+<li>Overview of intra-group divergence</li>
+<li>Practice with intra-site divergence</li>
+<li>Exercise with intra-media divergence</li>
+</ul></li>
+<li><a href="../divergence/inter_divergence.html">Inter-group divergence</a>
+<ul>
+<li>Overview of inter-group divergence</li>
+<li>Practice with inter-site divergence</li>
+<li>Exercise with inter-media divergence</li>
+</ul></li>
+<li><a href="../divergence/combined_plot.html">Advanced/extra</a>
+<ul>
+<li>Combining plots into one png</li>
+<li>Divergence analysis when splitting by another group (intra-media by intra-site &amp; inter-media by intra-site)</li>
+</ul></li>
 </ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

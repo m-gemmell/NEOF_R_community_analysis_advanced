@@ -1,6 +1,6 @@
 # Upset data format
 <center>
-![](images/format.png){style="width:200px"}
+![](images/format.png){style="width:200px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 The structure of the data for an upset plot is not a typical __tibble__.
@@ -64,7 +64,7 @@ intersection_list
 
 ## Upset tibble
 <center>
-![](images/2_column_table.png){style="width:150px"}
+![](images/2_column_table.png){style="width:150px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 We can now combine our __group vector__ and our __intersection list__ into a __tibble__.
@@ -148,7 +148,7 @@ We will talk in more depth about upset plots in the [Upset plots part](/upset/up
 
 ## MCQs
 <center>
-![](/images/question_bubble_green.png){style="width:150px"}
+![](/images/question_bubble_green.png){style="width:150px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 Superb! Attempt the following MCQs by choosing the correct word for the blanks.

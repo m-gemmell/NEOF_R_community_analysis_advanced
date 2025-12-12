@@ -1,6 +1,6 @@
 # Sample and taxa tibble
 <center>
-![](images/table_3.png){style="width:200px"}
+![](images/table_3.png){style="width:200px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 The first step is to extract the genus abundance table and then transpose it.

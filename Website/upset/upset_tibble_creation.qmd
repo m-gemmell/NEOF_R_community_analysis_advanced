@@ -1,6 +1,6 @@
 # Upset tibble creation
 <center>
-![](images/allen_keys.png){style="width:200px"}
+![](images/allen_keys.png){style="width:200px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 In this part we will finish creating the __tibble__ needed for our upset plot.
@@ -15,7 +15,7 @@ To carry this out we will build up a __tidyverse__ based pipeline step by step.
 ## Abundance column removal
 <center>
 <p><a href="https://neof-workshops.github.io/Tidyverse/dplyr/select.html">
-<img src="/images/dplyr_select.png" width="150px">
+<img src="/images/dplyr_select.png" width="200px">
 </a></p>
 </center>
 
@@ -38,7 +38,7 @@ You will notice we have 201 rows, and 2 columns called Phylum and Sample.
 ## Group tibble
 <center>
 <p><a href="https://neof-workshops.github.io/Tidyverse/dplyr/group_by.html">
-<img src="/images/dplyr_group_by.png" width="150px">
+<img src="/images/dplyr_group_by.png" width="200px">
 </a></p>
 </center>
 
@@ -66,7 +66,7 @@ This lets us know that it is grouped by the Phylum column and that there are 27 
 ## Summarise
 <center>
 <p><a href="https://neof-workshops.github.io/Tidyverse/dplyr/summarise.html">
-<img src="/images/dplyr_summarise.png" width="150px">
+<img src="/images/dplyr_summarise.png" width="200px">
 </a></p>
 </center>
 

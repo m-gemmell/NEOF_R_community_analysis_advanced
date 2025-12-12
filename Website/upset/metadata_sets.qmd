@@ -1,6 +1,6 @@
 # Metadata as sets
 <center>
-![](images/metadata_terminal.png){style="width:200px"}
+![](images/metadata_terminal.png){style="width:200px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 In previous parts we have been using the sample names as groups or sets.

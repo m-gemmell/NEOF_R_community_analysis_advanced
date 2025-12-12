@@ -19,7 +19,7 @@ We remove rare features for a few reasons:
 
 ## Number of taxa
 <center>
-![](images/tally.png){style="width:150px"}
+![](images/tally.png){style="width:150px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 The easiest method to determine the number of taxa groups at a certain taxonomic level is by aggregating the phyloseq object and display the dimension data of the objects within the aggregated phyloseq object.
@@ -37,7 +37,7 @@ This would be to much to visualise in an upset plot so lets reduce that number b
 
 ## Rare aggregation and removal
 <center>
-![](images/origami_rhino.png){style="width:200px"}
+![](images/origami_rhino.png){style="width:200px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 To remove the rare genera we will aggregate the taxa whilst carrying out rare aggregation.
@@ -68,7 +68,7 @@ This lead to a phyloseq object with 29 taxa which seems like a good number of __
 
 ## Upset plot creation
 <center>
-![](images/pencil.png){style="width:150px"}
+![](images/pencil.png){style="width:150px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 With our rare removed genus phyloseq object we can create an upset plot with:

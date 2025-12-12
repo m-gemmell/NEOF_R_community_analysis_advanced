@@ -1,6 +1,6 @@
 # All in one code
 <center>
-![](images/all_in.png){style="width:200px"}
+![](images/all_in.png){style="width:200px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 We'll create another upset plot with two main differences.
@@ -64,7 +64,7 @@ The total sample count in the bar chart is equal to the total sample count of ou
 
 #### MCQs
 <center>
-![](/images/question_bubble_purple.png){style="width:150px"}
+![](/images/question_bubble_purple.png){style="width:150px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 Great! With the upset plot answer the below yes/no MCQs.

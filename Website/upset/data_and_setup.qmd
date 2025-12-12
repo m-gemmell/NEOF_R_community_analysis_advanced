@@ -1,6 +1,6 @@
 # Data & Setup
 <center>
-![](images/setup_8.png){style="width:200px; border-radius:5px"}
+![](images/setup_8.png){style="width:200px; ; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 
@@ -27,7 +27,7 @@ At the top of the jupyter-notebook add the following headers:
 
 ## Libraries
 <center>
-![](images/packages.png){style="width:200px"}
+![](images/packages.png){style="width:200px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 Load the required libraries/packages in a new code cell.
@@ -44,7 +44,7 @@ library("ggupset")
 ## Data
 
 <center>
-![](images/river.png){style="width:200px"}
+![](images/river.png){style="width:200px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 We have a phyloseq object containing ASV abundance data through DADA2 denoising in QIIME2 ([theory](https://neof-workshops.github.io/16S_yg84o9/Course/03-Intro_to_qiime2.html#amplicon-sequence-variants-identification) & [code](https://neof-workshops.github.io/16S_yg84o9/Course/09-ASV_identification.html)).

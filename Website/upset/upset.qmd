@@ -79,7 +79,7 @@ This above plot shows:
 
 #### MCQs
 <center>
-![](/images/question_bubble_blue.png){style="width:150px"}
+![](/images/question_bubble_blue.png){style="width:150px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 Please attempt the below MCQs based on the above venn diagram.
@@ -153,7 +153,7 @@ ggplot2::ggsave("images/upset_plot.png", upset_plot,
 ```
 
 <center>
-![](images/upset_plot.png){style="width:600px; background: white; border-radius:15px"}
+![](images/upset_plot.png){style="width:600px; background: white; border-radius:5px; border: white solid 5px"}
 </center>
 <br>
 The first three bars/columns of the above plot shows:
@@ -166,7 +166,7 @@ On important note is that intersections with values of 0 are not displayed in up
 
 #### MCQs
 <center>
-![](/images/question_bubble_red.png){style="width:150px"}
+![](/images/question_bubble_red.png){style="width:150px; border:-radius: 5px; background: white; border: white solid 5px"}
 </center>
 
 Please attempt the below MCQs based on the above upset plot.

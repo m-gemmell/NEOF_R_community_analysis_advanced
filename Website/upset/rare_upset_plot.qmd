@@ -25,7 +25,7 @@ microbiome::aggregate_taxa(pseq, level = "Family")
 
 ## Rare aggregation
 <center>
-![](images/elephant_origami.png){style="width:150px"}
+![](images/elephant_origami.png){style="width:150px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 We have 112 taxa. Let's try to extract ~50 of the rarest taxa.
@@ -177,7 +177,7 @@ You could also use this method with a manually created vector of families that y
 
 ## Rare family upset plot
 <center>
-![](images/paint_brush.png){style="width:150px"}
+![](images/paint_brush.png){style="width:150px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 Now you can create the upset plot.

@@ -1,9 +1,12 @@
 # Divergences split by another group
+<center>
+![](images/divergence_within_divergence.png){style="width:300px; background: white; border-radius:5px"}
+</center>
 
 There are times when you may want to analyse divergences of a grouping within a different grouping.
 
 This page will quickly show you how to examine the inter- and intra-divergences of media within the sites.
-In other word we want to examine the media inter-/intra-distances of the intra-site distances.
+In other words, we want to examine the media inter-/intra-distances of the intra-site distances.
 
 If you were to perform this with your own data you would preferably have more data points than the amount in this dataset.
 
@@ -21,6 +24,8 @@ The code sections below carries out the intra-media divergences split by site.
 
 ### Tibble creation
 
+First we create a new tibble formatted for our analysis.
+
 ```{r eval=FALSE}
 #Tibble creation
 intra_media_intra_site_wunifrac_long_tbl <-
@@ -35,6 +40,10 @@ intra_media_intra_site_wunifrac_long_tbl |> head()
 ```
 
 ### Violin plot
+
+With our tibble we can create a violin plot.
+We'll set the x-axis to our media and the colours to our site grouping.
+You could swap these but I normally find it better to have groupings with more categories split by the x-axis rather than by colour (media = 4 categories, site = 3 categories).
 
 ```{r eval=FALSE}
 #Violin intra-media divergence plot by site
@@ -57,6 +66,8 @@ IRdisplay::display_png(file = "./wunifrac_intra_media_divergence_split_by_site_v
 
 ### Stats
 
+Finally we can carry out statistics to determine if the grouping are statistically different with a pairwise Wilcox test.
+
 ```{r eval=FALSE}
 pairwise.wilcox.test(intra_media_intra_site_wunifrac_long_tbl$value,
                         intra_media_intra_site_wunifrac_long_tbl$site.media_L)
@@ -74,16 +85,21 @@ In this case we can see:
 
 - The CVP media produces the lowest intra-site distances
 - KBC and TSA produce higher ranges of intra-site distances
-- We can see that he inter-distances for the ENV LD samples are much lower than for the other ENV MD and ENV UD samples.
+- The intra-distances for the ENV LD samples are much lower compared to the ENV MD and ENV UD samples.
 
 Although these are intra-replicate distances this might not be the case for your own data. 
-If you have groupings based on more than 2 primary groupings, such as site, media, and date, you should not discuss these types of findings in terms of replicates.
+If you have groupings based on more than 2 primary groupings (e.g. site, media, and date) you should not discuss these types of findings in terms of replicates.
 
 ## Inter-media by intra-site
 
 The code sections below carries out the inter-media divergences split by site.
 
 ### Tibble creation
+
+Create our formatted tibble. 
+This involves first filtering otu all inter-site values to retain the intra-site values.
+Next, we retain only inter-media values.
+Note in this case we do not remove the upper triangle values.
 
 ```{r eval=FALSE}
 #Tibble creation
@@ -97,6 +113,8 @@ inter_media_intra_site_wunifrac_long_tbl |> head()
 ```
 
 ### Violin plot
+
+Create the inter-media by intra-site violin plot.
 
 ```{r eval=FALSE}
 #Inter-media by site
@@ -120,6 +138,8 @@ IRdisplay::display_png(file = "./wunifrac_inter_media_divergence_split_by_site_v
 
 ### Stats
 
+Run a pairwise Wilcox test.
+
 ```{r eval=FALSE}
 pairwise.wilcox.test(inter_media_intra_site_wunifrac_long_tbl$value,
                         inter_media_intra_site_wunifrac_long_tbl$site.media_L)
@@ -127,3 +147,16 @@ pairwise.wilcox.test(inter_media_intra_site_wunifrac_long_tbl$value,
 
 Immediately noticeable is that a warning message about exact p-value with ties shows up.
 This can be ignored and you could suppress the message by including the option `exact=FALSE`.
+
+### Interpretation
+
+As we are working with intra-media values we have a lot more values/points and therefore more power.
+The main points from our analysis are:
+
+- There are no meaningful differences between the different media based groups (LD_CVP, LD_KBC, LD_TSA, MD_CVP, MD_KBC, etc.). Additionally, their dissimilarity values have very large ranges.
+- LD_ENV has the highest dissimilarity values with a low range and are significantly different to al other groupings except LD_KBC
+- MD_ENV & UD_ENV are quite similar with generally larger values than the CVP, KBC, and TSA groupings.
+    - They are significantly different to the following groupings:
+        - MD_ENV to: LD_ENV, MD_CVP, MD_TSA, UD_CVP, UD_KBC, & UD_TSA
+        - UD_ENV to: LD_ENV, MD_TSA, UD_CVP, UD-KBC, & UD_TSA
+

@@ -526,6 +526,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#tibble-creation-1" id="toc-tibble-creation-1" class="nav-link" data-scroll-target="#tibble-creation-1">Tibble creation</a></li>
   <li><a href="#violin-plot-1" id="toc-violin-plot-1" class="nav-link" data-scroll-target="#violin-plot-1">Violin plot</a></li>
   <li><a href="#stats-1" id="toc-stats-1" class="nav-link" data-scroll-target="#stats-1">Stats</a></li>
+  <li><a href="#interpretation-1" id="toc-interpretation-1" class="nav-link" data-scroll-target="#interpretation-1">Interpretation</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -540,8 +541,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="divergences-split-by-another-group" class="level1">
 <h1>Divergences split by another group</h1>
+<center>
+<img src="images/divergence_within_divergence.png" class="img-fluid" style="width:300px; background: white; border-radius:5px">
+</center>
 <p>There are times when you may want to analyse divergences of a grouping within a different grouping.</p>
-<p>This page will quickly show you how to examine the inter- and intra-divergences of media within the sites. In other word we want to examine the media inter-/intra-distances of the intra-site distances.</p>
+<p>This page will quickly show you how to examine the inter- and intra-divergences of media within the sites. In other words, we want to examine the media inter-/intra-distances of the intra-site distances.</p>
 <p>If you were to perform this with your own data you would preferably have more data points than the amount in this dataset.</p>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
@@ -555,6 +559,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The code sections below carries out the intra-media divergences split by site.</p>
 <section id="tibble-creation" class="level3">
 <h3 class="anchored" data-anchor-id="tibble-creation">Tibble creation</h3>
+<p>First we create a new tibble formatted for our analysis.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Tibble creation</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>intra_media_intra_site_wunifrac_long_tbl <span class="ot">&lt;-</span></span>
@@ -570,6 +575,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="violin-plot" class="level3">
 <h3 class="anchored" data-anchor-id="violin-plot">Violin plot</h3>
+<p>With our tibble we can create a violin plot. We’ll set the x-axis to our media and the colours to our site grouping. You could swap these but I normally find it better to have groupings with more categories split by the x-axis rather than by colour (media = 4 categories, site = 3 categories).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Violin intra-media divergence plot by site</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>intra_media_by_site_violin_plot <span class="ot">&lt;-</span></span>
@@ -591,6 +597,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="stats" class="level3">
 <h3 class="anchored" data-anchor-id="stats">Stats</h3>
+<p>Finally we can carry out statistics to determine if the grouping are statistically different with a pairwise Wilcox test.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(intra_media_intra_site_wunifrac_long_tbl<span class="sc">$</span>value,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                        intra_media_intra_site_wunifrac_long_tbl<span class="sc">$</span>site.media_L)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -604,9 +611,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>The CVP media produces the lowest intra-site distances</li>
 <li>KBC and TSA produce higher ranges of intra-site distances</li>
-<li>We can see that he inter-distances for the ENV LD samples are much lower than for the other ENV MD and ENV UD samples.</li>
+<li>The intra-distances for the ENV LD samples are much lower compared to the ENV MD and ENV UD samples.</li>
 </ul>
-<p>Although these are intra-replicate distances this might not be the case for your own data. If you have groupings based on more than 2 primary groupings, such as site, media, and date, you should not discuss these types of findings in terms of replicates.</p>
+<p>Although these are intra-replicate distances this might not be the case for your own data. If you have groupings based on more than 2 primary groupings (e.g.&nbsp;site, media, and date) you should not discuss these types of findings in terms of replicates.</p>
 </section>
 </section>
 <section id="inter-media-by-intra-site" class="level2">
@@ -614,6 +621,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The code sections below carries out the inter-media divergences split by site.</p>
 <section id="tibble-creation-1" class="level3">
 <h3 class="anchored" data-anchor-id="tibble-creation-1">Tibble creation</h3>
+<p>Create our formatted tibble. This involves first filtering otu all inter-site values to retain the intra-site values. Next, we retain only inter-media values. Note in this case we do not remove the upper triangle values.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Tibble creation</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>inter_media_intra_site_wunifrac_long_tbl <span class="ot">&lt;-</span></span>
@@ -627,6 +635,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="violin-plot-1" class="level3">
 <h3 class="anchored" data-anchor-id="violin-plot-1">Violin plot</h3>
+<p>Create the inter-media by intra-site violin plot.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Inter-media by site</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Violin inter-media divergence plot by site</span></span>
@@ -649,11 +658,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="stats-1" class="level3">
 <h3 class="anchored" data-anchor-id="stats-1">Stats</h3>
+<p>Run a pairwise Wilcox test.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.wilcox.test</span>(inter_media_intra_site_wunifrac_long_tbl<span class="sc">$</span>value,</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                        inter_media_intra_site_wunifrac_long_tbl<span class="sc">$</span>site.media_L)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Immediately noticeable is that a warning message about exact p-value with ties shows up. This can be ignored and you could suppress the message by including the option <code>exact=FALSE</code>.</p>
+</section>
+<section id="interpretation-1" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation-1">Interpretation</h3>
+<p>As we are working with intra-media values we have a lot more values/points and therefore more power. The main points from our analysis are:</p>
+<ul>
+<li>There are no meaningful differences between the different media based groups (LD_CVP, LD_KBC, LD_TSA, MD_CVP, MD_KBC, etc.). Additionally, their dissimilarity values have very large ranges.</li>
+<li>LD_ENV has the highest dissimilarity values with a low range and are significantly different to al other groupings except LD_KBC</li>
+<li>MD_ENV &amp; UD_ENV are quite similar with generally larger values than the CVP, KBC, and TSA groupings.
+<ul>
+<li>They are significantly different to the following groupings:
+<ul>
+<li>MD_ENV to: LD_ENV, MD_CVP, MD_TSA, UD_CVP, UD_KBC, &amp; UD_TSA</li>
+<li>UD_ENV to: LD_ENV, MD_TSA, UD_CVP, UD-KBC, &amp; UD_TSA</li>
+</ul></li>
+</ul></li>
+</ul>
 
 
 </section>

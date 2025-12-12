@@ -1,6 +1,6 @@
 # Upset plot
 <center>
-![](images/upset.png){style="width:150px"}
+![](images/upset.png){style="width:150px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 Now that we have our upset __tibble__ we can create out upset plot.
@@ -45,7 +45,7 @@ The total phyla count in the bar chart is equal to the total phyla count of our 
 
 #### MCQs
 <center>
-![](/images/question_bubble_orange.png){style="width:150px"}
+![](/images/question_bubble_orange.png){style="width:150px; background: white; border: white solid 5px; border-radius: 5px"}
 </center>
 
 Super! With the upset plot answer the below MCQs.
