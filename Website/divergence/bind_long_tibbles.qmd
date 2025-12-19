@@ -12,6 +12,6 @@ Additionally, we'll use the [`dplyr::glimpse()`](https://neof-workshops.github.i
 
 ```{r eval=FALSE}
 beta_long_tbl <-
-    dplyr::bind_rows(beta_lower_tbl, beta_upper_long_tbl)
+    dplyr::bind_rows(beta_lower_long_tbl, beta_upper_long_tbl)
 beta_long_tbl |> dplyr::glimpse()
 ```

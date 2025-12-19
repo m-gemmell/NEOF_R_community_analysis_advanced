@@ -49,7 +49,7 @@ We will set them to `TRUE` with `diag=TRUE`.
 upper.tri(demo_mat, diag=TRUE)
 ```
 
-We can then subset out matrix with this function to assign the upper triangle and diagonal values as `NA`.
+We can then subset our matrix with this function to assign the upper triangle and diagonal values as `NA`.
 
 ```{r eval=FALSE}
 #Convert upper triangle and diaganol to NA

@@ -66,7 +66,7 @@ colnames(metadf_R) <- paste0(colnames(metadf_R),"_R")
 beta_long_tbl <-
     dplyr::bind_cols(beta_long_tbl, metadf_R)
 #Check head of our long df
-beta_long_tbln |> head()
+beta_long_tbl |> head()
 
 #Assign to a new variable
 beta_upper_long_tbl <- beta_long_tbl

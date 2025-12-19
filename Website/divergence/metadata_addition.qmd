@@ -56,7 +56,7 @@ colnames(metadf_L) <- paste0(colnames(metadf_L),"_L")
 beta_long_tbl <-
     dplyr::bind_cols(beta_long_tbl, metadf_L)
 #Check head of our long df
-beta_long_tbln |> head()
+beta_long_tbl |> head()
 ```
 
 ## Testing code
@@ -115,7 +115,7 @@ colnames(metadf_R) <- paste0(colnames(metadf_R),"_R")
 beta_long_tbl <-
     dplyr::bind_cols(beta_long_tbl, metadf_R)
 #Check head of our long df
-beta_long_tbln |> head()
+beta_long_tbl |> head()
 ```
 
 ## Variable management
