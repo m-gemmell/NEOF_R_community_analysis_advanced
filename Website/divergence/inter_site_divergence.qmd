@@ -1,36 +1,33 @@
 # Inter-site divergence
-<center>
-![](images/rivers_inter_site.png){style="width:200px; background: white; border-radius:5px"}
-</center>
-On this page we'll examine the dissimilarity of samples between the sites, i.e. inter-site divergence.
-As a reminder, the sites are different parts of the Durance river:
 
-- Upper Durance (UD)
-- Middle Durance (MD)
-- Lower Durance (LD)
+<center>![](images/rivers_inter_site.png){style="width:200px; background: white; border-radius:5px"}</center>
+
+On this page we'll examine the dissimilarity of samples between the sites, i.e. inter-site divergence. As a reminder, the sites are different parts of the Durance river:
+
+-   Upper Durance (UD)
+-   Middle Durance (MD)
+-   Lower Durance (LD)
 
 To analyse the Inter-site divergence we will:
 
-- Subset our long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) of distances and metadata to contain both sets (lower and upper triangle) of inter-group distances.
-- Create a violin plot of the inter-site distances
-- Carry out a pairwise wilcox test to statistically compare the different inter-site divergences (UD to MD, UD to LD, and MD to LD).
+-   Subset our long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) of distances and metadata to contain both sets (lower and upper triangle) of inter-group distances.
+-   Create a violin plot of the inter-site distances
+-   Carry out a pairwise wilcox test to statistically compare the different inter-site divergences (UD to MD, UD to LD, and MD to LD).
 
 As a reminder we are using [weighted UniFrac distances](https://neof-workshops.github.io/R_community_whqkt8/iterative_rarefaction/19-Beta_distances_metrics.html#unifrac-distances).
 
 ## Inter-site tibble
-<center>
-![](images/site_inter_tibble.png){style="width:150px; background: white; border-radius:5px"}
-</center>
+
+<center>![](images/site_inter_tibble.png){style="width:150px; background: white; border-radius:5px"}</center>
 
 We need to subset our [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) to only have the inter-site distances.
 
-In this case we filter our rows with ['dplyr::filter()'](https://neof-workshops.github.io/Tidyverse/dplyr/filter.html) to retain observations where site_L and site_R are different/not identical (`site_L != site_R`).
-This removes the intra-site rows to only keep the inter-site rows.
+In this case we filter our rows with ['dplyr::filter()'](https://neof-workshops.github.io/Tidyverse/dplyr/filter.html) to retain observations where site_L and site_R are different/not identical (`site_L != site_R`). This removes the intra-site rows to only keep the inter-site rows.
 
-We'll pipe ([`|>`](https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html)) our weighted UniFrac long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) to  different ['dplyr::filter()'](https://neof-workshops.github.io/Tidyverse/dplyr/filter.html) commands.
+We'll pipe ([`|>`](https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html)) our weighted UniFrac long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html) to different ['dplyr::filter()'](https://neof-workshops.github.io/Tidyverse/dplyr/filter.html) commands.
 
-- In you own analyses and the exercise ensure you use the columns for the intra-grouping you are interested in. 
-    - E.g. you would use `media_L != media_R` when analysing inter-media divergence of this dataset.
+-   In you own analyses and the exercise ensure you use the columns for the intra-grouping you are interested in.
+    -   E.g. you would use `media_L != media_R` when analysing inter-media divergence of this dataset.
 
 ```{r eval=FALSE}
 #Subset long tibble so only rows where site_R and site_L are not identical
@@ -43,17 +40,13 @@ inter_site_wunifrac_long_tbl <-
 inter_site_wunifrac_long_tbl |> head()
 ```
 
-
-Unlike our intra-site divergence we keep both the lower and upper triangle values as the duplicate values are needed.
-These duplicate values will be split by the x-axis in our upcoming violin plots, more info further down.
+Unlike our intra-site divergence we keep both the lower and upper triangle values as the duplicate values are needed. These duplicate values will be split by the x-axis in our upcoming violin plots, more info further down.
 
 ## Violin plot
-<center>
-![](images/violin_plot_inter_site.png){style="width:150px; background: white; border-radius:5px"}
-</center>
 
-We're going to make violin plots to view the inter-group distances for each site.
-This means we'll have a violin for UD, MD, and LD in our plots.
+<center>![](images/violin_plot_inter_site.png){style="width:150px; background: white; border-radius:5px"}</center>
+
+We're going to make violin plots to view the inter-group distances for each site. This means we'll have a violin for UD, MD, and LD in our plots.
 
 ### Basic plot
 
@@ -76,13 +69,11 @@ ggsave(filename = "./wunifrac_inter_site_divergence_violinplot.png",
 IRdisplay::display_png(file = "./wunifrac_inter_site_divergence_violinplot.png")
 ```
 
-The produced plot shows the inter-site distances for each site.
-It is useful but we can't tell what specific inter-site distances each point represents.
+The produced plot shows the inter-site distances for each site. It is useful but we can't tell what specific inter-site distances each point represents.
 
 ### Points coloured by right site
 
-Let's edit our above violin plot by adding colours to the points.
-These will be coloured by the matching paired site grouping (i.e. left media on x axis and right media to colour points).
+Let's edit our above violin plot by adding colours to the points. These will be coloured by the matching paired site grouping (i.e. left media on x axis and right media to colour points).
 
 ```{r eval=FALSE}
 #Inter-site divergence violin plot points coloured by right site
@@ -103,69 +94,56 @@ ggsave(filename = "./wunifrac_inter_site_divergence_violinplot.png",
 IRdisplay::display_png(file = "./wunifrac_inter_site_divergence_violinplot.png")
 ```
 
-As you can see the points are separated in each violin by the assigned right Site information.
-In the LD violin the left green points are the LD-MD distances and the right blue points are the LD-UD distances.
-This means that we can examine:
+As you can see the points are separated in each violin by the assigned right Site information. In the LD violin the left green points are the LD-MD distances and the right blue points are the LD-UD distances. This means that we can examine:
 
-- The inter-site divergences between sites (comparing the violins)
-- The inter-site divergences within a site (compairng the points in a violin)
+-   The inter-site divergences between sites (comparing the violins)
+-   The inter-site divergences within a site (compairng the points in a violin)
 
-In the plot you will notice that the green (MD) points of the LD violin are the same as the red (LD) points in the MD violin.
-These are the same values except the left and right samples are swapped around (i.e. LD-MD, and MD-LD).
-This is why we keep the lower and upper triangle values so we can see all the values in each violin.
+In the plot you will notice that the green (MD) points of the LD violin are the same as the red (LD) points in the MD violin. These are the same values except the left and right samples are swapped around (i.e. LD-MD, and MD-LD). This is why we keep the lower and upper triangle values so we can see all the values in each violin.
 
 `r hide("Inter-media without upper triangle")`
 
-<center>
-![](images/wunifrac_inter_site_divergence_violinplot_lower_tri.png){style="width:800px; background: white; border-radius:5px"}
-</center>
+<center>![](images/wunifrac_inter_site_divergence_violinplot_lower_tri.png){style="width:800px; background: white; border-radius:5px"}</center>
+
 <br>
 
 `r unhide()`
 
 ## Stats
-<center>
-![](images/abacus_intra_site.png){style="width:150px; background: white; border-radius:5px"}
-</center>
 
-For our statistical analysis we'll carry out pairwise wilcox tests.
-We'll compare the inter-site dissimilarity distances in 2 groupings:
+<center>![](images/abacus_intra_site.png){style="width:150px; background: white; border-radius:5px"}</center>
 
-1. Between sites: Comparing the inter-site divergence between the three sites (UD, MD, and LD).
-2. Between pairs: Comparing the inter-site divergence between the pairs of sites (UD-MD, UD-LD, and MD-LD).
+For our statistical analysis we'll carry out pairwise wilcox tests. We'll compare the inter-site dissimilarity distances in 2 groupings:
+
+1.  Between sites: Comparing the inter-site divergence between the three sites (UD, MD, and LD).
+2.  Between pairs: Comparing the inter-site divergence between the pairs of sites (UD-MD, UD-LD, and MD-LD).
 
 ### Sites
 
-We will compare the inter-site divergences per group using the `site_L` column with a wilcox test  (using `site_R` would produce the same results).
-In relation to our violin plot, this will determine if there are significant differences between the profiles of the three violins.
+We will compare the inter-site divergences per group using the `site_L` column with a wilcox test (using `site_R` would produce the same results). In relation to our violin plot, this will determine if there are significant differences between the profiles of the three violins.
 
 ```{r eval=FALSE}
 pairwise.wilcox.test(inter_site_wunifrac_long_tbl$value,
                         inter_site_wunifrac_long_tbl$site_L)
 ```
 
-None of our p-values are significant, i.e. there is no statistical difference between the inter-site divergences.
-This coincides with our violin plot where does is a lot of overlap between the violins.
+None of our p-values are significant, i.e. there is no statistical difference between the inter-site divergences. This coincides with our violin plot where there is a lot of overlap between the violins.
 
 ### Pairs
 
-We can also compare all the site pairwise divergences.
-To carry this out we'll create a column called `site_L_R` which contains the site pairing (e.g. LD_MD).
-We'll use this column as our grouping for the wilcox test.
+We can also compare all the site pairwise divergences. To carry this out we'll create a column called `site_L_R` which contains the site pairing (e.g. LD_MD). We'll use this column as our grouping for the wilcox test.
 
-The main concern for our dat is that we want unique distance values within each site pair grouping.
-To create the paired site column, `site_L_R`, we'e use a tidyverse based pipeline.
-The steps are below:
+The main concern for our data is that we want unique distance values within each site pair grouping. To create the paired site column, `site_L_R`, we'e use a tidyverse based pipeline. The steps are below:
 
-- Filter to remove the upper triangle rows with [`dplyr::filter()`](https://neof-workshops.github.io/Tidyverse/dplyr/filter.html)
-        - This is to remove duplicated values which we do not want for these statistics.
-- Convert the `site_L` amd `site_R` columns to characters with [`dplyr::mutate()`](https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html) and [`dplyr::across()`](https://dplyr.tidyverse.org//reference/across.html).
-        - These columns are originally factors which can't be ordered alphabetically unlike characters. 
-        - This is required for the next step.
-- Create a new column with left and right sample info, `site_L_R`, with [`dplyr::mutate()`](https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html).
-        - We ensure the first site (alphabetically) is the prefix by specifying both columns within the `pmin()` function.
-        - The suffix is set as the last (alphabetically), i.e. second of the two, site with `pmax()`.
-        - This ensures all the pairings are in the same orientation (i.e. we won't have some values under LD-MD and some under MD-LD).
+-   Filter to remove the upper triangle rows with [`dplyr::filter()`](https://neof-workshops.github.io/Tidyverse/dplyr/filter.html) 
+    - This is to remove duplicated values which we do not want for these statistics.
+-   Convert the `site_L` amd `site_R` columns to characters with [`dplyr::mutate()`](https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html) and [`dplyr::across()`](https://dplyr.tidyverse.org//reference/across.html).
+    -   These columns are originally factors which can't be ordered alphabetically unlike characters.
+    -   This is required for the next step.
+-   Create a new column with left and right sample info, `site_L_R`, with [`dplyr::mutate()`](https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html).
+    -   We ensure the first site (alphabetically) is the prefix by specifying both columns within the `pmin()` function.
+    -   The suffix is set as the last (alphabetically), i.e. second of the two, site with `pmax()`.
+    -   This ensures all the pairings are in the same orientation (i.e. we won't have some values under LD-MD and some under MD-LD).
 
 ```{r eval=FALSE}
 #Create new tibble for site pair statistics
@@ -187,18 +165,13 @@ pairwise.wilcox.test(inter_site_pairs_wunifrac_long_tbl$value,
                         inter_site_pairs_wunifrac_long_tbl$site_L_R)
 ```
 
-This allows us to see if there are any differences between the distances between pairings.
-None, of the p-values are significant though the p-value between LD_MD and LD_UD is the highest.
-This lines up with the violin plot where the profiles of the two sets of points for the LD violin (LD_MD and LD_UD) are incredibly similar
+This allows us to see if there are any differences between the distances between pairings. None, of the p-values are significant though the p-value between LD_MD and LD_UD is the highest. This lines up with the violin plot where the profiles of the two sets of points for the LD violin (LD_MD and LD_UD) are incredibly similar
 
 ## Interpretation
-<center>
-![](images/interpret_2.png){style="width:150px; background: white; border-radius:5px"}
-</center>
 
-This analysis shows little to no difference between the inter-site divergences.
-This could indicate the three sites are equally dissimilar to each other.
-In other words the community difference between LD and MD is the same as between MD and UD which is again the same as the difference between LD and UD. 
+<center>![](images/interpret_2.png){style="width:150px; background: white; border-radius:5px"}</center>
+
+This analysis shows little to no difference between the inter-site divergences. This could indicate the three sites are equally dissimilar to each other. In other words the community difference between LD and MD is the same as between MD and UD which is again the same as the difference between LD and UD.
 
 Saying that, there is slight evidence (nothing statistically significant) that the MD and UD groups are a bit more similar to each other than they are to the LD.
 

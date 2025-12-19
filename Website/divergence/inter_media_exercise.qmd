@@ -102,11 +102,11 @@ inter_media_pairs_wunifrac_long_tbl <-
                 #Ensure the first alphabetical media (pmin) is the prefix
                 #and the second/last alphabetical media (pmax) is the suffix
                 dplyr::mutate(media_L_R = 
-                        paste0(pmin(media_L,site_R),"_",pmax(media_L,site_R)))
+                        paste0(pmin(media_L,media_R),"_",pmax(media_L,media_R)))
 
 #Wilcox
 pairwise.wilcox.test(inter_media_pairs_wunifrac_long_tbl$value,
-                        inter_media_pairs_wunifrac_long_tbl$site_L_R)
+                        inter_media_pairs_wunifrac_long_tbl$media_L_R)
 ```
 `r unhide()`
 

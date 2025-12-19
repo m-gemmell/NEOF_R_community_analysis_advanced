@@ -31,11 +31,11 @@ First we create a new tibble formatted for our analysis.
 intra_media_intra_site_wunifrac_long_tbl <-
     beta_long_tbl |>
     #Filter to only keep intra-site values
-    dplyr::filter(site_L == site_R)
+    dplyr::filter(site_L == site_R) |>
     #Filter to only keep intra-media values
     dplyr::filter(media_L == media_R) |>
     #Filter to remove upper triangle values (i.e. duplicates)
-    dplyr::filter(triangle == "lower") |>
+    dplyr::filter(triangle == "lower")
 intra_media_intra_site_wunifrac_long_tbl |> head()
 ```
 
@@ -97,18 +97,18 @@ The code sections below carries out the inter-media divergences split by site.
 ### Tibble creation
 
 Create our formatted tibble. 
-This involves first filtering otu all inter-site values to retain the intra-site values.
+This involves first filtering out all inter-site values to retain the intra-site values.
 Next, we retain only inter-media values.
 Note in this case we do not remove the upper triangle values.
 
 ```{r eval=FALSE}
 #Tibble creation
 inter_media_intra_site_wunifrac_long_tbl <-
-    intra_site_wunifrac_long_tbl |>
+    beta_long_tbl |>
     #Filter to only keep intra-site values
     dplyr::filter(site_L == site_R) |>
     #Filter to only keep inter-media values
-    dplyr::filter(media_L != media_R) |>
+    dplyr::filter(media_L != media_R)
 inter_media_intra_site_wunifrac_long_tbl |> head()
 ```
 
@@ -130,7 +130,7 @@ inter_media_by_site_violin_plot <-
                 colour = "Site")
 #Save ggplot2 object with ggsave
 ggsave(filename = "./wunifrac_inter_media_divergence_split_by_site_violinplot.png",
-        plot = intra_site_wunifrac_long_tbl,
+        plot = inter_media_by_site_violin_plot,
         device = png, dpi = 300, units = "mm", height = 100, width = 170)
 #Display plot
 IRdisplay::display_png(file = "./wunifrac_inter_media_divergence_split_by_site_violinplot.png")

@@ -65,7 +65,7 @@ intra_media_violin_plot <-
                     title="Intra-media divergence with Weighted UniFrac dissimilarity")
 #Save ggplot2 object with ggsave
 ggsave(filename = "./wunifrac_intra_media_divergence_violinplot.png",
-        plot = intra_media_wunifrac_long_tbl,
+        plot = intra_media_violin_plot,
         device = "png", dpi = 300, units = "mm", height = 100, width = 150)
 #Display plot
 IRdisplay::display_png(file = "./wunifrac_intra_media_divergence_violinplot.png")
