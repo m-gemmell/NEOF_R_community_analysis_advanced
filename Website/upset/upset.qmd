@@ -160,7 +160,7 @@ The first three bars/columns of the above plot shows:
 
 - S3 has 5 unique phyla.
 - There are 4 phyla found in all the samples.
-- S1 & S4 share four phyla not present in S2 or S3.
+- S1 & S4 share three phyla not present in S2 or S3.
 
 On important note is that intersections with values of 0 are not displayed in upset plots.
 

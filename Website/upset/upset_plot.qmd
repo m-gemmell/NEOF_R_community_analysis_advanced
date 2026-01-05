@@ -20,7 +20,7 @@ Create the upset plot with the below code.
 ```{r, eval=FALSE}
 #Upset plot with bar chart
 samples_phyla_upset_plot <- phyla_upset_tibble |>
-    ggplot2::ggplot(aes(x = Sample)) +
+    ggplot2::ggplot(aes(x = Samples)) +
         #Add bar chart
         ggplot2::geom_bar() +
         #Add upset display scale as x axis below bar chart

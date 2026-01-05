@@ -30,7 +30,7 @@ phyla_upset_tibble <- phyla_tibble_long |>
     #Remove Abundance column
     dplyr::select(-Abundance)
 #Glimpse tibble
-phyla_upset_tibble |> dplyre::glimpse()
+phyla_upset_tibble |> dplyr::glimpse()
 ```
 
 You will notice we have 201 rows, and 2 columns called Phylum and Sample.
@@ -57,7 +57,7 @@ phyla_upset_tibble <- phyla_tibble_long |>
     #Group tibble by the Phylum column important for next step
     dplyr::group_by(Phylum)    
 #Glimpse tibble
-phyla_upset_tibble |> dplyre::glimpse()
+phyla_upset_tibble |> dplyr::glimpse()
 ```
 
 The `glimpse ()` function shows the same information but also includes a line about the grouping info: `Groups: Phylum [27]`.
@@ -83,7 +83,7 @@ phyla_upset_tibble <- phyla_tibble_long |>
     #Summarize Sample column so it becomes column of list variables
     dplyr::summarize(Samples = list(Sample))  
 #Glimpse tibble
-phyla_upset_tibble |> dplyre::glimpse()
+phyla_upset_tibble |> dplyr::glimpse()
 ```
 
 Unfortunately, Jupyter notebook does not like displaying tibbles that have lists as columns.

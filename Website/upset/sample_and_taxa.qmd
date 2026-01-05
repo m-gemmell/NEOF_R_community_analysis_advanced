@@ -18,7 +18,7 @@ Transposing is vital for the next step as it means that:
 Carry out aggregation and transposing.
 
 ```{r, eval=FALSE}
-#Abundance tibble of samples (rows) against egenra (columns)
+#Abundance tibble of samples (rows) against genera (columns)
 genus_tibble  <- pseq |>
 	#Aggregate to genus
 	microbiome::aggregate_taxa("Genus", verbose = FALSE) |>
@@ -34,15 +34,23 @@ head(genus_tibble)
 
 ## Tibbles and transposing
 
-You may notice that we do not use the function `microbiome::tax_tibble()` in the above code.
-This is because transposing a __tibble__ will create a matrix in a format we do not want.
+You may notice that we do not use the function `microbiome::otu_tibble()` in the above code.
+This is because transposing a __tibble__ will convert our tibble into a transposed matrix rather than a transposed tibble.
+This matrix has our column names in the first row which we do not want.
+Therefore, it is easier to go from phyloseq -> otu_table -> data.frame -> transposed -> tibble.
+Annoyingly complex but 
+
 If you want to see this in action you can type and run the below demonstrative code.
 
 ```{r, eval=FALSE}
-#Demonstration on why we don't use microbiome::otu_tibble
-#Can't easily use microbiome::otu_tibble with transpose
-#t() converts the tibble to a matrix
-microbiome::otu_tibble(genus_pseq, column.id = "Sample") |>
-    t() |>
-    head()
+#Demonstration on why we don't use microibome::otu_tibble()
+pseq |>
+	#Aggregate to genus
+	microbiome::aggregate_taxa("Genus", verbose = FALSE) |>
+	#Extract otu_table as a tibble
+	microbiome::otu_tibble() |>
+	#Transpose
+	t() |>
+	#View top 6 rows
+	head()
 ```

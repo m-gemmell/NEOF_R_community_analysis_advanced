@@ -82,7 +82,7 @@ genus_rare_removed_samples_upset_plot <- genus_rareaggregate_pseq |>
     #Extract otu_table as a tibble
     microbiome::otu_tibble(column.id = "Genus") |>
     #Longify tibble
-    tidyr::pivot_longer(!Phylum, names_to="Sample", values_to="Abundance") |>
+    tidyr::pivot_longer(!Genus, names_to="Sample", values_to="Abundance") |>
     #Filter out rows were relative abundance is 0
     #i.e. retain rows showing presence
     dplyr::filter(Abundance > 0) |>
