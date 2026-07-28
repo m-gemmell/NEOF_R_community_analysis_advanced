@@ -355,5 +355,47 @@
   },
   "divergence/divergences_split_by_a_group.qmd": {
     "divergences_split_by_a_group.html": "efd1716f"
+  },
+  "rarefaction/rarefaction.qmd": {
+    "rarefaction.html": "5364395e"
+  },
+  "rarefaction/background.qmd": {
+    "background.html": "1e8843c2"
+  },
+  "rarefaction/setup.qmd": {
+    "setup.html": "14fc032b"
+  },
+  "rarefaction/data_and_setup.qmd": {
+    "data_and_setup.html": "21528309"
+  },
+  "rarefaction/random_seeds.qmd": {
+    "random_seeds.html": "933a4008"
+  },
+  "rarefaction/r_and_random_seeds.qmd": {
+    "r_and_random_seeds.html": "2be6f348"
+  },
+  "rarefaction/random_seed_practice.qmd": {
+    "random_seed_practice.html": "f0098e8b"
+  },
+  "rarefaction/iterating_rarefaction.qmd": {
+    "iterating_rarefaction.html": "aa8331b6"
+  },
+  "rarefaction/phyla_relative_abundance.qmd": {
+    "phyla_relative_abundance.html": "ddfe6fde"
+  },
+  "rarefaction/one_round.qmd": {
+    "one_round.html": "315a13a8"
+  },
+  "rarefaction/multiple_rounds.qmd": {
+    "multiple_rounds.html": "6fbe4fa3"
+  },
+  "rarefaction/one_iteration.qmd": {
+    "one_iteration.html": "8cd6e52e"
+  },
+  "rarefaction/multiple_iterations.qmd": {
+    "multiple_iterations.html": "180e8b7b"
+  },
+  "rarefaction/iteration_practice.qmd": {
+    "iteration_practice.html": "d3636849"
   }
 }

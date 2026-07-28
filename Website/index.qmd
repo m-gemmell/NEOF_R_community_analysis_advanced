@@ -1,5 +1,5 @@
 ---
-title: "NEOF Advanced R community analysis"
+title: "Introduction"
 ---
 
 This is the Website for the NEOF Advance R community analysis workshop.

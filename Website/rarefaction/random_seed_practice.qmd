@@ -1,0 +1,106 @@
+# Random seed practice
+![](images/seed_sowing.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
+
+
+Brilliant! To reinforce your gained knowledge try out the following challenges.
+
+First create the following vector:
+
+```{R, eval=FALSE}
+second_millennium <- 1001:2000
+```
+
+__Note:__ Remember it is best practice to `set.seed(NULL)` at the end of a code cell.
+
+## RSQ1
+![](images/printing_press.png){style="width:150px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
+
+Sample the object `second_millennium` with the following parameters:
+
+- Extract 10 values
+- Without replacement
+- Use the __random seed__ `489`
+
+```{r, echo = FALSE}
+opts_p <- c("__1120__", answer="__1369__", "__1744__")
+```
+What is the fourth number in the produced vector? `r longmcq(opts_p)`
+
+::: {.callout-note collapse="true" title="RSQ1 code solution"}
+```{R, eval=FALSE}
+#RSQ1
+#Set random seed
+set.seed(489)
+#Randomly sample
+first_answer <- sample(x = second_millennium, size = 10)[4]
+first_answer
+#Reset random seed
+set.seed(NULL)
+```
+:::
+
+## RSQ2
+![](images/vaccination_bottle.png){style="width:150px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
+
+Sample the object `second_millennium` with the following parameters:
+
+- Extract 24 values
+- Without replacement
+- Use the answer to the first question as the __random seed__
+
+```{r, echo = FALSE}
+opts_p <- c("__1120__", "__1369__", answer="__1744__")
+```
+What is the 16th number in the produced vector? `r longmcq(opts_p)`
+
+::: {.callout-note collapse="true" title="RSQ2 code solution"}
+```{R, eval=FALSE}
+#RSQ2
+#Set random seed
+set.seed(first_answer)
+#Randomly sample
+second_answer <- sample(x = second_millennium, size = 24)[16]
+second_answer
+#Reset random seed
+set.seed(NULL)
+```
+:::
+
+## RSQ3
+![](images/automobile.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
+
+Sample the object `second_millennium` with the following parameters:
+
+- Extract a number of values equal to the answer of the second question
+- With replacement
+- Use the answer to the first question as the __random seed__
+
+```{r, echo = FALSE}
+opts_p <- c(answer="__1120__", "__1369__", "__1744__")
+```
+What is the 999th number in the produced vector? `r longmcq(opts_p)`
+
+::: {.callout-note collapse="true" title="RSQ3 code solution"}
+```{R, eval=FALSE}
+#RSQ3
+#Set random seed
+set.seed(first_answer)
+#Randomly sample
+sample(x = second_millennium, size = second_answer, replace = TRUE)[999]
+#Reset random seed
+set.seed(NULL)
+```
+:::
+
+## Random seed recap
+![](images/recap.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
+
+Once you are happy you can save then close and halt your "Random_seeds.ipynb" notebook.
+
+Through this section you have learnt:
+
+- The use of random seeds for random processes such as sampling
+- The difference between sampling with and without replacement
+- How to set __random seeds__ in `R` for reproducible randomness
+
+With this you can continue onto __iterative rarefaction__.

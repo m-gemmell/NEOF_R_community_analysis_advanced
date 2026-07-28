@@ -1,0 +1,39 @@
+# Rarefaction
+
+Rarefaction is used for two different but related processes.
+These were covered in the R community analysis course:
+
+- [Depth evaluations via rarefactions curves and slopes](https://neof-workshops.github.io/R_community_whqkt8/Course/14-Rarefaction.html#rarefaction-curve)
+- [Normalisation to control for sample depth variation](https://neof-workshops.github.io/R_community_whqkt8/Course/14-Rarefaction.html#rarefy-data)
+
+## Iterations
+
+![](images/iterative_rarefaction.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
+
+In this part we will primarily focus on carrying out iterative rarefaction normalisation.
+This is the process:
+
+1. Carrying out out multiple rarefaction normalisations
+2. Producing the desired diversity (alpha and/or beta) analyses on all the normalised count tables
+3. Producing an average result
+
+Theory, practice and code are in the following parts:
+
+
+
+
+
+INfo for matthew to incroporate
+
+
+Unfortunately many of the R packages for community analysis do not contain inbuilt rarefaction methods with their diversity functions.
+This makes carrying out iterative rarefaction based diveristy analysis more complicated than it ought to be.
+This explains the size and breadth of this book.
+
+In this book you will learn how to:
+
+- Use __random seeds__ for sampling
+- Carry out __iterative rarefaction__ with sets of __random seeds__
+- Use __iterative rarefaction__ to carry out alpha diversity analysis
+- Use __iterative rarefaction__ to carry out beta diversity analysis
+

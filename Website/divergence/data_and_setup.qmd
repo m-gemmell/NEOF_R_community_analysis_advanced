@@ -1,29 +1,29 @@
 # Data & Setup
 <center>
-![](images/setup_8.png){style="width:200px; background: white; border-radius:5px; border: white solid 5px"}
+![](/images/setup_5.png){style="width:200px; background: white; border-radius:5px; border: white solid 5px"}
 </center>
 
 
 Before you carry out any practice you will need to setup your environment  with the instructions in this page. The steps are:
 
-- Ensuring you have setup your directory, environment, and jupyter-notebook as shown in the overall [setup](/setup/setup.qmd).
-- Creating a jupyter-notebook in a new work directory.
-- Loading in the required libraries.
-- Loading in the data.
+- Ensuring you have setup your directory, environment, and jupyter-notebook as shown in the overall [setup](/setup/setup.qmd)
+- Creating a jupyter-notebook in a new work directory
+- Loading in the required libraries
+- Loading in the data
 
 ## Jupyter notebook
 <center>
 ![](/images/jupyter_logo.png){style="width:200px; background: white; border-radius:5px; border: white solid 5px"}
 </center>
 
-In the jupyter-notebook file explorer create and move into a new directory called `divergence`, ensure this is a subdiretcory of the main workshop directory (`adv_R_comm`).
+In the jupyter-notebook file explorer create and move into a new directory called `divergence`, ensure this is a subdirectory of the main workshop directory (`adv_R_comm`).
 We'll keep each section in its own subdirectory so it is easier to keep the output files separate and tidy.
 
 Create a new R based jupyter-notebook called "divergence.ipynb".
 At the top of the jupyter-notebook add the following headers:
 
-- A first level header of "Divergence".
-- A second level header of "Libraries & data".
+- A first level header of "Divergence"
+- A second level header of "Libraries & data"
 
 ## Libraries
 <center>

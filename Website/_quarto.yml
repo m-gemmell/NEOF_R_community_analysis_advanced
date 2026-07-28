@@ -1,6 +1,8 @@
 project:
   type: website
-editor: source
+editor:
+  render-on-save: true
+knitr: true
 website:
   bread-crumbs: false
   favicon: /images/NEOF_favicon.png
@@ -9,12 +11,15 @@ website:
   description: NEOF advanced R community analysis workshop site
   navbar:
     title: Adv. R comm
+    logo: "images/NEOF_logo_no_background.png"
     collapse-below: lg
     left:
     - text: Overview
       href: index.qmd
     - text: Setup
       href: setup/setup.qmd
+    - text: Rarefaction
+      href: rarefaction/rarefaction.qmd
     - text: Divergence
       href: divergence/divergence.qmd
     - text: Upset
@@ -48,6 +53,29 @@ website:
     align: left
     contents:
     - href: setup/setup.qmd
+  - id: Rarefaction
+    title: Rarefaction
+    style: floating
+    collapse-level: 2
+    align: left
+    contents:
+    - href: rarefaction/rarefaction.qmd
+    - href: rarefaction/background.qmd
+    - section: "Setup"
+      contents:
+      - href: rarefaction/data_and_setup.qmd
+    - section: "Random seeds"
+      contents:
+      - href: rarefaction/random_seeds.qmd
+      - href: rarefaction/r_and_random_seeds.qmd
+      - href: rarefaction/random_seed_practice.qmd
+    - section: "Iterating rarefaction"
+      contents:
+      - href: rarefaction/iterating_rarefaction.qmd
+      - href: rarefaction/phyla_relative_abundance.qmd
+      - href: rarefaction/one_iteration.qmd
+      - href: rarefaction/multiple_iterations.qmd
+      - href: rarefaction\iteration_practice.qmd
   - id: Divergence
     title: Divergence
     style: floating
@@ -112,24 +140,44 @@ website:
       - href: upset/metadata_upset_plot.qmd
       - href: upset/media_genus_upset.qmd
       - href: upset/challenge_2.qmd
+
+#Format
 format:
   html:
     fig-width: 10.2
     fig-height: 6
+###Include table of contents
+### "On this page" right of page
+    toc: true
+
+###Page size
     grid:
+####Width of sidebar
       sidebar-width: 200px
-      body-width: 1000px
-      margin-width: 200px
-      gutter-width: 0.75em
+####Max width of main page
+      body-width: 1200px
+####Width of empty margin at right of toc
+#### needed to give room for long headers
+      margin-width: 150px
+####Space separating body from sidebar and toc  
+      gutter-width: 10px
+###Code highlighting style
+### a11y is accessible and auto switches between dark and light mode
+    highlight-style: a11y
+
+###Themes
+###HTML themes: https://quarto.org/docs/output-formats/html-themes.html
+    theme:
+####Dark theme with scss file
+      dark: [darkly, styles_dark.scss]
+####Light theme with scss
+      light: [styles_light.scss]
+####Any text not determined in scss files will be mainfont
+    mainfont: Lexend
+
+####Code will overflow in code blocks
+####set to scroll for scroll (i.e. horizontal scroll at bottom of block)
+    code-overflow: wrap
+###Paths for webexercises files
     css: include/webex.css
     include-after-body: include/webex.js
-    theme:
-      light:
-      - cosmo
-      - styles.scss
-      dark:
-      - darkly
-      - styles_dark.scss
-    embed-resources: false
-    toc: true
-    mainfont: Lexend
