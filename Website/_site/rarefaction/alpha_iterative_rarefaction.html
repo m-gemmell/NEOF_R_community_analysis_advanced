@@ -409,8 +409,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/random_seed_practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Random seed practice</span></a>
+  <a href="../rarefaction/random_seed_tasks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Random seed tasks</span></a>
   </div>
 </li>
       </ul>
@@ -450,8 +450,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/iteration_practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Iteration practice</span></a>
+  <a href="../rarefaction/iteration_task.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Iteration task</span></a>
   </div>
 </li>
       </ul>
@@ -497,8 +497,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/alpha_practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">α practice</span></a>
+  <a href="../rarefaction/alpha_task.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">α task</span></a>
   </div>
 </li>
       </ul>
@@ -556,8 +556,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">β practice</span></a>
+  <a href="../rarefaction/beta_task.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">β task</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Templates</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../rarefaction/iterative_rarefaction_diversity_loop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Alpha and Beta loop</span></a>
   </div>
 </li>
       </ul>
@@ -591,11 +608,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>Now we will create averaged <strong>alpha diversity</strong> values through <strong>iterative rarefaction</strong>. We will carry this out by:</p>
-<ul>
+<ol type="1">
 <li>Calculating initial <strong>alpha diversity</strong> values from the first <strong>iteration</strong></li>
 <li>Looping through the subsequent <strong>rarefaction iterations</strong> and adding/summing calculated <strong>alpha diversity</strong> values to the initial <strong>alpha diversity</strong> values</li>
-<li>Dividing each value of the final summed <strong>alpha diversity</strong> by the number of <strong>rarefaction iterations</strong>. This gives us the averaged alpha diversity values.</li>
-</ul>
+<li>Dividing each value of the final summed <strong>alpha diversity</strong> by the number of <strong>rarefaction iterations</strong>
+<ul>
+<li>This gives us the averaged alpha diversity values</li>
+</ul></li>
+</ol>
 <p>For this we will use the function <code>microbiome::alpha()</code> to calculate our alpha diversity values.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Loop to create iteration based rarefied alpha diversity values</span></span>

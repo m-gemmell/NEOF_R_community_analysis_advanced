@@ -111,35 +111,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../include/webex.css">
 </head>
@@ -438,8 +409,8 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/random_seed_practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Random seed practice</span></a>
+  <a href="../rarefaction/random_seed_tasks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Random seed tasks</span></a>
   </div>
 </li>
       </ul>
@@ -479,8 +450,8 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/iteration_practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Iteration practice</span></a>
+  <a href="../rarefaction/iteration_task.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Iteration task</span></a>
   </div>
 </li>
       </ul>
@@ -526,8 +497,8 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/alpha_practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">α practice</span></a>
+  <a href="../rarefaction/alpha_task.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">α task</span></a>
   </div>
 </li>
       </ul>
@@ -585,8 +556,25 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">β practice</span></a>
+  <a href="../rarefaction/beta_task.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">β task</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Templates</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../rarefaction/iterative_rarefaction_diversity_loop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Alpha and Beta loop</span></a>
   </div>
 </li>
       </ul>
@@ -605,8 +593,8 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#rename-metrics" id="toc-rename-metrics" class="nav-link" data-scroll-target="#rename-metrics">Rename metrics</a></li>
   <li><a href="#metric-and-metadata-data-frame" id="toc-metric-and-metadata-data-frame" class="nav-link" data-scroll-target="#metric-and-metadata-data-frame">Metric and metadata data frame</a></li>
-  <li><a href="#alpha_long_df" id="toc-alpha_long_df" class="nav-link" data-scroll-target="#alpha_long_df">Long data frame</a></li>
-  <li><a href="#alpha-subset-metrics" id="toc-alpha-subset-metrics" class="nav-link" data-scroll-target="#alpha-subset-metrics"><span class="math inline">\(\alpha\)</span>: Subset metrics</a></li>
+  <li><a href="#long-data-frame" id="toc-long-data-frame" class="nav-link" data-scroll-target="#long-data-frame">Long data frame</a></li>
+  <li><a href="#subset-metrics" id="toc-subset-metrics" class="nav-link" data-scroll-target="#subset-metrics">Subset metrics</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -626,11 +614,11 @@ window.Quarto = {
 </figure>
 </div>
 <p>In this section we will tidy up our data frame to make it ready for plotting by:</p>
-<ul>
-<li>Combining our <strong>alpha diversity</strong> values and metadata</li>
-<li>Converting our wide data frame to a long data frame</li>
+<ol type="1">
+<li><strong>Renaming</strong> our metric of interest</li>
+<li>Combining our <strong>alpha diversity</strong> values and metadata 3 Converting our wide data frame to a long data frame</li>
 <li>Subsetting our data frame so it only contains the <strong>alpha diversity</strong> metrics we want to plot</li>
-</ul>
+</ol>
 <section id="rename-metrics" class="level2">
 <h2 class="anchored" data-anchor-id="rename-metrics">Rename metrics</h2>
 <div class="quarto-figure quarto-figure-center">
@@ -638,16 +626,26 @@ window.Quarto = {
 <p><img src="images/dplyr_rename.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px"></p>
 </figure>
 </div>
-<p>As seen at the end of the last chapter, many of the columns names are quite long such as “<strong>diversity_shannon</strong>”. This is not great for plotting so we will rename the column to “<strong>shannon</strong>” with <a href="https://neof-workshops.github.io/Tidyverse/dplyr/rename.html">the <code>dplyr::rename()</code> function</a>.</p>
+<p>As seen at the end of the last page, many of the columns names are quite long such as “<strong>diversity_shannon</strong>”. This is not great for plotting so we will rename the column to “<strong>shannon</strong>” with <a href="https://neof-workshops.github.io/Tidyverse/dplyr/rename.html">the <code>dplyr::rename()</code> function</a>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Rename</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Rename shannon_diversity column</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#dplyr::rename(df, new_name=old_name)</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>alpha_df_mean <span class="ot">&lt;-</span> </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(alpha_df_mean,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">shannon=</span>diversity_shannon)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>alpha_df_mean <span class="ot">&lt;-</span> alpha_df_mean <span class="sc">|&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">shannon=</span>diversity_shannon)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Keep this part in mind when you reach the practice task on <a href="#alpha-task">Chapter_17</a>.</p>
+</div>
+</div>
 </section>
 <section id="metric-and-metadata-data-frame" class="level2">
 <h2 class="anchored" data-anchor-id="metric-and-metadata-data-frame">Metric and metadata data frame</h2>
@@ -657,7 +655,7 @@ window.Quarto = {
 </figure>
 </div>
 <p>Now that we have our <strong>alpha diversity</strong> values we can create a data frame that contains these values and the metadata.</p>
-<p>In the below code we extract the metadata from the rarefied phyloseq object created in the last rarefaction iteration loop. This ensures we only acquire metadata from samples that are retained after <strong>rarefaction</strong>. The samples that are retained are always the same across our <strong>rarefaction iterations</strong>. This is because samples are retained based on the <strong>rarefaction size/depth</strong> which is kept consistent across our <strong>rarefactions iterations</strong>.</p>
+<p>In the below code we extract the metadata from the rarefied phyloseq object created by the last rarefaction iteration loop. This ensures we only acquire metadata from samples that are retained after <strong>rarefaction</strong>. The samples that are retained are always the same across our <strong>rarefaction iterations</strong>. This is because samples are retained based on the <strong>rarefaction size/depth</strong> which is kept consistent across our <strong>rarefactions iterations</strong>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Combine metadata and alpha diversity mean values into one data frame</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract metadata from rarefied phyloseq object</span></span>
@@ -675,8 +673,8 @@ window.Quarto = {
 </div>
 <p>From the output of <code>head()</code> you should see a table with the first set of columns being the metadata columns. The next set of columns are the alpha diversity metrics.</p>
 </section>
-<section id="alpha_long_df" class="level2">
-<h2 class="anchored" data-anchor-id="alpha_long_df">Long data frame</h2>
+<section id="long-data-frame" class="level2">
+<h2 class="anchored" data-anchor-id="long-data-frame">Long data frame</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/long_data_frame.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100px; border-radius:5px; background:white; border: white solid 5px"></p>
@@ -693,28 +691,47 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create long version for plotting</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#alpha_df_mean (no metadata) column names to be used for long conversion</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>alpha_div_colnames <span class="ot">&lt;-</span> <span class="fu">colnames</span>(alpha_df_mean)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Wide to long</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>meta_alpha_mean_long_df <span class="ot">&lt;-</span> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">data =</span> meta_alpha_mean_df,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                      <span class="co">#Change the alpha diversity names to long format</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                      <span class="co">#I.e. keep our metadata columns as separate columns</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                      <span class="co">#all_of() used to silence warning message</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">cols =</span> <span class="fu">all_of</span>(alpha_div_colnames),</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                      <span class="co">#Set metric names to column called metric</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                      <span class="co">#Set values to column called value</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">names_to =</span> <span class="st">"metric"</span>, <span class="at">values_to =</span> <span class="st">"value"</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#Change our metric column to a factor</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Useful for plotting</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>meta_alpha_mean_long_df<span class="sc">$</span>metric <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(meta_alpha_mean_long_df<span class="sc">$</span>metric)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#Check head and dimensions of long data frame</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(meta_alpha_mean_long_df)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(meta_alpha_mean_long_df)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#wide df to long tibble</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>meta_alpha_mean_tbl <span class="ot">&lt;-</span> meta_alpha_mean_df <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Change the alpha diversity names to long format</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="co">#I.e keep our metadata columns as separate columns</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">#all_of() used to silence wanring message</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">cols =</span> <span class="fu">all_of</span>(alpha_div_colnames),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Set metric names to column called metric</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to =</span> <span class="st">"metric"</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Set values to column called value</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to =</span> <span class="st">"value"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Change metric column to a factor</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Useful for plotting</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">metric=</span><span class="fu">as.factor</span>(metric))</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Glimpse produced tibble</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>meta_alpha_mean_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">glimpse</span>()</span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove unneeded objects</span></span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(alpha_df_mean, metadf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Cookbook links to Pipes, Tibbles, and the Tidyverse functions used above">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Cookbook links to Pipes, Tibbles, and the Tidyverse functions used above
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html">Pipes (<code>|&gt;</code>)</a></li>
+<li><a href="https://neof-workshops.github.io/Tidyverse/tibble/tibble.html">Tibbles</a></li>
+<li><a href="https://neof-workshops.github.io/Tidyverse/tidyr/pivot_longer.html"><code>tidyr::pivot_longer()</code></a></li>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html"><code>dplyr::mutate()</code></a></li>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/glimpse.html"><code>dplyr::glimpse()</code></a></li>
+</ul>
+</div>
+</div>
 </section>
-<section id="alpha-subset-metrics" class="level2">
-<h2 class="anchored" data-anchor-id="alpha-subset-metrics"><span class="math inline">\(\alpha\)</span>: Subset metrics</h2>
+<section id="subset-metrics" class="level2">
+<h2 class="anchored" data-anchor-id="subset-metrics">Subset metrics</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/observe.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:5px; background:white; border: white solid 5px"></p>
@@ -727,7 +744,7 @@ window.Quarto = {
 </div>
 <p>For this tutorial we are only interested in the following:</p>
 <ul>
-<li><strong>observed:</strong> The number of observed features (ASVs, Phlya, Species, etc.)</li>
+<li><strong>observed:</strong> The number of observed features (ASVs, Phyla, Species, etc.)</li>
 <li><strong>shannon:</strong> The Shannon diversity metric
 <ul>
 <li>An estimate of feature diversity based on richness (presence/absence) and abundance</li>
@@ -737,14 +754,31 @@ window.Quarto = {
 </ul>
 <p>We’ll subset our long data frame to only retain rows with these metrics. We’ll also use the utility of factors to order the metrics so they will be plotted in our preferred order.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Process our long data frame</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Subset our long alpha diversity data frame to only contain our metrics of choice</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Subset tibble to only keep observed ASVs and shannon rows</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Vector of metrics/columns to keep</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"observed"</span>,<span class="st">"shannon"</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>basic_alpha_metrics_long_df <span class="ot">&lt;-</span> meta_alpha_mean_long_df[</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  meta_alpha_mean_long_df<span class="sc">$</span>metric <span class="sc">%in%</span> metrics,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Check head of subsetted long data frame</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(basic_alpha_metrics_long_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter our long alpha diversity tibble to only contain</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># rows where the metric column value is "observed" or "shannon"</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>basic_alpha_metrics_long_df <span class="ot">&lt;-</span> meta_alpha_mean_tbl <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(metric <span class="sc">%in%</span> metrics)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#Glimpse long tibble</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>basic_alpha_metrics_long_df <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Cookbook links for Tidyverse functions used above">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Cookbook links for Tidyverse functions used above
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/filter.html"><code>dplyr::filter()</code></a></li>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/glimpse.html"><code>dplyr::glimpse()</code></a></li>
+</ul>
+</div>
 </div>
 <p>With this data frame we can move onto visualisation and statistics.</p>
 

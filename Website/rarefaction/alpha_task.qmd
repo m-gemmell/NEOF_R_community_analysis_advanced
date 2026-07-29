@@ -34,9 +34,8 @@ In your own analysis it is best to do this at one time as rarefying with 1000 it
 #Rename
 #Rename columns
 #dplyr::rename(df, new_name=old_name)
-alpha_df_mean <- 
-  dplyr::rename(alpha_df_mean,
-                shannon=diversity_shannon,
+alpha_df_mean <- alpha_df_mean |>
+  dplyr::rename(shannon=diversity_shannon,
                 invsimpson=diversity_inverse_simpson,
                 pielou=evenness_pielou,
                 fisher=diversity_fisher)

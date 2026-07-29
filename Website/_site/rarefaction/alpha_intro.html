@@ -611,8 +611,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="images/alpha_iterative_rarefaction.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:300px; border-radius:5px; background:white; border: white solid 5px"></p>
 </figure>
 </div>
-<p>In this section we’ll carry out <strong>alpha diversity</strong> analysis using the <strong>iterative rarefaction</strong> approach. We will carry this out on the ASV counts rather than at a taxonomy level such as phyla.</p>
-<p>These materials are mostly a combination of the <strong>iterative rarefaction</strong> in this book and the <strong>alpha diversity</strong> analysis in the R community workshop. Due to this we won’t go into great detail, instead focussing on giving you the code to be able to carry this out.</p>
+<p>In this section we’ll carry out <strong>alpha diversity</strong> analysis using the <strong>iterative rarefaction</strong> approach. We use ASV counts rather than taxa counts such as phyla. Though you can use taxa counts for alpha and beta diversity using ASVs is normally the first approach.</p>
+<p>These materials are mostly a combination of the <strong>iterative rarefaction</strong> in this book and the <strong>alpha diversity</strong> analysis in the <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html">R community workshop</a>. Due to this we won’t go into great detail, instead focussing on giving you the code to be able to carry this out.</p>
 <section id="setup" class="level2">
 <h2 class="anchored" data-anchor-id="setup">Setup</h2>
 <div class="quarto-figure quarto-figure-center">
@@ -646,11 +646,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>We are using the minimum sample depth here</li>
 <li>The size you choose will be based on your data and what you feel is appropriate</li>
-<li>More info in the main <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/14-Rarefaction.html">R community workshop</a></li>
+<li>More info in the <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/14-Rarefaction.html">R community workshop</a></li>
 </ul></li>
 <li><strong>RNG seeds:</strong> The rng seeds we will use for all the rarefactions
 <ul>
-<li>We created these in the previous <a href="#rng_vec_creation">section</a></li>
+<li>We created these in the previous <a href="../rarefaction/iterating_rarefaction.html#rng_vec_creation">section</a></li>
 </ul></li>
 <li><strong>Rarefaction iterations:</strong> The number of rarefaction iterations we will use
 <ul>

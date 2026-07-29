@@ -2,9 +2,10 @@
 ![](images/alpha_iterative_rarefaction.png){style="width:300px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
 
 In this section we'll carry out __alpha diversity__ analysis using the __iterative rarefaction__ approach.
-We will carry this out on the ASV counts rather than at a taxonomy level such as phyla.
+We use ASV counts rather than taxa counts such as phyla.
+Though you can use taxa counts for alpha and beta diversity using ASVs is normally the first approach.
 
-These materials are mostly a combination of the __iterative rarefaction__ in this book and the __alpha diversity__ analysis in the R community workshop.
+These materials are mostly a combination of the __iterative rarefaction__ in this book and the __alpha diversity__ analysis in the [R community workshop](https://neof-workshops.github.io/R_community_whqkt8/Course/15-Alpha.html).
 Due to this we won't go into great detail, instead focussing on giving you the code to be able to carry this out.
 
 ## Setup
@@ -33,9 +34,9 @@ Before carrying out __iterative rarefaction__ we need to decide on a few values
 - __Rarefaction size:__ The sequence depth to normalise samples to
   - We are using the minimum sample depth here
   - The size you choose will be based on your data and what you feel is appropriate
-  - More info in the main [R community workshop](https://neof-workshops.github.io/R_community_whqkt8/Course/14-Rarefaction.html)
+  - More info in the [R community workshop](https://neof-workshops.github.io/R_community_whqkt8/Course/14-Rarefaction.html)
 - __RNG seeds:__ The rng seeds we will use for all the rarefactions
-  - We created these in the previous [section](#rng_vec_creation)
+  - We created these in the previous [section](/rarefaction/iterating_rarefaction.qmd#rng_vec_creation)
 - __Rarefaction iterations:__ The number of rarefaction iterations we will use
   - We are using 10 here based on the length of our rng seed vector
   - We recommend using 1000 in your real analysis
