@@ -1,15 +1,15 @@
-# Intro & setup
+# Iteration intro & setup
 ![](images/iterations.png){style="width:300px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
 
 In this section we will create code to carry out __iterative rarefaction__.
 For this we need to create a vector of __random seeds__, one for each __iteration__ of __rarefaction__.
 We will loop through this vector, using each __random seed__ to carry out one __iteration__ of __rarefaction__.
-In the next sections we will utilise this code to produce alpha and beta diversity values that we will analyse.
+In the subsequent sections we will utilise this code to produce **alpha** and **beta diversity** values for analysis.
 
 ## Iterating rarefaction setup
 ![](/images/setup.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
 
-First, create a new R jupyter-notebook called "Iterating_rarefaction.ipynb".
+Create a new R jupyter-notebook called "Iterating_rarefaction.ipynb".
 
 At the top of this notebook create a code cell to load in the various packages and data we need.
 
@@ -23,16 +23,19 @@ library("IRdisplay")
 load("/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData")
 ```
 
-__Note:__ The `phyloseq` object in the file "phyloseq.RData" was created after [importing the qiime2 artifacts](https://neof-workshops.github.io/R_community_whqkt8/Course/07-Import.html#save-the-phyloseq-object).
+
+::: {.callout-note}
+The `phyloseq` object in the file "phyloseq.RData" was created after [importing the qiime2 artifacts](https://neof-workshops.github.io/R_community_whqkt8/Course/07-Import.html#save-the-phyloseq-object).
 Ensure you are using your phyloseq data after processing in your real life analysis (i.e. after any sample or ASV filtering) but not your rarefied data.
+:::
 
 ## Rarefaction iterations
 ![](images/number_pad.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
 
 We need to choose the number of __iterations__ we are going to carry out.
 
-For speed we will use __10 iterations__ in this practice. 
-In your real analysis I would recommend using __1000 iterations__.
+For speed we will use __10 iterations__ in this course. 
+In your real analysis I would recommend using __1,000 iterations__.
 
 Let's create a variable for our number of __iterations__.
 
@@ -52,6 +55,7 @@ We can now carry out __Random Number Generation (RNG)__ to create a number of __
 #Set seed for reproducibility
 #This number was chosen randomly
 set.seed(2605)
+#Create the rng seed vector
 #Sample 10 (number of iters) values from the number range 1-100,000
 rngseed_vec <- sample(x=1:100000, size = rarefaction_iters, replace = FALSE)
 #Print out vector
@@ -64,7 +68,7 @@ set.seed(NULL)
 
 There are a lot of steps above. These are:
 
-- __Setting the random seed:__ We carry this out so we will always get the same rngseed vector that will be used for the rarefaction iterations. This is important so you will always get the same results if you need to rework some analysis, stats, or plots. Also useful here so you get the same results as the instructor and other attendees.
+- __Setting the random seed:__ We carry this out so we will always get the same rngseed vector that will be used for the rarefaction iterations. This is important so you will always get the same results if you need to rework some analysis, stats, or plots. Also useful here so you get the same results as other attendees and for answering later quizzes.
 - __Creating the rngseed vector:__ We use our old friend `sample()` to create a random number for each __iteration__ we will carry out. 
   - We arbitrarily sample from the numbers 1-100,000. You could change this to a larger range in your future research.
   - We use our previous object `rarefaction_iters` as `size=` to produce a random number for each of our __iterations__.

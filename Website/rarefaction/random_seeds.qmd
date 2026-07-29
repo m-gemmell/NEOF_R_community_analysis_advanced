@@ -57,14 +57,14 @@ When sampling __without replacement__ you don't replace the results.
 
 The famous example is sampling green and yellow balls from a bag.
 If you had a bag with 1000 balls and you wanted a rough idea of the ratio of yellow and green balls you could count the number of these balls within a sample of 50.
-Without replacement you would take out a ball, record its colour and throw it in a separate container.
-With replacement you would take out a ball, record its colour and put it back into the initial bag, meaning it could possibly be recounted.
+**Without replacement** you would take out a ball, record its colour and throw it in a separate container.
+**With replacement** you would take out a ball, record its colour and put it back into the initial bag, meaning it could possibly be recounted.
 
 ### Advantage of replacement
 
-One advantage of sampling with replacement is that your sampling size can be larger than your actual population size.
-For example, you could create a random sampling of 50 with a bag containing 10 balls with replacement.
-This would not work without replacement.
+One advantage of sampling **with replacement** is that your sampling size can be larger than your actual population size.
+For example, you could create a random sampling of 50 with a bag containing 10 balls **with replacement**.
+This would not work **without replacement**.
 The below script will cause R to produce an error saying "cannot take a sample larger than the population when 'replace = FALSE' ".
 
 ```{R, eval=FALSE}

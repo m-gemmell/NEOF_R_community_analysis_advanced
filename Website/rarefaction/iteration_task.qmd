@@ -1,15 +1,18 @@
-# Iteration practice
+# Iteration task
 
 Superlative! Now that you know how to carry out __iterative rarefaction__ I'll ask you to do it once more for the phyla data.
 
-## One thousand iteration
+## One thousand iterations
 ![](images/per_thousand.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
 
-Create a rarefaction averaged phyla relative abundance as we have done in the previous chapters but with 1000 __rarefaction iterations__.
-For this task use __153478__ as the __seed__ when creating your vector of 1000 __rng seeds__.
+Create a rarefaction averaged phyla relative abundance as we have done in the previous chapters but with **1,000 rarefaction iterations**.
+For this task use __153478__ (one-five-three-four-seven-eight) as the __seed__ when creating your vector of 1,000 __rng seeds__.
 Save this vector of rngseeds to a file called "rngseeds_1000.RData".
 
-__Note:__ The iterative rarefaction step may take a few minutes. 
+
+::: {.callout-note}
+The iterative rarefaction step may take a few minutes. 
+:::
 
 After creating the relative abundance matrix determine how different the values are compared to the non-rarefied relative abundance with a histogram.
 
@@ -18,9 +21,11 @@ opts_p <- c(answer="__-0.0003(-3e-04) to 0.0003(3e-04)__", "__-0.003 to 0.003__"
 ```
 What is the range of the differences compared to the non rarefied relative abundance values? `r longmcq(opts_p)`
 
-Please attempt the task yourself before looking at the solution code in the below expandable box.
+## Solution
 
-::: {.callout-note collapse="true" title="Task solution code"}
+Please attempt the task yourself before looking at the solution code block in the below expandable boxes.
+
+::: {.callout-note collapse="true" title="Creating vector of random seeds"}
 ```{R, eval=FALSE}
 #Number of rarefaction iterations to be carried out
 rarefaction_iters <- 1000
@@ -35,7 +40,9 @@ save(rngseed_vec, file="rngseeds_1000.RData")
 #Reset seed
 set.seed(NULL)
 ```
+:::
 
+::: {.callout-note collapse="true" title="Phyla aggregation and iterative rarefaction"}
 ```{R, eval=FALSE}
 #Iterative rarefaction to produce an average rarefied abundance table
 
@@ -69,14 +76,18 @@ rarefy_phyla_mean_df <- rarefy_phyla_df / length(rngseed_vec)
 #Remove unwanted objects
 rm(pseq_rarefy, rarefy_phyla_df)
 ```
+:::
 
+::: {.callout-note collapse="true" title="Relative abundance transformation"}
 ```{R, eval = FALSE}
 #Convert to relative abundance table
 rarefy_i1000_relabund_phyla_df <- dplyr::mutate_all(rarefy_phyla_mean_df, prop.table)
 #View relative abundances
 rarefy_i1000_relabund_phyla_df
 ```
+:::
 
+::: {.callout-note collapse="true" title="Histogram of difference to non rarefied data"}
 ```{R, eval=FALSE}
 #Value difference matrix
 iterative_rarefaction_1000_diff <- 
@@ -90,12 +101,14 @@ hist(iterative_rarefaction_diff)
 ## Iterating rarefaction recap
 ![](images/recap){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
 
+Amazing!
+
 With this section you have learnt:
 
 - How to create a vector of rngseeds
 - How to use rng seeds to carry out __iterative rarefaction__
 
 In you real life analysis you would not use this method to create relative abundance taxonomy bar charts, you would use the non-rarefied relative abundance.
-However, this has hopefully gave you a good idea of how __iterative rarefaction__ works so we can utilise it the next 2 chapters for alpha and beta diversity analysis.
+However, this has hopefully given you a good idea of how __iterative rarefaction__ works so we can utilise it the next 2 chapters for alpha and beta diversity analysis.
 
 Feel free to save then close and halt your "Iterating_rarefaction.ipynb" notebook.

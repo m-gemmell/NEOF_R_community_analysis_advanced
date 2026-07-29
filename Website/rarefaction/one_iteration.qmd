@@ -3,7 +3,7 @@
 
 Building up to multiple __iterations__ of __rarefaction__ we will first carry out one round of __rarefaction__ on our environmental phyla abundance data.
 
-This will also allow us to compare the results of no __rarefaction__ to only one round.
+This will also allow us to compare the results of no __rarefaction__ to **one iteration of rarefaction**.
 
 ## Rarefaction
 ![](images/black_rhino.png){style="width:300px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
@@ -12,7 +12,7 @@ Carry out one round of __rarefaction__ and view the __rarefied__ counts.
 
 We are using the environmental samples subsetted and phyla aggregated data.
 Additionally, we are using the first of our __random seeds__ in `rng_seed_vec` and the minimum read count as our __rarefaction__ size.
-Please see advice on how to determine the rarefaction size of your own data in the [main NEOF R community analysis workshop](https://neof-workshops.github.io/R_community_whqkt8/Course/14-Rarefaction.html)
+Please see advice on how to determine the rarefaction size of your own data in the [NEOF R community analysis workshop](https://neof-workshops.github.io/R_community_whqkt8/Course/14-Rarefaction.html)
 
 ```{R, eval=FALSE}
 #One round of rarefaction
@@ -35,10 +35,12 @@ You should see that all the samples now have a total count of __11046__.
 
 Now to create a relative abundance bar chart with our __rarefied__ data to compare to our non-rarefied data.
 
-__Note:__ This is for demonstrative purposes. You would not use rarefied abudances for taxa barcharts in your real analysis.
+::: {.callout-important}
+This is for demonstrative purposes. You would not use rarefied abundances for taxa bar charts in your real analysis.
+:::
 
 ```{R, eval=FALSE}
-#Quick phyla bar chart of relative abundances
+#Quick phyla bar chart of relative abundances of rarefied data
 #Relative abundance transformation
 pseq_env_phyla_rarefy_1_relabund <- microbiome::transform(pseq_env_phyla_rarefy_1, "compositional")
 #Create, save, and display bar chart
@@ -63,7 +65,8 @@ single_rarefaction_diff <-
 single_rarefaction_diff
 ```
 
-To have a clearer viewer of these differences let's make a histogram.
+In the matrix we can see there are differences.
+For a clearer view of these differences let's make a histogram.
 
 ```{R, eval = FALSE}
 #Histogram of differences
@@ -75,7 +78,8 @@ opts_p <- c("__-0.0003(-3e-04) to 0.0003(3e-04)__", "__-0.003 to 0.003__", answe
 ```
 What is the range of the differences? `r longmcq(opts_p)`
 
-Although these values appear quite small keep in mind we are working with relative abundance values.
+These values appear quite small.
+However, keep in mind we are working with relative abundance values.
 Each sample has a total relative abundance of 1.00 so a relative abundance value of 0.01 is 1%.
 
 Let's see if we can make these differences smaller with multiple rounds of rarefaction.

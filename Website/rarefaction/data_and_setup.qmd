@@ -9,7 +9,7 @@ engine: knitr
 ![](images/river.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
 
 
-The data set we will use in this book is the same as that used in the [main R community analysis workshop](https://neof-workshops.github.io/R_community_whqkt8/Course/02-Dataset_and_workflow.html#dataset).
+The dataset we will use in this part is the same as that used in the [R community analysis workshop](https://neof-workshops.github.io/R_community_whqkt8/Course/02-Dataset_and_workflow.html#dataset).
 
 Below are brief bullet points about the data:
 
@@ -27,9 +27,14 @@ Below are brief bullet points about the data:
 - There are three replicates for each sampling site and media combination (36 samples total)
 
 
-# Setup
+## Setup
 ![](/images/setup_4.png){style="width:200px; background: white; border-radius:5px; border: white solid 10px" fig-align="center"}
 
 Before you carry out any practice ensure you have setup your directory, environment, and jupyter-notebook as shown in the overall [setup](/setup/setup.qmd)
+
+With the jupyter-notebook file explorer:
+
+1. Create a directory called `iterative_rarefaction` within your `adv_R_comm` directory
+2. Move into your newly created `iterative_rarefaction` directory.
 
 Each of the following sections will use its own `jupyter` notebook so they will include the creation instructions.

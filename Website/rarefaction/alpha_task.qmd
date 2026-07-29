@@ -1,0 +1,122 @@
+# α task
+![](images/tasks.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
+
+As an optional task create a new violin plot that includes the following:
+
+- Plots the metrics:
+  - "diversity_inverse_simpson" renaming it as "invsimpson"
+  - "evenness_pielou" renaming it as "pielou"
+  - "diversity_fisher" renaming it as "fisher"
+  - Ensure they are in the order "pielou", "invsimpson", then "fisher"
+- The x-axis is separated by Site (UD, MD, LD) rather than media.
+  - Ensure the order is UD, MD, then LD
+- Points are coloured by Media (ENV, CVP, KBC, and TSA)
+  - Ensure the order is ENV, CVP, KBC, then TSA
+- Include Wilcoxon paired stats comparing the Sites
+
+
+::: {.callout-note}
+Going to earlier code, [renaming](/rarefaction/alpha_data_frame_tidy.qmd#rename-metrics), adding new options, and rerunning the entire notebook may be useful.
+:::
+
+## Solutions
+
+Below are expandable solution boxes showing step by step how to complete the task.
+Remember:
+
+- Please make a good attempt yourself before looking at the solutions
+- Your solution might be different. As long as your solution works and you understand it that is grand. There are infinite ways to do the same thing in `R`.
+
+::: {.callout-note collapse="true" title="Rename diversity metrics"}
+Add an extra [`dplyr::rename()` function](https://neof-workshops.github.io/Tidyverse/dplyr/rename.html) along with the previous one. You will then need to rerun the jupyter-notebook.
+In your own analysis it is best to do this at one time as rarefying with 1000 iterations will take much longer than with our demonstrative 10.
+```{R, eval=FALSE}
+#Rename
+#Rename columns
+#dplyr::rename(df, new_name=old_name)
+alpha_df_mean <- 
+  dplyr::rename(alpha_df_mean,
+                shannon=diversity_shannon,
+                invsimpson=diversity_inverse_simpson,
+                pielou=evenness_pielou,
+                fisher=diversity_fisher)
+```
+:::
+
+The blocks in the below solution boxes should be created and run at the bottom of the jupyter-notebook.
+
+::: {.callout-note collapse="true" title="Data frame with metrics of choice"}
+Subset [long alpha diversity table created earlier in this section](/rarefaction/alpha_data_frame_tidy.qmd#long-data-frame) to contain metrics of choice.
+```{R, eval=FALSE}
+#Process our long data frame
+#Subset our long alpha diversity data frame to only contain our metrics of choice
+metrics <- c("invsimpson", "pielou","fisher")
+subset_alpha_metrics_long_df <- meta_alpha_mean_long_df[
+  meta_alpha_mean_long_df$metric %in% metrics,
+]
+#Check head of subsetted long data frame
+head(subset_alpha_metrics_long_df)
+```
+:::
+
+::: {.callout-note collapse="true" title="Create metadata combination list for plot stats"}
+```{R,eval = FALSE}
+#To compare mean we need to create a list of comparisons
+#Create character vector of unique metadata values (site in this case)
+uniq_site_values_chr_vec <- unique(as.character(subset_alpha_metrics_long_df$site))
+uniq_site_values_chr_vec
+#Can use combn() to get comparisons
+my_comparisons <- combn(uniq_site_values_chr_vec, m = 2, simplify = FALSE)
+#Check contents and structure
+my_comparisons
+str(my_comparisons)
+```
+:::
+
+::: {.callout-note collapse="true" title="Reorder factors and comparisons"}
+```{r,eval = FALSE}
+#Reorder sites, media and comparisons
+#Set order of sites
+subset_alpha_metrics_long_df$site <- factor(subset_alpha_metrics_long_df$site,
+                                            #Set order of levels
+                                            levels = c("UD", "MD", "LD"))
+#Set order of media
+subset_alpha_metrics_long_df$media <- factor(subset_alpha_metrics_long_df$media,
+                                            #Set order of levels
+                                            levels = c("ENV", "CVP", "KBC", "TSA"))
+#Order comparisons
+my_ordered_comparisons <- my_comparisons[c(3,1,2)]
+my_ordered_comparisons
+```
+:::
+
+::: {.callout-note collapse="true" title="Plot with stats"}
+```{R, eval = FALSE}
+#Produce ggplot object of violin plot
+alpha_violinplot <- ggplot(subset_alpha_metrics_long_df, aes(x = site, y = value)) +
+                            ggplot2::geom_violin() +
+                            ggforce::geom_sina(alpha=0.5, aes(color=site)) +
+                            ggplot2::labs(color = "Media", x = "Site", y = "Value") +
+                            ggplot2::facet_wrap(~metric, scales = "free") +
+                            #Add comparisons
+                            ggpubr::stat_compare_means(comparisons = my_ordered_comparisons)
+#Save ggplot2 object with ggsave()
+ggsave(filename = "./Alpha_diversity_rarefy_iters_site_violinplot_pairwise_wilcox.png", 
+       plot = alpha_violinplot,
+       device = "png", dpi = 300, units = "mm", height = 150, width = 250)
+#Display plot
+IRdisplay::display_png(file = "./Alpha_diversity_rarefy_iters_site_violinplot_pairwise_wilcox.png")
+```
+:::
+
+## Recap
+![](images/recap.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
+
+In this part you have:
+
+- Produced __alpha diversity__ values through __iterative rarefaction__
+- Created a long data frame containing metadata and specified __alpha diversity__ metrics
+- Visualised the group differences of __alpha diversity__ metrics with violin plots
+- Embedded paired Wilcoxon p-values in our violin plots
+
+With these skills and knowledge you will be able to carry out thorough investigations of __alpha diversity__ in your future research.

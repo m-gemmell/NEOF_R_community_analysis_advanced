@@ -68,14 +68,35 @@ website:
       contents:
       - href: rarefaction/random_seeds.qmd
       - href: rarefaction/r_and_random_seeds.qmd
-      - href: rarefaction/random_seed_practice.qmd
+      - href: rarefaction/random_seed_tasks.qmd
     - section: "Iterating rarefaction"
       contents:
       - href: rarefaction/iterating_rarefaction.qmd
       - href: rarefaction/phyla_relative_abundance.qmd
       - href: rarefaction/one_iteration.qmd
       - href: rarefaction/multiple_iterations.qmd
-      - href: rarefaction\iteration_practice.qmd
+      - href: rarefaction/iteration_task.qmd
+    - section: "Alpha diversity"
+      contents:
+      - href: rarefaction/alpha_intro.qmd
+      - href: rarefaction/alpha_iterative_rarefaction.qmd
+      - href: rarefaction/alpha_data_frame_tidy.qmd
+      - href: rarefaction/alpha_violin_plot_and_stats.qmd
+      - href: rarefaction/alpha_plot_with_stats.qmd
+      - href: rarefaction/alpha_task.qmd
+    - section: "Beta diversity"
+      contents:
+      - href: rarefaction/beta_intro.qmd
+      - href: rarefaction/beta_rarefaction.qmd
+      - href: rarefaction/beta_distance_matrices.qmd
+      - href: rarefaction/beta_ordination.qmd
+      - href: rarefaction/beta_stats.qmd
+      - href: rarefaction/beta_subset_ordination.qmd
+      - href: rarefaction/beta_considerations.qmd
+      - href: rarefaction/beta_task.qmd
+    - section: "Templates"
+      contents:
+      - href: rarefaction/iterative_rarefaction_diversity_loop.qmd
   - id: Divergence
     title: Divergence
     style: floating

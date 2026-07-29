@@ -31,12 +31,21 @@ microbiome::readcount(pseq_env_phyla)
 rm(pseq, pseq_env)
 ```
 
+We now have:
+
+- 9 samples
+  - These samples have counts/depths ranging from 11,000 to 17,000
+- 10 phyla groups
+  - This includes "Other", our aggregated phyla
+
 ## Phyla relative abundance bar chart
 ![](images/stacked_bar_chart.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
 
 Let's have a quick look at the non rarefied phyla relative abundances through a bar chart.
 
-__Note:__ This is how you would normally look at this type of bar chart.
+::: {.callout-note}
+This is how you would normally look at this type of bar chart.
+:::
 
 ```{R, eval=FALSE}
 #Quick phyla bar chart of relative abundance
@@ -48,3 +57,6 @@ ggsave(filename = "./env_phyla_relabund.png", plot = phylum_bar,
        device = "png", dpi = 300, units = "mm", height = 100, width = 200)
 IRdisplay::display_png(file = "./env_phyla_relabund.png")
 ```
+
+Great! We now know what the relative abundance of our phyla looks like within and between our samples.
+In the next page we'll **rarefy** the aggregated phyla phyloseq and recreate the above plot with the **rarefied** data.

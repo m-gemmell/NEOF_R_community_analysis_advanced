@@ -64,7 +64,9 @@ Two numeric data frames/matrices can be summed together with `+` if they have th
 This can be carried out with any mathematical operator (`+`,`-`,`*`,`/`, etc.)
 An example of how this works is below.
 
-__Note:__ You don't need to run the below code as the output is displayed.
+::: {.callout-note}
+You don't need to run the below code as the output is displayed below the code block on this page.
+:::
 
 ```{R, eval = TRUE}
 #Matrix 1
@@ -85,7 +87,7 @@ mat_sum
 If you only use one number with a data frame/matrix the operation will act upon each cell in the same manner.
 You could add 1 to each cell, minus 4 from each cell, etc.
 
-Continuing the matrix example, we'll get the average of the 2 data frames by dividins by two (`/2`).
+Continuing the matrix example, we'll get the average of the 2 data frames by dividing by two (`/2`).
 
 ```{R, eval = TRUE}
 #Mean matrix
@@ -136,6 +138,6 @@ opts_p <- c("__-0.0003(-3e-04) to 0.0003(3e-04)__", answer="__-0.003 to 0.003__"
 ```
 What is the range of the differences compared to the non rarefied relative abundance values? `r longmcq(opts_p)`
 
-You should notice that the differences are much smaller compared to the differences found in [chapter 9](#r-difference-from-non-rarefied).
-This indicates that the structure of the __iterative rarefied__ data is much closer to the non-rarefied data compared to the one round __rarefied__ data.
+You should notice that the differences are much smaller compared to the differences found in [with one iteration of rarefaction](/rarefaction/one_iteration.qmd#difference-from-non-rarefied).
+This indicates that the relative abundance structure of the __iteratively rarefied__ data is much closer to the non-rarefied data compared to the one round __rarefied__ data.
 This is what we want.

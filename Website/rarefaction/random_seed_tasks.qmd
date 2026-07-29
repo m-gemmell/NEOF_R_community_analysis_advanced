@@ -1,4 +1,4 @@
-# Random seed practice
+# Random seed tasks
 ![](images/seed_sowing.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
 
 
@@ -10,7 +10,10 @@ First create the following vector:
 second_millennium <- 1001:2000
 ```
 
-__Note:__ Remember it is best practice to `set.seed(NULL)` at the end of a code cell.
+
+::: {.callout-note}
+Remember it is best practice to `set.seed(NULL)` at the end of a code cell where you set the seed.
+:::
 
 ## RSQ1
 ![](images/printing_press.png){style="width:150px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
@@ -32,7 +35,7 @@ What is the fourth number in the produced vector? `r longmcq(opts_p)`
 #Set random seed
 set.seed(489)
 #Randomly sample
-first_answer <- sample(x = second_millennium, size = 10)[4]
+first_answer <- sample(x = second_millennium, size = 10, replace = FALSE)[4]
 first_answer
 #Reset random seed
 set.seed(NULL)
@@ -59,7 +62,7 @@ What is the 16th number in the produced vector? `r longmcq(opts_p)`
 #Set random seed
 set.seed(first_answer)
 #Randomly sample
-second_answer <- sample(x = second_millennium, size = 24)[16]
+second_answer <- sample(x = second_millennium, size = 24, replace = FALSE)[16]
 second_answer
 #Reset random seed
 set.seed(NULL)
@@ -95,12 +98,14 @@ set.seed(NULL)
 ## Random seed recap
 ![](images/recap.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
 
+Splendid!
+
 Once you are happy you can save then close and halt your "Random_seeds.ipynb" notebook.
 
 Through this section you have learnt:
 
-- The use of random seeds for random processes such as sampling
-- The difference between sampling with and without replacement
+- The use of **random seeds** for random processes such as sampling
+- The difference between sampling **with replacement** and **without replacement**
 - How to set __random seeds__ in `R` for reproducible randomness
 
 With this you can continue onto __iterative rarefaction__.

@@ -397,5 +397,80 @@
   },
   "rarefaction/iteration_practice.qmd": {
     "iteration_practice.html": "d3636849"
+  },
+  "rarefaction/alpha_diversity_intro.qmd": {
+    "alpha_diversity_intro.html": "47d67898"
+  },
+  "rarefaction/alpha_diversity_iterative_rarefaction.qmd": {
+    "alpha_diversity_iterative_rarefaction.html": "a2c14b1a"
+  },
+  "rarefaction/alpha_data_frame_tidy.qmd": {
+    "alpha_data_frame_tidy.html": "75dac837"
+  },
+  "rarefaction/alpha_violin_plot_with_stats.qmd": {
+    "alpha_violin_plot_with_stats.html": "6ae08a13"
+  },
+  "rarefaction/alpha_plot_with_stats.qmd": {
+    "alpha_plot_with_stats.html": "48c1e01f"
+  },
+  "rarefaction/alpha_violin_plot_and_stats.qmd": {
+    "alpha_violin_plot_and_stats.html": "8992ffd6"
+  },
+  "rarefaction/alpha_diversity_practice.qmd": {
+    "alpha_diversity_practice.html": "d30608ba"
+  },
+  "rarefaction/beta_diversity_intro.qmd": {
+    "beta_diversity_intro.html": "6cee6961"
+  },
+  "rarefaction/beta_considerations.qmd": {
+    "beta_considerations.html": "49eee57a"
+  },
+  "rarefaction/beta_distance_matrices.qmd": {
+    "beta_distance_matrices.html": "97365f1e"
+  },
+  "rarefaction/beta_ordination.qmd": {
+    "beta_ordination.html": "2e06b052"
+  },
+  "rarefaction/beta_practice.qmd": {
+    "beta_practice.html": "7780683c"
+  },
+  "rarefaction/beta_rarefaction.qmd": {
+    "beta_rarefaction.html": "6ab6b64b"
+  },
+  "rarefaction/beta_stats.qmd": {
+    "beta_stats.html": "65ba1339"
+  },
+  "rarefaction/beta_subset_ordination.qmd": {
+    "beta_subset_ordination.html": "ea58064d"
+  },
+  "rarefaction/alpha_intro.qmd": {
+    "alpha_intro.html": "4b22839d"
+  },
+  "rarefaction/alpha_iterative_rarefaction.qmd": {
+    "alpha_iterative_rarefaction.html": "7c0ac210"
+  },
+  "rarefaction/alpha_practice.qmd": {
+    "alpha_practice.html": "90add042"
+  },
+  "rarefaction/beta_intro.qmd": {
+    "beta_intro.html": "c33f658a"
+  },
+  "iterative_rarefaction_diversity_loop.qmd": {
+    "iterative_rarefaction_diversity_loop.html": "98be9205"
+  },
+  "rarefaction/alpha_task.qmd": {
+    "alpha_task.html": "2850139f"
+  },
+  "rarefaction/beta_task.qmd": {
+    "beta_task.html": "009b7d0f"
+  },
+  "rarefaction/iteration_task.qmd": {
+    "iteration_task.html": "37fda540"
+  },
+  "rarefaction/random_seed_tasks.qmd": {
+    "random_seed_tasks.html": "9bb761f7"
+  },
+  "rarefaction/iterative_rarefaction_diversity_loop.qmd": {
+    "iterative_rarefaction_diversity_loop.html": "5f9e1e3f"
   }
 }
