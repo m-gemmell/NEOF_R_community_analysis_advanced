@@ -87,9 +87,9 @@ IRdisplay::display_png(file = "./Beta_diversity_pcoa_wunifrac_noenv_media_site.p
 
 Now we can see some much clearer clustering of the media and site groupings:
 
-- The different media produce distinct separate clusters.
-- CVP has the tightest clustering.
-- Within the KBC and TSA groups the three different sites seems to produce distinct clusters.
+- The different media produce distinct separate clusters
+- CVP has the tightest clustering
+- Within the KBC and TSA groups the three different sites seems to produce distinct clusters
 
 ## Stats?
 

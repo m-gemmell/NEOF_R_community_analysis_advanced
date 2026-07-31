@@ -3,7 +3,7 @@
 
 As an optional task create a NMDS and PCoA scatter plot using Bray-Curtis. To do this carry out the following steps:
 
-- Generate a Bray-Curtis distance matrix using the 10 rng seeds previously created.
+- Generate a Bray-Curtis distance matrix using the 10 rng seeds previously created
 - Carry out ordination using NMDS and PCoA
 - Create long data frames with metadata and points
 - Plot the points using the media groupings as the shape and the site groupings as the colour
@@ -38,36 +38,38 @@ rarefaction_iters <- length(rngseed_vec)
 #First create a matrix to contain the final summed bray-curtis beta diversity values
 #In this case we'll run the first rarefied beta diversity analysis
 pseq_rarefy <- phyloseq::rarefy_even_depth(
-  pseq,
-  sample.size = rarefaction_size,
-  rngseed = rngseed_vec[1],
-  verbose = FALSE)
-#bray-curtis beta diversity
-beta_df_sum <- as.matrix(
-  vegan::vegdist(x = t(phyloseq::otu_table(pseq_rarefy)), 
-                 method = "bray"))
-#Loop through 2 to the number of iterations
-for (i in 2:rarefaction_iters){
-  #Rarefaction
-  pseq_rarefy <- phyloseq::rarefy_even_depth(
     pseq,
     sample.size = rarefaction_size,
-    rngseed = rngseed_vec[i],
+    rngseed = rngseed_vec[1],
     verbose = FALSE)
-  #Beta diversity
-  beta_df <- as.matrix(
-      vegan::vegdist(x = t(phyloseq::otu_table(pseq_rarefy)), 
-                 method = "bray"))
-  #Add/sum the new data frame values to the sum data frame
-  beta_df_sum <- beta_df_sum + beta_df
+#wunifrac beta diversity
+beta_df_sum <-
+    rbiom::bdiv_matrix(
+        biom = rbiom::as_rbiom(pseq_rarefy),
+        bdiv="bray")
+#Loop through 2 to the number of rarefaction iterations
+for (i in 2:rarefaction_iters){
+    #Rarefaction
+    pseq_rarefy <- phyloseq::rarefy_even_depth(
+        pseq,
+        sample.size = rarefaction_size,
+        rngseed = rngseed_vec[i],
+        verbose = FALSE)
+    #beta diversity
+    beta_df <- 
+        rbiom::bdiv_matrix(
+            biom = rbiom::as_rbiom(pseq_rarefy),
+            bdiv="bray")
+    #Add/sum the new data frame values to the sum data frame
+    beta_df_sum <-  beta_df_sum + beta_df
 }
 #Divide by number of rarefaction iterations to get average
 beta_df_mean <- beta_df_sum / rarefaction_iters
-#Save bray curtis mean data frame
-save(beta_df_mean, file = "bray_curtis_df_mean.RData")
-#View first 6 rows and columns of matrix
+#Save bray curtis mean dataframe
+save(beta_df_mean, file = "braycurtis_df_mean.RData")
+#See head of data frame
 beta_df_mean[1:6,1:6]
-#Remove unneeded objects
+#Remove created objects
 rm(beta_df_sum, beta_df_mean, pseq_rarefy)
 ```
 :::

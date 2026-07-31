@@ -55,11 +55,11 @@ rm(pseq_rarefy)
 
 From the output of `head()` you should see a table with the first set of columns being the metadata columns. The next set of columns are the alpha diversity metrics.
 
-## Long data frame
+## Long tibble
 ![](images/long_data_frame.png){style="width:100px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
 
 We will plot our __alpha diversity__ values with `ggplot2` functions.
-Before we carry this out we need to convert our wide data frame to a long data frame.
+Before we carry this out we need to convert our wide data frame to a long [tibble](https://neof-workshops.github.io/Tidyverse/tibble/tibble.html).
 We'll carry this out with [the `tidyr::pivot_longer()` function](https://neof-workshops.github.io/Tidyverse/tidyr/pivot_longer.html).
 
 We want our metric values to become long.
@@ -112,7 +112,7 @@ There are a lot of diversity values created by `microbiome::alpha()`.
 You can check the variety with the below command:
 
 ```{R, eval=FALSE}
-unique(meta_alpha_mean_long_df$metric)
+unique(meta_alpha_mean_tbl$metric)
 ```
 
 For this tutorial we are only interested in the following:
@@ -132,10 +132,10 @@ We'll also use the utility of factors to order the metrics so they will be plott
 metrics <- c("observed","shannon")
 #Filter our long alpha diversity tibble to only contain
 # rows where the metric column value is "observed" or "shannon"
-basic_alpha_metrics_long_df <- meta_alpha_mean_tbl |>
+basic_alpha_metrics_tbl <- meta_alpha_mean_tbl |>
     dplyr::filter(metric %in% metrics)
 #Glimpse long tibble
-basic_alpha_metrics_long_df |> dplyr::glimpse()
+basic_alpha_metrics_tbl |> dplyr::glimpse()
 ```
 
 ::: {.callout-tip title="Cookbook links for Tidyverse functions used above"}

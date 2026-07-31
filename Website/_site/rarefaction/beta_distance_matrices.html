@@ -68,8 +68,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../rarefaction/beta_ordination.html" rel="next">
-<link href="../rarefaction/beta_rarefaction.html" rel="prev">
+<link href="../rarefaction/beta_rarefaction.html" rel="next">
+<link href="../rarefaction/beta_intro.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -409,8 +409,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/random_seed_practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Random seed practice</span></a>
+  <a href="../rarefaction/random_seed_tasks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Random seed tasks</span></a>
   </div>
 </li>
       </ul>
@@ -450,8 +450,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/iteration_practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Iteration practice</span></a>
+  <a href="../rarefaction/iteration_task.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Iteration task</span></a>
   </div>
 </li>
       </ul>
@@ -497,8 +497,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/alpha_practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">α practice</span></a>
+  <a href="../rarefaction/alpha_task.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">α task</span></a>
   </div>
 </li>
       </ul>
@@ -520,14 +520,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_rarefaction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">β iterative rarefaction</span></a>
+  <a href="../rarefaction/beta_distance_matrices.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">β distance matrices</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_distance_matrices.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">β distance matrices</span></a>
+  <a href="../rarefaction/beta_rarefaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">β iterative rarefaction</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -556,8 +556,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_practice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">β practice</span></a>
+  <a href="../rarefaction/beta_task.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">β task</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Templates</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../rarefaction/iterative_rarefaction_diversity_loop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Alpha and Beta loop</span></a>
   </div>
 </li>
       </ul>
@@ -574,12 +591,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#β-distance-matrices" id="toc-β-distance-matrices" class="nav-link active" data-scroll-target="#β-distance-matrices">β distance matrices</a>
   <ul class="collapse">
-  <li><a href="#unifrac-distances" id="toc-unifrac-distances" class="nav-link" data-scroll-target="#unifrac-distances">Unifrac distances</a>
-  <ul class="collapse">
-  <li><a href="#phyloseq-to-r_biom" id="toc-phyloseq-to-r_biom" class="nav-link" data-scroll-target="#phyloseq-to-r_biom">Phyloseq to r_biom</a></li>
-  <li><a href="#unifrac-calculation" id="toc-unifrac-calculation" class="nav-link" data-scroll-target="#unifrac-calculation">Unifrac calculation</a></li>
-  </ul></li>
-  <li><a href="#vegan-distances" id="toc-vegan-distances" class="nav-link" data-scroll-target="#vegan-distances">Vegan distances</a></li>
+  <li><a href="#phyloseq-to-rbiom" id="toc-phyloseq-to-rbiom" class="nav-link" data-scroll-target="#phyloseq-to-rbiom">phyloseq to rbiom</a></li>
+  <li><a href="#distance-dissimilarity-matrix" id="toc-distance-dissimilarity-matrix" class="nav-link" data-scroll-target="#distance-dissimilarity-matrix">Distance dissimilarity matrix</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -598,59 +611,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="images/measuring_tape_2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:300px; border-radius:5px; background:white; border: white solid 5px"></p>
 </figure>
 </div>
-<p>Here we’ll find out how to produce a paired distance matrix with our <strong>beta diversity</strong> metric of choice.</p>
-<section id="unifrac-distances" class="level2">
-<h2 class="anchored" data-anchor-id="unifrac-distances">Unifrac distances</h2>
+<p>Here we’ll find out how to produce a paired distance matrix with our <strong>beta diversity</strong> metric of choice using the <a href="https://cmmr.github.io/rbiom/"><code>rbiom</code></a> package. Along with many other functions it is able to calculate all the beta diversity metrics we are interested. These include:</p>
+<ul>
+<li>Weighted and Unweighted UniFrac</li>
+<li>Bray-curtis</li>
+<li>Jaccard</li>
+</ul>
+<p>However, the <code>rbiom</code> package requires its input to be in the rbiom format.</p>
+<section id="phyloseq-to-rbiom" class="level2">
+<h2 class="anchored" data-anchor-id="phyloseq-to-rbiom">phyloseq to rbiom</h2>
+<p>Thankfully we can easily convert our <code>phyloseq</code> object to an <code>r_biom</code> with <a href="https://cmmr.github.io/rbiom/reference/as_rbiom.html"><code>rbiom::as_rbiom()</code></a>.</p>
+<p>Run the function to see the summary of the produced <code>r_biom</code> object.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rbiom<span class="sc">::</span><span class="fu">as_rbiom</span>(pseq)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>You’ll notice that the <code>r_biom</code> object contains the phylogenetic tree in our <code>phyloseq</code> object. This means we can use it for UniFrac distance calculations.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We have not created a variable with the rbiom object. INstead we’ll use this function within the functions to calculate beta diversity.</p>
+</div>
+</div>
+</section>
+<section id="distance-dissimilarity-matrix" class="level2">
+<h2 class="anchored" data-anchor-id="distance-dissimilarity-matrix">Distance dissimilarity matrix</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/weighted_blanket.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:5px; background:white; border: white solid 5px"></p>
 </figure>
 </div>
-<p>Unifrac distances are preferred by many when a phylogenetic tree is available for your data. We are working with 16S data so a phylogenetic tree was created. Other barcodes or types of data may not have a phylogenetic such as ITS data or complex shotgun metagenomic data.</p>
-<p>To produce a Unifrac distance matrix we will use the function <code>bdiv_matrix()</code> from the package <code>rbiom</code>.</p>
-<section id="phyloseq-to-r_biom" class="level3">
-<h3 class="anchored" data-anchor-id="phyloseq-to-r_biom">Phyloseq to r_biom</h3>
-<p>The function <code>rbiom::bdiv_matrix()</code> was created to work with biom files and not <strong>phyloseq</strong> objects. Thankfully we can easily convert our <code>phyloseq</code> object to an <code>r_biom</code> with <code>rbiom::as_rbiom()</code>.</p>
-<p>Run the function to see the summary of the produced <code>r_biom</code> object.</p>
+<p>The function <a href="https://cmmr.github.io/rbiom/reference/bdiv_table.html"><code>rbiom::bdiv_matrix()</code></a> can calculate many different many different beta diversity distances. Additionally, the output is a matrix which we need for our ordination step later on. This is perfect for our downstream rarefaction, ordinations, and stats.</p>
+<p>Calculate weighted Unifrac distances by specifying the parameter <code>bdiv="weighted_unifrac"</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>rbiom<span class="sc">::</span><span class="fu">as_rbiom</span>(pseq)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>You’ll notice that the <code>r_biom</code> object contains the phylogenetic tree in our <code>phyloseq</code> object. This means we can use it for Unifrac distance calculations.</p>
-</section>
-<section id="unifrac-calculation" class="level3">
-<h3 class="anchored" data-anchor-id="unifrac-calculation">Unifrac calculation</h3>
-<p>The function <code>rbiom::bdiv_matrix()</code> can calculate many different many different beta diversity distances. Additionally, the output is a matrix which we need for our ordination step later on. We’ll calculate weighted Unifrac distances by specifying the parameter <code>bdiv="weighted_unifrac"</code>.</p>
-<p><a href="https://cmmr.github.io/rbiom/reference/bdiv_table.html"><code>rbiom::bdiv_matrix()</code> manual page</a></p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate weighted unifrac values</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate Weighted UniFrac values</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>unifrac_rbiom_microbiome <span class="ot">&lt;-</span> </span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    rbiom<span class="sc">::</span><span class="fu">bdiv_matrix</span>(</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">biom =</span> rbiom<span class="sc">::</span><span class="fu">as_rbiom</span>(pseq),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">bdiv=</span><span class="st">"weighted_unifrac"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Check the first 6 rows and columns of the resulting distance matrix</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>unifrac_rbiom_microbiome[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="co">#Phyloseq to rbiom</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">biom =</span> rbiom<span class="sc">::</span><span class="fu">as_rbiom</span>(pseq),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">bdiv=</span><span class="st">"weighted_unifrac"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Check the first 6 rows and columns of the resulting distance matrix</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>unifrac_rbiom_microbiome[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-</section>
-<section id="vegan-distances" class="level2">
-<h2 class="anchored" data-anchor-id="vegan-distances">Vegan distances</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/vegan_fork.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:5px; background:white; border: white solid 5px"></p>
-</figure>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p>To calculate non-unifrac <strong>beta diversity</strong> distances we can use the <code>vegan</code> package and its function <code>vegdist()</code>.</p>
-<p>The function <code>rbiom::unifrac()</code> calculates paired distances by columns, this is the samples in the <code>otu_table</code> of a phyloseq object. Unfortunately, <code>vegan::vegdist()</code> calculates paired distances by rows, this being the features in the <code>otu_table</code> of a phyloseq object. We do not want this but thankfully we can use the function <code>t()</code> to our abundance object to transpose the data.</p>
-<p>Create a <strong>Bray-Curtis</strong> distance matrix with the below code:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate Bray-Curtis distance matrix</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>bray_curtis_mat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  vegan<span class="sc">::</span><span class="fu">vegdist</span>(<span class="at">x =</span> <span class="fu">t</span>(phyloseq<span class="sc">::</span><span class="fu">otu_table</span>(pseq)),</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">"bray"</span>))</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Check first 6 rows and columns of matrix</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>bray_curtis_mat[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout-title-container flex-fill">
+Tip
 </div>
-<p>The function can calculate a plethora of metrics with the full list available at the following <a href="https://rdrr.io/cran/vegan/man/vegdist.html">webpage</a>.</p>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a full list of the distances see the <a href="https://cmmr.github.io/rbiom/reference/bdiv_table.html"><code>rbiom::bdiv_matrix()</code> reference page</a>.</p>
+<p>Distances include:</p>
+<ul>
+<li>Weighted UniFrac = <code>weighted_unifrac</code></li>
+<li>Unweighted UniFrac = <code>unweighted_unifrac</code></li>
+<li>Bray-Curtis = <code>bray</code></li>
+<li>Jaccard = <code>jaccard</code></li>
+</ul>
+</div>
+</div>
 
 
 </section>
@@ -1484,13 +1512,13 @@ window.onload = function() {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../rarefaction/beta_rarefaction.html" class="pagination-link" aria-label="β iterative rarefaction">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">β iterative rarefaction</span>
+      <a href="../rarefaction/beta_intro.html" class="pagination-link" aria-label="β intro &amp; setup">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">β intro &amp; setup</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../rarefaction/beta_ordination.html" class="pagination-link" aria-label="β ordination">
-        <span class="nav-page-text">β ordination</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../rarefaction/beta_rarefaction.html" class="pagination-link" aria-label="β iterative rarefaction">
+        <span class="nav-page-text">β iterative rarefaction</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

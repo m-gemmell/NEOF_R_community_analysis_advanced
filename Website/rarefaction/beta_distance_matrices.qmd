@@ -1,21 +1,19 @@
 # β distance matrices
 ![](images/measuring_tape_2.png){style="width:300px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
 
-Here we'll find out how to produce a paired distance matrix with our __beta diversity__ metric of choice.
+Here we'll find out how to produce a paired distance matrix with our __beta diversity__ metric of choice using the [`rbiom`](https://cmmr.github.io/rbiom/) package. 
+Along with many other functions it is able to calculate all the beta diversity metrics we are interested.
+These include:
 
-## Unifrac distances
-![](images/weighted_blanket.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
+- Weighted and Unweighted UniFrac
+- Bray-curtis
+- Jaccard
 
-Unifrac distances are preferred by many when a phylogenetic tree is available for your data.
-We are working with 16S data so a phylogenetic tree was created.
-Other barcodes or types of data may not have a phylogenetic such as ITS data or complex shotgun metagenomic data.
+However, the `rbiom` package requires its input to be in the rbiom format.
 
-To produce a Unifrac distance matrix we will use the function `bdiv_matrix()` from the package `rbiom`.
+## phyloseq to rbiom
 
-### Phyloseq to r_biom
-
-The function `rbiom::bdiv_matrix()` was created to work with biom files and not __phyloseq__ objects.
-Thankfully we can easily convert our `phyloseq` object to an `r_biom` with `rbiom::as_rbiom()`.
+Thankfully we can easily convert our `phyloseq` object to an `r_biom` with [`rbiom::as_rbiom()`](https://cmmr.github.io/rbiom/reference/as_rbiom.html).
 
 Run the function to see the summary of the produced `r_biom` object.
 
@@ -24,44 +22,40 @@ rbiom::as_rbiom(pseq)
 ```
 
 You'll notice that the `r_biom` object contains the phylogenetic tree in our `phyloseq` object.
-This means we can use it for Unifrac distance calculations.
+This means we can use it for UniFrac distance calculations.
 
-### Unifrac calculation
+::: {.callout-note}
+We have not created a variable with the rbiom object. INstead we'll use this function within the functions to calculate beta diversity.
+:::
 
-The function `rbiom::bdiv_matrix()` can calculate many different many different beta diversity distances.
+## Distance dissimilarity matrix
+![](images/weighted_blanket.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
+
+
+The function [`rbiom::bdiv_matrix()`](https://cmmr.github.io/rbiom/reference/bdiv_table.html) can calculate many different many different beta diversity distances.
 Additionally, the output is a matrix which we need for our ordination step later on.
-We'll calculate weighted Unifrac distances by specifying the parameter `bdiv="weighted_unifrac"`.
+This is perfect for our downstream rarefaction, ordinations, and stats.
 
-[`rbiom::bdiv_matrix()` manual page](https://cmmr.github.io/rbiom/reference/bdiv_table.html)
+Calculate weighted Unifrac distances by specifying the parameter `bdiv="weighted_unifrac"`.
 
 ```{r,eval=FALSE}
-#Calculate weighted unifrac values
+#Calculate Weighted UniFrac values
 unifrac_rbiom_microbiome <- 
     rbiom::bdiv_matrix(
+        #Phyloseq to rbiom
         biom = rbiom::as_rbiom(pseq),
         bdiv="weighted_unifrac")
 #Check the first 6 rows and columns of the resulting distance matrix
 unifrac_rbiom_microbiome[1:6,1:6]
 ```
 
-## Vegan distances
-![](images/vegan_fork.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
+::: {.callout-tip}
+For a full list of the distances see the [`rbiom::bdiv_matrix()` reference page](https://cmmr.github.io/rbiom/reference/bdiv_table.html).
 
-To calculate non-unifrac __beta diversity__ distances we can use the `vegan` package and its function `vegdist()`.
+Distances include:
 
-The function `rbiom::unifrac()` calculates paired distances by columns, this is the samples in the `otu_table` of a phyloseq object.
-Unfortunately, `vegan::vegdist()` calculates paired distances by rows, this being the features in the `otu_table` of a phyloseq object.
-We do not want this but thankfully we can use the function `t()` to our abundance object to transpose the data.
-
-Create a __Bray-Curtis__ distance matrix with the below code:
-
-```{R, eval=FALSE}
-#Calculate Bray-Curtis distance matrix
-bray_curtis_mat <- as.matrix(
-  vegan::vegdist(x = t(phyloseq::otu_table(pseq)),
-                 method = "bray"))
-#Check first 6 rows and columns of matrix
-bray_curtis_mat[1:6,1:6]
-```
-
-The function can calculate a plethora of metrics with the full list available at the following [webpage](https://rdrr.io/cran/vegan/man/vegdist.html).
+- Weighted UniFrac = `weighted_unifrac`
+- Unweighted UniFrac = `unweighted_unifrac`
+- Bray-Curtis = `bray`
+- Jaccard = `jaccard`
+:::

@@ -1,7 +1,7 @@
 # β iterative rarefaction
 ![](images/iterative_distances.png){style="width:400px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
 
-Now that we know how to create a __beta diveristy__ paired distance matrix, we can create one with averaged values produced by __iterative rarefaction__.
+Now that we know how to create a __beta diversity__ paired distance matrix, we can create one with averaged values produced by __iterative rarefaction__.
 
 ## Iterative rarefaction values
 ![](images/ten_rng_seeds.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
@@ -68,7 +68,6 @@ save(beta_df_mean, file = "wunifrac_df_mean.RData")
 beta_df_mean[1:6,1:6]
 #Remove created objects
 rm(beta_df_sum, beta_df_mean, pseq_rarefy)
-
 ```
 
 ::: {.callout-note collapse="true" title="verbose = FALSE option"}

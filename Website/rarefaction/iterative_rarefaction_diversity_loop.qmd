@@ -3,8 +3,13 @@
 This page contains code blocks to carry out iterative rarefaction for alpha and beta diversity with one loop.
 This is the best method in your own analyses so you only need to run the rarefaction loop once.
 
-This page is primarily provided as a template which you can copy, paste, and edit for you won analyses.
-Ensure you check through all the code and put as well as making relevant edits when you do so.
+::: {.callout-note}
+This page does not contain any code for producing plots or stats.
+:::
+
+
+This page is primarily provided as a template which you can copy, paste, and edit for you own analyses.
+Ensure you check through all the code as well as making relevant edits when you do so.
 
 ::: {.callout-note}
 We do not recommend you run the below during the course as it will take quite a while.
@@ -19,7 +24,6 @@ Load in the required libraries and your phyloseq object.
 library("phyloseq")
 library("microbiome")
 library("tidyverse")
-library("vegan")
 library("rbiom")
 #Load processed but unrarefied phyloseq
 #Please provide your own below
@@ -75,8 +79,8 @@ Carry out iterative rarefaction whilst calculating all your alpha and beta diver
 
 There are 2 code blocks below (only use one of these for your data):
 
-- Phylogenetically aware metrics included.
-- Phylogenetically aware metrics excluded.
+- Phylogenetically aware metrics included
+- Phylogenetically aware metrics excluded
 
 Below we use pipes (`|>`) to make some of the code tidier.
 Please see more info about pipes in out [Tidyverse site](https://neof-workshops.github.io/Tidyverse/dplyr/pipes.html).
@@ -86,12 +90,12 @@ Please see more info about pipes in out [Tidyverse site](https://neof-workshops.
 In the below code block the following metrics are calculated:
 
 - All alpha diversity metrics available in `microbiome::alpha()`
-- Weighted & unweighted unifrac
+- Weighted & unweighted UniFrac
 - Bray-curtis
 - Jaccard
 
 ```{R, eval=FALSE}
-#Iteration based rarefied alpha diversity values
+#Iteration based rarefied diversity values
 
 #Initial data frames
 #First rarefaction
@@ -114,9 +118,13 @@ uwunifrac_df_sum <- rbiom::bdiv_matrix(
     biom = biom_rarefy,
     bdiv="unweighted_unifrac")
 #Bray-curtis
-bray_df_sum <- vegan::vegdist(x = t(otu_df), method = "bray") |> as.matrix()
+bray_df_sum <- rbiom::bdiv_matrix(
+    biom = biom_rarefy,
+    bdiv="bray")
 #Jaccard
-jaccard_df_sum <- vegan::vegdist(x = t(otu_df), method = "jaccard") |> as.matrix()
+jaccard_df_sum <- rbiom::bdiv_matrix(
+    biom = biom_rarefy,
+    bdiv="jaccard")
 
 #Loop through 2 to the number of rarefaction
 for (i in 2:rarefaction_iters){
@@ -146,10 +154,14 @@ for (i in 2:rarefaction_iters){
         bdiv="unweighted_unifrac")
     uwunifrac_df_sum <-  uwunifrac_df_sum + beta_df
     #Bray-curtis
-    beta_df <- vegan::vegdist(x = t(otu_df), method = "bray") |> as.matrix()
+    beta_df <- rbiom::bdiv_matrix(
+        biom = biom_rarefy,
+        bdiv="bray")
     bray_df_sum <-  bray_df_sum + beta_df
     #Jaccard
-    beta_df <- vegan::vegdist(x = t(otu_df), method = "jaccard") |> as.matrix()
+    beta_df <- rbiom::bdiv_matrix(
+        biom = biom_rarefy,
+        bdiv="jaccard")
     jaccard_df_sum <-  jaccard_df_sum + beta_df
 }
 #Alpha
@@ -173,7 +185,6 @@ save(jaccard_df_mean, file = "jaccard_df_mean.RData")
 
 #Remove unneeded objects
 rm(pseq, alpha_df_sum, alpha_df)
-
 ```
 
 ### Phylogenetically aware metrics excluded
@@ -187,7 +198,7 @@ In the below code block the following metrics are calculated:
 - Jaccard
 
 ```{R, eval=FALSE}
-#Iteration based rarefied alpha diversity values
+#Iteration based rarefied diversity values
 
 #Initial data frames
 #First rarefaction
@@ -197,12 +208,16 @@ pseq_rarefy <- phyloseq::rarefy_even_depth(
 #Alpha diversity
 alpha_df_sum <- microbiome::alpha(pseq_rarefy, index= "all")
 #Beta diveristy values
-#Objects from phyloseq object
-otu_df <- phyloseq::otu_table(pseq_rarefy)
+#Biom object from phyloseq object
+biom_rarefy <- rbiom::as_rbiom(pseq_rarefy)
 #Bray-curtis
-bray_df_sum <- vegan::vegdist(x = t(otu_df), method = "bray") |> as.matrix()
+bray_df_sum <- rbiom::bdiv_matrix(
+    biom = biom_rarefy,
+    bdiv="bray")
 #Jaccard
-jaccard_df_sum <- vegan::vegdist(x = t(otu_df), method = "jaccard") |> as.matrix()
+jaccard_df_sum <- rbiom::bdiv_matrix(
+    biom = biom_rarefy,
+    bdiv="jaccard")
 
 #Loop through 2 to the number of rarefaction
 for (i in 2:rarefaction_iters){
@@ -217,13 +232,17 @@ for (i in 2:rarefaction_iters){
     #Below we assign all beta diversity values to beta_df 
     # then add this to the appropriate sum dafa frame (e.g. wunifrac_df_sum)
     #This is to limit number of objects saved in env at one time
-    #Objects from phyloseq object
-    otu_df <- phyloseq::otu_table(pseq_rarefy)
+    #Biom object from phyloseq object
+    biom_rarefy <- rbiom::as_rbiom(pseq_rarefy)
     #Bray-curtis
-    beta_df <- vegan::vegdist(x = t(otu_df), method = "bray") |> as.matrix()
+    beta_df <- rbiom::bdiv_matrix(
+        biom = biom_rarefy,
+        bdiv="bray")
     bray_df_sum <-  bray_df_sum + beta_df
     #Jaccard
-    beta_df <- vegan::vegdist(x = t(otu_df), method = "jaccard") |> as.matrix()
+    beta_df <- rbiom::bdiv_matrix(
+        biom = biom_rarefy,
+        bdiv="jaccard")
     jaccard_df_sum <-  jaccard_df_sum + beta_df
 }
 #Alpha

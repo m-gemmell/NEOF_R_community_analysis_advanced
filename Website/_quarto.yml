@@ -87,8 +87,8 @@ website:
     - section: "Beta diversity"
       contents:
       - href: rarefaction/beta_intro.qmd
-      - href: rarefaction/beta_rarefaction.qmd
       - href: rarefaction/beta_distance_matrices.qmd
+      - href: rarefaction/beta_rarefaction.qmd
       - href: rarefaction/beta_ordination.qmd
       - href: rarefaction/beta_stats.qmd
       - href: rarefaction/beta_subset_ordination.qmd

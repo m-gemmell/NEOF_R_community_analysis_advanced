@@ -19,20 +19,9 @@ We also specify `scales = "free"` so each of the three plots has their own x and
 This is important when the values are drastically different such as in the case between the observed (>100) and shannon values (<10).
 
 
-::: {.callout-note collapse="true" title="scale options"}
-The four `scales` are:
-
-- __`"fixed"` (default):__ All the scales are the same (fixed), based on the largest and smallest x and y values across all the plots. Useful where you want direct comparisons such as looking at the overall pattern in ordination plots.
-- __`"free"`:__ All the scales are free. Each plot's x and y values limits are based on the data within it.
-- __`"free_x"`:__ The x axis is free and the y axis is fixed.
-- __`"free_y"`:__ The y axis is free and the x axis is fixed.
-
-Which you want to use depends on your data and how you are faceting it.
-:::
-
 ```{R, eval = FALSE}
 #Produce ggplot object of violin plot
-alpha_violinplot <- ggplot(basic_alpha_metrics_long_df, aes(x = media, y = value)) +
+alpha_violinplot <- ggplot(basic_alpha_metrics_tbl, aes(x = media, y = value)) +
                             ggplot2::geom_violin() +
                             ggforce::geom_sina(alpha=0.5, aes(color=site)) +
                             ggplot2::labs(color = "Site", x = "Media", y = "Value") +
@@ -44,12 +33,27 @@ ggsave(filename = "./Alpha_diversity_rarefy_iters_media_violinplot.png", plot = 
 IRdisplay::display_png(file = "./Alpha_diversity_rarefy_iters_media_violinplot.png")
 ```
 
+::: {.callout-note collapse="true" title="scale options"}
+The four `scales` are:
+
+- __`"fixed"` (default):__ All the scales are the same (fixed), based on the largest and smallest x and y values across all the plots. Useful where you want direct comparisons such as looking at the overall pattern in ordination plots.
+- __`"free"`:__ All the scales are free. Each plot's x and y values limits are based on the data within it.
+- __`"free_x"`:__ The x axis is free and the y axis is fixed.
+- __`"free_y"`:__ The y axis is free and the x axis is fixed.
+
+Which you want to use depends on your data and how you are faceting it.
+:::
+
 ## Stats
 ![](images/stats.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
 
 We can carry out statistics to compare the alpha diversity values between sample groups.
 
-An important note is that we are using our wide data frame (`meta_alpha_mean_df`) rather than our long data frame (`basic_alpha_metrics_long_df`).
+
+::: {.callout-important}
+We are using our wide data frame (`meta_alpha_mean_df`) rather than our long tibble (`basic_alpha_metrics_tbl`) for these stats.
+:::
+
 
 ### Kruskal Wallis test
 
@@ -76,7 +80,7 @@ To determine what groups are significantly different from each other we can carr
 #Observed ASVs
 pairwise.wilcox.test(meta_alpha_mean_df$observed, meta_alpha_mean_df$media, p.adjust.method = "holm")
 #Shannon diversity
-pairwise.wilcox.test(meta_alpha_mean_df$shannon, meta_alpha_mean_df$media, p.adjust.method = "holm")
+pairwise.wilcox.test(meta_alpha_mean_df$shannon, meta_alpha_mean_dfl$media, p.adjust.method = "holm")
 ```
 
 You'll see three p-value adjusted tables with all the values (except Shannon: ENV against TSA) being significant (<0.05).
