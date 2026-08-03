@@ -4,9 +4,9 @@
 This section will teach you how to carry out __beta diversity__ analysis.
 The steps will include:
 
-- Calculating __beta diversity__ distances
-- Using __iterative rarefaction__ to create averaged distance values
-- Carrying out various ordination techniques to visualise the distances between samples
+1. Calculating __beta diversity__ distances
+2. Using __iterative rarefaction__ to create averaged distance values
+3. Carrying out various ordination techniques to visualise the distances between samples
 
 ## Setup
 ![](images/setup_7.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}

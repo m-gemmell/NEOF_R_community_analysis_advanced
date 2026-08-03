@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>beta_considerations – Advanced R community analysis</title>
+<title>rarefaction_slope_tibble – Advanced R community analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -33,8 +68,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../rarefaction/beta_task.html" rel="next">
-<link href="../rarefaction/beta_subset_ordination.html" rel="prev">
+<link href="../rarefaction/rareslope_boxplots.html" rel="next">
+<link href="../rarefaction/rarefaction_curve.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -515,7 +550,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_considerations.html" class="sidebar-item-text sidebar-link active">
+  <a href="../rarefaction/beta_considerations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">β considerations</span></a>
   </div>
 </li>
@@ -540,6 +575,24 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../rarefaction/rareslope_intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Slope intro</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../rarefaction/rarefaction_curve.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rarefaction curve</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../rarefaction/rarefaction_slope_tibble.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Rarefaction slope tibble</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../rarefaction/rareslope_boxplots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Slope boxplots</span></a>
   </div>
 </li>
       </ul>
@@ -571,15 +624,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#β-considerations" id="toc-β-considerations" class="nav-link active" data-scroll-target="#β-considerations">β considerations</a>
+  <li><a href="#rarefaction-slope-tibble" id="toc-rarefaction-slope-tibble" class="nav-link active" data-scroll-target="#rarefaction-slope-tibble">Rarefaction slope tibble</a>
   <ul class="collapse">
-  <li><a href="#which-distance-measures-to-use" id="toc-which-distance-measures-to-use" class="nav-link" data-scroll-target="#which-distance-measures-to-use">Which distance measures to use?</a></li>
-  <li><a href="#which-ordination-method-to-use" id="toc-which-ordination-method-to-use" class="nav-link" data-scroll-target="#which-ordination-method-to-use">Which ordination method to use?</a></li>
-  <li><a href="#more-dimensions" id="toc-more-dimensions" class="nav-link" data-scroll-target="#more-dimensions">More dimensions</a>
-  <ul class="collapse">
-  <li><a href="#produce-multiple-plots" id="toc-produce-multiple-plots" class="nav-link" data-scroll-target="#produce-multiple-plots">Produce multiple plots</a></li>
-  <li><a href="#d-scatterplot" id="toc-d-scatterplot" class="nav-link" data-scroll-target="#d-scatterplot">3D scatterplot</a></li>
-  </ul></li>
+  <li><a href="#ordered-tibble-of-read-depths" id="toc-ordered-tibble-of-read-depths" class="nav-link" data-scroll-target="#ordered-tibble-of-read-depths">Ordered tibble of read depths</a></li>
+  <li><a href="#rarefaction-slopes-at-each-sample-depth" id="toc-rarefaction-slopes-at-each-sample-depth" class="nav-link" data-scroll-target="#rarefaction-slopes-at-each-sample-depth">Rarefaction slopes at each sample depth</a></li>
+  <li><a href="#tidying-up" id="toc-tidying-up" class="nav-link" data-scroll-target="#tidying-up">Tidying up</a></li>
+  <li><a href="#one-sample-example" id="toc-one-sample-example" class="nav-link" data-scroll-target="#one-sample-example">One sample example</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -591,72 +641,192 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="β-considerations" class="level1">
-<h1>β considerations</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/consider.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:5px; background:white; border: white solid 5px"></p>
-</figure>
+<section id="rarefaction-slope-tibble" class="level1">
+<h1>Rarefaction slope tibble</h1>
+<p>In the main <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/14-Rarefaction.html#rarefaction-slope">R community workshop</a> we created calculated the rarefaction slope for each sample at our specified sampling depth. This depth was the depth of the sample with the smallest/minimum read count.</p>
+<p>In this section we will carry this out but we will calculate the rarefaction slopes of all samples at all unique sample depths.</p>
+<p>In other words we will:</p>
+<ol type="1">
+<li>Find the depth of the sample with the lowest read count/depth</li>
+<li>Calculate the rarefaction slopes of all samples at this depth</li>
+<li>Find the depth of the sample with the 2nd lowest read count/depth</li>
+<li>Calculate the rarefaction slopes of all samples at this depth</li>
+<li>Etc. all the way to the depth of the sample with the highest read count/depth</li>
+</ol>
+<p>To create this tibble we’ll:</p>
+<ol type="1">
+<li>Create a tibble of samples and their read depths</li>
+<li>Loop through this tibble to create our tibble of rarefaction slopes</li>
+<li>Add the sample depths to this tibble</li>
+<li>Remove <code>NA</code>s and rows where the rarefaction depth is higher than the sample’s depth</li>
+</ol>
+<section id="ordered-tibble-of-read-depths" class="level2">
+<h2 class="anchored" data-anchor-id="ordered-tibble-of-read-depths">Ordered tibble of read depths</h2>
+<p>First we’ll create a 2-column tibble of Samples and read depths. We’ll order it from lowest to highest depth.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Vector of ordered read depths</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ordered_read_depths <span class="ot">&lt;-</span> abund_df <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rowSums</span>() <span class="sc">|&gt;</span> <span class="fu">sort</span>()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Create a tibble </span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>read_depths_tbl <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sample=</span><span class="fu">names</span>(ordered_read_depths),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Reads=</span>ordered_read_depths</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#View top</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>read_depths_tbl <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>There are many considerations to take in mind when carrying out beta diversity analysis.</p>
-<section id="which-distance-measures-to-use" class="level2">
-<h2 class="anchored" data-anchor-id="which-distance-measures-to-use">Which distance measures to use?</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/inch_or_mm.xcf.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; border-radius:5px; background:white; border: white solid 5px"></p>
-</figure>
-</div>
-<p>There are many beta diversity distances that you can use. Ultimately the choice is yours but our recommendations would be:</p>
-<ul>
-<li>Weighted and unweighted unifrac distances if you have a phylogenetic tree</li>
-<li>Bray-Curtis and Jaccard distances if you do not have a phylogenetic tree</li>
-</ul>
-<p>These 2 sets of distances are very popular and commonly used as the default choices.</p>
-<p>There are two distances in each set as one is based on:</p>
-<ul>
-<li>Richness (presence/absence): Unweighted unifrac &amp; Jaccard</li>
-<li>Richness and abundance values: Weighted unifrac &amp; Bray-Curtis</li>
-</ul>
-<p>Normally the measure using abundance values will be more informative. However, it is good to attempt the richness only approach too as it may show something hidden by the inclusion of the abundance data.</p>
+<p>We can see the sample with the lowest/minimum depth is “UD_KBC_rep4” with a depth of 1,399.</p>
 </section>
-<section id="which-ordination-method-to-use" class="level2">
-<h2 class="anchored" data-anchor-id="which-ordination-method-to-use">Which ordination method to use?</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/compass_2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; border-radius:5px; background:white; border: white solid 5px"></p>
-</figure>
-</div>
-<p>A common question is “Which ordination method should I use?” There are many ordination methods with <strong>NMDS</strong> and <strong>PCoA</strong> being popular for ordination distance based values (dissimilarity matrices).</p>
-<p>Many people choose based on which method is the most informative. They choose the one that shows the best picture and that explains the data the best.</p>
-<p>In this case the PCoA plot looks better than the NMDS plot as the PCoA plot has a high <strong>% variance explained</strong> and it shows more separation of the samples.</p>
-<p>If the PCoA plot had a low <strong>% variance explained</strong> it may be better to choose the NMDS plot. NMDS attempts to explain the data in the number of dimensions chosen by the user. We chose 2 as we want to plot the data in 2 dimensions.</p>
-<p>There is one paper that recommends you create, publish, and stick to a statistical plan before carrying out your analysis. The proposal and reasoning is in the following paper: <a href="https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2021.796025/full">The Power of Microbiome Studies: Some Considerations on Which Alpha and Beta Metrics to Use and How to Report Results</a></p>
-</section>
-<section id="more-dimensions" class="level2">
-<h2 class="anchored" data-anchor-id="more-dimensions">More dimensions</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/3d.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; border-radius:5px; background:white; border: white solid 5px"></p>
-</figure>
-</div>
-<p>Your data may be very complex and two dimensions may not be sufficient to plot the data. There are two main ways to plot multiple dimensions.</p>
-<section id="produce-multiple-plots" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="produce-multiple-plots">Produce multiple plots</h3>
-<p>Create multiple 2D plots to compare pairs of axes. If you wanted to plot the first three axes this way you would produce the following scatter plots:</p>
+<section id="rarefaction-slopes-at-each-sample-depth" class="level2">
+<h2 class="anchored" data-anchor-id="rarefaction-slopes-at-each-sample-depth">Rarefaction slopes at each sample depth</h2>
+<p>The most complex step is creating our tibble with rarefaction slopes of each sample at all sample depths. To carry this out we’ll create four <strong>vectors</strong> which will be used to create the columns of our <strong>tibble</strong>. The columns will be:</p>
 <ul>
-<li>Axis 1 against Axis 2</li>
-<li>Axis 1 against Axis 3</li>
-<li>Axis 2 against Axis 3</li>
+<li><code>Sample</code>: The sample which is having its rarefaction slope calculated</li>
+<li><code>RareSlope</code>: The rarefaction slope value</li>
+<li><code>RarefyDepth</code>: The rarefaction depth the slope value was calculated at</li>
+<li><code>RarefyDepthSample</code>: The sample whose depth is equal to the <code>RarefyDepth</code> sample</li>
 </ul>
-<p>You can use this method to easily visualise as many axes as possible. The drawback is that you can only directly compare two axes in each plot.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create tibble of rareslope for each sample at each rarefy depth</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Set seed</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">343</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Create empty vectors for loop</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Sample column</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>sample_vec <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#RareSlope column</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>rareslope_vec <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#RarefyDepth column</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>rarefy_depth_vec <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#RarefyDepthSample column</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>rarefy_depth_sample_vec <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Loop through read_depths_tibble</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(read_depths_tbl)) {</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Extract rarefy depth and rarefy depth sample</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Use pull to extract values as scalar rather than a tibble</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    rarefy_depth <span class="ot">&lt;-</span> read_depths_tbl[i,<span class="st">"Reads"</span>] <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">pull</span>()</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    rarefy_depth_sample <span class="ot">&lt;-</span> read_depths_tbl[i,<span class="st">"Sample"</span>] <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">pull</span>()</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Calculate rareslopes</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Creates vector with names</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Names are samples, values are rareslope</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    rareslopes <span class="ot">&lt;-</span> vegan<span class="sc">::</span><span class="fu">rareslope</span>(</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        abund_df, <span class="at">sample=</span>rarefy_depth</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    )   </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Add values to vectors</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    sample_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(sample_vec, <span class="fu">names</span>(rareslopes))</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Use unname() to only extract rare slope value</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    rareslope_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(rareslope_vec, <span class="fu">unname</span>(rareslopes))</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Replicate rarefy depth and sample by the length of the rareslopes vector</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="co">#These values are the same within ech iteration of the loop</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    rarefy_depth_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(rarefy_depth_vec, </span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">rep</span>(rarefy_depth, <span class="fu">length</span>(rareslopes)))</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    rarefy_depth_sample_vec <span class="ot">&lt;-</span> <span class="fu">c</span>(rarefy_depth_sample_vec, </span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">rep</span>(rarefy_depth_sample, <span class="fu">length</span>(rareslopes)))</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co">#Create tibble</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>rareslope_tbl <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">Sample =</span> sample_vec,</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">RareSlope =</span> rareslope_vec,</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">RarefyDepth =</span> rarefy_depth_vec,</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">RarefyDepthSample =</span> rarefy_depth_sample_vec</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a><span class="co">#Set seed to NULL</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Check the number of rows and the top of the <strong>tibble</strong>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(rareslope_tbl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>rareslope_tbl <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>There are a lot of rows but we’ll reduce this number in the next steps.</p>
 </section>
-<section id="d-scatterplot" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="d-scatterplot">3D scatterplot</h3>
-<p>You can create an interactive 3D scatter plot with the package <code>plotly</code> using the <code>plot_ly()</code> function (<a href="https://plotly.com/r/3d-scatter-plots/">guide</a>).</p>
-<p>This allows you to directly compare 3 axes at once. It is interactive, allowing you to change the perspective of the plot. This allows you to choose the best angle to save the image to use in publication. However, you would generally not use this method to compare more than 3 axes.</p>
+<section id="tidying-up" class="level2">
+<h2 class="anchored" data-anchor-id="tidying-up">Tidying up</h2>
+<p>We’ll tidy up <code>rareslope_tbl</code>. First we’ll add the depth of the samples to the tibble with <a href="https://dplyr.tidyverse.org//reference/mutate-joins.html"><code>dplyr::inner_join()</code></a> (this is similar to excel’s vlookup).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Add column of sample depths</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>rareslope_tbl <span class="ot">&lt;-</span> rareslope_tbl <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Add Reads values from read_depths_tbl</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Joins by their shared column "Sample"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">inner_join</span>(read_depths_tbl, <span class="at">by=</span><span class="st">"Sample"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Rename and move column</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">SampleDepth=</span>Reads) <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">relocate</span>(SampleDepth, <span class="at">.after=</span>Sample)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#Glimpse</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>rareslope_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Cookbook and reference links for Tidyverse function used above">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Cookbook and reference links for Tidyverse function used above
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://dplyr.tidyverse.org//reference/mutate-joins.html"><code>dplyr::inner_join()</code></a></li>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/rename.html"><code>dplyr::rename()</code></a></li>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/relocate.html"><code>dplyr::relocate()</code></a></li>
+</ul>
+</div>
+</div>
+<p>Next we’ll:</p>
+<ul>
+<li>Remove any rows with <code>NA</code>s</li>
+<li>Retain rows where <code>SampleDepth</code> is greater or equal to <code>RarefyDepth</code>
+<ul>
+<li>The rarefaction slope of a sample equal to or above its depth is always 0 and therefore uninformative</li>
+</ul></li>
+<li>Convert <code>ReadDepthSample</code> to a factor for later plotting</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Edits</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rareslope_tbl <span class="ot">&lt;-</span> rareslope_tbl <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Remove NAs</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">drop_na</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Keep rows where sample depth is greater than rarefy depth</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(SampleDepth <span class="sc">&gt;</span> RarefyDepth)    </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Change ReadDepthSample to factor so it stays in order</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># of lowest to highest read depth</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>rareslope_tbl<span class="sc">$</span>RarefyDepthSample <span class="ot">&lt;-</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">factor</span>(rareslope_tbl<span class="sc">$</span>RarefyDepthSample,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>              <span class="co">#Set order</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">levels=</span>read_depths_tbl<span class="sc">$</span>Sample)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Glimpse</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>rareslope_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now you can see we only have 2,628 rows now which is good.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Cookbook links for Tidyverse function used above">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Cookbook links for Tidyverse function used above
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://neof-workshops.github.io/Tidyverse/tidyr/drop_na.html"><code>tidyr::drop_na()</code></a></li>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/filter.html"><code>dplyr::filter()</code></a></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="one-sample-example" class="level2">
+<h2 class="anchored" data-anchor-id="one-sample-example">One sample example</h2>
+<p>Run the below command and you’ll see the rarefaction slopes of UD_CVP_rep1. It starts from the minimum read depth (1,399) moving across the read depth of samples in increasing order until it reaches the depth of the sample before it (MD_TSA_rep3 with 10,521).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#View all rarefaction slopes of UD_CVP_rep1</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>rareslope_tbl <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Sample<span class="sc">==</span><span class="st">"UD_CVP_rep1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>As you scroll down the tibble, from lowest to highest rarefaction depth, you’ll notice the rarefaction slope decreasing indicating the sample’s rarefaction curve plateauing. Let’s visualise this in the next page.</p>
 
 
-</section>
 </section>
 </section>
 
@@ -1488,13 +1658,13 @@ window.onload = function() {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../rarefaction/beta_subset_ordination.html" class="pagination-link" aria-label="β subset ordinations">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">β subset ordinations</span>
+      <a href="../rarefaction/rarefaction_curve.html" class="pagination-link" aria-label="Rarefaction curve">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Rarefaction curve</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../rarefaction/beta_task.html" class="pagination-link" aria-label="β task">
-        <span class="nav-page-text">β task</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../rarefaction/rareslope_boxplots.html" class="pagination-link" aria-label="Slope boxplots">
+        <span class="nav-page-text">Slope boxplots</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

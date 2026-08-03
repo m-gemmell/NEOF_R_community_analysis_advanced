@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>beta_considerations – Advanced R community analysis</title>
+<title>rareslope_boxplots – Advanced R community analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,6 +23,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -33,8 +68,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../rarefaction/beta_task.html" rel="next">
-<link href="../rarefaction/beta_subset_ordination.html" rel="prev">
+<link href="../rarefaction/iterative_rarefaction_diversity_loop.html" rel="next">
+<link href="../rarefaction/rarefaction_slope_tibble.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -515,7 +550,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_considerations.html" class="sidebar-item-text sidebar-link active">
+  <a href="../rarefaction/beta_considerations.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">β considerations</span></a>
   </div>
 </li>
@@ -540,6 +575,24 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../rarefaction/rareslope_intro.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Slope intro</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../rarefaction/rarefaction_curve.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rarefaction curve</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../rarefaction/rarefaction_slope_tibble.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rarefaction slope tibble</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../rarefaction/rareslope_boxplots.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Slope boxplots</span></a>
   </div>
 </li>
       </ul>
@@ -571,15 +624,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#β-considerations" id="toc-β-considerations" class="nav-link active" data-scroll-target="#β-considerations">β considerations</a>
+  <li><a href="#slope-boxplots" id="toc-slope-boxplots" class="nav-link active" data-scroll-target="#slope-boxplots">Slope boxplots</a>
   <ul class="collapse">
-  <li><a href="#which-distance-measures-to-use" id="toc-which-distance-measures-to-use" class="nav-link" data-scroll-target="#which-distance-measures-to-use">Which distance measures to use?</a></li>
-  <li><a href="#which-ordination-method-to-use" id="toc-which-ordination-method-to-use" class="nav-link" data-scroll-target="#which-ordination-method-to-use">Which ordination method to use?</a></li>
-  <li><a href="#more-dimensions" id="toc-more-dimensions" class="nav-link" data-scroll-target="#more-dimensions">More dimensions</a>
+  <li><a href="#slope-box-plot" id="toc-slope-box-plot" class="nav-link" data-scroll-target="#slope-box-plot">Slope box plot</a>
   <ul class="collapse">
-  <li><a href="#produce-multiple-plots" id="toc-produce-multiple-plots" class="nav-link" data-scroll-target="#produce-multiple-plots">Produce multiple plots</a></li>
-  <li><a href="#d-scatterplot" id="toc-d-scatterplot" class="nav-link" data-scroll-target="#d-scatterplot">3D scatterplot</a></li>
+  <li><a href="#subset-slope-boxplot" id="toc-subset-slope-boxplot" class="nav-link" data-scroll-target="#subset-slope-boxplot">Subset slope boxplot</a></li>
   </ul></li>
+  <li><a href="#rarefaction-slope-and-sample-depth-box-plots" id="toc-rarefaction-slope-and-sample-depth-box-plots" class="nav-link" data-scroll-target="#rarefaction-slope-and-sample-depth-box-plots">Rarefaction slope and sample depth box plots</a></li>
+  <li><a href="#summary-table" id="toc-summary-table" class="nav-link" data-scroll-target="#summary-table">Summary table</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -591,72 +643,199 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="β-considerations" class="level1">
-<h1>β considerations</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/consider.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:5px; background:white; border: white solid 5px"></p>
-</figure>
-</div>
-<p>There are many considerations to take in mind when carrying out beta diversity analysis.</p>
-<section id="which-distance-measures-to-use" class="level2">
-<h2 class="anchored" data-anchor-id="which-distance-measures-to-use">Which distance measures to use?</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/inch_or_mm.xcf.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; border-radius:5px; background:white; border: white solid 5px"></p>
-</figure>
-</div>
-<p>There are many beta diversity distances that you can use. Ultimately the choice is yours but our recommendations would be:</p>
+<section id="slope-boxplots" class="level1">
+<h1>Slope boxplots</h1>
+<p>On this page you’ll:</p>
 <ul>
-<li>Weighted and unweighted unifrac distances if you have a phylogenetic tree</li>
-<li>Bray-Curtis and Jaccard distances if you do not have a phylogenetic tree</li>
+<li>Create a boxplot visualisation of rarefaction slopes across the depth of samples.</li>
+<li>Create rarefaction slope boxplots side by side with depth boxplots</li>
+<li>Create a summary table showing the slopes and depths across the sample depths</li>
 </ul>
-<p>These 2 sets of distances are very popular and commonly used as the default choices.</p>
-<p>There are two distances in each set as one is based on:</p>
-<ul>
-<li>Richness (presence/absence): Unweighted unifrac &amp; Jaccard</li>
-<li>Richness and abundance values: Weighted unifrac &amp; Bray-Curtis</li>
-</ul>
-<p>Normally the measure using abundance values will be more informative. However, it is good to attempt the richness only approach too as it may show something hidden by the inclusion of the abundance data.</p>
-</section>
-<section id="which-ordination-method-to-use" class="level2">
-<h2 class="anchored" data-anchor-id="which-ordination-method-to-use">Which ordination method to use?</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/compass_2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; border-radius:5px; background:white; border: white solid 5px"></p>
-</figure>
+<section id="slope-box-plot" class="level2">
+<h2 class="anchored" data-anchor-id="slope-box-plot">Slope box plot</h2>
+<p>Let’s create the boxplots of rarefaction slopes across the sample depths. The x-axis will be the slope values. The y-axis will have the samples from lowest depth (bottom) to highest depth (top).</p>
+<p>The purpose of this plot is to allow us to choose which sample we want to use as the minimum depth for rarefaction. We can also use this for minimum depth sample removal.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Box plot of rare slopes</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>rareslope_boxplot <span class="ot">&lt;-</span> rareslope_tbl <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>RarefyDepthSample, <span class="at">x =</span> RareSlope)) <span class="sc">+</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_boxplot</span>()</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"rareslope_boxplot.png"</span>, <span class="at">plot =</span> rareslope_boxplot, </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">"png"</span>, <span class="at">units=</span><span class="st">"mm"</span>, <span class="at">width=</span><span class="dv">200</span>, <span class="at">height=</span><span class="dv">500</span>, <span class="at">dpi=</span><span class="dv">300</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file=</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"./rareslope_boxplot.png"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="dv">600</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>A common question is “Which ordination method should I use?” There are many ordination methods with <strong>NMDS</strong> and <strong>PCoA</strong> being popular for ordination distance based values (dissimilarity matrices).</p>
-<p>Many people choose based on which method is the most informative. They choose the one that shows the best picture and that explains the data the best.</p>
-<p>In this case the PCoA plot looks better than the NMDS plot as the PCoA plot has a high <strong>% variance explained</strong> and it shows more separation of the samples.</p>
-<p>If the PCoA plot had a low <strong>% variance explained</strong> it may be better to choose the NMDS plot. NMDS attempts to explain the data in the number of dimensions chosen by the user. We chose 2 as we want to plot the data in 2 dimensions.</p>
-<p>There is one paper that recommends you create, publish, and stick to a statistical plan before carrying out your analysis. The proposal and reasoning is in the following paper: <a href="https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2021.796025/full">The Power of Microbiome Studies: Some Considerations on Which Alpha and Beta Metrics to Use and How to Report Results</a></p>
-</section>
-<section id="more-dimensions" class="level2">
-<h2 class="anchored" data-anchor-id="more-dimensions">More dimensions</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/3d.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; border-radius:5px; background:white; border: white solid 5px"></p>
-</figure>
+<p>In the plot you can see the range of rarefaction slopes starts high going up to a rarefaction slope of 0.15. As we move up the plot the ranges reduce and the values decrease, a lower slope value the better.</p>
+<p>It seems if we chose one of the rep4 samples as the rarefaction path we would still have quite high slopes. Preferably we want the slopes to be lower than 0.01.</p>
+<section id="subset-slope-boxplot" class="level3">
+<h3 class="anchored" data-anchor-id="subset-slope-boxplot">Subset slope boxplot</h3>
+<p>Let’s recreate the plot without the rep4 samples. We’ll definitely not want to use them and its hard to see the slope values on the x-axis of the other samples.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Box plot of rareslopes</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>rareslope_boxplot <span class="ot">&lt;-</span> rareslope_tbl <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Remove rows where "rep4" is in the RarefyDepthSample column</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">grepl</span>(<span class="st">"rep4"</span>,RarefyDepthSample)) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Plot</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>RarefyDepthSample, <span class="at">x =</span> RareSlope)) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_boxplot</span>()</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"rareslope_boxplot_no_rep4.png"</span>, <span class="at">plot =</span> rareslope_boxplot, </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">"png"</span>, <span class="at">units=</span><span class="st">"mm"</span>, <span class="at">width=</span><span class="dv">200</span>, <span class="at">height=</span><span class="dv">500</span>, <span class="at">dpi=</span><span class="dv">300</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file=</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"./rareslope_boxplot_no_rep4.png"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="dv">600</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Your data may be very complex and two dimensions may not be sufficient to plot the data. There are two main ways to plot multiple dimensions.</p>
-<section id="produce-multiple-plots" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="produce-multiple-plots">Produce multiple plots</h3>
-<p>Create multiple 2D plots to compare pairs of axes. If you wanted to plot the first three axes this way you would produce the following scatter plots:</p>
+<p>In this case we can see that most of the rarefaction slopes are less than 0.01 if we used LD_ENV_rep5’s depth as the rarefaction/minimum read depth size which is pretty good.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Cookbook and reference links for Tidyverse function used above">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Cookbook and reference links for Tidyverse function used above
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
-<li>Axis 1 against Axis 2</li>
-<li>Axis 1 against Axis 3</li>
-<li>Axis 2 against Axis 3</li>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/filter.html#regular-expression-matching-with-grepl"><code>dplyr::filter()</code> with <code>grepl()</code></a></li>
 </ul>
-<p>You can use this method to easily visualise as many axes as possible. The drawback is that you can only directly compare two axes in each plot.</p>
+</div>
+</div>
 </section>
-<section id="d-scatterplot" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="d-scatterplot">3D scatterplot</h3>
-<p>You can create an interactive 3D scatter plot with the package <code>plotly</code> using the <code>plot_ly()</code> function (<a href="https://plotly.com/r/3d-scatter-plots/">guide</a>).</p>
-<p>This allows you to directly compare 3 axes at once. It is interactive, allowing you to change the perspective of the plot. This allows you to choose the best angle to save the image to use in publication. However, you would generally not use this method to compare more than 3 axes.</p>
+</section>
+<section id="rarefaction-slope-and-sample-depth-box-plots" class="level2">
+<h2 class="anchored" data-anchor-id="rarefaction-slope-and-sample-depth-box-plots">Rarefaction slope and sample depth box plots</h2>
+<p>We can add the boxplot of sample of depths beside the slope box plots. This is useful for determining a minimum read depth if you want to remove low depth samples.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is not as useful for rarefaction size determination as all samples will have the same depth after rarefaction.</p>
+</div>
+</div>
+<p>To carry this out we need to “longify” the <code>SampleDepths</code> and <code>RareSlope</code> variables/columns so we can facet them.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Box plots of rareslopes and depth side by side</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>rareslope_boxplot <span class="ot">&lt;-</span> rareslope_tbl <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Longify Rareslope and Sampledepth columns</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">c</span>(SampleDepth,RareSlope), </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">names_to=</span><span class="st">"metric"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">values_to=</span><span class="st">"value"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Plot</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y=</span>RarefyDepthSample, <span class="at">x =</span> value)) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#facet by metric column</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">facet_grid</span>(<span class="at">cols =</span> dplyr<span class="sc">::</span><span class="fu">vars</span>(metric), <span class="at">scales =</span> <span class="st">"free_x"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"rareslope_and_depth_boxplot.png"</span>, <span class="at">plot =</span> rareslope_boxplot, </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">"png"</span>, <span class="at">units=</span><span class="st">"mm"</span>, <span class="at">width=</span><span class="dv">200</span>, <span class="at">height=</span><span class="dv">500</span>, <span class="at">dpi=</span><span class="dv">300</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Display plot</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file=</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"./rareslope_and_depth_boxplot.png"</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="dv">600</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Cookbook links for Tidyverse function used above">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Cookbook links for Tidyverse function used above
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://neof-workshops.github.io/Tidyverse/tidyr/pivot_longer.html"><code>tidyr::pivot_longer()</code></a></li>
+<li><a href="https://neof-workshops.github.io/Tidyverse/ggplot2/facet.html#facet-grid">‘ggplot2::facet_grid()’</a></li>
+</ul>
+</div>
+</div>
+<p>The right side box plots (SampleDepth) shows how the range of sample depths changes as samples are removed whn we move up the plot. I.e. the second bottom boxplot (MD_KBC_rep4) shows the depth of all samples except for UD_KBC_rep4 (the bottom/lowest depth sample).</p>
+</section>
+<section id="summary-table" class="level2">
+<h2 class="anchored" data-anchor-id="summary-table">Summary table</h2>
+<p>Finally we can create a summary table that will show the summary metrics of the box plots. This will help us choose the rarefaction depth to choose based on the sample on the y-axis of our plots.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The summary plot will go from lowest depth (top) to highest depth (bottom).</p>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Summary output</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>summary_tbl <span class="ot">&lt;-</span> rareslope_tbl <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(RarefyDepthSample) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">rarefy_depth=</span><span class="fu">mean</span>(RarefyDepth),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">number_samples=</span><span class="fu">n</span>(),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">max_slope=</span><span class="fu">max</span>(RareSlope),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean_slope=</span><span class="fu">mean</span>(RareSlope),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">iqr_slope=</span><span class="fu">IQR</span>(RareSlope),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">min_slope=</span><span class="fu">min</span>(RareSlope),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">max_depth=</span><span class="fu">max</span>(SampleDepth),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean_depth=</span><span class="fu">mean</span>(SampleDepth),</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">iqr_depth=</span><span class="fu">IQR</span>(SampleDepth),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">min_depth=</span><span class="fu">min</span>(SampleDepth)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#View</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>summary_tbl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>What if we used LD_ENV_rep5 as our cutoff sample for rarefaction/minimum sample depth filtering?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#LD_ENV_rep5 info</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>summary_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(RarefyDepthSample<span class="sc">==</span><span class="st">"LD_ENV_rep5"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In this case if we we would have:</p>
+<ul>
+<li>A rarefaction size of 5,622</li>
+<li>59 sample retained after rarefaction/minimum sample depth filtering</li>
+<li>Slope values ranging from 0.042 to 1.7e-05</li>
+</ul>
+<p>This is fine for our data as we’ll keep 5 replicates per site and media combination. However, the rarefaction size is quite low and their are a lot of samples with depths &gt;10,000.</p>
+<p>What if we want to remove all the rep5 samples and use LD_CVP_rep1 (the lowest non rep5 or rep4 sample) as our sample threshold.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#LD_CVP_rep1 info</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>summary_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(RarefyDepthSample<span class="sc">==</span><span class="st">"LD_CVP_rep1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now we have:</p>
+<ul>
+<li>Less samples (49), but we do have 4 replicates per combination which is still good</li>
+<li>A much higher rarefaction size of 10,433</li>
+<li>Better slope values ranging from 0.019 to 2.86e-12</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Cookbook links for Tidyverse function used above">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Cookbook links for Tidyverse function used above
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/group_by.html"><code>dplyr::group_by()</code></a></li>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/summarise.html"><code>dplyr::summarise()</code></a></li>
+</ul>
+</div>
+</div>
 
 
-</section>
 </section>
 </section>
 
@@ -1488,13 +1667,13 @@ window.onload = function() {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../rarefaction/beta_subset_ordination.html" class="pagination-link" aria-label="β subset ordinations">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">β subset ordinations</span>
+      <a href="../rarefaction/rarefaction_slope_tibble.html" class="pagination-link" aria-label="Rarefaction slope tibble">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Rarefaction slope tibble</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../rarefaction/beta_task.html" class="pagination-link" aria-label="β task">
-        <span class="nav-page-text">β task</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../rarefaction/iterative_rarefaction_diversity_loop.html" class="pagination-link" aria-label="Alpha and Beta loop">
+        <span class="nav-page-text">Alpha and Beta loop</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

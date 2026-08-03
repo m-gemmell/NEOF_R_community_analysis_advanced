@@ -1,0 +1,64 @@
+# Slope intro
+
+Rarefaction curves are a useful visualisation for depth evaluation.
+However they can be difficult to read when you have a lot of samples of varying depths.
+
+In this section you'll look create rarefaction slope boxplots.
+This will help you determine which sample to use as the minimum depth for minimum sample depth and rarefaction size. 
+
+For this you'll:
+
+1. Create a **rarefaction curve**
+2. Create a tibble of the **rarefaction slopes** for each sample at every unique sample depth
+3. Create a **rarefaction slope** boxplot figure
+4. Create a boxplots of **rarefaction slopes** and sample depths
+5. Create a summary table showing **slope** and **depth** 
+
+## Setup
+![](/images/setup_3.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
+
+Create a new R jupyter notebook called "Rarefaction_boxplot_of_slopes.ipynb".
+
+Load the required data and libraries.
+
+```{R, eval = FALSE}
+library("phyloseq")
+library("microbiome")
+library("tidyverse")
+library("vegan")
+#Data
+#temp path
+load("/pub14/tea/nsc206/NEOF/R_community_advanced/phyloseq_6reps.RData")
+```
+
+## Data
+
+The dataset is the same Durance river dataset as we have used in the rest of this part (see [Data & setup](/rarefaction/data_and_setup.qmd)).
+However, three more replicates of river and media combinations have been added (totalling 6 replicates).
+These three media have a greater variety of read depths to show the usefulness of the rare slope approach.
+
+Summarise the `phyloseq` object to get an brief idea of this:
+
+```{r,eval=FALSE}
+#Summarise
+microbiome::summarize_phyloseq(pseq)
+```
+
+Additionally, view the sample depths/total read counts.
+
+```{r, eval=FALSE}
+#Check sample sizes
+abund_df |>
+    rowSums() |> sort()
+```
+
+Here you can see the depths of the newly added replicates.
+These were generated for this workshop.
+The depth ranges of the replicates are:
+
+- **rep4**: 1,000-3,000
+    - Produced by subsampling the relevant replicate 1
+- **rep5**: 5,000-10,000
+    - Produced by subsampling the relevant replicate 2
+- **rep6**: 30,000+
+    - Produced by combing the counts of the three original/real replicates (rep1, 2, and 3)

@@ -1,0 +1,69 @@
+# Rarefaction curve
+
+Before looking at slopes let's see what our rarefaction curve looks like.
+We'll primarily run the same commands as the [R community workshop](https://neof-workshops.github.io/R_community_whqkt8/Course/14-Rarefaction.html).
+The main change is that we will set the seeds to produce reproducible results.
+
+## Create data.frame
+
+Create a `data.frame` that we will use for `vegan::rarecurve()`.
+
+```{r,eval=FALSE}
+#Create data frame for rarefaction
+abund_df <- pseq |>
+    #Extract otu/count table
+    phyloseq::otu_table() |>
+    #Transpose and convert to data.frame
+    t() |> as.data.frame()
+```
+
+## Rarefaction curve tibble
+
+Create a `tibble` for the rarefaction curve plot.
+
+The option `tidy=TRUE` ensure the output is a `tibble`.
+
+```{r, eval=FALSE}
+#Set seed
+set.seed(117)
+#Create rarefaction tidy data frame to put into ggplot2
+rarecurve_tbl <- vegan::rarecurve(
+    x=abund_df, 
+    step=100,
+    xlab="Read depth",
+    ylab="ASVs",
+    tidy=TRUE
+)
+#Glimpse tibble
+rarecurve_tbl |> dplyr::glimpse()
+#Set seed to NULL
+set.seed(NULL)
+```
+
+## Rarefaction curve
+
+With our tibble we can create the rarefaction curve plot.
+
+```{r,eval=FALSE}
+#Rarefaction curve plot
+rarecurve <- rarecurve_tbl |>
+    ggplot2::ggplot(aes(x=Sample,y=Species, colour=Site)) +
+    ggplot2::geom_line() +
+    ggplot2::scale_x_continuous(
+        breaks=seq(from = 0, to = 20000, by = 1000),
+        limits=c(0,20000)
+    ) +
+    ggplot2::guides(colour="none")
+ggsave(filename = "rarecurve.png", plot = rarecurve, 
+       device = "png", units="mm", width=300, height=200, dpi=300)
+```
+
+```{r, eval=FALSE}
+IRdisplay::display_png(file=
+    "./rarecurve.png",
+    width = 600)
+```
+
+In the plot we can the samples do plateau.
+However, it is very difficult to make out the curves of all the different samples as they overlap each other.
+This is when rarefaction slopes come in handy.

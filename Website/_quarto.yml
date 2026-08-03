@@ -94,6 +94,12 @@ website:
       - href: rarefaction/beta_subset_ordination.qmd
       - href: rarefaction/beta_considerations.qmd
       - href: rarefaction/beta_task.qmd
+    - section: "Rarefaction slopes"
+      contents:
+      - href: rarefaction/rareslope_intro.qmd
+      - href: rarefaction/rarefaction_curve.qmd
+      - href: rarefaction/rarefaction_slope_tibble.qmd
+      - href: rarefaction/rareslope_boxplots.qmd
     - section: "Templates"
       contents:
       - href: rarefaction/iterative_rarefaction_diversity_loop.qmd

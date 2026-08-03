@@ -472,5 +472,17 @@
   },
   "rarefaction/iterative_rarefaction_diversity_loop.qmd": {
     "iterative_rarefaction_diversity_loop.html": "5f9e1e3f"
+  },
+  "rarefaction/rareslope_intro.qmd": {
+    "rareslope_intro.html": "713786d1"
+  },
+  "rarefaction/rarefaction_curve.qmd": {
+    "rarefaction_curve.html": "d4737326"
+  },
+  "rarefaction/rarefaction_slope_tibble.qmd": {
+    "rarefaction_slope_tibble.html": "82981c16"
+  },
+  "rarefaction/rareslope_boxplots.qmd": {
+    "rareslope_boxplots.html": "24a0281b"
   }
 }
