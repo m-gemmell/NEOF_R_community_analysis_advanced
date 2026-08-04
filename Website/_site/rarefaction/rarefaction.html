@@ -547,6 +547,18 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Rarefaction curve</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../rarefaction/rarefaction_slope_tibble.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rarefaction slope tibble</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../rarefaction/rareslope_boxplots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Slope boxplots</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -579,6 +591,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#rarefaction" id="toc-rarefaction" class="nav-link active" data-scroll-target="#rarefaction">Rarefaction</a>
   <ul class="collapse">
   <li><a href="#iterations" id="toc-iterations" class="nav-link" data-scroll-target="#iterations">Iterations</a></li>
+  <li><a href="#rarefaction-slope-boxplot" id="toc-rarefaction-slope-boxplot" class="nav-link" data-scroll-target="#rarefaction-slope-boxplot">Rarefaction slope boxplot</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -610,15 +623,26 @@ ul.task-list li input[type="checkbox"] {
 <li>Producing the desired diversity (alpha and/or beta) analyses on all the normalised count tables</li>
 <li>Producing an average result</li>
 </ol>
-<p>Theory, practice and code are in the following parts:</p>
-<p>INfo for matthew to incroporate</p>
-<p>Unfortunately many of the R packages for community analysis do not contain inbuilt rarefaction methods with their diversity functions. This makes carrying out iterative rarefaction based diveristy analysis more complicated than it ought to be. This explains the size and breadth of this book.</p>
-<p>In this book you will learn how to:</p>
+<p>Theory, practice and code are in the following sections:</p>
 <ul>
-<li>Use <strong>random seeds</strong> for sampling</li>
-<li>Carry out <strong>iterative rarefaction</strong> with sets of <strong>random seeds</strong></li>
-<li>Use <strong>iterative rarefaction</strong> to carry out alpha diversity analysis</li>
-<li>Use <strong>iterative rarefaction</strong> to carry out beta diversity analysis</li>
+<li><a href="../rarefaction/data_and_setup.html">Data &amp; setup</a></li>
+<li><a href="../rarefaction/random_seeds.html">Random seeds</a>: How and why random seeds are used for reproducibility</li>
+<li><a href="../rarefaction/iterating_rarefaction.html">Iterating rarefaction</a>: Carrying out rarefaction through iterations</li>
+<li><a href="../rarefaction/alpha_intro.html">Alpha diversity</a>: Alpha diversity through iterative rarefaction</li>
+<li><a href="../rarefaction/beta_intro.html">Beta diversity</a>: Beta diversity through iterative rarefaction</li>
+<li><a href="../rarefaction/iterative_rarefaction_diversity_loop.html">Template script</a>: A template script for your future analysis</li>
+</ul>
+</section>
+<section id="rarefaction-slope-boxplot" class="level2">
+<h2 class="anchored" data-anchor-id="rarefaction-slope-boxplot">Rarefaction slope boxplot</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/bike_slope.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:5px; background:white; border: white solid 5px"></p>
+</figure>
+</div>
+<p>In addition there is a section on creating rarefaction slope boxplots to help decide on an appropriate rarefaction size. This is useful for datasets where rarefaction curves are harder to read.</p>
+<ul>
+<li><a href="../rarefaction/rareslope_intro.html">Rarefaction slopes</a></li>
 </ul>
 
 

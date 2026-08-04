@@ -589,6 +589,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Rarefaction slope tibble</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../rarefaction/rareslope_boxplots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Slope boxplots</span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -622,7 +628,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#create-data.frame" id="toc-create-data.frame" class="nav-link" data-scroll-target="#create-data.frame">Create data.frame</a></li>
   <li><a href="#rarefaction-curve-tibble" id="toc-rarefaction-curve-tibble" class="nav-link" data-scroll-target="#rarefaction-curve-tibble">Rarefaction curve tibble</a></li>
-  <li><a href="#rarefaction-curve-1" id="toc-rarefaction-curve-1" class="nav-link" data-scroll-target="#rarefaction-curve-1">Rarefaction curve</a></li>
+  <li><a href="#rarefaction-curve-plot" id="toc-rarefaction-curve-plot" class="nav-link" data-scroll-target="#rarefaction-curve-plot">Rarefaction curve plot</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -636,9 +642,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="rarefaction-curve" class="level1">
 <h1>Rarefaction curve</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/curve_vaporwave.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:5px; background:white; border: white solid 10px"></p>
+</figure>
+</div>
 <p>Before looking at slopes let’s see what our rarefaction curve looks like. We’ll primarily run the same commands as the <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/14-Rarefaction.html">R community workshop</a>. The main change is that we will set the seeds to produce reproducible results.</p>
 <section id="create-data.frame" class="level2">
 <h2 class="anchored" data-anchor-id="create-data.frame">Create data.frame</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/table_vaporwave.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:5px; background:white; border: white solid 10px"></p>
+</figure>
+</div>
 <p>Create a <code>data.frame</code> that we will use for <code>vegan::rarecurve()</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create data frame for rarefaction</span></span>
@@ -651,6 +667,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="rarefaction-curve-tibble" class="level2">
 <h2 class="anchored" data-anchor-id="rarefaction-curve-tibble">Rarefaction curve tibble</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/tibble_vaporwave.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:5px; background:white"></p>
+</figure>
+</div>
 <p>Create a <code>tibble</code> for the rarefaction curve plot.</p>
 <p>The option <code>tidy=TRUE</code> ensure the output is a <code>tibble</code>.</p>
 <div class="cell">
@@ -670,8 +691,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="rarefaction-curve-1" class="level2">
-<h2 class="anchored" data-anchor-id="rarefaction-curve-1">Rarefaction curve</h2>
+<section id="rarefaction-curve-plot" class="level2">
+<h2 class="anchored" data-anchor-id="rarefaction-curve-plot">Rarefaction curve plot</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/rarecurve_vaporwave.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:100px; background:white"></p>
+</figure>
+</div>
 <p>With our tibble we can create the rarefaction curve plot.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Rarefaction curve plot</span></span>

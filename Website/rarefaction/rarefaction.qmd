@@ -17,23 +17,20 @@ This is the process:
 2. Producing the desired diversity (alpha and/or beta) analyses on all the normalised count tables
 3. Producing an average result
 
-Theory, practice and code are in the following parts:
+Theory, practice and code are in the following sections:
 
+- [Data & setup](/rarefaction/data_and_setup.qmd)
+- [Random seeds](/rarefaction/random_seeds.qmd): How and why random seeds are used for reproducibility
+- [Iterating rarefaction](/rarefaction/iterating_rarefaction.qmd): Carrying out rarefaction through iterations
+- [Alpha diversity](/rarefaction/alpha_intro.qmd): Alpha diversity through iterative rarefaction
+- [Beta diversity](/rarefaction/beta_intro.qmd): Beta diversity through iterative rarefaction
+- [Template script](/rarefaction/iterative_rarefaction_diversity_loop.qmd): A template script for your future analysis
 
+## Rarefaction slope boxplot
 
+![](images/bike_slope.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
 
+In addition there is a section on creating rarefaction slope boxplots to help decide on an appropriate rarefaction size.
+This is useful for datasets where rarefaction curves are harder to read.
 
-INfo for matthew to incroporate
-
-
-Unfortunately many of the R packages for community analysis do not contain inbuilt rarefaction methods with their diversity functions.
-This makes carrying out iterative rarefaction based diveristy analysis more complicated than it ought to be.
-This explains the size and breadth of this book.
-
-In this book you will learn how to:
-
-- Use __random seeds__ for sampling
-- Carry out __iterative rarefaction__ with sets of __random seeds__
-- Use __iterative rarefaction__ to carry out alpha diversity analysis
-- Use __iterative rarefaction__ to carry out beta diversity analysis
-
+- [Rarefaction slopes](/rarefaction/rareslope_intro.qmd)

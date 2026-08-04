@@ -1,10 +1,12 @@
 # Rarefaction curve
+![](images/curve_vaporwave.png){style="width:200px; border-radius:5px; background:white; border: white solid 10px" fig-align="center"}
 
 Before looking at slopes let's see what our rarefaction curve looks like.
 We'll primarily run the same commands as the [R community workshop](https://neof-workshops.github.io/R_community_whqkt8/Course/14-Rarefaction.html).
 The main change is that we will set the seeds to produce reproducible results.
 
 ## Create data.frame
+![](images/table_vaporwave.png){style="width:200px; border-radius:5px; background:white; border: white solid 10px" fig-align="center"}
 
 Create a `data.frame` that we will use for `vegan::rarecurve()`.
 
@@ -18,6 +20,8 @@ abund_df <- pseq |>
 ```
 
 ## Rarefaction curve tibble
+![](images/tibble_vaporwave.png){style="width:200px; border-radius:5px; background:white" fig-align="center"}
+
 
 Create a `tibble` for the rarefaction curve plot.
 
@@ -40,7 +44,8 @@ rarecurve_tbl |> dplyr::glimpse()
 set.seed(NULL)
 ```
 
-## Rarefaction curve
+## Rarefaction curve plot
+![](images/rarecurve_vaporwave.png){style="width:200px; border-radius:100px; background:white" fig-align="center"}
 
 With our tibble we can create the rarefaction curve plot.
 

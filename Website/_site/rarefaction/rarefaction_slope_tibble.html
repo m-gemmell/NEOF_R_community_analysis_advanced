@@ -643,6 +643,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="rarefaction-slope-tibble" class="level1">
 <h1>Rarefaction slope tibble</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/tibble_vaporwave.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:5px; background:white"></p>
+</figure>
+</div>
 <p>In the main <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/14-Rarefaction.html#rarefaction-slope">R community workshop</a> we created calculated the rarefaction slope for each sample at our specified sampling depth. This depth was the depth of the sample with the smallest/minimum read count.</p>
 <p>In this section we will carry this out but we will calculate the rarefaction slopes of all samples at all unique sample depths.</p>
 <p>In other words we will:</p>
@@ -662,6 +667,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <section id="ordered-tibble-of-read-depths" class="level2">
 <h2 class="anchored" data-anchor-id="ordered-tibble-of-read-depths">Ordered tibble of read depths</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/order_vaporwave.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:5px; background:white; border: 5px white solid"></p>
+</figure>
+</div>
 <p>First we’ll create a 2-column tibble of Samples and read depths. We’ll order it from lowest to highest depth.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Vector of ordered read depths</span></span>
@@ -679,6 +689,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="rarefaction-slopes-at-each-sample-depth" class="level2">
 <h2 class="anchored" data-anchor-id="rarefaction-slopes-at-each-sample-depth">Rarefaction slopes at each sample depth</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/loop_vaporwave.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:100px; background:white; border: 5px white solid"></p>
+</figure>
+</div>
 <p>The most complex step is creating our tibble with rarefaction slopes of each sample at all sample depths. To carry this out we’ll create four <strong>vectors</strong> which will be used to create the columns of our <strong>tibble</strong>. The columns will be:</p>
 <ul>
 <li><code>Sample</code>: The sample which is having its rarefaction slope calculated</li>
@@ -743,6 +758,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="tidying-up" class="level2">
 <h2 class="anchored" data-anchor-id="tidying-up">Tidying up</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/sweep_vaporwave.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:5px; background:white; border: 5px white solid"></p>
+</figure>
+</div>
 <p>We’ll tidy up <code>rareslope_tbl</code>. First we’ll add the depth of the samples to the tibble with <a href="https://dplyr.tidyverse.org//reference/mutate-joins.html"><code>dplyr::inner_join()</code></a> (this is similar to excel’s vlookup).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Add column of sample depths</span></span>
@@ -824,7 +844,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>rareslope_tbl <span class="sc">|&gt;</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Sample<span class="sc">==</span><span class="st">"UD_CVP_rep1"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>As you scroll down the tibble, from lowest to highest rarefaction depth, you’ll notice the rarefaction slope decreasing indicating the sample’s rarefaction curve plateauing. Let’s visualise this in the next page.</p>
+<p>As you scroll down the tibble, from lowest to highest rarefaction depth, you’ll notice the rarefaction slopes decreasing indicating the sample’s rarefaction curve plateauing. Let’s visualise this in the next page.</p>
 
 
 </section>

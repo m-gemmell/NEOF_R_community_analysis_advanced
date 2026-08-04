@@ -1,4 +1,5 @@
 # Rarefaction slope tibble
+![](images/tibble_vaporwave.png){style="width:200px; border-radius:5px; background:white" fig-align="center"}
 
 In the main [R community workshop](https://neof-workshops.github.io/R_community_whqkt8/Course/14-Rarefaction.html#rarefaction-slope) we created calculated the rarefaction slope for each sample at our specified sampling depth.
 This depth was the depth of the sample with the smallest/minimum read count.
@@ -21,6 +22,7 @@ To create this tibble we'll:
 4. Remove `NA`s and rows where the rarefaction depth is higher than the sample's depth
 
 ## Ordered tibble of read depths
+![](images/order_vaporwave.png){style="width:200px; border-radius:5px; background:white; border: 5px white solid" fig-align="center"}
 
 First we'll create a 2-column tibble of Samples and read depths.
 We'll order it from lowest to highest depth.
@@ -41,6 +43,7 @@ read_depths_tbl |> head()
 We can see the sample with the lowest/minimum depth is "UD_KBC_rep4" with a depth of 1,399.
 
 ## Rarefaction slopes at each sample depth
+![](images/loop_vaporwave.png){style="width:200px; border-radius:100px; background:white; border: 5px white solid" fig-align="center"}
 
 The most complex step is creating our tibble with rarefaction slopes of each sample at all sample depths.
 To carry this out we'll create four **vectors** which will be used to create the columns of our **tibble**.
@@ -111,6 +114,8 @@ rareslope_tbl |> head()
 There are a lot of rows but we'll reduce this number in the next steps.
 
 ## Tidying up
+![](images/sweep_vaporwave.png){style="width:200px; border-radius:5px; background:white; border: 5px white solid" fig-align="center"}
+
 
 We'll tidy up `rareslope_tbl`.
 First we'll add the depth of the samples to the tibble with [`dplyr::inner_join()`](https://dplyr.tidyverse.org//reference/mutate-joins.html) (this is similar to excel's vlookup).
@@ -176,5 +181,5 @@ rareslope_tbl |>
     filter(Sample=="UD_CVP_rep1")
 ```
 
-As you scroll down the tibble, from lowest to highest rarefaction depth, you'll notice the rarefaction slope decreasing indicating the sample's rarefaction curve plateauing.
+As you scroll down the tibble, from lowest to highest rarefaction depth, you'll notice the rarefaction slopes decreasing indicating the sample's rarefaction curve plateauing.
 Let's visualise this in the next page.

@@ -1,4 +1,5 @@
 # Slope boxplots
+![](images/boxplot_vaporwave.png){style="width:200px; border-radius:5px; background:white; border: 5px white solid" fig-align="center"}
 
 On this page you'll:
 
@@ -102,6 +103,7 @@ The right side box plots (SampleDepth) shows how the range of sample depths chan
 I.e. the second bottom boxplot (MD_KBC_rep4) shows the depth of all samples except for UD_KBC_rep4 (the bottom/lowest depth sample).
 
 ## Summary table
+![](images/summary_vaporwave.png){style="width:200px; border-radius:5px; background:white; border: 5px white solid" fig-align="center"}
 
 Finally we can create a summary table that will show the summary metrics of the box plots.
 This will help us choose the rarefaction depth to choose based on the sample on the y-axis of our plots.
@@ -164,3 +166,8 @@ Now we have:
 - [`dplyr::group_by()`](https://neof-workshops.github.io/Tidyverse/dplyr/group_by.html)
 - [`dplyr::summarise()`](https://neof-workshops.github.io/Tidyverse/dplyr/summarise.html)
 :::
+
+## Recap
+![](images/cap_vaporwave.png){style="width:200px; border-radius:5px; background:white; border: 5px white solid" fig-align="center"}
+
+Excellent! You can now carry out iterative rarefaction and you can now further investigate what minimum depth/rarefaction size you should use with rarefaction slopes.
