@@ -1,0 +1,49 @@
+---
+engine: knitr
+---
+# Environment
+![](images/setup.png){style="width: 200px; border-radius:5px;  background-color: white" fig-align="center"}
+
+Below are the instructions to setup your environment.
+
+## New terminal setup
+![](images/terminal_ibm.png){style="width: 200px; border-radius:5px;  background-color: white; border: 10px solid white" fig-align="center"}
+
+You will need to use a different environment for this part.
+
+To open a new terminal:
+
+1. Right click on background/desktop of vnc
+2. Select "Terminal"
+
+## MaAsLin3 directory
+![](images/directory.png){style="width: 200px; border-radius:5px;  background-color: white" fig-align="center"}
+
+Make an d change into a directory named `~/adv_R_comm/maaslin3`.
+
+```{bash, eval=FALSE}
+mkdir ~/adv_R_comm/maaslin3
+cd ~/adv_R_comm/maaslin3
+```
+
+## Mamba
+![](images/mamba_logo.png){style="width: 200px; border-radius:5px;  background-color: white" fig-align="center"}
+
+Load the conda/mamba environment `maaslin3` with a use script made for this environment.
+
+```{bash, eval=FALSE}
+. usemaaslin3
+```
+
+::: {.callout-note}
+Instructions on creating the environment for your own future analysis are in the [appendix](/appendix/mamba.qmd).
+:::
+
+## Jupyter
+![](images/jupiter.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+Activate `jupyter-notebook`.
+
+```{bash,eval=FALSE}
+jupyter-notebook
+```

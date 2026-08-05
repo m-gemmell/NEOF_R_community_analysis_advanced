@@ -1,0 +1,232 @@
+# Mixed effect model
+
+```{r, echo=FALSE, warning=FALSE, results=FALSE, output=FALSE}
+#Load library so functions run smoothly
+library(tidyverse)
+```
+
+![](images/mixtape.png){style="width:200px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+In the last example we had one outcome variable (e.g. E.coli abundance) and one predictor variable (e.g. drug dose).
+In real life we will commonly have more than one predictor variable in our experiments.
+Thankfully, linear regression can have three or more variables.
+
+Once you start using more variables they can start to interact with each other in various ways.
+This is when Mixed Effect Modelling, also known as Hierarchical modelling, can be useful.
+This is important for us to know as MaAsLin3 stands for **Microbiome Multivariable Associations with Linear Models** and uses Mixed effect linear models.
+
+In simplest terms, a mixed effect model is when you have multiple linear regressions for your data based on different nested groups.
+To explain this further we'll go through the following concepts:
+
+- Nested data
+- Random intercept
+- Random slope
+- Random slope + intercept
+
+## Nested data
+
+Nested data is when your observations are within groups. This could be:
+
+- Age groups
+- Demographics
+- Gender
+- Experimental blocks
+- Sequencing runs
+
+Let's look at a concrete example with our _E.coli_ data from the last page.
+However, in this case we have more datapoints.
+Our original data was 75 patients from hospital 1 (H1).
+Our new set of 75 patients are from hospital 2 (H2).
+These two sets of patients are our two nested groups.
+
+:::{.callout-note}
+You can have a lot more than just 2 nested groups.
+:::
+
+```{r, echo=FALSE, warning=FALSE, results=FALSE}
+set.seed(222)
+Dosage <- c(sample(10:100,25), sample(100:500,25), sample(500:1000,25), 
+            sample(10:100,25), sample(100:750,25), sample(500:1000,25))
+Ecoli <- c(sample(75:150,25), sample(80:180,25), sample(100:250,25), 
+            sample(50:100,25), sample(20:80,25), sample(1:40,25))
+Ecoli <- Ecoli/10
+#Nest by hospital
+Hospital <- c(rep(x = "H1", times = 75), rep(x = "H2", times = 75))
+#Tibble
+tbl <- tibble::tibble(Dosage, Ecoli, Hospital)
+set.seed(NULL)
+```
+
+```{r, echo=FALSE, warning=FALSE, results=FALSE}
+#linear rgession
+#Calculate linear model
+ecoli_lm <- lm(Ecoli ~ Dosage, data = tbl)
+#Intercept and gradient
+c <- ecoli_lm$coefficients[1]
+m <- ecoli_lm$coefficients[2]
+#equation
+lm_equation <- stringr::str_c(
+    "y = ", as.character(round(m, digits=5)),"x + ",as.character(round(c,digits=2))
+)
+#plot
+tbl |>
+    ggplot2::ggplot(aes(x=Dosage, y=Ecoli)) +
+    ggplot2::geom_smooth(method='lm', formula= y~x) +
+    ggplot2::geom_point(aes(color=Hospital)) +
+    ggplot2::annotate("text", x = 100, y = 22, label = lm_equation) +
+    ggplot2::labs(x = "Antibiotic dosage (mg/kg)", y = "E.coli relative abundance (%)")
+```
+
+In this case we can see that our simple linear model based only on _E.coli_ abundance and Antibiotic dosage is not fit for purpose.
+
+## Random intercepts
+
+The first addition to our linear model to incorporate mixed effects is to add random intercepts.
+In essence this is allowing each group to have different intercept values.
+
+`r hide("Random?")`
+The word "random" can be confusing, here. 
+The intercepts are not chosen randomly at random. 
+Instead A random intercept allows each group to have its own baseline (intercept) value rather than sharing the same one across groups.
+
+In our example samples from different hospitals start from slightly different average E. coli abundances. 
+The model estimates these hospital-specific baselines, while also estimating the overall average across all hospitals. 
+This means each hospital can differ, but the model still tries to learn what is typical across hospitals.
+`r unhide()`
+
+Let's see that in practice with our dataset.
+
+```{r, echo=FALSE, warning=FALSE, results=FALSE}
+#filter tbl
+h1_tbl <- tbl |> dplyr::filter(Hospital=="H1")
+h2_tbl <- tbl |> dplyr::filter(Hospital=="H2")
+#linear regressions
+#Calculate linear model
+ecoli_lm <- lm(Ecoli ~ Dosage, data = tbl)
+#Intercept and gradient
+c <- ecoli_lm$coefficients[1]
+m <- ecoli_lm$coefficients[2]
+#Hospital 1 linear model
+h1_lm <- lm(Ecoli ~ Dosage, data = h1_tbl)
+#Intercept and gradient
+h1_c <- h1_lm$coefficients[1]
+h1_m <- h1_lm$coefficients[2]
+#AMR Calculate linear model
+h2_lm <- lm(Ecoli ~ Dosage, data = h2_tbl)
+#Intercept and gradient
+h2_c <- h2_lm$coefficients[1]
+h2_m <- h2_lm$coefficients[2]
+#equation
+h1_lm_equation <- stringr::str_c(
+    "y = ", as.character(round(m, digits=5)),"x + ",as.character(round(h1_c,digits=2))
+)
+h2_lm_equation <- stringr::str_c(
+    "y = ", as.character(round(m, digits=5)),"x + ",as.character(round(h1_c,digits=2))
+)
+#plot
+tbl |>  ggplot2::ggplot(aes(x=Dosage, y=Ecoli)) +
+    ggplot2::geom_abline(slope = m, intercept = h1_c, color = "#f8766d", size=1) +
+    ggplot2::geom_abline(slope = m, intercept=h2_c, color = "#00bfc4", size = 1) +
+    ggplot2::geom_point(aes(color=Hospital)) +
+    ggplot2::annotate("text", x = 250, y = 18.5, label = h1_lm_equation) +
+    ggplot2::annotate("text", x = 875, y = 6, label = h2_lm_equation) +
+    ggplot2::labs(x = "Antibiotic dosage (mg/kg)", y = "E.coli relative abundance (%)")
+```
+
+The linear models for each nested group (Hospital 1 & 2) now start in good places since they have different intercepts.
+However, they both have the same slope which does not fit either group very well.
+
+## Random slope
+
+Instead of random intercepts lets use random slopes.
+This gives each group its own slope.
+
+Below is our data with random slopes but the same intercept.
+
+```{r, echo=FALSE, warning=FALSE, results=FALSE}
+#filter tbl
+h1_tbl <- tbl |> dplyr::filter(Hospital=="H1")
+h2_tbl <- tbl |> dplyr::filter(Hospital=="H2")
+#linear regressions
+#Calculate linear model
+ecoli_lm <- lm(Ecoli ~ Dosage, data = tbl)
+#Intercept and gradient
+c <- ecoli_lm$coefficients[1]
+m <- ecoli_lm$coefficients[2]
+#Hospital 1 linear model
+h1_lm <- lm(Ecoli ~ Dosage, data = h1_tbl)
+#Intercept and gradient
+h1_c <- h1_lm$coefficients[1]
+h1_m <- h1_lm$coefficients[2]
+#AMR Calculate linear model
+h2_lm <- lm(Ecoli ~ Dosage, data = h2_tbl)
+#Intercept and gradient
+h2_c <- h2_lm$coefficients[1]
+h2_m <- h2_lm$coefficients[2]
+#equation
+h1_lm_equation <- stringr::str_c(
+    "y = ", as.character(round(m, digits=5)),"x + ",as.character(round(h1_c,digits=2))
+)
+h2_lm_equation <- stringr::str_c(
+    "y = ", as.character(round(m, digits=5)),"x + ",as.character(round(h1_c,digits=2))
+)
+#plot
+tbl |>  ggplot2::ggplot(aes(x=Dosage, y=Ecoli)) +
+    ggplot2::geom_abline(slope = h1_m, intercept = c, color = "#f8766d", size=1) +
+    ggplot2::geom_abline(slope = h2_m, intercept=c, color = "#00bfc4", size = 1) +
+    ggplot2::geom_point(aes(color=Hospital)) +
+    ggplot2::annotate("text", x = 250, y = 18.5, label = h1_lm_equation) +
+    ggplot2::annotate("text", x = 875, y = 6, label = h2_lm_equation) +
+    ggplot2::labs(x = "Antibiotic dosage (mg/kg)", y = "E.coli relative abundance (%)")
+```
+
+This looks better but its still not perfect.
+
+## Random slope and intercept
+
+In mixed effect models both random slopes and random intercepts are can be used.
+This allows you to best account for the differences between the groups.
+
+Below is our final plot with random slopes and random intercepts.
+
+```{r, echo=FALSE, warning=FALSE, results=FALSE}
+#filter tbl
+h1_tbl <- tbl |> dplyr::filter(Hospital=="H1")
+h2_tbl <- tbl |> dplyr::filter(Hospital=="H2")
+#linear regressions
+#Calculate linear model
+ecoli_lm <- lm(Ecoli ~ Dosage, data = tbl)
+#Intercept and gradient
+c <- ecoli_lm$coefficients[1]
+m <- ecoli_lm$coefficients[2]
+#Hospital 1 linear model
+h1_lm <- lm(Ecoli ~ Dosage, data = h1_tbl)
+#Intercept and gradient
+h1_c <- h1_lm$coefficients[1]
+h1_m <- h1_lm$coefficients[2]
+#AMR Calculate linear model
+h2_lm <- lm(Ecoli ~ Dosage, data = h2_tbl)
+#Intercept and gradient
+h2_c <- h2_lm$coefficients[1]
+h2_m <- h2_lm$coefficients[2]
+#equation
+h1_lm_equation <- stringr::str_c(
+    "y = ", as.character(round(m, digits=5)),"x + ",as.character(round(h1_c,digits=2))
+)
+h2_lm_equation <- stringr::str_c(
+    "y = ", as.character(round(m, digits=5)),"x + ",as.character(round(h1_c,digits=2))
+)
+#plot
+tbl |>  ggplot2::ggplot(aes(x=Dosage, y=Ecoli)) +
+    ggplot2::geom_abline(slope = h1_m, intercept = h1_c, color = "#f8766d", size=1) +
+    ggplot2::geom_abline(slope = h2_m, intercept=h2_c, color = "#00bfc4", size = 1) +
+    ggplot2::geom_point(aes(color=Hospital)) +
+    ggplot2::annotate("text", x = 250, y = 18.5, label = h1_lm_equation) +
+    ggplot2::annotate("text", x = 875, y = 6, label = h2_lm_equation) +
+    ggplot2::labs(x = "Antibiotic dosage (mg/kg)", y = "E.coli relative abundance (%)")
+```
+
+For an animated explanation please see the following link: [mfviz Introduction to Hierarchical Modeling](https://mfviz.com/hierarchical-models/)
+
+In our MaAsLin3 analysis we will only use random intercepts.
+This is covered in the [MaAsLin3 relative abundance analysis section](/relative/relative.qmd).

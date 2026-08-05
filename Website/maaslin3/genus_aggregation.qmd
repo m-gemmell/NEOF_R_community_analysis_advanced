@@ -1,0 +1,38 @@
+# Genus phyloseq
+
+All taxa levels from phyla to species to ASVs can be used with MaAsLin3.
+In fact, in your own research I would recommend carrying out MaAsLin3 analysis on multiple taxa levels.
+
+For speed and to produce clear results we will carry out MaAsLin3 analysis with genus counts.
+
+## Aggregation
+
+Use the function `microbiome::aggregate_taxa()` to produce a genus count based `phyloseq` object.
+
+```{r, eval=FALSE}
+#Aggregate ASV based phyloseq to genus phyloseq
+genus_pseq <- microbiome::aggregate_taxa(pseq, "Genus", verbose=FALSE)
+```
+
+::: {.callout-note}
+Biomarker detection/differential abundance allows you to determine if rare taxa are differentially abundant.
+Due to this I would not reccomend aggregating rare taxa with `microbiome::aggregate_rare()` unless you have a good reason.
+:::
+
+Check the `phyloseq` object and number of genera.
+
+```{r,eval=FALSE}
+#Summarise
+microbiome::summarize_phyloseq(genus_pseq)
+#Number of genera
+nrow(phyloseq::otu_table(genus_pseq))
+```
+
+## Clear up
+
+We won't need the ASV phyloseq object anymore so you can remove it.
+
+```{r, eval=FALSE}
+#Remove pseq object
+rm(pseq)
+```

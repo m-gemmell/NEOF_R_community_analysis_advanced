@@ -484,5 +484,41 @@
   },
   "rarefaction/rareslope_boxplots.qmd": {
     "rareslope_boxplots.html": "24a0281b"
+  },
+  "maaslin3/maaslin3.qmd": {
+    "maaslin3.html": "5ff8faf7"
+  },
+  "maaslin3/linear_model.qmd": {
+    "linear_model.html": "c16d6a55"
+  },
+  "maaslin3/logistic_model.qmd": {
+    "logistic_model.html": "40b23659"
+  },
+  "maaslin3/mixed_effects_model.qmd": {
+    "mixed_effects_model.html": "1caacfeb"
+  },
+  "maaslin3/data_and_setup.qmd": {
+    "data_and_setup.html": "16a9d72b"
+  },
+  "maaslin3/environment.qmd": {
+    "environment.html": "2520a5ae"
+  },
+  "maaslin3/notebook.qmd": {
+    "notebook.html": "df6d4cc8"
+  },
+  "maaslin3/count_table.qmd": {
+    "count_table.html": "0e2be960"
+  },
+  "maaslin3/dataset.qmd": {
+    "dataset.html": "121e91df"
+  },
+  "maaslin3/metadata.qmd": {
+    "metadata.html": "e68c9ec9"
+  },
+  "maaslin3/read_counts.qmd": {
+    "read_counts.html": "cb46dd33"
+  },
+  "maaslin3/genus_aggregation.qmd": {
+    "genus_aggregation.html": "b52daa60"
   }
 }

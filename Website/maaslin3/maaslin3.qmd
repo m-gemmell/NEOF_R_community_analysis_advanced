@@ -1,0 +1,60 @@
+# MaAsLin3
+
+MaAsLin3 is a tool to detect feature associations based on metadata groupings using mixed effect models.
+
+It carries out 2 types of association tests:
+
+1. Abundance testing
+    - Determines the difference in the abundance values between groups
+    - Carried out with [linear modelling](/maaslin3/background/linear_model.qmd)
+2. Prevalence testing
+    - Determines the likelihood of features being present based on groupings
+    - Carried out with [logistic modelling](/aaslin3/background/logistic_model.qmd)
+
+Both tests produce q-values plus a joint q-value is given.
+
+## Sections
+
+# CGR MaAsLin3 for Unilever
+
+There are multiple sections in this website.
+These are described below.
+
+## Background
+![](images/background.png){style="width:150px; background:white; border-radius:5px" fig-align="center"}
+
+Info on MaAsLin3 and Mixed effect liner models including:
+
+- [Linear regression](/background/linear_model.qmd): Theory of linear models for abundance testing, and mixed effect models
+- [Logistic model](/background/logistic_model.qmd): Theory of logistic models for prevalence testing
+
+## Setup
+![](/images/setup.png){style="width: 150px; border-radius:5px;  background-color: white" fig-align="center"}
+
+Environment and `jupyter-notebook` setup including:
+
+- [Setup](/setup/setup.qmd): Directory and mamba/conda environment setup
+- [Jupyter](/setup/jupyter.qmd): `Jupyter-notebook` tutorial
+
+## MaAslin3 analysis
+![](images/relative_piechart.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+A standard MaAsLin3 analysis with an relative/count table based on genomic reads.
+Includes:
+
+- [Overview](/relative/relative.qmd): Description of dataset, and more detailed descriptions of the section's parts and their pages
+- [Notebook setup](/relative/notebook.qmd): Setup of the first jupyter-notebook for this section
+- [Data importing & formatting](/relative/count_table.qmd): Setting up the count table and metadata table for MaAsLin3 analysis
+- [MaAsLin3 analysis](/relative/maaslin3.qmd): Use of the `maaslin3()` function and considerations for its inputs
+- [Text output](/relative/html_table.qmd): Viewing and interpreting the text output of `maaslin3()`
+- [Output plots](/relative/plots.qmd): Viewing, understanding, and interpreting the various plot types produced by `maaslin3()`
+- [Challenge](/relative/timepoint_challenge.qmd): Tasks based on interrogating the `maaslin3()` output related to the `TimepointName` metadata variable
+
+## Appendix
+![](images/appendix.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+A selection of resources including:
+
+- [MaAsLin3 resources](/appendix/maaslin3.qmd)
+- [R courses](/appendix/r_courses.qmd)
+- [Mamba](/appendix/mamba.qmd)

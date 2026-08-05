@@ -1,0 +1,49 @@
+# Dataset
+
+This section will introduce you to our dataset and how to prepare it for `MaAsLin3` from a `phyloseq` object.
+
+## Durance river data
+![](images/france_ibm.png){style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white" fig-align="center"}
+
+We will use the same dataset from the Durance river as the [R community analysis workshop](https://neof-workshops.github.io/R_community_whqkt8/Course/02-Dataset_and_workflow.html#dataset).
+
+We will use MaAsLin3 to determine the differential abundance and prevalence of genera between the sites and the media.
+These groupings are:
+
+- `site`: UD (Upper Durance), MD (Middle Durance), and LD (Lower Durance)
+- `media`: ENV (Environmental samples, no media), CVP, KBC, and TSA
+
+## Jupyter notebook
+![](images/jupyter_notebook.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+Create and open a new `jupyter` notebook called "1-Data.ipynb"
+
+::: {.callout-important}
+Ensure all notebooks for this part are created in your `~/adv_R_comm/maaslin3` directory.
+:::
+
+At the top create a markdown cell with the following headers.
+
+```{r, eval=FALSE}
+# 1-Data
+## Libraries
+```
+
+Then load all the libraries we need in a new code cell along with the `phyloseq` object containing our dataset.
+
+```{r, eval=FALSE}
+#Libraries
+library("phyloseq")
+library("tidyverse")
+library("microbiome")
+#Data
+load("/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData")
+```
+
+Please create other useful markdown cells in this and future notebooks.
+
+## Workflow
+
+We need 2 `data.frames` for MaAsLin3: genus taxa counts, and metadata.
+
+We'll create these in our `jupyter` notebook with four main stages:

@@ -24,6 +24,8 @@ website:
       href: divergence/divergence.qmd
     - text: Upset
       href: upset/upset.qmd
+    - text: MaAsLin3
+      href: maaslin3/maaslin3.qmd
     right:
     - icon: house-fill
       href: https://neof.org.uk/training/
@@ -167,7 +169,28 @@ website:
       - href: upset/metadata_upset_plot.qmd
       - href: upset/media_genus_upset.qmd
       - href: upset/challenge_2.qmd
-
+  - id: MaAsLin3
+    title: Upset
+    style: floating
+    collapse-level: 2
+    align: left
+    contents:
+    - href: maaslin3/maaslin3.qmd
+    - section: "Background"
+      contents:
+      - href: maaslin3/linear_model.qmd
+      - href: maaslin3/mixed_effects_model.qmd
+      - href: maaslin3/logistic_model.qmd
+    - section: "Setup"
+      contents:
+      - href: maaslin3/environment.qmd
+    - section: "Data"
+      contents: 
+      - href: maaslin3/dataset.qmd
+      - href: maaslin3/genus_aggregation.qmd
+      - href: maaslin3/count_table.qmd
+      - href: maaslin3/metadata.qmd
+      - href: maaslin3\read_counts.qmd
 #Format
 format:
   html:

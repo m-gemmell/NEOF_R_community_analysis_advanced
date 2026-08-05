@@ -1,0 +1,111 @@
+# Metadata
+![](images/metadata_2.png){style="width:200px; background:white; border-radius:5px" fig-align="center"}
+
+As with most analysis we require metadata. 
+Our metadata table requires:
+
+- Columns of the different metadata variables
+    - The column names are the names of the variables
+- Rows of observations per sample
+    - The row names need to contain the same sample names as the [count table](/relative/count_table.qmd)
+
+## Extract metadata
+
+Extract and check our metadata.
+
+```{r, eval=FALSE}
+#Extract metadata from phyloseq as data.frame
+metadf <- genus_pseq |> 
+    microbiome::meta()
+#Check rows 1:5
+metadf |> dplyr::slice(1:5)
+```
+
+Capitalise columns we'll use as fixed effects. 
+This is to make the MaAsLin3 output look nicer.
+
+```{r,eval=FALSE}
+#Capitalise column names for MaAsLin3 output
+metadf <- metadf |>
+    dplyr::rename(Site=site, Media=media)
+```
+
+## Fixed effects and random effects
+<center>
+![](images/dice_three.png){style="width:150px; background:white; border-radius:5px" fig-align="center"}
+</center>
+
+There are three main types of metadata variables for `MaAsLin3`. 
+These are:
+
+- __Categorical fixed effects__
+    - A categorical variable that is related to your hypothesis and requires evaluation
+    - These need to be factors in your metadata 
+        - The first level is the reference group
+        - All other levels are compared to the reference in pairwise fashion (i.e. the query)
+        - For example healthy vs disease states
+    - We will use `Site` and `Media` as categorical fixed effects
+- __Continuous fixed effects__
+    - This could be a continuous variable that is related to your hypothesis and requires evaluation (e.g. dosage)
+    - Or it could be a continuous control variable (e.g. age)
+    - We will use `Reads` (read counts/depth) as a continuous control variable (see the [read counts page](/maaslin3/read_counts.qmd))
+- __Random effects__
+    - Categorical variables to include that you are not necessarily interested in evaluating
+    - These don't need to be factors since a reference group is not required
+    - An example includes experimental blocks, different sequencing runs, or subjects
+    - We won't use any random effects in our analysis
+
+More theory and considerations are included in the later pages:
+
+- [Fixed effects](/maaslin3/fixed_effects.qmd)
+- [Random effects](/maaslin3/random_effects.qmd)
+
+## Factorisation
+![](images/factor_key.png){style="width:150px; background:white; border-radius:5px" fig-align="center"}
+
+We are going to use `Site` and `Media` as categorical fixed effects.
+Therefore, we need to set the  order of their factor levels.
+
+::: {.callout-note collapse="true" title="Factors"}
+A factor is R’s way of storing categorical data. 
+It tells the model to compare categories, and lets us set which category is used as the reference level.
+
+For more info please see: [R primer for omics explanation of factors](https://cgr-liverpool.github.io/R_primer_f81b92/course/14-Plots_scatterplot_and_box_plots.html#factors)
+:::
+
+Before factor ordering, let's see what groupings are in the two variables.
+
+```{r, eval=FALSE}
+#Check unique values of site and media
+metadf |> dplyr::pull(site) |> unique()
+metadf |> dplyr::pull(media) |> unique()
+```
+
+We have 3 for `Site`.
+Let's use `UD` as the reference group and `MD` and `LD` as the queries.
+We've chosen `UD` as it is the site with the lowest anthropisation.
+
+We have four groups for `Media`.
+We'll use `ENV` as the reference so all media groups are compared to it.
+
+Type and run the below code to order tje factor levels of the two metadata variables.
+The code uses some piping and the [`dplyr::mutate()` function](https://cgr-liverpool.github.io/Tidyverse/dplyr/mutate.html).
+
+```{r, eval=FALSE}
+#Factorise to order our categorical fixed effects
+metadf <- metadf |>
+    #Factorise site with UD as the reference level
+    dplyr::mutate(site=factor(site,
+                              levels = c("UD","MD","LD"))) |>
+    #Factorise media with ENV as the reference level
+    dplyr::mutate(media=factor(media,
+                               levels = c("ENV","CVP","KBC","TSA")))
+```
+
+
+::: {.callout-note}
+For the purposes of setting a reference it only matters which group is set as the first group.
+The order of the subsequent levels does not matter for the MaAsLin3 analysis we will carry out.
+:::
+
+Great! Next we'll add read counts/depth to the metadata table.

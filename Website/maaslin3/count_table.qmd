@@ -1,0 +1,54 @@
+# Count table
+![](images/counts.png){style="width:200px; background:white; border-radius:5px" fig-align="center"}
+
+The count table for MaAsLin3 needs to be a `data.frame` with:
+
+- Columns names of features
+    - In our case species
+- Row names of sample names
+- Values of counts
+    - In our case abundance values
+
+:::{.callout-note}
+As it requires row names the count table cannot be a tibble.
+:::
+
+## Extract count table
+
+Extract the `otu_table` (i.e. count table) from the genus `phyloseq` object as a `matrix`.
+
+```{r, eval=FALSE}
+#Extract otu_table as matrix
+taxa_df <- genus_pseq |>
+    microbiome::abundances()
+#Check
+taxa_df[1:5,1:10]
+```
+
+
+## Formatting
+![](images/format.png){style="width:100px; background:white; border-radius:5px; border: white solid 7px" fig-align="center"}
+
+Our count table is currently not in the correct format so we will need to use some base R and [`dplyr()`](https://cgr-liverpool.github.io/Tidyverse/dplyr/dplyr.html) functions to manipulate it. 
+This includes:
+
+- Transposing the table with `t()`
+- Convert `matrix` to a `data.frame`
+    - This is carried out after transposing as `t()` always produces a `matrix`
+- Ensure all values are numerics
+- Replacing `NA`s with 0 as MaAsLin3 won't work with `NA`s
+
+```{r, eval=FALSE}
+#Format count table for MaAsLin3
+taxa_df <- taxa_df |>
+    #Transpose and convert to data.frame
+    t() |> as.data.frame() |>
+    #Ensure all values are numerics
+    dplyr::mutate_all(as.numeric)
+#Replace an NAs with 0
+taxa_df[is.na(taxa_df)] <- 0
+#Check
+taxa_df[1:5,1:10]
+```
+
+Perfect! Now its on to the metadata.

@@ -1,0 +1,93 @@
+# Linear model
+
+```{r, echo=FALSE, warning=FALSE, results=FALSE, output=FALSE}
+#Load library so functions run smoothly
+library(tidyverse)
+```
+
+![](images/abundance.png){style="width:200px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+MaAsLin3 carries out linear modelling for abundance testing.
+
+
+## Simple linear regression
+
+A simple linear regression can be carried two variables. These variables are:
+
+- The independent variable: Not dependent on any other variable
+    - Preferably controlled by the experimenter
+- The dependant variable: Dependant on the independent variable
+
+The below linear regression equation then allows you to predict the value of y when you have the value of x or vice verse.
+
+$$
+y = mx + c
+$$
+
+Where:
+
+- $y$ = Y variable (dependant variable)
+- $m$ = slope coefficient
+- $x$ = X variable (independent variable)
+- $c$ = intercept coefficient (i.e. y position when x = 0)
+
+An example of a simple linear regression on a chart can be seen below:
+
+```{r, echo=FALSE, warning=FALSE, results=FALSE}
+#Calculate linear model
+petal_width_length_lm <- lm(Petal.Length ~ Petal.Width, data = iris)
+#Intercept and gradient
+c <- petal_width_length_lm$coefficients[1]
+m <- petal_width_length_lm$coefficients[2]
+#equation
+lm_equation <- stringr::str_c(
+    "y = ", as.character(round(m, digits=2)),"x + ",as.character(round(c,digits=2))
+)
+#plot
+iris |>
+    ggplot2::ggplot(aes(x=Petal.Width, y=Petal.Length)) +
+    ggplot2::geom_smooth(method='lm', formula=y~x) +
+    ggplot2::geom_point() +
+    ggplot2::annotate("text", x = 0.5, y = 6, label = lm_equation) +
+    ggplot2::labs(x = "Petal width", y = "Petal length")
+```
+
+## E.coli example
+
+As another example lets look at those treated for an _E.coli_ infection.
+In our MaAsLin3 analysis the linear equation may use the abundance of _E.coli_ (post treatment) on the y axis and the antibiotic dosage (mg/kg) on the x axis like so:
+
+```{r, echo=FALSE, warning=FALSE, results=FALSE}
+set.seed(222)
+Dosage <- c(sample(10:100,25), sample(100:500,25), sample(500:1000,25), 
+            sample(10:100,25), sample(100:750,25), sample(500:1000,25))
+Ecoli <- c(sample(75:150,25), sample(80:180,25), sample(100:250,25), 
+            sample(50:100,25), sample(20:80,25), sample(1:40,25))
+Ecoli <- Ecoli/10
+#AMR shows if AMR was found in Ecoli (AMR) or not (no_AMR)
+AMR <- c(rep(x = "AMR", times = 75), rep(x = "no_AMR", times = 75))
+#Tibble
+tbl <- tibble::tibble(Dosage, Ecoli, AMR)
+set.seed(NULL)
+```
+
+```{r, echo=FALSE, warning=FALSE, results=FALSE}
+AMR_tbl <- tbl |> dplyr::filter(AMR=="no_AMR")
+#linear rgession
+#Calculate linear model
+ecoli_lm <- lm(Ecoli ~ Dosage, data = AMR_tbl)
+#Intercept and gradient
+c <- ecoli_lm$coefficients[1]
+m <- ecoli_lm$coefficients[2]
+#equation
+lm_equation <- stringr::str_c(
+    "y = ", as.character(round(m, digits=2)),"x + ",as.character(round(c,digits=2))
+)
+#plot
+AMR_tbl |>
+    ggplot2::ggplot(aes(x=Dosage, y=Ecoli)) +
+    ggplot2::geom_smooth(method='lm', formula=y~x) +
+    ggplot2::geom_point() +
+    ggplot2::annotate("text", x = 750, y = 9, label = lm_equation) +
+    ggplot2::labs(x = "Antibiotic dosage (mg/kg)", y = "E.coli relative abundance (%)")
+```
