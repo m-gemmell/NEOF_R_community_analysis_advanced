@@ -430,7 +430,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../maaslin3/genus_aggregation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Genus phyloseq</span></a>
+ <span class="menu-text">Genus aggregation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -490,6 +490,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Prevalence of organisms can be greatly affected by the read depth of the different samples. When using abundance values (not quantitative abundance values) the read numbers/depth for each sample should be included as a continuous fixed effect.</p>
 <section id="calculate-read-depth-data" class="level2">
 <h2 class="anchored" data-anchor-id="calculate-read-depth-data">Calculate read depth data</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/depth_gauge.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width: 100px; border-radius:5px;  background-color: white; border: 5px solid white"></p>
+</figure>
+</div>
 <p>We can calculate read depths from our count table with <code>rowSums()</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calculate read count of each sample</span></span>

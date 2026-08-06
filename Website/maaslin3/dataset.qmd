@@ -1,4 +1,5 @@
 # Dataset
+![](images/dataset_ibm.png){style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white" fig-align="center"}
 
 This section will introduce you to our dataset and how to prepare it for `MaAsLin3` from a `phyloseq` object.
 
@@ -43,7 +44,13 @@ load("/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData")
 Please create other useful markdown cells in this and future notebooks.
 
 ## Workflow
+![](images/workflow_ibm.png){style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white" fig-align="center"}
 
 We need 2 `data.frames` for MaAsLin3: genus taxa counts, and metadata.
 
 We'll create these in our `jupyter` notebook with four main stages:
+
+1. [Genus aggregation](/maaslin3/genus_aggregation.qmd): Creating a genus count `phyloseq` from our ASV `phyloseq`
+2. [Count table](/maaslin3/count_table.qmd): Extracting the genus count table from our genus `phyloseq` and formatting it
+3. [Metadata](/maaslin3/metadata.qmd): Extracting the metadata from the `phyloseq` object and setting reference levels in our groupings
+4. [Read counts](/maaslin3/read_counts.qmd): Adding read counts/depths to our metadata which are required for prevalence association testing

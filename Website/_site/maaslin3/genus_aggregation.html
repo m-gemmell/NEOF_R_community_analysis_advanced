@@ -68,6 +68,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../maaslin3/count_table.html" rel="next">
 <link href="../maaslin3/dataset.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
@@ -430,7 +431,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../maaslin3/genus_aggregation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Genus phyloseq</span></a>
+ <span class="menu-text">Genus aggregation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/count_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Count table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/metadata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/read_counts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Read counts</span></a>
   </div>
 </li>
       </ul>
@@ -445,7 +464,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#genus-phyloseq" id="toc-genus-phyloseq" class="nav-link active" data-scroll-target="#genus-phyloseq">Genus phyloseq</a>
+  <li><a href="#genus-aggregation" id="toc-genus-aggregation" class="nav-link active" data-scroll-target="#genus-aggregation">Genus aggregation</a>
   <ul class="collapse">
   <li><a href="#aggregation" id="toc-aggregation" class="nav-link" data-scroll-target="#aggregation">Aggregation</a></li>
   <li><a href="#clear-up" id="toc-clear-up" class="nav-link" data-scroll-target="#clear-up">Clear up</a></li>
@@ -460,12 +479,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="genus-phyloseq" class="level1">
-<h1>Genus phyloseq</h1>
+<section id="genus-aggregation" class="level1">
+<h1>Genus aggregation</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/ginger_ibm.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white"></p>
+</figure>
+</div>
 <p>All taxa levels from phyla to species to ASVs can be used with MaAsLin3. In fact, in your own research I would recommend carrying out MaAsLin3 analysis on multiple taxa levels.</p>
 <p>For speed and to produce clear results we will carry out MaAsLin3 analysis with genus counts.</p>
 <section id="aggregation" class="level2">
 <h2 class="anchored" data-anchor-id="aggregation">Aggregation</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/aggregate_ibm.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white"></p>
+</figure>
+</div>
 <p>Use the function <code>microbiome::aggregate_taxa()</code> to produce a genus count based <code>phyloseq</code> object.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Aggregate ASV based phyloseq to genus phyloseq</span></span>
@@ -1337,6 +1366,9 @@ window.onload = function() {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../maaslin3/count_table.html" class="pagination-link" aria-label="Count table">
+        <span class="nav-page-text">Count table</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

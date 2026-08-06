@@ -8,6 +8,7 @@ Prevalence of organisms can be greatly affected by the read depth of the differe
 When using abundance values (not quantitative abundance values) the read numbers/depth for each sample should be included as a continuous fixed effect.
 
 ## Calculate read depth data
+![](images/depth_gauge.png){style="width: 100px; border-radius:5px;  background-color: white; border: 5px solid white" fig-align="center"}
 
 We can calculate read depths from our count table with `rowSums()`.
 

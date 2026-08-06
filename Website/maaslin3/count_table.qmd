@@ -14,6 +14,7 @@ As it requires row names the count table cannot be a tibble.
 :::
 
 ## Extract count table
+![](images/extractor_fan_ibm_1.png){style="width: 200px; border-radius:5px;  background-color: white; border: 10px solid white" fig-align="center"}
 
 Extract the `otu_table` (i.e. count table) from the genus `phyloseq` object as a `matrix`.
 

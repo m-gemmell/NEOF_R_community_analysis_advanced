@@ -68,6 +68,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../maaslin3/genus_aggregation.html" rel="next">
 <link href="../maaslin3/environment.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
@@ -427,6 +428,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Dataset</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/genus_aggregation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Genus aggregation</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/count_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Count table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/metadata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/read_counts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Read counts</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -457,6 +482,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="dataset" class="level1">
 <h1>Dataset</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/dataset_ibm.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white"></p>
+</figure>
+</div>
 <p>This section will introduce you to our dataset and how to prepare it for <code>MaAsLin3</code> from a <code>phyloseq</code> object.</p>
 <section id="durance-river-data" class="level2">
 <h2 class="anchored" data-anchor-id="durance-river-data">Durance river data</h2>
@@ -511,8 +541,19 @@ Important
 </section>
 <section id="workflow" class="level2">
 <h2 class="anchored" data-anchor-id="workflow">Workflow</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/workflow_ibm.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white"></p>
+</figure>
+</div>
 <p>We need 2 <code>data.frames</code> for MaAsLin3: genus taxa counts, and metadata.</p>
 <p>We’ll create these in our <code>jupyter</code> notebook with four main stages:</p>
+<ol type="1">
+<li><a href="../maaslin3/genus_aggregation.html">Genus aggregation</a>: Creating a genus count <code>phyloseq</code> from our ASV <code>phyloseq</code></li>
+<li><a href="../maaslin3/count_table.html">Count table</a>: Extracting the genus count table from our genus <code>phyloseq</code> and formatting it</li>
+<li><a href="../maaslin3/metadata.html">Metadata</a>: Extracting the metadata from the <code>phyloseq</code> object and setting reference levels in our groupings</li>
+<li><a href="../maaslin3/read_counts.html">Read counts</a>: Adding read counts/depths to our metadata which are required for prevalence association testing</li>
+</ol>
 
 
 </section>
@@ -1351,6 +1392,9 @@ window.onload = function() {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../maaslin3/genus_aggregation.html" class="pagination-link" aria-label="Genus aggregation">
+        <span class="nav-page-text">Genus aggregation</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

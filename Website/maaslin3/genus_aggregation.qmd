@@ -1,4 +1,5 @@
-# Genus phyloseq
+# Genus aggregation
+![](images/ginger_ibm.png){style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white" fig-align="center"}
 
 All taxa levels from phyla to species to ASVs can be used with MaAsLin3.
 In fact, in your own research I would recommend carrying out MaAsLin3 analysis on multiple taxa levels.
@@ -6,6 +7,7 @@ In fact, in your own research I would recommend carrying out MaAsLin3 analysis o
 For speed and to produce clear results we will carry out MaAsLin3 analysis with genus counts.
 
 ## Aggregation
+![](images/aggregate_ibm.png){style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white" fig-align="center"}
 
 Use the function `microbiome::aggregate_taxa()` to produce a genus count based `phyloseq` object.
 

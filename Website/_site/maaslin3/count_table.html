@@ -68,6 +68,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../maaslin3/metadata.html" rel="next">
 <link href="../maaslin3/genus_aggregation.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
@@ -430,13 +431,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../maaslin3/genus_aggregation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Genus phyloseq</span></a>
+ <span class="menu-text">Genus aggregation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../maaslin3/count_table.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Count table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/metadata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/read_counts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Read counts</span></a>
   </div>
 </li>
       </ul>
@@ -500,6 +513,11 @@ Note
 </div>
 <section id="extract-count-table" class="level2">
 <h2 class="anchored" data-anchor-id="extract-count-table">Extract count table</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/extractor_fan_ibm_1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width: 200px; border-radius:5px;  background-color: white; border: 10px solid white"></p>
+</figure>
+</div>
 <p>Extract the <code>otu_table</code> (i.e.&nbsp;count table) from the genus <code>phyloseq</code> object as a <code>matrix</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Extract otu_table as matrix</span></span>
@@ -1372,11 +1390,14 @@ window.onload = function() {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../maaslin3/genus_aggregation.html" class="pagination-link" aria-label="Genus phyloseq">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Genus phyloseq</span>
+      <a href="../maaslin3/genus_aggregation.html" class="pagination-link" aria-label="Genus aggregation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Genus aggregation</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../maaslin3/metadata.html" class="pagination-link" aria-label="Metadata">
+        <span class="nav-page-text">Metadata</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
