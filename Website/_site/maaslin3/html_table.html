@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>one_iteration – Advanced R community analysis</title>
+<title>html_table – Advanced R community analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -68,8 +68,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../rarefaction/multiple_iterations.html" rel="next">
-<link href="../rarefaction/phyla_relative_abundance.html" rel="prev">
+<link href="../maaslin3/metrics.html" rel="next">
+<link href="../maaslin3/median_comparison.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -305,7 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Setup</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../rarefaction/rarefaction.html" aria-current="page"> 
+    <a class="nav-link" href="../rarefaction/rarefaction.html"> 
 <span class="menu-text">Rarefaction</span></a>
   </li>  
   <li class="nav-item">
@@ -317,7 +317,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Upset</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../maaslin3/maaslin3.html"> 
+    <a class="nav-link active" href="../maaslin3/maaslin3.html" aria-current="page"> 
 <span class="menu-text">MaAsLin3</span></a>
   </li>  
 </ul>
@@ -363,20 +363,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/rarefaction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Rarefaction</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../rarefaction/background.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Background</span></a>
+  <a href="../maaslin3/maaslin3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MaAsLin3</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Setup</span></a>
+ <span class="menu-text">Background</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -384,8 +378,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/data_and_setup.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Data &amp; setup</span></a>
+  <a href="../maaslin3/linear_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/mixed_effects_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mixed effect model</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/logistic_model.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Logistic model</span></a>
   </div>
 </li>
       </ul>
@@ -393,7 +399,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Random seeds</span></a>
+ <span class="menu-text">Setup</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -401,20 +407,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/random_seeds.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Random seeds and sampling</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../rarefaction/r_and_random_seeds.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">R and random seeds</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../rarefaction/random_seed_tasks.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Random seed tasks</span></a>
+  <a href="../maaslin3/environment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Environment</span></a>
   </div>
 </li>
       </ul>
@@ -422,7 +416,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Iterating rarefaction</span></a>
+ <span class="menu-text">Data</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -430,32 +424,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/iterating_rarefaction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Iteration intro &amp; setup</span></a>
+  <a href="../maaslin3/dataset.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dataset</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/phyla_relative_abundance.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Phyla relative abundance</span></a>
+  <a href="../maaslin3/genus_aggregation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Genus aggregation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/one_iteration.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">One iteration</span></a>
+  <a href="../maaslin3/count_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Count table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/multiple_iterations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Multiple iterations</span></a>
+  <a href="../maaslin3/metadata.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/iteration_task.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Iteration task</span></a>
+  <a href="../maaslin3/read_counts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Read counts</span></a>
   </div>
 </li>
       </ul>
@@ -463,7 +457,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">Alpha diversity</span></a>
+ <span class="menu-text">MaAsLin3 analysis</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -471,38 +465,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/alpha_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">α intro and setup</span></a>
+  <a href="../maaslin3/maaslin3_function.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MaAsLin3 function</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/alpha_iterative_rarefaction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">α iterative rarefaction loop</span></a>
+  <a href="../maaslin3/lme4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">lme4 formula</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/alpha_data_frame_tidy.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">α data frame tidying</span></a>
+  <a href="../maaslin3/fixed_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fixed effects</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/alpha_violin_plot_and_stats.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">α plot and stats</span></a>
+  <a href="../maaslin3/random_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Random effects</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/alpha_plot_with_stats.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">α plot with stats</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../rarefaction/alpha_task.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">α task</span></a>
+  <a href="../maaslin3/median_comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Median comparisons</span></a>
   </div>
 </li>
       </ul>
@@ -510,7 +498,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Beta diversity</span></a>
+ <span class="menu-text">Text output</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -518,102 +506,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">β intro &amp; setup</span></a>
+  <a href="../maaslin3/html_table.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Significant results table</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_distance_matrices.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">β distance matrices</span></a>
+  <a href="../maaslin3/metrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metrics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_rarefaction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">β iterative rarefaction</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_ordination.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">β ordination</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_stats.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">β stats</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_subset_ordination.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">β subset ordinations</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_considerations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">β considerations</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_task.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">β task</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Rarefaction slopes</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../rarefaction/rareslope_intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Slope intro</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../rarefaction/rarefaction_curve.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Rarefaction curve</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../rarefaction/rarefaction_slope_tibble.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Rarefaction slope tibble</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../rarefaction/rareslope_boxplots.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Slope boxplots</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">Templates</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../rarefaction/iterative_rarefaction_diversity_loop.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Alpha and Beta loop</span></a>
+  <a href="../maaslin3/text_task.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Text tasks</span></a>
   </div>
 </li>
       </ul>
@@ -628,11 +534,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#one-iteration" id="toc-one-iteration" class="nav-link active" data-scroll-target="#one-iteration">One iteration</a>
+  <li><a href="#significant-results-table" id="toc-significant-results-table" class="nav-link active" data-scroll-target="#significant-results-table">Significant results table</a>
   <ul class="collapse">
-  <li><a href="#rarefaction" id="toc-rarefaction" class="nav-link" data-scroll-target="#rarefaction">Rarefaction</a></li>
-  <li><a href="#relative-abundance-bar-chart" id="toc-relative-abundance-bar-chart" class="nav-link" data-scroll-target="#relative-abundance-bar-chart">Relative abundance bar chart</a></li>
-  <li><a href="#difference-from-non-rarefied" id="toc-difference-from-non-rarefied" class="nav-link" data-scroll-target="#difference-from-non-rarefied">Difference from non-rarefied</a></li>
+  <li><a href="#notebook-setup" id="toc-notebook-setup" class="nav-link" data-scroll-target="#notebook-setup">Notebook setup</a></li>
+  <li><a href="#read-in-and-glimpsing" id="toc-read-in-and-glimpsing" class="nav-link" data-scroll-target="#read-in-and-glimpsing">Read in and glimpsing</a></li>
+  <li><a href="#saving" id="toc-saving" class="nav-link" data-scroll-target="#saving">Saving</a></li>
+  <li><a href="#viewing" id="toc-viewing" class="nav-link" data-scroll-target="#viewing">Viewing</a></li>
+  <li><a href="#html-table-creation" id="toc-html-table-creation" class="nav-link" data-scroll-target="#html-table-creation">HTML table creation</a></li>
+  <li><a href="#explore-html-table" id="toc-explore-html-table" class="nav-link" data-scroll-target="#explore-html-table">Explore HTML table</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -644,97 +553,132 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="one-iteration" class="level1">
-<h1>One iteration</h1>
+<section id="significant-results-table" class="level1">
+<h1>Significant results table</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/one_round.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:5px; background:white; border: white solid 5px"></p>
+<p><img src="images/table.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; background:white; border-radius:5px"></p>
 </figure>
 </div>
-<p>Building up to multiple <strong>iterations</strong> of <strong>rarefaction</strong> we will first carry out one round of <strong>rarefaction</strong> on our environmental phyla abundance data.</p>
-<p>This will also allow us to compare the results of no <strong>rarefaction</strong> to <strong>one iteration of rarefaction</strong>.</p>
-<section id="rarefaction" class="level2">
-<h2 class="anchored" data-anchor-id="rarefaction">Rarefaction</h2>
+<p>There are various output files in our output directory <code>genus_output</code>. The first we will look at is the text file <code>significant_results.tsv</code>. This contains all the significant features <code>maaslin3()</code> found.</p>
+<p>This significance is based on the individual q-value or the joint q-value. Additionally, the rows are ordered from most to least significant (i.e.&nbsp;ascending order based on the <code>qval_individual</code> column).</p>
+<section id="notebook-setup" class="level2">
+<h2 class="anchored" data-anchor-id="notebook-setup">Notebook setup</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/black_rhino.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:300px; border-radius:5px; background:white; border: white solid 5px"></p>
+<p><img src="images/jupiter.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white solid 5px"></p>
 </figure>
 </div>
-<p>Carry out one round of <strong>rarefaction</strong> and view the <strong>rarefied</strong> counts.</p>
-<p>We are using the environmental samples subsetted and phyla aggregated data. Additionally, we are using the first of our <strong>random seeds</strong> in <code>rng_seed_vec</code> and the minimum read count as our <strong>rarefaction</strong> size. Please see advice on how to determine the rarefaction size of your own data in the <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/14-Rarefaction.html">NEOF R community analysis workshop</a></p>
+<p>Save then close and halt your “2-MaAsLin3.ipynb” notebook.</p>
+<p>Create and open a new jupyter notebook called “3-Text_output.ipynb”.</p>
+<p>Create a markdown cell at the top with:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#One round of rarefaction</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pseq_env_phyla_rarefy_1 <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">rarefy_even_depth</span>(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  pseq_env_phyla,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Minimum read count as rarefaction size</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample.size =</span> <span class="fu">min</span>(microbiome<span class="sc">::</span><span class="fu">readcount</span>(pseq_env_phyla)),</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#First random seed as the rng seed</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">rngseed =</span> rngseed_vec[<span class="dv">1</span>])</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#View count table</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">otu_table</span>(pseq_env_phyla_rarefy_1)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Sum count of samples</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>microbiome<span class="sc">::</span><span class="fu">readcount</span>(pseq_env_phyla_rarefy_1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3-Text output</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Libraries</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>You should see that all the samples now have a total count of <strong>11046</strong>.</p>
+<p>In a code cell load the required libraries.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Library</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"DT"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </section>
-<section id="relative-abundance-bar-chart" class="level2">
-<h2 class="anchored" data-anchor-id="relative-abundance-bar-chart">Relative abundance bar chart</h2>
+<section id="read-in-and-glimpsing" class="level2">
+<h2 class="anchored" data-anchor-id="read-in-and-glimpsing">Read in and glimpsing</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/stacked_bar_chart_2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:5px; background:white; border: white solid 5px"></p>
+<p><img src="images/read.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white 5px solid"></p>
 </figure>
 </div>
-<p>Now to create a relative abundance bar chart with our <strong>rarefied</strong> data to compare to our non-rarefied data.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This is for demonstrative purposes. You would not use rarefied abundances for taxa bar charts in your real analysis.</p>
-</div>
-</div>
+<p>To view the significant results we need to first read in the file. In this case we’ll read it in as a <strong>tibble</strong> with <a href="https://cgr-liverpool.github.io/Tidyverse/readr/read.html"><code>readr::read_delim()</code></a> and then <a href="https://cgr-liverpool.github.io/Tidyverse/dplyr/glimpse.html">glimpse</a> it.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Quick phyla bar chart of relative abundances of rarefied data</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Relative abundance transformation</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>pseq_env_phyla_rarefy_1_relabund <span class="ot">&lt;-</span> microbiome<span class="sc">::</span><span class="fu">transform</span>(pseq_env_phyla_rarefy_1, <span class="st">"compositional"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Create, save, and display bar chart</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>phylum_bar <span class="ot">&lt;-</span> microbiome<span class="sc">::</span><span class="fu">plot_composition</span>(pseq_env_phyla_rarefy_1_relabund)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"./env_phyla_rarefy_1_relabund.png"</span>, <span class="at">plot =</span> phylum_bar,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">device =</span> <span class="st">"png"</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">units =</span> <span class="st">"mm"</span>, <span class="at">height =</span> <span class="dv">100</span>, <span class="at">width =</span> <span class="dv">200</span>)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file =</span> <span class="st">"./env_phyla_rarefy_1_relabund.png"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sig_res_tbl <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_delim</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">file=</span><span class="st">"./genus_output/significant_results.tsv"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">delim=</span><span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>sig_res_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Viewing the <strong>non-rarefied</strong> and <strong>rarefied</strong> based bar charts shows some differences. However, these are quite difficult to discern.</p>
+<p>There are many columns/variables which are explained in the next page: <a href="../maaslin3/metrics.html">Metrics</a>.</p>
 </section>
-<section id="difference-from-non-rarefied" class="level2">
-<h2 class="anchored" data-anchor-id="difference-from-non-rarefied">Difference from non-rarefied</h2>
+<section id="saving" class="level2">
+<h2 class="anchored" data-anchor-id="saving">Saving</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/histogram_1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; border-radius:5px; background:white; border: white solid 5px"></p>
+<p><img src="images/save.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white 5px solid"></p>
 </figure>
 </div>
-<p>To more easily see the differences between the rarefied and non-rarefied data we will subtract the two phyla relative abundance tables from each other. This will produce a matrix of differences.</p>
+<p>To load the significant results easily in other notebooks we’ll save the <code>sig_res_tbl</code> object as a file.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Value difference matrix</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>single_rarefaction_diff <span class="ot">&lt;-</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  phyloseq<span class="sc">::</span><span class="fu">otu_table</span>(pseq_env_phyla_relabund) <span class="sc">-</span> phyloseq<span class="sc">::</span><span class="fu">otu_table</span>(pseq_env_phyla_rarefy_1_relabund)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>single_rarefaction_diff</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Save significant reults tibble</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(sig_res_tbl, <span class="at">file=</span><span class="st">"./genus_output/significant_results.RData"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>In the matrix we can see there are differences. For a clearer view of these differences let’s make a histogram.</p>
+</section>
+<section id="viewing" class="level2">
+<h2 class="anchored" data-anchor-id="viewing">Viewing</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/eye_ibm_orange.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white 5px solid"></p>
+</figure>
+</div>
+<p>You can view the whole table in R:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Histogram of differences</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(single_rarefaction_diff, <span class="at">main =</span> <span class="st">"Single rarefaction"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sig_res_tbl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-What is the range of the differences?
-<div id="radio_CEPUNIWMZS" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_CEPUNIWMZS" value=""> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_CEPUNIWMZS" value=""> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_CEPUNIWMZS" value="answer"> <span><strong>-0.015 to 0.015</strong></span></label>
+<p>With this object you can carry out various commands to pull out specific data.</p>
+<p>Optionally, you can open the file (<code>significant_results.tsv</code>) by navigating to the <code>genus_output</code> directory through your jupyter file explorer. Once in the directory you can click on the file to open it.</p>
+<p>Neither of these methods are convenient. In your own future analysis you can use excel but we’ll show you another option below.</p>
+</section>
+<section id="html-table-creation" class="level2">
+<h2 class="anchored" data-anchor-id="html-table-creation">HTML table creation</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/html.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white 5px solid"></p>
+</figure>
 </div>
-<p>These values appear quite small. However, keep in mind we are working with relative abundance values. Each sample has a total relative abundance of 1.00 so a relative abundance value of 0.01 is 1%.</p>
-<p>Let’s see if we can make these differences smaller with multiple rounds of rarefaction.</p>
+<p>We can create a html table with the package <code>DT</code> and its function <code>DT::datatable()</code>. In the function we specify the <code>data.frame</code>/<code>tibble</code> to convert to HTML. Additionally, we specify <code>options = list(pageLength = 20)</code> so the resulting html will show 20 rows at a time.</p>
+<p><a href="https://rstudio.github.io/DT/"><code>DT</code> package homepage</a></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert table to html</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sig_res_dt <span class="ot">&lt;-</span> DT<span class="sc">::</span><span class="fu">datatable</span>(sig_res_tbl, <span class="at">options =</span> <span class="fu">list</span>(<span class="at">pageLength =</span> <span class="dv">20</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The above code created an R object which we then need to save as an HTML file. We’ll carry this out with <a href="https://www.rdocumentation.org/packages/htmlwidgets/versions/1.6.4/topics/saveWidget"><code>htmlwidgets::saveWidget()</code></a>. The option <code>selfcontained =</code> must be set to <code>TRUE</code> for this to function correctly.</p>
+<p><a href="https://www.htmlwidgets.org/develop_intro.html"><code>htmlwidgets::savewdigets()</code> code documentation</a></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Save HTML</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>htmlwidgets<span class="sc">::</span><span class="fu">saveWidget</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Input widget/html</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">widget =</span> sig_res_dt,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Output html</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">file =</span> <span class="st">"./genus_output/significant_results.html"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Save as a single self contained HTML</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">selfcontained =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="explore-html-table" class="level2">
+<h2 class="anchored" data-anchor-id="explore-html-table">Explore HTML table</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/html_explore.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white 5px solid"></p>
+</figure>
+</div>
+<p>With the HTML created navigate into the <code>genus_output</code> directory via the <code>jupyter</code> file browser. Click on your HTML file (<code>significant_results.html</code>) to open it.</p>
+<p>The html is interactive with the following features:</p>
+<ul>
+<li>Order the table by a specific column by clicking on its column name
+<ul>
+<li>Click on it once for descending order</li>
+<li>Click on it twice for ascending order</li>
+</ul></li>
+<li>Set the number of rows to display with the drop down on the top left (“Show X entries”)
+<ul>
+<li>Choices are: 10, 20, 25, 50, and 100</li>
+</ul></li>
+<li>Search for specific text/numbers with the search bar on the top right
+<ul>
+<li>Useful if you are interested in the results of a specific species or genus</li>
+</ul></li>
+<li>Navigate across the pages with the arrows and page numbers on the bottom right</li>
+<li>View the total number of rows (i.e.&nbsp;significant features) on the bottom left</li>
+</ul>
 
 
 </section>
@@ -1568,13 +1512,13 @@ window.onload = function() {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../rarefaction/phyla_relative_abundance.html" class="pagination-link" aria-label="Phyla relative abundance">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Phyla relative abundance</span>
+      <a href="../maaslin3/median_comparison.html" class="pagination-link" aria-label="Median comparisons">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Median comparisons</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../rarefaction/multiple_iterations.html" class="pagination-link" aria-label="Multiple iterations">
-        <span class="nav-page-text">Multiple iterations</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../maaslin3/metrics.html" class="pagination-link" aria-label="Metrics">
+        <span class="nav-page-text">Metrics</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

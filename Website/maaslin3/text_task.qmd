@@ -1,0 +1,192 @@
+# Text tasks
+![](images/text_task.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+To familiarise yourself with the text outputs of `maaslin3()` please attempt the below tasks.
+This involves answering some MCQs (multiple choice questions) and creating some of your own code.
+
+## Significant results
+
+Please attempt the below MCQs based on the significant results table.
+
+You can find the results by searching through the HTML we created earlier (`significant_results.html`).
+The instructions on how to use the html file are here: [Explore HTML table](/maaslin3/html_table.qmd#explore-html-table).
+
+You can also find the answers using various [`tidyverse` functions](https://cgr-liverpool.github.io/Tidyverse/) on the `sig_res_tbl` object.
+
+
+### Arranging questions
+![](images/question_bubble_ibm_orange.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+The first three questions can be carried out by ordering the specific columns by clicking on the column name in the HTML.
+Optionally, [`dplyr::slice()` functions](https://cgr-liverpool.github.io/Tidyverse/dplyr/slice.html) and the [`dplyr::pull()` function](https://cgr-liverpool.github.io/Tidyverse/dplyr/pull.html) can be used.
+
+```{r, echo = FALSE}
+opts_p <- c(
+    answer="*Aeromonas*",
+    "*Alkalimonas*", 
+    "*Elizabethkingia*")
+```
+1. Which feature/genus has the most significant q-value for one of its associations? `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c(
+    "*Aeromonas*",
+    "*Alkalimonas*", 
+    answer="*Elizabethkingia*")
+```
+2. Which feature/genus has the largest coefficient value? `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c(
+    "*Aeromonas*", 
+    answer="*Alkalimonas*",
+    "*Elizabethkingia*")
+```
+3. Which feature/genus has the lowest `N_not_zero` value? `r longmcq(opts_p)`
+
+::: {.callout-note collapse="true" title="MCQ1 code"}
+```{r, eval=FALSE}
+#MCQ1
+#Feature with most significant q-value
+sig_res_tbl |>
+    dplyr::slice_min(qval_individual, n=1) |>
+    dplyr::pull(feature)
+```
+:::
+::: {.callout-note collapse="true" title="MCQ2 code"}
+```{r, eval=FALSE}
+#MCQ2
+#Feature with largest coefficient value
+sig_res_tbl |>
+    dplyr::slice_max(coef, n=1) |>
+    dplyr::pull(feature)
+```
+:::
+::: {.callout-note collapse="true" title="MCQ3 code"}
+```{r, eval=FALSE}
+#MCQ3
+#Feature with largest joint q-value
+sig_res_tbl |>
+    dplyr::slice_max(qval_joint, n=1) |>
+    dplyr::pull(feature)
+```
+:::
+
+### Specific comparisons questions
+![](images/question_bubble_ibm_purple.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+The next three question involve looking up the results of a specific feature and association.
+This can be carried out with the search bar in the HTML.
+With tidyverse you can use multiple [`dplyr::filter()` functions](https://cgr-liverpool.github.io/Tidyverse/dplyr/filter.html) and the [`dplyr::pull() function](https://cgr-liverpool.github.io/Tidyverse/dplyr/pull.html).
+
+```{r, echo = FALSE}
+opts_p <- c(
+    answer="**-3.70122591449453**", 
+    "**-2.14910132819983**", 
+    "**0.879255866584319**")
+```
+4. What is the coefficient value of Acinetobacter johnsonii for the Scalp vs Axilla comparison for the abundance model? `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c(
+    "**-3.70122591449453**", 
+    answer="**-2.14910132820065**", 
+    "**0.879255866584319**")
+```
+5. What is the coefficient value of Staphylococcus epidermidis for the Cheek vs Axilla comparison for the abundance model? `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c(
+    "**-3.70122591449453**", 
+    "**-2.14910132820065**", 
+    answer="**0.879255866584319**")
+```
+6. What is the coefficient value of Staphylococcus pasteuri for the reads association for the prevalence model? `r longmcq(opts_p)`
+
+`r hide("MCQ4 code")`
+```{r, eval=FALSE}
+#MCQ4
+#Coefficient value of Acinetobacter johnsonii for Scalp vs Axilla comparison
+# for the abundance model
+sig_res_tbl |>
+    dplyr::filter(feature=="Acinetobacter johnsonii") |>
+    dplyr::filter(name=="SampleSiteScalp") |>
+    dplyr::filter(model=="abundance") |>
+    dplyr::pull(coef)
+```
+`r unhide()`
+`r hide("MCQ5 code")`
+```{r, eval=FALSE}
+#MCQ5
+#Coefficient value of Staphylococcus epidermidis for Cheek vs Axilla comparison
+# for the abundance model
+sig_res_tbl |>
+    dplyr::filter(feature=="Staphylococcus epidermidis") |>
+    dplyr::filter(name=="SampleSiteCheek") |>
+    dplyr::filter(model=="abundance") |>
+    dplyr::pull(coef)
+```
+`r unhide()`
+`r hide("MCQ6 code")`
+```{r, eval=FALSE}
+#MCQ6
+#Coefficient value of Staphylococcus pasteuri for Reads association
+# for the prevalence model
+sig_res_tbl |>
+    dplyr::filter(feature=="Staphylococcus pasteuri") |>
+    dplyr::filter(name=="Reads") |>
+    dplyr::filter(model=="prevalence") |>
+    dplyr::pull(coef)
+```
+`r unhide()`
+
+## All results
+![](images/question_bubble_ibm_yellow.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+For this task you will read in the all results file as a tibble.
+
+- File to read in: `metagenome_output/all_results.tsv`
+- Output tibble name: `all_res_tbl`
+- Glimpse the tibble once it is created
+- Use the instructions for the significant results as a guide: [sig results page](/relative/html_table.qmd)
+- Feel free to copy and paste your previous code but ensure you edit/change the relevant names
+
+Answer the below MCQs based on the `sig_res_tbl` and `all_res_tbl` objects.
+
+```{r, echo = FALSE}
+opts_p <- c(
+    "**15**", 
+    answer="**512**", 
+    "**13080**")
+```
+1. How many observations are there in the significant results table? `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c(
+    "**15**", 
+    "**512**", 
+    answer="**13080**")
+```
+2. How many observations are there in the all results table? `r longmcq(opts_p)`
+
+`r hide("Read in tibble solution")`
+```{r, eval=FALSE}
+#Read in all results
+all_res_tbl <- readr::read_delim(
+    file = "./metagenome_output/all_results.tsv", 
+    delim="\t")
+all_res_tbl |> glimpse()
+```
+`r unhide()`
+
+Our all table is so large we unfortunately cannot convert it to a HTML with `DT::datatable()`.
+If you try you will get the following error:
+
+```{r, eval=FALSE}
+Warning message in instance$preRenderHook(instance):
+“It seems your data is too big for client-side DataTables. You may consider server-side processing: https://rstudio.github.io/DT/server.html”
+```
+
+Doubly unfortunately the link in the suggestion is dead.
+Most likely trying to setup server-side processing will be incredibly difficult and not worth the effort to view all the results as an HTML.
+Therefore, we won't.

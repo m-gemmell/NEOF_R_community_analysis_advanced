@@ -1,0 +1,171 @@
+# Median comparisons
+![](images/median.png){style="width:400px; background:white; border-radius:5px" fig-align="center"}
+
+MaAsLin3 analysis compares the coefficient of each feature against either 0 or the median coefficient value.
+The median coefficient value being calculated from all the coefficient values of all the features for the one specific comparison (e.g. ENV vs CVP).
+
+Median comparison can be set in `maaslin3()` with the following 2 options:
+
+- `median_comparison_abundance`: Median comparison for abundance/linear comparisons
+    - By default is set to `TRUE`
+- `median_comparison_prevalence`: Median comparison for prevalence/logistic comparisons
+    - By default is set to `FALSE`
+
+## Demonstration
+
+Below is a quick example of how median and zero comparison differ.
+In this case we'll compare Media (query) against Environment (reference).
+
+### Count data
+
+Say we have two groups: **Media** and **Environment**.
+They'll each have one sample for simplicity. 
+Below are the counts for 5 taxa:
+
+|Taxa|Environment|Media|
+|---|---|---|
+|Taxon A | 100 | 200|
+|Taxon B | 100 | 200|
+|Taxon C | 100 | 200|
+|Taxon D | 100 | 200|
+|Taxon E | 100 | 400|
+
+We can see that Taxa A-D each have 2 times the counts in the Media compared to the Environment, whilst Taxon E has 4 times.
+As these are raw counts, the overall doubling could be due to library size, bacterial load, etc.
+
+### Convert to relative abundance
+In our [MaAsLin3 analysis](/relative/maaslin3.qmd) we convert the counts to relative abundances (`normalization = 'TSS'`):
+
+|Taxa|Environment|Media|
+|---|---|---|
+|Taxon A | 0.2 | 0.167|
+|Taxon B | 0.2 | 0.167 |
+|Taxon C | 0.2 | 0.167 |
+|Taxon D | 0.2 | 0.167 |
+|Taxon E | 0.2 | 0.333 |
+
+Now it still appears like Taxon E has a higher count in Media but lower in the other taxa.
+
+### Calculate coefficients (changes)
+
+Next coefficients are calculated as log2-fold changes (coefficients explained in the [plots section](/relative/plots.qmd)).
+
+Feature|Relative abundance change| Coefficient|
+|---|---|---|
+|Taxon A | 0.167 / 0.2 | -0.26|
+|Taxon B | 0.167 / 0.2 | -0.26 |
+|Taxon C | 0.167 / 0.2 | -0.26 |
+|Taxon D | 0.167 / 0.2 | -0.26 |
+|Taxon E | 0.333 / 0.2 | 0.74 |
+
+### Option 1: Compare to zero
+
+Here we ask whether each feature’s coefficient is above or below **0**.
+
+| Feature | Coefficient | Compared to zero | Simple interpretation |
+|---|---:|---:|---|
+| Taxon A | -0.26 | < 0 | Appears decreased |
+| Taxon B | -0.26 | < 0 | Appears decreased |
+| Taxon C | -0.26 | < 0 | Appears decreased |
+| Taxon D | -0.26 | < 0 | Appears decreased |
+| Taxon E | 0.74 | > 0 | Appears increased |
+
+When comparing the relative abundance coefficients to zero, Taxa A-D look like they are lower in the Media.
+
+But we know from the raw counts that Taxa A-D were **not** lower in the Media. 
+Their values were double compared to the Environment (100 to 200). 
+They look lower because Taxon E was even higher, changing the relative composition of the sample.
+
+### Option 2: Compare to the median coefficient
+
+To compensate for this composition we can compare to the **median coefficient**.
+
+For each comparison, in this case we only have one (Media vs Environment), a **median coefficient** is calculated.
+
+The coefficients are:
+
+`-0.26, -0.26, -0.26, -0.26, 0.74`
+
+Therefore the **median coefficient** value is **-0.26**.
+Instead of comparing each feature to **0**, we compare them to the **median coefficient**.
+
+| Feature | Coefficient | Median coefficient | Compared to median | Simple interpretation |
+|---|---:|---:|---:|---|
+| Taxon A | -0.26 | -0.26 | 0.00 | Typical/background change |
+| Taxon B | -0.26 | -0.26 | 0.00 | Typical/background change |
+| Taxon C | -0.26 | -0.26 | 0.00 | Typical/background change |
+| Taxon D | -0.26 | -0.26 | 0.00 | Typical/background change |
+| Taxon E | 0.74 | -0.26 | 1.00 | Increased more than typical |
+
+### Conclusion
+
+Comparing to **zero** makes the abundance of Taxa A-D look decreased in Media compared to the Environment. Comparing to the **median coefficient** does not treat Taxa A-D as specifically decreased. Instead, median comparison highlights Taxon E as the feature that changed more than the typical feature. So:
+
+* Comparing to zero asks: *“Did this feature increase or decrease in relative abundance?"* 
+* Comparing to the median asks: *"Did this feature change more or less than the typical feature”*
+
+::: {.callout-important}
+This is a simplified example with one sample per group. In a real MaAsLin3 analysis, the coefficients would come from a statistical model fitted across multiple samples, with uncertainty, p-values, and multiple-testing correction.
+:::
+
+## Abundance testing
+![](images/abundance.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+Median comparison is primarily used for abundance testing.
+It accounts for compositionality and allows you to infer absolute scale changes when using relative abundance data (i.e. anything without absolute abundance values).
+
+### Abundance median comparison
+
+By default `median_comparison_abundance` is set to `TRUE`.
+It should be used when using relative abundance values so you can make absolute scale inferences.
+The primary reason for this is that testing against zero on the relative scale is not the same as testing against zero on the absolute scale.
+
+When using abundance median comparison:
+
+- A median coefficient for the comparison/metadatum (e.g. UD vs MD) is created
+- The abundance coefficient for each feature is tested against the median value 
+- Compositionality is accounted for
+- Only p-values and q-values change
+- Coefficients in the results are the relative abundance coefficients unless `subtract_median = TRUE` is set
+
+### Abundance zero comparison
+
+When `median_comparison_abundance` is `FALSE` the coefficients are compared against 0.
+This should be used when testing for:
+
+- **Significant relative abundance** associations when using relative abundance data (i.e. you don't want to infer absolute scale changes)
+- Absolute abundance associations under the assumption that the total absolute abundance is not changing
+- Significant absolute abundance association when supplying spike-in with `unscaled_abundance`
+- Significant absolute abundance association when supplying total abundance with `unscaled_abundance`
+
+## Prevalence testing
+![](images/prevalence.png){style="width:150px; background:white; border-radius:5px" fig-align="center"}
+
+By default and for the vast majority of cases prevalence testing should be compared to 0 (`median_comparison_prevalence=FALSE`).
+
+Median testing can be carried out when you are interested in determining if a specific prevalence association is significantly different to the median prevalence coefficient.
+This won't be very often but it is an option.
+
+## Median comparison threshold
+
+When using either abundance or prevalence median comparison a threshold is set for each.
+If the feature's coefficient is within threshold of the median its p-value will be set to 1.
+
+For example:
+
+- The median is 0.1
+- The median threshold is 0.05
+- Features with coefficient values from 0.05-0.15 will automatically have a p-value of 1
+
+This prevents features which may have a statistical difference but not a substantially different value compared to the median from being detected as significant.
+
+By default both `median_comparison_abundance_threshold` and `median_comparison_prevalence_threshold` are set to 0.
+Therefore, only features whose coefficient match the median coefficient will automatically be given a p-value of 1.
+
+## Conclusion
+![](images/sum_ibm_magenta.png){style="width:150px; background:white; border-radius:5px; border: white 5px solid" fig-align="center"}
+
+Our analysis is using a standard relative abundance dataset and we want to infer absolute scale changes. 
+Therefore, we used the default parameters of `median_comparison_abundance=TRUE` and `median_comparison_prevalence=FALSE`.
+
+More information and considerations can be found in the [MaAsLin3 manual](https://github.com/biobakery/Maaslin3#median-comparisons).

@@ -1,0 +1,86 @@
+# Random effects
+![](images/random_effect.png){style="width:200px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+A random effect is a categorical control variable to include that you are not necessarily interested in evaluating but you want to control for.
+These include:
+
+- Experimental blocks
+- Common spatial groupings that create non-independence (e.g. samples from the same people or country)
+- Temporal groupings that also create non-independence (e.g. samples collected from different places in the same year)
+
+In our analysis we are using the `SubjectID` variable as a random effect.
+
+## Random effect specifications
+
+Random effects are always included by writing elements in `()` with a `|`.
+On the left of the `|` you specify the random effect/s.
+On the right of the `|` you specify the grouping factor/s on which the random effects depend on, these must be categorical.
+
+Examples include:
+
+- `(1|s)`: Random intercepts for unique level of factor s
+- `(1|s) + (1|i)`: Random intercept for each unique level of s and each unique level of i
+- `(1|s/i)`: Random intercepts for factor s and i, where the random effects of i are nested in s
+    - Expands to `(1|s) + (1|s:i)`, i.e. a random intercept for each level of s, and each unique combination of the levels s and i
+    - Nested random effects are used in so-called multilevel models
+    - For example, s might refer to schools/forest, and i to classroom/tree within the school/forest
+- `(a|s)`: Random intercept and random slopes for a, for each level of s
+    - Correlations between the intercept and slope effects are also estimated
+- `(a*b|s)`: Random intercepts and slopes for a, b, and the a:b interaction, for each level of s.
+    - Correlation between all the random effects are estimated
+- `(0+a|s)`: Random slopes for a for each level of s, but no random intercepts
+- `(a||s)`: Random intercepts and random slopes for a, for each level of s, but no correlations between the random effect (i.e. they are set to 0)
+    - Expands to `(0+a|s) + (1|s)`
+
+You are most likely to only use grouping factors (`(1|grouping_effect)`).
+In our formula our random effect specification is `(1|SubjectID)` so we are using `SubjectID` as a grouping effect.
+
+## Small random effect
+![](images/small.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+Random effects may not be suitable when there are fewer than 4 average observations per random effect group.
+Small random effect groups may produce poor model fits from logistic/prevalence random intercept models.
+Generally small random effects do not cause an issue for linear/abundance models.
+
+Recommendations:
+
+- \>= 4 average observations per group
+    - e.g. subject sampled >= 4 times
+    - Use subject as random effect
+    - Set `small_random_effects=FALSE` (default)
+    - Random effects are robust and increase power
+- < 4 average observations per group, metadata not collinear with the groups
+    - e.g. Subjects sampled once before and once after treatment
+    - Use subject as random effect
+    - Set `small_random_effect=TRUE`
+        - Abundance testing will use random effects as random effects
+        - Prevalence testing will use random effects as fixed effects
+    - Prevalence random effects are not robust but fixed effects are robust and control for grouping
+- < 4 average observations per group, metadata collinear with the groups
+    - e.g. Subjects have fixed disease status and are sampled twice 
+        - Each subject has the same disease status for all their data points, therefore subject and disease status are collinear
+    - Subset or average data to one observation per group (i.e. have one observation per subject)
+    - Reminder: This only benefits prevalence testing as abundance testing is not greatly affected by small random effects
+
+Therefore, it is always good to check the number of observations per group of your random effects.
+The below code uses the functions [dplyr::count()](https://cgr-liverpool.github.io/Tidyverse/dplyr/count.html) to show this for our `Media` variable as an example.
+
+```{r, eval=FALSE}
+#Number of observations for each SubjectID grouping
+metadata |>
+    dplyr::count(Media)
+```
+
+In this case all our observations have >=4 so our average will also be >= 4.
+Using `small_random_effects=FALSE` in our `maaslin3()` analysis would be the correct choice.
+You should check this before running `maaslin3()` in your own analysis when using random effects.
+
+It is not always easy to determine whether the average is >=4 by viewing them all.
+You can quickly calculate the average with the below code.
+
+```{r, eval=FALSE}
+#Average number of observations per group
+metadata |>
+    dplyr::count(Media) |>
+    dplyr::pull(n) |> mean()
+```

@@ -1,0 +1,38 @@
+# Fixed effects
+![](images/fixed_effect.png){style="width:200px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+Fixed effects are any term related to your hypothesis that requires evaluation and any continuous control variables.
+
+We are interested in the differences of our three sites (UD, MD, and LD) so we used it as a fixed effect.
+We are also interested in the difference of the media compared ot the environmental sample so we used `Media` as a fixed effect.
+
+To control for the read counts/depths of the samples we used `Reads` as a fixed effect.
+This uses it as a continuous control variable.
+
+## Main effect and interactions
+
+When using fixed effects you can look at the main effect, interactions, or both of multiple variables.
+
+The main effects is when looking at the effect of one variable by itself.
+Interactions are used to test whether the effect of one predictor variable on the outcome changes depending on another predictor variable.
+For example, an interaction between treatment and time point tests whether the treatment effect is different at different time points.
+
+In our formula we specified the formula to only look at main effects.
+
+## Fixed effect specifications
+
+Below is a list of examples on how to specify the usage of fixed effects.
+
+- `a`: Main effect of a
+- `a + b`: Main effect of a and b (no interaction)
+- `a:b`: Interaction of a and b (no main effects)
+- `a * b`: Main effects and interaction of a and b (expands to `a + b + a:b`)
+- `(a+b+c)^2`: Main effects and 2-way interactions (no 3-way interaction) of a, b , and c (expands to `a + b + c + a:b + a:c + b:c`)
+- `(a+b)*c`: all main effects and pairwise interactions between a and c, and b and c (not between a and b) (expands to `a + b + c + a:c + b:c`)
+- `0 + a`: 0 suppresses the intercept resulting in a model that has one parameter per level of a (identical to : a - 1)
+
+
+::: {.callout-tip}
+The `maaslin3()` developers recommend combing 2 fixed effect columns into one for interactions rather than the `a:b` method.
+For example, you could use the column `site.media` as a main effect to see the interactions of `Site` and `Media` rather than using `site:media` in the formula.
+:::

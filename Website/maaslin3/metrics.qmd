@@ -1,0 +1,81 @@
+# Metrics
+![](images/metrics.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+There are various metrics in the output text files of `maaslin3()`.
+Each row is a single association based on a combination of a single feature, the specific metadata comparison, and the model used (abundance or prevalence).
+
+## Interpretation
+![](images/magnifying_glass_ibm_blue.png){style="width:150px; background:white; border-radius:5px; border: white 5px solid" fig-align="center"}
+
+There is a lot of information in this file as can be seen in the number of metrics below.
+
+Although the metrics are important they do not give a full picture of the results.
+Rather it is better to use the metrics and plots together.
+
+## Columns
+![](images/columns.png){style="width:150px; background:white; border-radius:5px; border: white 5px solid" fig-align="center"}
+
+Both the files `all_results.tsv` and `significant_results.tsv` have the following columns/metrics:
+
+- __feature:__ Feature name
+    - Features are species in our data
+- __metadata:__ Metadata name (e.g. `SampleSite` or `Reads`)
+- __value:__ Metadata value
+    - Categorical: The query group name (e.g. `Cheek`)
+    - Continuous: The metadata name (e.g. `Reads`)
+- __name:__ Variable name from model
+    - Categorical: The metadata name and query group name combined (e.g. `SampleSiteCheek`)
+    - Continuous: The metadata name (e.g. `Reads`)
+- __coef:__ The fit coefficient
+    - Abundance models: A one-unit change in metadata variable corresponds to 2^coef^ fold change in the relative abundance of the feature
+    - Prevalence models: A one-unit change in the metadatum variable corresponds to a coef change in the [log-odds/logit](/maaslin3/logistic_model.qmd#log-oddslogit) of a feature being present
+    - This is covered more in the [output plot part](/maaslin3/plots.qmd)
+- __null_hypothesis:__ The value of the null hypothesis against which the coefficient is tested
+    - This value is zero when median comparison is off
+    - This value is the median value when median comparison is on, [see median comparison](/maaslin3/median_comparison.qmd)
+    - In our results abundance model rows are median and prevalence model rows are 0
+- __pval_individual:__ The p-value of the individual association
+- __qval_individual:__ The false discovery rate (FDR) corrected q-value of the individual association
+    - FDR correction is performed over all p-values without errors in the abundance and prevalence modelling together
+- __pval_joint:__ p-value of the joint prevalence and abundance association
+    - More info below
+    - Calculated from plugging in the minimum of the association's abundance and prevalence p-values into the Beta(1,2) CDF
+    - Interpreted as the probability that either the abundance or prevalence association would be as extreme as observed if there was neither an abundance nor prevalence association between the feature and metadatum
+- __qval_joint:__ q-value of the joint prevalence and abundance association
+- __error:__ Lists any errors from the model fitting
+- __model:__ Specifies whether the association is abundance or prevalence
+- __N:__ Total number of data points for the feature
+- __N_not_zero:__ Total number of non-zero data points for the feature
+
+## P-values
+![](images/p_hand_language.png){style="width:150px; background:white; border-radius:5px; border: white 5px solid" fig-align="center"}
+
+The Individual p-value is the p-value from the linear/abundance or logistic/prevalence model testing depending on the value of the `model` column.
+It's q-value indicates if the association is significant (<0.1) or not (>=0.1)
+
+The joint p-value is equal to `pbeta(min_p_value,1,2)`, where:
+
+- `pbeta()`: Function to generate probability density values for the Beta Distribution
+    - [Function webpage](https://www.rdocumentation.org/packages/fitODBOD/versions/1.5.5/topics/pBETA)
+- `min_p_value`: The minimum value between the abundance and prevalence modelling p-values of the feature comparison
+- `1,2`: In essence represents 1 out of 2
+
+:::{.callout-note}
+There is an exception to this calculation. If one of the 2 associations has an error or an NA for its p-value then the joint p-value is the p-value of the other association.
+:::
+
+In essence this is a form of multiple test testing due to the fact we are running 2 tests for each feature comparison (abundance and prevalence).
+
+It can be useful in the below situations:
+
+1. The abundance test of a comparison is significant but the prevalence test is insignificant
+    - If the joint p-value is insignificant then it is likely the abundance p-value may not be as extreme, i.e. its significant p-value came about by chance
+2. The prevalence test of a comparison is significant but the abundance test is insignificant
+    - If the joint p-value is insignificant then it is likely the prevalence p-value may not be as extreme, i.e. its significant p-value came about by chance
+
+Generally this is only a concern if the significant p-value is very near significance (i.e. a bit lower than 0.1).
+If this is the case and the joint p-value is not significant (>=0.1) we should be sceptical of the association.
+
+If both the individual p/q-values of the association (abundance & prevalence) are significant we can generally ignore the joint p/q-value.
+
+For this and your future analysis we recommend using the q-values rather than p-values.

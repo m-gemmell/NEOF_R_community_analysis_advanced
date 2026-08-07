@@ -1,0 +1,122 @@
+# Significant results table
+![](images/table.png){style="width:200px; background:white; border-radius:5px" fig-align="center"}
+
+There are various output files in our output directory `genus_output`.
+The first we will look at is the text file `significant_results.tsv`.
+This contains all the significant features `maaslin3()` found.
+
+This significance is based on the individual q-value or the joint q-value.
+Additionally, the rows are ordered from most to least significant (i.e. ascending order based on the `qval_individual` column).
+
+## Notebook setup
+![](images/jupiter.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+Save then close and halt your "2-MaAsLin3.ipynb" notebook.
+
+Create and open a new jupyter notebook called "3-Text_output.ipynb".
+
+Create a markdown cell at the top with:
+
+```{r, eval=FALSE}
+# 3-Text output
+## Libraries
+```
+
+In a code cell load the required libraries.
+
+```{r, eval=FALSE}
+#Library
+library("DT")
+library("tidyverse")
+```
+
+## Read in and glimpsing
+![](images/read.png){style="width:150px; background:white; border-radius:5px; border: white 5px solid" fig-align="center"}
+
+To view the significant results we need to first read in the file.
+In this case we'll read it in as a __tibble__ with [`readr::read_delim()`](https://cgr-liverpool.github.io/Tidyverse/readr/read.html) and then [glimpse](https://cgr-liverpool.github.io/Tidyverse/dplyr/glimpse.html) it.
+
+```{r, eval=FALSE}
+sig_res_tbl <- readr::read_delim(
+    file="./genus_output/significant_results.tsv",
+    delim="\t")
+sig_res_tbl |> dplyr::glimpse()
+```
+
+There are many columns/variables which are explained in the next page: [Metrics](/maaslin3/metrics.qmd).
+
+## Saving
+![](images/save.png){style="width:150px; background:white; border-radius:5px; border: white 5px solid" fig-align="center"}
+
+To load the significant results easily in other notebooks we'll save the `sig_res_tbl` object as a file.
+
+```{r, eval=FALSE}
+#Save significant reults tibble
+save(sig_res_tbl, file="./genus_output/significant_results.RData")
+```
+
+## Viewing
+![](images/eye_ibm_orange.png){style="width:150px; background:white; border-radius:5px; border: white 5px solid" fig-align="center"}
+
+You can view the whole table in R:
+
+```{r, eval=FALSE}
+sig_res_tbl
+```
+
+With this object you can carry out various commands to pull out specific data.
+
+Optionally, you can open the file (`significant_results.tsv`) by navigating to the `genus_output` directory through your jupyter file explorer.
+Once in the directory you can click on the file to open it.
+
+Neither of these methods are convenient.
+In your own future analysis you can use excel but we'll show you another option below.
+
+## HTML table creation
+![](images/html.png){style="width:150px; background:white; border-radius:5px; border: white 5px solid" fig-align="center"}
+
+We can create a html table with the package `DT` and its function `DT::datatable()`.
+In the function we specify the `data.frame`/`tibble` to convert to HTML.
+Additionally, we specify `options = list(pageLength = 20)` so the resulting html will show 20 rows at a time.
+
+[`DT` package homepage](https://rstudio.github.io/DT/)
+
+```{r, eval=FALSE}
+#Convert table to html
+sig_res_dt <- DT::datatable(sig_res_tbl, options = list(pageLength = 20))
+```
+
+The above code created an R object which we then need to save as an HTML file.
+We'll carry this out with [`htmlwidgets::saveWidget()`](https://www.rdocumentation.org/packages/htmlwidgets/versions/1.6.4/topics/saveWidget).
+The option `selfcontained =` must be set to `TRUE` for this to function correctly.
+
+[`htmlwidgets::savewdigets()` code documentation](https://www.htmlwidgets.org/develop_intro.html)
+
+```{r, eval=FALSE}
+#Save HTML
+htmlwidgets::saveWidget(
+    #Input widget/html
+    widget = sig_res_dt,
+    #Output html
+    file = "./genus_output/significant_results.html",
+    #Save as a single self contained HTML
+    selfcontained = TRUE)
+```
+
+## Explore HTML table
+![](images/html_explore.png){style="width:150px; background:white; border-radius:5px; border: white 5px solid" fig-align="center"}
+
+With the HTML created navigate into the `genus_output` directory via the `jupyter` file browser.
+Click on your HTML file (`significant_results.html`) to open it.
+
+The html is interactive with the following features:
+
+- Order the table by a specific column by clicking on its column name
+    - Click on it once for descending order
+    - Click on it twice for ascending order
+- Set the number of rows to display with the drop down on the top left ("Show X entries")
+    - Choices are: 10, 20, 25, 50, and 100
+- Search for specific text/numbers with the search bar on the top right
+    - Useful if you are interested in the results of a specific species or genus
+- Navigate across the pages with the arrows and page numbers on the bottom right
+- View the total number of rows (i.e. significant features) on the bottom left

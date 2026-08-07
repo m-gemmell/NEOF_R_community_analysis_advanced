@@ -191,6 +191,18 @@ website:
       - href: maaslin3/count_table.qmd
       - href: maaslin3/metadata.qmd
       - href: maaslin3\read_counts.qmd
+    - section: "MaAsLin3 analysis"
+      contents:
+      - href: maaslin3/maaslin3_function.qmd
+      - href: maaslin3/lme4.qmd
+      - href: maaslin3/fixed_effects.qmd
+      - href: maaslin3/random_effects.qmd
+      - href: maaslin3/median_comparison.qmd
+    - section: "Text output"
+      contents:
+      - href: maaslin3/html_table.qmd
+      - href: maaslin3/metrics.qmd
+      - href: maaslin3/text_task.qmd
 #Format
 format:
   html:

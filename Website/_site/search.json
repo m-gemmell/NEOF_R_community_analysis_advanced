@@ -2432,7 +2432,7 @@
     "href": "maaslin3/maaslin3.html",
     "title": "MaAsLin3",
     "section": "",
-    "text": "MaAsLin3 is a tool to detect feature associations based on metadata groupings using mixed effect models.\nIt carries out 2 types of association tests:\n\nAbundance testing\n\nDetermines the difference in the abundance values between groups\nCarried out with linear modelling\n\nPrevalence testing\n\nDetermines the likelihood of features being present based on groupings\nCarried out with logistic modelling\n\n\nBoth tests produce q-values plus a joint q-value is given.",
+    "text": "MaAsLin3 is a tool to detect feature associations based on metadata groupings using mixed effect models.\nIt carries out 2 types of association tests:\n\nAbundance testing\n\nDetermines the difference in the abundance values between groups\nCarried out with linear modelling\n\nPrevalence testing\n\nDetermines the likelihood of features being present based on groupings\nCarried out with logistic modelling\n\n\nBoth tests produce q-values plus a joint q-value is given.\n\n\nThere are multiple sections in this website. These are described below.\n\n\n\n\n\n\n\n\nInfo on MaAsLin3 and Mixed effect liner models including:\n\nLinear regression: Theory of linear models for abundance testing, and mixed effect models\nLogistic model: Theory of logistic models for prevalence testing\n\n\n\n\n\n\n\n\n\nEnvironment and jupyter-notebook setup including:\n\nSetup: Directory and mamba/conda environment setup\nJupyter: Jupyter-notebook tutorial\n\n\n\n\n\n\n\n\n\nA standard MaAsLin3 analysis with an relative/count table based on genomic reads. Includes:\n\nOverview: Description of dataset, and more detailed descriptions of the section’s parts and their pages\nNotebook setup: Setup of the first jupyter-notebook for this section\nData importing & formatting: Setting up the count table and metadata table for MaAsLin3 analysis\nMaAsLin3 analysis: Use of the maaslin3() function and considerations for its inputs\nText output: Viewing and interpreting the text output of maaslin3()\nOutput plots: Viewing, understanding, and interpreting the various plot types produced by maaslin3()\nChallenge: Tasks based on interrogating the maaslin3() output related to the TimepointName metadata variable\n\n\n\n\n\n\n\n\n\nA selection of resources including:\n\nMaAsLin3 resources\nR courses\nMamba",
     "crumbs": [
       "MaAsLin3"
     ]
@@ -2441,8 +2441,8 @@
     "objectID": "maaslin3/maaslin3.html#background",
     "href": "maaslin3/maaslin3.html#background",
     "title": "MaAsLin3",
-    "section": "Background",
-    "text": "Background\n\n\n\n\n\nInfo on MaAsLin3 and Mixed effect liner models including:\n\nLinear regression: Theory of linear models for abundance testing, and mixed effect models\nLogistic model: Theory of logistic models for prevalence testing",
+    "section": "",
+    "text": "Info on MaAsLin3 and Mixed effect liner models including:\n\nLinear regression: Theory of linear models for abundance testing, and mixed effect models\nLogistic model: Theory of logistic models for prevalence testing",
     "crumbs": [
       "MaAsLin3"
     ]
@@ -2451,8 +2451,8 @@
     "objectID": "maaslin3/maaslin3.html#setup",
     "href": "maaslin3/maaslin3.html#setup",
     "title": "MaAsLin3",
-    "section": "Setup",
-    "text": "Setup\n\n\n\n\n\nEnvironment and jupyter-notebook setup including:\n\nSetup: Directory and mamba/conda environment setup\nJupyter: Jupyter-notebook tutorial",
+    "section": "",
+    "text": "Environment and jupyter-notebook setup including:\n\nSetup: Directory and mamba/conda environment setup\nJupyter: Jupyter-notebook tutorial",
     "crumbs": [
       "MaAsLin3"
     ]
@@ -2461,8 +2461,8 @@
     "objectID": "maaslin3/maaslin3.html#maaslin3-analysis",
     "href": "maaslin3/maaslin3.html#maaslin3-analysis",
     "title": "MaAsLin3",
-    "section": "MaAslin3 analysis",
-    "text": "MaAslin3 analysis\n\n\n\n\n\nA standard MaAsLin3 analysis with an relative/count table based on genomic reads. Includes:\n\nOverview: Description of dataset, and more detailed descriptions of the section’s parts and their pages\nNotebook setup: Setup of the first jupyter-notebook for this section\nData importing & formatting: Setting up the count table and metadata table for MaAsLin3 analysis\nMaAsLin3 analysis: Use of the maaslin3() function and considerations for its inputs\nText output: Viewing and interpreting the text output of maaslin3()\nOutput plots: Viewing, understanding, and interpreting the various plot types produced by maaslin3()\nChallenge: Tasks based on interrogating the maaslin3() output related to the TimepointName metadata variable",
+    "section": "",
+    "text": "A standard MaAsLin3 analysis with an relative/count table based on genomic reads. Includes:\n\nOverview: Description of dataset, and more detailed descriptions of the section’s parts and their pages\nNotebook setup: Setup of the first jupyter-notebook for this section\nData importing & formatting: Setting up the count table and metadata table for MaAsLin3 analysis\nMaAsLin3 analysis: Use of the maaslin3() function and considerations for its inputs\nText output: Viewing and interpreting the text output of maaslin3()\nOutput plots: Viewing, understanding, and interpreting the various plot types produced by maaslin3()\nChallenge: Tasks based on interrogating the maaslin3() output related to the TimepointName metadata variable",
     "crumbs": [
       "MaAsLin3"
     ]
@@ -2471,8 +2471,8 @@
     "objectID": "maaslin3/maaslin3.html#appendix",
     "href": "maaslin3/maaslin3.html#appendix",
     "title": "MaAsLin3",
-    "section": "Appendix",
-    "text": "Appendix\n\n\n\n\n\nA selection of resources including:\n\nMaAsLin3 resources\nR courses\nMamba",
+    "section": "",
+    "text": "A selection of resources including:\n\nMaAsLin3 resources\nR courses\nMamba",
     "crumbs": [
       "MaAsLin3"
     ]
@@ -3114,6 +3114,400 @@
       "MaAsLin3",
       "Data",
       "Read counts"
+    ]
+  },
+  {
+    "objectID": "maaslin3/random_effects.html",
+    "href": "maaslin3/random_effects.html",
+    "title": "Random effects",
+    "section": "",
+    "text": "A random effect is a categorical control variable to include that you are not necessarily interested in evaluating but you want to control for. These include:\n\nExperimental blocks\nCommon spatial groupings that create non-independence (e.g. samples from the same people or country)\nTemporal groupings that also create non-independence (e.g. samples collected from different places in the same year)\n\nIn our analysis we are using the SubjectID variable as a random effect.\n\n\nRandom effects are always included by writing elements in () with a |. On the left of the | you specify the random effect/s. On the right of the | you specify the grouping factor/s on which the random effects depend on, these must be categorical.\nExamples include:\n\n(1|s): Random intercepts for unique level of factor s\n(1|s) + (1|i): Random intercept for each unique level of s and each unique level of i\n(1|s/i): Random intercepts for factor s and i, where the random effects of i are nested in s\n\nExpands to (1|s) + (1|s:i), i.e. a random intercept for each level of s, and each unique combination of the levels s and i\nNested random effects are used in so-called multilevel models\nFor example, s might refer to schools/forest, and i to classroom/tree within the school/forest\n\n(a|s): Random intercept and random slopes for a, for each level of s\n\nCorrelations between the intercept and slope effects are also estimated\n\n(a*b|s): Random intercepts and slopes for a, b, and the a:b interaction, for each level of s.\n\nCorrelation between all the random effects are estimated\n\n(0+a|s): Random slopes for a for each level of s, but no random intercepts\n(a||s): Random intercepts and random slopes for a, for each level of s, but no correlations between the random effect (i.e. they are set to 0)\n\nExpands to (0+a|s) + (1|s)\n\n\nYou are most likely to only use grouping factors ((1|grouping_effect)). In our formula our random effect specification is (1|SubjectID) so we are using SubjectID as a grouping effect.\n\n\n\n\n\n\n\n\nRandom effects may not be suitable when there are fewer than 4 average observations per random effect group. Small random effect groups may produce poor model fits from logistic/prevalence random intercept models. Generally small random effects do not cause an issue for linear/abundance models.\nRecommendations:\n\n&gt;= 4 average observations per group\n\ne.g. subject sampled &gt;= 4 times\nUse subject as random effect\nSet small_random_effects=FALSE (default)\nRandom effects are robust and increase power\n\n&lt; 4 average observations per group, metadata not collinear with the groups\n\ne.g. Subjects sampled once before and once after treatment\nUse subject as random effect\nSet small_random_effect=TRUE\n\nAbundance testing will use random effects as random effects\nPrevalence testing will use random effects as fixed effects\n\nPrevalence random effects are not robust but fixed effects are robust and control for grouping\n\n&lt; 4 average observations per group, metadata collinear with the groups\n\ne.g. Subjects have fixed disease status and are sampled twice\n\nEach subject has the same disease status for all their data points, therefore subject and disease status are collinear\n\nSubset or average data to one observation per group (i.e. have one observation per subject)\nReminder: This only benefits prevalence testing as abundance testing is not greatly affected by small random effects\n\n\nTherefore, it is always good to check the number of observations per group of your random effects. The below code uses the functions dplyr::count() to show this for our Media variable as an example.\n\n#Number of observations for each SubjectID grouping\nmetadata |&gt;\n    dplyr::count(Media)\n\nIn this case all our observations have &gt;=4 so our average will also be &gt;= 4. Using small_random_effects=FALSE in our maaslin3() analysis would be the correct choice. You should check this before running maaslin3() in your own analysis when using random effects.\nIt is not always easy to determine whether the average is &gt;=4 by viewing them all. You can quickly calculate the average with the below code.\n\n#Average number of observations per group\nmetadata |&gt;\n    dplyr::count(Media) |&gt;\n    dplyr::pull(n) |&gt; mean()",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "Random effects"
+    ]
+  },
+  {
+    "objectID": "maaslin3/random_effects.html#random-effect-specifications",
+    "href": "maaslin3/random_effects.html#random-effect-specifications",
+    "title": "Random effects",
+    "section": "",
+    "text": "Random effects are always included by writing elements in () with a |. On the left of the | you specify the random effect/s. On the right of the | you specify the grouping factor/s on which the random effects depend on, these must be categorical.\nExamples include:\n\n(1|s): Random intercepts for unique level of factor s\n(1|s) + (1|i): Random intercept for each unique level of s and each unique level of i\n(1|s/i): Random intercepts for factor s and i, where the random effects of i are nested in s\n\nExpands to (1|s) + (1|s:i), i.e. a random intercept for each level of s, and each unique combination of the levels s and i\nNested random effects are used in so-called multilevel models\nFor example, s might refer to schools/forest, and i to classroom/tree within the school/forest\n\n(a|s): Random intercept and random slopes for a, for each level of s\n\nCorrelations between the intercept and slope effects are also estimated\n\n(a*b|s): Random intercepts and slopes for a, b, and the a:b interaction, for each level of s.\n\nCorrelation between all the random effects are estimated\n\n(0+a|s): Random slopes for a for each level of s, but no random intercepts\n(a||s): Random intercepts and random slopes for a, for each level of s, but no correlations between the random effect (i.e. they are set to 0)\n\nExpands to (0+a|s) + (1|s)\n\n\nYou are most likely to only use grouping factors ((1|grouping_effect)). In our formula our random effect specification is (1|SubjectID) so we are using SubjectID as a grouping effect.",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "Random effects"
+    ]
+  },
+  {
+    "objectID": "maaslin3/random_effects.html#small-random-effect",
+    "href": "maaslin3/random_effects.html#small-random-effect",
+    "title": "Random effects",
+    "section": "",
+    "text": "Random effects may not be suitable when there are fewer than 4 average observations per random effect group. Small random effect groups may produce poor model fits from logistic/prevalence random intercept models. Generally small random effects do not cause an issue for linear/abundance models.\nRecommendations:\n\n&gt;= 4 average observations per group\n\ne.g. subject sampled &gt;= 4 times\nUse subject as random effect\nSet small_random_effects=FALSE (default)\nRandom effects are robust and increase power\n\n&lt; 4 average observations per group, metadata not collinear with the groups\n\ne.g. Subjects sampled once before and once after treatment\nUse subject as random effect\nSet small_random_effect=TRUE\n\nAbundance testing will use random effects as random effects\nPrevalence testing will use random effects as fixed effects\n\nPrevalence random effects are not robust but fixed effects are robust and control for grouping\n\n&lt; 4 average observations per group, metadata collinear with the groups\n\ne.g. Subjects have fixed disease status and are sampled twice\n\nEach subject has the same disease status for all their data points, therefore subject and disease status are collinear\n\nSubset or average data to one observation per group (i.e. have one observation per subject)\nReminder: This only benefits prevalence testing as abundance testing is not greatly affected by small random effects\n\n\nTherefore, it is always good to check the number of observations per group of your random effects. The below code uses the functions dplyr::count() to show this for our Media variable as an example.\n\n#Number of observations for each SubjectID grouping\nmetadata |&gt;\n    dplyr::count(Media)\n\nIn this case all our observations have &gt;=4 so our average will also be &gt;= 4. Using small_random_effects=FALSE in our maaslin3() analysis would be the correct choice. You should check this before running maaslin3() in your own analysis when using random effects.\nIt is not always easy to determine whether the average is &gt;=4 by viewing them all. You can quickly calculate the average with the below code.\n\n#Average number of observations per group\nmetadata |&gt;\n    dplyr::count(Media) |&gt;\n    dplyr::pull(n) |&gt; mean()",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "Random effects"
+    ]
+  },
+  {
+    "objectID": "maaslin3/maaslin3_function.html",
+    "href": "maaslin3/maaslin3_function.html",
+    "title": "MaAsLin3 function",
+    "section": "",
+    "text": "For our analysis we will immediately run the maaslin3() function. It takes quite a while to run so we’ll use pre-made results instead of running the code.\nAdditionally, this section contains a lot of theory on the following:\n\nlme4 specification: The formula containing the fixed and random effects\nFixed effects: The effects your hypothesis are interested in\nRandom effects: Effects your hypothesis is not necessarily interested in but you want to control for\nMedian comparison: When to and whn notto use median comparison in association testing\n\n\n\n\n\n\n\n\nCreate and open a new jupyter notebook called “2-MaAsLin3.ipynb”.\nCreate a markdown cell at the top with:\n\n# 2-MaAsLin3\n## Libraries\n\nIn a code cell load the required libraries and data.\n\n#Libraries\nlibrary(\"maaslin3\")\nlibrary(\"tidyverse\")\n#Load data\nload(\"genus_taxa_df.RData\")\nload(\"metadf.RData\")\n\n\n\n\n\n\n\n\n\nRun the MaAsLin3 analysis.\n\n#Set a random seed\nset.seed(419)\n#MaAsLin3\nfit_out &lt;- maaslin3(input_data=taxa_df,\n                    input_metadata=metadf,\n                    output='genus_output',\n                    formula='~ Site + Media + Reads',\n                    normalization='TSS',\n                    transform='LOG',\n                    augment=TRUE,\n                    standardize=TRUE,\n                    max_significance=0.1,\n                    median_comparison_abundance=TRUE,\n                    median_comparison_prevalence=FALSE,\n                    small_random_effects=FALSE,\n                    max_pngs=250,\n                    cores=1)\n#Set random seed back to null\nset.seed(NULL)\n\n\n\n\n\n\n\nImportant\n\n\n\nThe above command will take a while. As it runs please read the below and the other pages in this part.\n\n\n\n\n\n\n\n\n\n\nThe parameters we have used are described below.\n\ninput_data: Our formatted count table containing abundance values of species against samples.\ninput_metadata: Our formatted metadata table for our samples\noutput: Name of output directory\n\nThis will be created by the function\n\nformula: The comparison formula in lme4 specification\n\nDetails in lme4 formula page\n\nnormalization: Normalisation of the counts before transformation and analysis. Options include:\n\n'TTS' (default): Total Sum Scaling\n\nConverts the counts to fractional relative abundance values so total count of each sample = 1\n\n'CLR': Centred Log Ratio\n'NONE': No normalisation\n\ntransform: Transformation of feature counts after normalisation but before analysis\n\nAllows MaAsLin3 and us to see the log difference of features between comparisons/groups\nOptions include:\n\nLOG: Base 2 log transformation (recommended)\n\nOur TSS normalised values will all become -ve values or 0 (log(1, base=2) = 0, log(0.1, base=2)=-3.321928)\n\nPLOG: Pseudo-log with a pseudo-count of half the dataset’s minimum non-zero abundance replacing zeroes\n\nSuggested for metabolomics data\n\nNONE\n\n\naugment: Default is TRUE\n\nAvoids linear separability and is almost always recommended\n\nstandardise: When TRUE it applies z-scores to continuous metadata variables so they are on the same scale\n\nThe default is TRUE and is recommended\nAllows comparison of coefficients across metadata variables\n\nmax_significance: FDR corrected q-value threshold for significance\n\nThis will determine what associations are written as signifiant and what plots are created\nAssociations with an individual or joint q-value less than the threshold will be included in the significant results out\nOnly associations with an individual q-value lower than the threshold will be plotted\n\nmedian_comparison_abundance & median_comparison_prevalence: Whether to compare coefficients against median coefficient (TRUE) or against 0\n\nFor normal taxa abundance data set median_comparison_abundance = TRUE and median_comparison_prevalence = FALSE\nMore info, including when to use TRUE and FALSE, in Median comparison page\n\nsmall_random_effect: Replace random effects with fixed effects in logistic prevalence model\n\ndefault FALSE\nUse TRUE to handle low number of observations per group\nMore information in the Random effect page\n\n\nFull information here: MaAslin3 analysis options",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "MaAsLin3 function"
+    ]
+  },
+  {
+    "objectID": "maaslin3/maaslin3_function.html#notebook-setup",
+    "href": "maaslin3/maaslin3_function.html#notebook-setup",
+    "title": "MaAsLin3 function",
+    "section": "",
+    "text": "Create and open a new jupyter notebook called “2-MaAsLin3.ipynb”.\nCreate a markdown cell at the top with:\n\n# 2-MaAsLin3\n## Libraries\n\nIn a code cell load the required libraries and data.\n\n#Libraries\nlibrary(\"maaslin3\")\nlibrary(\"tidyverse\")\n#Load data\nload(\"genus_taxa_df.RData\")\nload(\"metadf.RData\")",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "MaAsLin3 function"
+    ]
+  },
+  {
+    "objectID": "maaslin3/maaslin3_function.html#maaslin3-function-1",
+    "href": "maaslin3/maaslin3_function.html#maaslin3-function-1",
+    "title": "MaAsLin3 function",
+    "section": "",
+    "text": "Run the MaAsLin3 analysis.\n\n#Set a random seed\nset.seed(419)\n#MaAsLin3\nfit_out &lt;- maaslin3(input_data=taxa_df,\n                    input_metadata=metadf,\n                    output='genus_output',\n                    formula='~ Site + Media + Reads',\n                    normalization='TSS',\n                    transform='LOG',\n                    augment=TRUE,\n                    standardize=TRUE,\n                    max_significance=0.1,\n                    median_comparison_abundance=TRUE,\n                    median_comparison_prevalence=FALSE,\n                    small_random_effects=FALSE,\n                    max_pngs=250,\n                    cores=1)\n#Set random seed back to null\nset.seed(NULL)\n\n\n\n\n\n\n\nImportant\n\n\n\nThe above command will take a while. As it runs please read the below and the other pages in this part.",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "MaAsLin3 function"
+    ]
+  },
+  {
+    "objectID": "maaslin3/maaslin3_function.html#input-output-parameters",
+    "href": "maaslin3/maaslin3_function.html#input-output-parameters",
+    "title": "MaAsLin3 function",
+    "section": "",
+    "text": "The parameters we have used are described below.\n\ninput_data: Our formatted count table containing abundance values of species against samples.\ninput_metadata: Our formatted metadata table for our samples\noutput: Name of output directory\n\nThis will be created by the function\n\nformula: The comparison formula in lme4 specification\n\nDetails in lme4 formula page\n\nnormalization: Normalisation of the counts before transformation and analysis. Options include:\n\n'TTS' (default): Total Sum Scaling\n\nConverts the counts to fractional relative abundance values so total count of each sample = 1\n\n'CLR': Centred Log Ratio\n'NONE': No normalisation\n\ntransform: Transformation of feature counts after normalisation but before analysis\n\nAllows MaAsLin3 and us to see the log difference of features between comparisons/groups\nOptions include:\n\nLOG: Base 2 log transformation (recommended)\n\nOur TSS normalised values will all become -ve values or 0 (log(1, base=2) = 0, log(0.1, base=2)=-3.321928)\n\nPLOG: Pseudo-log with a pseudo-count of half the dataset’s minimum non-zero abundance replacing zeroes\n\nSuggested for metabolomics data\n\nNONE\n\n\naugment: Default is TRUE\n\nAvoids linear separability and is almost always recommended\n\nstandardise: When TRUE it applies z-scores to continuous metadata variables so they are on the same scale\n\nThe default is TRUE and is recommended\nAllows comparison of coefficients across metadata variables\n\nmax_significance: FDR corrected q-value threshold for significance\n\nThis will determine what associations are written as signifiant and what plots are created\nAssociations with an individual or joint q-value less than the threshold will be included in the significant results out\nOnly associations with an individual q-value lower than the threshold will be plotted\n\nmedian_comparison_abundance & median_comparison_prevalence: Whether to compare coefficients against median coefficient (TRUE) or against 0\n\nFor normal taxa abundance data set median_comparison_abundance = TRUE and median_comparison_prevalence = FALSE\nMore info, including when to use TRUE and FALSE, in Median comparison page\n\nsmall_random_effect: Replace random effects with fixed effects in logistic prevalence model\n\ndefault FALSE\nUse TRUE to handle low number of observations per group\nMore information in the Random effect page\n\n\nFull information here: MaAslin3 analysis options",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "MaAsLin3 function"
+    ]
+  },
+  {
+    "objectID": "maaslin3/fixed_effects.html",
+    "href": "maaslin3/fixed_effects.html",
+    "title": "Fixed effects",
+    "section": "",
+    "text": "Fixed effects are any term related to your hypothesis that requires evaluation and any continuous control variables.\nWe are interested in the differences of our three sites (UD, MD, and LD) so we used it as a fixed effect. We are also interested in the difference of the media compared ot the environmental sample so we used Media as a fixed effect.\nTo control for the read counts/depths of the samples we used Reads as a fixed effect. This uses it as a continuous control variable.\n\n\nWhen using fixed effects you can look at the main effect, interactions, or both of multiple variables.\nThe main effects is when looking at the effect of one variable by itself. Interactions are used to test whether the effect of one predictor variable on the outcome changes depending on another predictor variable. For example, an interaction between treatment and time point tests whether the treatment effect is different at different time points.\nIn our formula we specified the formula to only look at main effects.\n\n\n\nBelow is a list of examples on how to specify the usage of fixed effects.\n\na: Main effect of a\na + b: Main effect of a and b (no interaction)\na:b: Interaction of a and b (no main effects)\na * b: Main effects and interaction of a and b (expands to a + b + a:b)\n(a+b+c)^2: Main effects and 2-way interactions (no 3-way interaction) of a, b , and c (expands to a + b + c + a:b + a:c + b:c)\n(a+b)*c: all main effects and pairwise interactions between a and c, and b and c (not between a and b) (expands to a + b + c + a:c + b:c)\n0 + a: 0 suppresses the intercept resulting in a model that has one parameter per level of a (identical to : a - 1)\n\n\n\n\n\n\n\nTip\n\n\n\nThe maaslin3() developers recommend combing 2 fixed effect columns into one for interactions rather than the a:b method. For example you could use the column site.media as a main effect rather than using site:media in the formula.",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "Fixed effects"
+    ]
+  },
+  {
+    "objectID": "maaslin3/fixed_effects.html#main-effect-and-interactions",
+    "href": "maaslin3/fixed_effects.html#main-effect-and-interactions",
+    "title": "Fixed effects",
+    "section": "",
+    "text": "When using fixed effects you can look at the main effect, interactions, or both of multiple variables.\nThe main effects is when looking at the effect of one variable by itself. Interactions are used to test whether the effect of one predictor variable on the outcome changes depending on another predictor variable. For example, an interaction between treatment and time point tests whether the treatment effect is different at different time points.\nIn our formula we specified the formula to only look at main effects.",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "Fixed effects"
+    ]
+  },
+  {
+    "objectID": "maaslin3/fixed_effects.html#fixed-effect-specifications",
+    "href": "maaslin3/fixed_effects.html#fixed-effect-specifications",
+    "title": "Fixed effects",
+    "section": "",
+    "text": "Below is a list of examples on how to specify the usage of fixed effects.\n\na: Main effect of a\na + b: Main effect of a and b (no interaction)\na:b: Interaction of a and b (no main effects)\na * b: Main effects and interaction of a and b (expands to a + b + a:b)\n(a+b+c)^2: Main effects and 2-way interactions (no 3-way interaction) of a, b , and c (expands to a + b + c + a:b + a:c + b:c)\n(a+b)*c: all main effects and pairwise interactions between a and c, and b and c (not between a and b) (expands to a + b + c + a:c + b:c)\n0 + a: 0 suppresses the intercept resulting in a model that has one parameter per level of a (identical to : a - 1)\n\n\n\n\n\n\n\nTip\n\n\n\nThe maaslin3() developers recommend combing 2 fixed effect columns into one for interactions rather than the a:b method. For example you could use the column site.media as a main effect rather than using site:media in the formula.",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "Fixed effects"
+    ]
+  },
+  {
+    "objectID": "maaslin3/lme4.html",
+    "href": "maaslin3/lme4.html",
+    "title": "lme4 formula",
+    "section": "",
+    "text": "When using the formula= parameter of the maaslin3() function the formula needs to be specified in lme4 specification.\nThe following terms can be included in a lme4 formula:\n\nFixed effects\nRandom effects\nInteraction terms\nOthers\n\nThe lme4 specification was originally created for the lme4 R package which stands for “Liner Mixed Effect Models using ‘Eigen’ and S4”.\n\n\nThe formula we specify to maaslin3() is a string that contains our formula. The string contains the column names from metadata that we want to use.\nBelow is the formula that we specified:\n\"~ Site + Media + Reads\"\n\n\nThe first feature of note is the ~ operator. This separates the responses and the fixed and random effects\n\n\n\nTo the right of the ~ operator are the fixed effects and random effects.\nFixed effects are specified as normal strings. Our fixed effects are \"Site + Media + Reads\".\nMore information is in the Fixed effects page.\nRandom effects are specified as strings within brackets that includes a pipe symbol ((|)) An example could be: \"(1|SubjectID)\".\nMore information is in the Random effects page\n\n\n\nThe response variable is the variable that we’re testing for associations against our metadata. e.g. Pseudomonas abundance. In standard regression, the response variable is written to the left of the ~. In MaAsLin3, we usually leave the left-hand side empty because it automatically models each feature (Genus in our analysis) in the abundance table as a response variable, separately.",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "lme4 formula"
+    ]
+  },
+  {
+    "objectID": "maaslin3/lme4.html#our-formula",
+    "href": "maaslin3/lme4.html#our-formula",
+    "title": "lme4 formula",
+    "section": "",
+    "text": "The formula we specify to maaslin3() is a string that contains our formula. The string contains the column names from metadata that we want to use.\nBelow is the formula that we specified:\n\"~ Site + Media + Reads\"\n\n\nThe first feature of note is the ~ operator. This separates the responses and the fixed and random effects\n\n\n\nTo the right of the ~ operator are the fixed effects and random effects.\nFixed effects are specified as normal strings. Our fixed effects are \"Site + Media + Reads\".\nMore information is in the Fixed effects page.\nRandom effects are specified as strings within brackets that includes a pipe symbol ((|)) An example could be: \"(1|SubjectID)\".\nMore information is in the Random effects page\n\n\n\nThe response variable is the variable that we’re testing for associations against our metadata. e.g. Pseudomonas abundance. In standard regression, the response variable is written to the left of the ~. In MaAsLin3, we usually leave the left-hand side empty because it automatically models each feature (Genus in our analysis) in the abundance table as a response variable, separately.",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "lme4 formula"
+    ]
+  },
+  {
+    "objectID": "maaslin3/median_comparison.html",
+    "href": "maaslin3/median_comparison.html",
+    "title": "Median comparisons",
+    "section": "",
+    "text": "MaAsLin3 analysis compares the coefficient of each feature against either 0 or the median coefficient value. The median coefficient value being calculated from all the coefficient values of all the features for the one specific comparison (e.g. ENV vs CVP).\nMedian comparison can be set in maaslin3() with the following 2 options:\n\nmedian_comparison_abundance: Median comparison for abundance/linear comparisons\n\nBy default is set to TRUE\n\nmedian_comparison_prevalence: Median comparison for prevalence/logistic comparisons\n\nBy default is set to FALSE\n\n\n\n\nBelow is a quick example of how median and zero comparison differ. In this case we’ll compare Media (query) against Environment (reference).\n\n\nSay we have two groups: Media and Environment. They’ll each have one sample for simplicity. Below are the counts for 5 taxa:\n\n\n\nTaxa\nEnvironment\nMedia\n\n\n\n\nTaxon A\n100\n200\n\n\nTaxon B\n100\n200\n\n\nTaxon C\n100\n200\n\n\nTaxon D\n100\n200\n\n\nTaxon E\n100\n400\n\n\n\nWe can see that Taxa A-D each have 2 times the counts in the Media compared to the Environment, whilst Taxon E has 4 times. As these are raw counts, the overall doubling could be due to library size, bacterial load, etc.\n\n\n\nIn our MaAsLin3 analysis we convert the counts to relative abundances (normalization = 'TSS'):\n\n\n\nTaxa\nEnvironment\nMedia\n\n\n\n\nTaxon A\n0.2\n0.167\n\n\nTaxon B\n0.2\n0.167\n\n\nTaxon C\n0.2\n0.167\n\n\nTaxon D\n0.2\n0.167\n\n\nTaxon E\n0.2\n0.333\n\n\n\nNow it still appears like Taxon E has a higher count in Media but lower in the other taxa.\n\n\n\nNext coefficients are calculated as log2-fold changes (coefficients explained in the plots section).\n\n\n\nFeature\nRelative abundance change\nCoefficient\n\n\n\n\nTaxon A\n0.167 / 0.2\n-0.26\n\n\nTaxon B\n0.167 / 0.2\n-0.26\n\n\nTaxon C\n0.167 / 0.2\n-0.26\n\n\nTaxon D\n0.167 / 0.2\n-0.26\n\n\nTaxon E\n0.333 / 0.2\n0.74\n\n\n\n\n\n\nHere we ask whether each feature’s coefficient is above or below 0.\n\n\n\nFeature\nCoefficient\nCompared to zero\nSimple interpretation\n\n\n\n\nTaxon A\n-0.26\n&lt; 0\nAppears decreased\n\n\nTaxon B\n-0.26\n&lt; 0\nAppears decreased\n\n\nTaxon C\n-0.26\n&lt; 0\nAppears decreased\n\n\nTaxon D\n-0.26\n&lt; 0\nAppears decreased\n\n\nTaxon E\n0.74\n&gt; 0\nAppears increased\n\n\n\nWhen comparing the relative abundance coefficients to zero, Taxa A-D look like they are lower in the Media.\nBut we know from the raw counts that Taxa A-D were not lower in the Media. Their values were double compared to the Environment (100 to 200). They look lower because Taxon E was even higher, changing the relative composition of the sample.\n\n\n\nTo compensate for this composition we can compare to the median coefficient.\nFor each comparison, in this case we only have one (Media vs Environment), a median coefficient is calculated.\nThe coefficients are:\n-0.26, -0.26, -0.26, -0.26, 0.74\nTherefore the median coefficient value is -0.26. Instead of comparing each feature to 0, we compare them to the median coefficient.\n\n\n\n\n\n\n\n\n\n\nFeature\nCoefficient\nMedian coefficient\nCompared to median\nSimple interpretation\n\n\n\n\nTaxon A\n-0.26\n-0.26\n0.00\nTypical/background change\n\n\nTaxon B\n-0.26\n-0.26\n0.00\nTypical/background change\n\n\nTaxon C\n-0.26\n-0.26\n0.00\nTypical/background change\n\n\nTaxon D\n-0.26\n-0.26\n0.00\nTypical/background change\n\n\nTaxon E\n0.74\n-0.26\n1.00\nIncreased more than typical\n\n\n\n\n\n\nComparing to zero makes the abundance of Taxa A-D look decreased in Media compared to the Environment. Comparing to the median coefficient does not treat Taxa A-D as specifically decreased. Instead, median comparison highlights Taxon E as the feature that changed more than the typical feature. So:\n\nComparing to zero asks: “Did this feature increase or decrease in relative abundance?“\nComparing to the median asks: “Did this feature change more or less than the typical feature”\n\n\n\n\n\n\n\nImportant\n\n\n\nThis is a simplified example with one sample per group. In a real MaAsLin3 analysis, the coefficients would come from a statistical model fitted across multiple samples, with uncertainty, p-values, and multiple-testing correction.\n\n\n\n\n\n\n\n\n\n\n\nMedian comparison is primarily used for abundance testing. It accounts for compositionality and allows you to infer absolute scale changes when using relative abundance data (i.e. anything without absolute abundance values).\n\n\nBy default median_comparison_abundance is set to TRUE. It should be used when using relative abundance values so you can make absolute scale inferences. The primary reason for this is that testing against zero on the relative scale is not the same as testing against zero on the absolute scale.\nWhen using abundance median comparison:\n\nA median coefficient for the comparison/metadatum (e.g. UD vs MD) is created\nThe abundance coefficient for each feature is tested against the median value\nCompositionality is accounted for\nOnly p-values and q-values change\nCoefficients in the results are the relative abundance coefficients unless subtract_median = TRUE is set\n\n\n\n\nWhen median_comparison_abundance is FALSE the coefficients are compared against 0. This should be used when testing for:\n\nSignificant relative abundance associations when using relative abundance data (i.e. you don’t want to infer absolute scale changes)\nAbsolute abundance associations under the assumption that the total absolute abundance is not changing\nSignificant absolute abundance association when supplying spike-in with unscaled_abundance\nSignificant absolute abundance association when supplying total abundance with unscaled_abundance\n\n\n\n\n\n\n\n\n\n\nBy default and for the vast majority of cases prevalence testing should be compared to 0 (median_comparison_prevalence=FALSE).\nMedian testing can be carried out when you are interested in determining if a specific prevalence association is significantly different to the median prevalence coefficient. This won’t be very often but it is an option.\n\n\n\nWhen using either abundance or prevalence median comparison a threshold is set for each. If the feature’s coefficient is within threshold of the median its p-value will be set to 1.\nFor example:\n\nThe median is 0.1\nThe median threshold is 0.05\nFeatures with coefficient values from 0.05-0.15 will automatically have a p-value of 1\n\nThis prevents features which may have a statistical difference but not a substantially different value compared to the median from being detected as significant.\nBy default both median_comparison_abundance_threshold and median_comparison_prevalence_threshold are set to 0. Therefore, only features whose coefficient match the median coefficient will automatically be given a p-value of 1.\n\n\n\n\n\n\n\n\nOur analysis is using a standard relative abundance dataset and we want to infer absolute scale changes. Therefore, we used the default parameters of median_comparison_abundance=TRUE and median_comparison_prevalence=FALSE.\nMore information and considerations can be found in the MaAsLin3 manual.",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "Median comparisons"
+    ]
+  },
+  {
+    "objectID": "maaslin3/median_comparison.html#demonstration",
+    "href": "maaslin3/median_comparison.html#demonstration",
+    "title": "Median comparisons",
+    "section": "",
+    "text": "Below is a quick example of how median and zero comparison differ. In this case we’ll compare Media (query) against Environment (reference).\n\n\nSay we have two groups: Media and Environment. They’ll each have one sample for simplicity. Below are the counts for 5 taxa:\n\n\n\nTaxa\nEnvironment\nMedia\n\n\n\n\nTaxon A\n100\n200\n\n\nTaxon B\n100\n200\n\n\nTaxon C\n100\n200\n\n\nTaxon D\n100\n200\n\n\nTaxon E\n100\n400\n\n\n\nWe can see that Taxa A-D each have 2 times the counts in the Media compared to the Environment, whilst Taxon E has 4 times. As these are raw counts, the overall doubling could be due to library size, bacterial load, etc.\n\n\n\nIn our MaAsLin3 analysis we convert the counts to relative abundances (normalization = 'TSS'):\n\n\n\nTaxa\nEnvironment\nMedia\n\n\n\n\nTaxon A\n0.2\n0.167\n\n\nTaxon B\n0.2\n0.167\n\n\nTaxon C\n0.2\n0.167\n\n\nTaxon D\n0.2\n0.167\n\n\nTaxon E\n0.2\n0.333\n\n\n\nNow it still appears like Taxon E has a higher count in Media but lower in the other taxa.\n\n\n\nNext coefficients are calculated as log2-fold changes (coefficients explained in the plots section).\n\n\n\nFeature\nRelative abundance change\nCoefficient\n\n\n\n\nTaxon A\n0.167 / 0.2\n-0.26\n\n\nTaxon B\n0.167 / 0.2\n-0.26\n\n\nTaxon C\n0.167 / 0.2\n-0.26\n\n\nTaxon D\n0.167 / 0.2\n-0.26\n\n\nTaxon E\n0.333 / 0.2\n0.74\n\n\n\n\n\n\nHere we ask whether each feature’s coefficient is above or below 0.\n\n\n\nFeature\nCoefficient\nCompared to zero\nSimple interpretation\n\n\n\n\nTaxon A\n-0.26\n&lt; 0\nAppears decreased\n\n\nTaxon B\n-0.26\n&lt; 0\nAppears decreased\n\n\nTaxon C\n-0.26\n&lt; 0\nAppears decreased\n\n\nTaxon D\n-0.26\n&lt; 0\nAppears decreased\n\n\nTaxon E\n0.74\n&gt; 0\nAppears increased\n\n\n\nWhen comparing the relative abundance coefficients to zero, Taxa A-D look like they are lower in the Media.\nBut we know from the raw counts that Taxa A-D were not lower in the Media. Their values were double compared to the Environment (100 to 200). They look lower because Taxon E was even higher, changing the relative composition of the sample.\n\n\n\nTo compensate for this composition we can compare to the median coefficient.\nFor each comparison, in this case we only have one (Media vs Environment), a median coefficient is calculated.\nThe coefficients are:\n-0.26, -0.26, -0.26, -0.26, 0.74\nTherefore the median coefficient value is -0.26. Instead of comparing each feature to 0, we compare them to the median coefficient.\n\n\n\n\n\n\n\n\n\n\nFeature\nCoefficient\nMedian coefficient\nCompared to median\nSimple interpretation\n\n\n\n\nTaxon A\n-0.26\n-0.26\n0.00\nTypical/background change\n\n\nTaxon B\n-0.26\n-0.26\n0.00\nTypical/background change\n\n\nTaxon C\n-0.26\n-0.26\n0.00\nTypical/background change\n\n\nTaxon D\n-0.26\n-0.26\n0.00\nTypical/background change\n\n\nTaxon E\n0.74\n-0.26\n1.00\nIncreased more than typical\n\n\n\n\n\n\nComparing to zero makes the abundance of Taxa A-D look decreased in Media compared to the Environment. Comparing to the median coefficient does not treat Taxa A-D as specifically decreased. Instead, median comparison highlights Taxon E as the feature that changed more than the typical feature. So:\n\nComparing to zero asks: “Did this feature increase or decrease in relative abundance?“\nComparing to the median asks: “Did this feature change more or less than the typical feature”\n\n\n\n\n\n\n\nImportant\n\n\n\nThis is a simplified example with one sample per group. In a real MaAsLin3 analysis, the coefficients would come from a statistical model fitted across multiple samples, with uncertainty, p-values, and multiple-testing correction.",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "Median comparisons"
+    ]
+  },
+  {
+    "objectID": "maaslin3/median_comparison.html#abundance-testing",
+    "href": "maaslin3/median_comparison.html#abundance-testing",
+    "title": "Median comparisons",
+    "section": "",
+    "text": "Median comparison is primarily used for abundance testing. It accounts for compositionality and allows you to infer absolute scale changes when using relative abundance data (i.e. anything without absolute abundance values).\n\n\nBy default median_comparison_abundance is set to TRUE. It should be used when using relative abundance values so you can make absolute scale inferences. The primary reason for this is that testing against zero on the relative scale is not the same as testing against zero on the absolute scale.\nWhen using abundance median comparison:\n\nA median coefficient for the comparison/metadatum (e.g. UD vs MD) is created\nThe abundance coefficient for each feature is tested against the median value\nCompositionality is accounted for\nOnly p-values and q-values change\nCoefficients in the results are the relative abundance coefficients unless subtract_median = TRUE is set\n\n\n\n\nWhen median_comparison_abundance is FALSE the coefficients are compared against 0. This should be used when testing for:\n\nSignificant relative abundance associations when using relative abundance data (i.e. you don’t want to infer absolute scale changes)\nAbsolute abundance associations under the assumption that the total absolute abundance is not changing\nSignificant absolute abundance association when supplying spike-in with unscaled_abundance\nSignificant absolute abundance association when supplying total abundance with unscaled_abundance",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "Median comparisons"
+    ]
+  },
+  {
+    "objectID": "maaslin3/median_comparison.html#prevalence-testing",
+    "href": "maaslin3/median_comparison.html#prevalence-testing",
+    "title": "Median comparisons",
+    "section": "",
+    "text": "By default and for the vast majority of cases prevalence testing should be compared to 0 (median_comparison_prevalence=FALSE).\nMedian testing can be carried out when you are interested in determining if a specific prevalence association is significantly different to the median prevalence coefficient. This won’t be very often but it is an option.",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "Median comparisons"
+    ]
+  },
+  {
+    "objectID": "maaslin3/median_comparison.html#median-comparison-threshold",
+    "href": "maaslin3/median_comparison.html#median-comparison-threshold",
+    "title": "Median comparisons",
+    "section": "",
+    "text": "When using either abundance or prevalence median comparison a threshold is set for each. If the feature’s coefficient is within threshold of the median its p-value will be set to 1.\nFor example:\n\nThe median is 0.1\nThe median threshold is 0.05\nFeatures with coefficient values from 0.05-0.15 will automatically have a p-value of 1\n\nThis prevents features which may have a statistical difference but not a substantially different value compared to the median from being detected as significant.\nBy default both median_comparison_abundance_threshold and median_comparison_prevalence_threshold are set to 0. Therefore, only features whose coefficient match the median coefficient will automatically be given a p-value of 1.",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "Median comparisons"
+    ]
+  },
+  {
+    "objectID": "maaslin3/median_comparison.html#conclusion-1",
+    "href": "maaslin3/median_comparison.html#conclusion-1",
+    "title": "Median comparisons",
+    "section": "",
+    "text": "Our analysis is using a standard relative abundance dataset and we want to infer absolute scale changes. Therefore, we used the default parameters of median_comparison_abundance=TRUE and median_comparison_prevalence=FALSE.\nMore information and considerations can be found in the MaAsLin3 manual.",
+    "crumbs": [
+      "MaAsLin3",
+      "MaAsLin3 analysis",
+      "Median comparisons"
+    ]
+  },
+  {
+    "objectID": "maaslin3/maaslin3.html#sections",
+    "href": "maaslin3/maaslin3.html#sections",
+    "title": "MaAsLin3",
+    "section": "",
+    "text": "There are multiple sections in this website. These are described below.",
+    "crumbs": [
+      "MaAsLin3"
+    ]
+  },
+  {
+    "objectID": "maaslin3/text_task.html",
+    "href": "maaslin3/text_task.html",
+    "title": "Text tasks",
+    "section": "",
+    "text": "To familiarise yourself with the text outputs of maaslin3() please attempt the below tasks. This involves answering some MCQs (multiple choice questions) and creating some of your own code.\n\n\nPlease attempt the below MCQs based on the significant results table.\nYou can find the results by searching through the HTML we created earlier (significant_results.html). The instructions on how to use the html file are here: Explore HTML table.\nYou can also find the answers using various tidyverse functions on the sig_res_tbl object.\n\n\n\n\n\n\n\nThe first three questions can be carried out by ordering the specific columns by clicking on the column name in the HTML. Optionally, dplyr::slice() functions and the dplyr::pull() function can be used.\n\nWhich feature/genus has the most significant q-value for one of its associations?\n\n Aeromonas Alkalimonas Elizabethkingia\n\n\n\nWhich feature/genus has the largest coefficient value?\n\n Aeromonas Alkalimonas Elizabethkingia\n\n\n\nWhich feature/genus has the lowest N_not_zero value?\n\n Aeromonas Alkalimonas Elizabethkingia\n\n\n\n\n\n\n\n\nNoteMCQ1 code\n\n\n\n\n\n\n#MCQ1\n#Feature with most significant q-value\nsig_res_tbl |&gt;\n    dplyr::slice_min(qval_individual, n=1) |&gt;\n    dplyr::pull(feature)\n\n\n\n\n\n\n\n\n\n\nNoteMCQ2 code\n\n\n\n\n\n\n#MCQ2\n#Feature with largest coefficient value\nsig_res_tbl |&gt;\n    dplyr::slice_max(coef, n=1) |&gt;\n    dplyr::pull(feature)\n\n\n\n\n\n\n\n\n\n\nNoteMCQ3 code\n\n\n\n\n\n\n#MCQ3\n#Feature with largest joint q-value\nsig_res_tbl |&gt;\n    dplyr::slice_max(qval_joint, n=1) |&gt;\n    dplyr::pull(feature)\n\n\n\n\n\n\n\n\n\n\n\n\nThe next three question involve looking up the results of a specific feature and association. This can be carried out with the search bar in the HTML. With tidyverse you can use multiple dplyr::filter() functions and the `dplyr::pull() function.\n\nWhat is the coefficient value of Acinetobacter johnsonii for the Scalp vs Axilla comparison for the abundance model?\n\n -3.70122591449453 -2.14910132819983 0.879255866584319\n\n\n\nWhat is the coefficient value of Staphylococcus epidermidis for the Cheek vs Axilla comparison for the abundance model?\n\n -3.70122591449453 -2.14910132820065 0.879255866584319\n\n\n\nWhat is the coefficient value of Staphylococcus pasteuri for the reads association for the prevalence model?\n\n -3.70122591449453 -2.14910132820065 0.879255866584319\n\n\n\n\nMCQ4 code\n\n\n#MCQ4\n#Coefficient value of Acinetobacter johnsonii for Scalp vs Axilla comparison\n# for the abundance model\nsig_res_tbl |&gt;\n    dplyr::filter(feature==\"Acinetobacter johnsonii\") |&gt;\n    dplyr::filter(name==\"SampleSiteScalp\") |&gt;\n    dplyr::filter(model==\"abundance\") |&gt;\n    dplyr::pull(coef)\n\n\n\n\nMCQ5 code\n\n\n#MCQ5\n#Coefficient value of Staphylococcus epidermidis for Cheek vs Axilla comparison\n# for the abundance model\nsig_res_tbl |&gt;\n    dplyr::filter(feature==\"Staphylococcus epidermidis\") |&gt;\n    dplyr::filter(name==\"SampleSiteCheek\") |&gt;\n    dplyr::filter(model==\"abundance\") |&gt;\n    dplyr::pull(coef)\n\n\n\n\nMCQ6 code\n\n\n#MCQ6\n#Coefficient value of Staphylococcus pasteuri for Reads association\n# for the prevalence model\nsig_res_tbl |&gt;\n    dplyr::filter(feature==\"Staphylococcus pasteuri\") |&gt;\n    dplyr::filter(name==\"Reads\") |&gt;\n    dplyr::filter(model==\"prevalence\") |&gt;\n    dplyr::pull(coef)\n\n\n\n\n\n\n\n\n\n\n\nFor this task you will read in the all results file as a tibble.\n\nFile to read in: metagenome_output/all_results.tsv\nOutput tibble name: all_res_tbl\nGlimpse the tibble once it is created\nUse the instructions for the significant results as a guide: sig results page\nFeel free to copy and paste your previous code but ensure you edit/change the relevant names\n\nAnswer the below MCQs based on the sig_res_tbl and all_res_tbl objects.\n\nHow many observations are there in the significant results table?\n\n 15 512 13080\n\n\n\nHow many observations are there in the all results table?\n\n 15 512 13080\n\n\n\n\nRead in tibble solution\n\n\n#Read in all results\nall_res_tbl &lt;- readr::read_delim(\n    file = \"./metagenome_output/all_results.tsv\", \n    delim=\"\\t\")\nall_res_tbl |&gt; glimpse()\n\n\nOur all table is so large we unfortunately cannot convert it to a HTML with DT::datatable(). If you try you will get the following error:\n\nWarning message in instance$preRenderHook(instance):\n“It seems your data is too big for client-side DataTables. You may consider server-side processing: https://rstudio.github.io/DT/server.html”\n\nDoubly unfortunately the link in the suggestion is dead. Most likely trying to setup server-side processing will be incredibly difficult and not worth the effort to view all the results as an HTML. Therefore, we won’t.",
+    "crumbs": [
+      "MaAsLin3",
+      "Text output",
+      "Text tasks"
+    ]
+  },
+  {
+    "objectID": "maaslin3/text_task.html#significant-results",
+    "href": "maaslin3/text_task.html#significant-results",
+    "title": "Text tasks",
+    "section": "",
+    "text": "Please attempt the below MCQs based on the significant results table.\nYou can find the results by searching through the HTML we created earlier (significant_results.html). The instructions on how to use the html file are here: Explore HTML table.\nYou can also find the answers using various tidyverse functions on the sig_res_tbl object.\n\n\n\n\n\n\n\nThe first three questions can be carried out by ordering the specific columns by clicking on the column name in the HTML. Optionally, dplyr::slice() functions and the dplyr::pull() function can be used.\n\nWhich feature/genus has the most significant q-value for one of its associations?\n\n Aeromonas Alkalimonas Elizabethkingia\n\n\n\nWhich feature/genus has the largest coefficient value?\n\n Aeromonas Alkalimonas Elizabethkingia\n\n\n\nWhich feature/genus has the lowest N_not_zero value?\n\n Aeromonas Alkalimonas Elizabethkingia\n\n\n\n\n\n\n\n\nNoteMCQ1 code\n\n\n\n\n\n\n#MCQ1\n#Feature with most significant q-value\nsig_res_tbl |&gt;\n    dplyr::slice_min(qval_individual, n=1) |&gt;\n    dplyr::pull(feature)\n\n\n\n\n\n\n\n\n\n\nNoteMCQ2 code\n\n\n\n\n\n\n#MCQ2\n#Feature with largest coefficient value\nsig_res_tbl |&gt;\n    dplyr::slice_max(coef, n=1) |&gt;\n    dplyr::pull(feature)\n\n\n\n\n\n\n\n\n\n\nNoteMCQ3 code\n\n\n\n\n\n\n#MCQ3\n#Feature with largest joint q-value\nsig_res_tbl |&gt;\n    dplyr::slice_max(qval_joint, n=1) |&gt;\n    dplyr::pull(feature)\n\n\n\n\n\n\n\n\n\n\n\n\nThe next three question involve looking up the results of a specific feature and association. This can be carried out with the search bar in the HTML. With tidyverse you can use multiple dplyr::filter() functions and the `dplyr::pull() function.\n\nWhat is the coefficient value of Acinetobacter johnsonii for the Scalp vs Axilla comparison for the abundance model?\n\n -3.70122591449453 -2.14910132819983 0.879255866584319\n\n\n\nWhat is the coefficient value of Staphylococcus epidermidis for the Cheek vs Axilla comparison for the abundance model?\n\n -3.70122591449453 -2.14910132820065 0.879255866584319\n\n\n\nWhat is the coefficient value of Staphylococcus pasteuri for the reads association for the prevalence model?\n\n -3.70122591449453 -2.14910132820065 0.879255866584319\n\n\n\n\nMCQ4 code\n\n\n#MCQ4\n#Coefficient value of Acinetobacter johnsonii for Scalp vs Axilla comparison\n# for the abundance model\nsig_res_tbl |&gt;\n    dplyr::filter(feature==\"Acinetobacter johnsonii\") |&gt;\n    dplyr::filter(name==\"SampleSiteScalp\") |&gt;\n    dplyr::filter(model==\"abundance\") |&gt;\n    dplyr::pull(coef)\n\n\n\n\nMCQ5 code\n\n\n#MCQ5\n#Coefficient value of Staphylococcus epidermidis for Cheek vs Axilla comparison\n# for the abundance model\nsig_res_tbl |&gt;\n    dplyr::filter(feature==\"Staphylococcus epidermidis\") |&gt;\n    dplyr::filter(name==\"SampleSiteCheek\") |&gt;\n    dplyr::filter(model==\"abundance\") |&gt;\n    dplyr::pull(coef)\n\n\n\n\nMCQ6 code\n\n\n#MCQ6\n#Coefficient value of Staphylococcus pasteuri for Reads association\n# for the prevalence model\nsig_res_tbl |&gt;\n    dplyr::filter(feature==\"Staphylococcus pasteuri\") |&gt;\n    dplyr::filter(name==\"Reads\") |&gt;\n    dplyr::filter(model==\"prevalence\") |&gt;\n    dplyr::pull(coef)",
+    "crumbs": [
+      "MaAsLin3",
+      "Text output",
+      "Text tasks"
+    ]
+  },
+  {
+    "objectID": "maaslin3/text_task.html#all-results",
+    "href": "maaslin3/text_task.html#all-results",
+    "title": "Text tasks",
+    "section": "",
+    "text": "For this task you will read in the all results file as a tibble.\n\nFile to read in: metagenome_output/all_results.tsv\nOutput tibble name: all_res_tbl\nGlimpse the tibble once it is created\nUse the instructions for the significant results as a guide: sig results page\nFeel free to copy and paste your previous code but ensure you edit/change the relevant names\n\nAnswer the below MCQs based on the sig_res_tbl and all_res_tbl objects.\n\nHow many observations are there in the significant results table?\n\n 15 512 13080\n\n\n\nHow many observations are there in the all results table?\n\n 15 512 13080\n\n\n\n\nRead in tibble solution\n\n\n#Read in all results\nall_res_tbl &lt;- readr::read_delim(\n    file = \"./metagenome_output/all_results.tsv\", \n    delim=\"\\t\")\nall_res_tbl |&gt; glimpse()\n\n\nOur all table is so large we unfortunately cannot convert it to a HTML with DT::datatable(). If you try you will get the following error:\n\nWarning message in instance$preRenderHook(instance):\n“It seems your data is too big for client-side DataTables. You may consider server-side processing: https://rstudio.github.io/DT/server.html”\n\nDoubly unfortunately the link in the suggestion is dead. Most likely trying to setup server-side processing will be incredibly difficult and not worth the effort to view all the results as an HTML. Therefore, we won’t.",
+    "crumbs": [
+      "MaAsLin3",
+      "Text output",
+      "Text tasks"
+    ]
+  },
+  {
+    "objectID": "maaslin3/html_table.html",
+    "href": "maaslin3/html_table.html",
+    "title": "Significant results table",
+    "section": "",
+    "text": "There are various output files in our output directory genus_output. The first we will look at is the text file significant_results.tsv. This contains all the significant features maaslin3() found.\nThis significance is based on the individual q-value or the joint q-value. Additionally, the rows are ordered from most to least significant (i.e. ascending order based on the qval_individual column).\n\n\n\n\n\n\n\nSave then close and halt your “2-MaAsLin3.ipynb” notebook.\nCreate and open a new jupyter notebook called “3-Text_output.ipynb”.\nCreate a markdown cell at the top with:\n\n# 3-Text output\n## Libraries\n\nIn a code cell load the required libraries.\n\n#Library\nlibrary(\"DT\")\nlibrary(\"tidyverse\")\n\n\n\n\n\n\n\n\n\nTo view the significant results we need to first read in the file. In this case we’ll read it in as a tibble with readr::read_delim() and then glimpse it.\n\nsig_res_tbl &lt;- readr::read_delim(\n    file=\"./genus_output/significant_results.tsv\",\n    delim=\"\\t\")\nsig_res_tbl |&gt; dplyr::glimpse()\n\nThere are many columns/variables which are explained in the next page: Metrics.\n\n\n\n\n\n\n\n\nTo load the significant results easily in other notebooks we’ll save the sig_res_tbl object as a file.\n\n#Save significant reults tibble\nsave(sig_res_tbl, file=\"./genus_output/significant_results.RData\")\n\n\n\n\n\n\n\n\n\nYou can view the whole table in R:\n\nsig_res_tbl\n\nWith this object you can carry out various commands to pull out specific data.\nOptionally, you can open the file (significant_results.tsv) by navigating to the genus_output directory through your jupyter file explorer. Once in the directory you can click on the file to open it.\nNeither of these methods are convenient. In your own future analysis you can use excel but we’ll show you another option below.\n\n\n\n\n\n\n\n\nWe can create a html table with the package DT and its function DT::datatable(). In the function we specify the data.frame/tibble to convert to HTML. Additionally, we specify options = list(pageLength = 20) so the resulting html will show 20 rows at a time.\nDT package homepage\n\n#Convert table to html\nsig_res_dt &lt;- DT::datatable(sig_res_tbl, options = list(pageLength = 20))\n\nThe above code created an R object which we then need to save as an HTML file. We’ll carry this out with htmlwidgets::saveWidget(). The option selfcontained = must be set to TRUE for this to function correctly.\nhtmlwidgets::savewdigets() code documentation\n\n#Save HTML\nhtmlwidgets::saveWidget(\n    #Input widget/html\n    widget = sig_res_dt,\n    #Output html\n    file = \"./genus_output/significant_results.html\",\n    #Save as a single self contained HTML\n    selfcontained = TRUE)\n\n\n\n\n\n\n\n\n\nWith the HTML created navigate into the genus_output directory via the jupyter file browser. Click on your HTML file (significant_results.html) to open it.\nThe html is interactive with the following features:\n\nOrder the table by a specific column by clicking on its column name\n\nClick on it once for descending order\nClick on it twice for ascending order\n\nSet the number of rows to display with the drop down on the top left (“Show X entries”)\n\nChoices are: 10, 20, 25, 50, and 100\n\nSearch for specific text/numbers with the search bar on the top right\n\nUseful if you are interested in the results of a specific species or genus\n\nNavigate across the pages with the arrows and page numbers on the bottom right\nView the total number of rows (i.e. significant features) on the bottom left",
+    "crumbs": [
+      "MaAsLin3",
+      "Text output",
+      "Significant results table"
+    ]
+  },
+  {
+    "objectID": "maaslin3/html_table.html#notebook-setup",
+    "href": "maaslin3/html_table.html#notebook-setup",
+    "title": "Significant results table",
+    "section": "",
+    "text": "Save then close and halt your “2-MaAsLin3.ipynb” notebook.\nCreate and open a new jupyter notebook called “3-Text_output.ipynb”.\nCreate a markdown cell at the top with:\n\n# 3-Text output\n## Libraries\n\nIn a code cell load the required libraries.\n\n#Library\nlibrary(\"DT\")\nlibrary(\"tidyverse\")",
+    "crumbs": [
+      "MaAsLin3",
+      "Text output",
+      "Significant results table"
+    ]
+  },
+  {
+    "objectID": "maaslin3/html_table.html#read-in-and-glimpsing",
+    "href": "maaslin3/html_table.html#read-in-and-glimpsing",
+    "title": "Significant results table",
+    "section": "",
+    "text": "To view the significant results we need to first read in the file. In this case we’ll read it in as a tibble with readr::read_delim() and then glimpse it.\n\nsig_res_tbl &lt;- readr::read_delim(\n    file=\"./genus_output/significant_results.tsv\",\n    delim=\"\\t\")\nsig_res_tbl |&gt; dplyr::glimpse()\n\nThere are many columns/variables which are explained in the next page: Metrics.",
+    "crumbs": [
+      "MaAsLin3",
+      "Text output",
+      "Significant results table"
+    ]
+  },
+  {
+    "objectID": "maaslin3/html_table.html#saving",
+    "href": "maaslin3/html_table.html#saving",
+    "title": "Significant results table",
+    "section": "",
+    "text": "To load the significant results easily in other notebooks we’ll save the sig_res_tbl object as a file.\n\n#Save significant reults tibble\nsave(sig_res_tbl, file=\"./genus_output/significant_results.RData\")",
+    "crumbs": [
+      "MaAsLin3",
+      "Text output",
+      "Significant results table"
+    ]
+  },
+  {
+    "objectID": "maaslin3/html_table.html#viewing",
+    "href": "maaslin3/html_table.html#viewing",
+    "title": "Significant results table",
+    "section": "",
+    "text": "You can view the whole table in R:\n\nsig_res_tbl\n\nWith this object you can carry out various commands to pull out specific data.\nOptionally, you can open the file (significant_results.tsv) by navigating to the genus_output directory through your jupyter file explorer. Once in the directory you can click on the file to open it.\nNeither of these methods are convenient. In your own future analysis you can use excel but we’ll show you another option below.",
+    "crumbs": [
+      "MaAsLin3",
+      "Text output",
+      "Significant results table"
+    ]
+  },
+  {
+    "objectID": "maaslin3/html_table.html#html-table-creation",
+    "href": "maaslin3/html_table.html#html-table-creation",
+    "title": "Significant results table",
+    "section": "",
+    "text": "We can create a html table with the package DT and its function DT::datatable(). In the function we specify the data.frame/tibble to convert to HTML. Additionally, we specify options = list(pageLength = 20) so the resulting html will show 20 rows at a time.\nDT package homepage\n\n#Convert table to html\nsig_res_dt &lt;- DT::datatable(sig_res_tbl, options = list(pageLength = 20))\n\nThe above code created an R object which we then need to save as an HTML file. We’ll carry this out with htmlwidgets::saveWidget(). The option selfcontained = must be set to TRUE for this to function correctly.\nhtmlwidgets::savewdigets() code documentation\n\n#Save HTML\nhtmlwidgets::saveWidget(\n    #Input widget/html\n    widget = sig_res_dt,\n    #Output html\n    file = \"./genus_output/significant_results.html\",\n    #Save as a single self contained HTML\n    selfcontained = TRUE)",
+    "crumbs": [
+      "MaAsLin3",
+      "Text output",
+      "Significant results table"
+    ]
+  },
+  {
+    "objectID": "maaslin3/html_table.html#explore-html-table",
+    "href": "maaslin3/html_table.html#explore-html-table",
+    "title": "Significant results table",
+    "section": "",
+    "text": "With the HTML created navigate into the genus_output directory via the jupyter file browser. Click on your HTML file (significant_results.html) to open it.\nThe html is interactive with the following features:\n\nOrder the table by a specific column by clicking on its column name\n\nClick on it once for descending order\nClick on it twice for ascending order\n\nSet the number of rows to display with the drop down on the top left (“Show X entries”)\n\nChoices are: 10, 20, 25, 50, and 100\n\nSearch for specific text/numbers with the search bar on the top right\n\nUseful if you are interested in the results of a specific species or genus\n\nNavigate across the pages with the arrows and page numbers on the bottom right\nView the total number of rows (i.e. significant features) on the bottom left",
+    "crumbs": [
+      "MaAsLin3",
+      "Text output",
+      "Significant results table"
+    ]
+  },
+  {
+    "objectID": "maaslin3/metrics.html",
+    "href": "maaslin3/metrics.html",
+    "title": "Metrics",
+    "section": "",
+    "text": "There are various metrics in the output text files of maaslin3(). Each row is a single association based on a combination of a single feature, the specific metadata comparison, and the model used (abundance or prevalence).\n\n\n\n\n\n\n\nThere is a lot of information in this file as can be seen in the number of metrics below. Rather than interrogate the file you can read through the list and then we’ll carry onto the plots.\nAlthough the metrics are important they do not give a full picture of the results. Rather it is better to use the metrics and plots together.\n\n\n\n\n\n\n\n\nBoth the files all_results.tsv and significant_results.tsv have the following columns/metrics:\n\nfeature: Feature name\n\nFeatures are species in our data\n\nmetadata: Metadata name (e.g. SampleSite or Reads)\nvalue: Metadata value\n\nCategorical: The query group name (e.g. Cheek)\nContinuous: The metadata name (e.g. Reads)\n\nname: Variable name from model\n\nCategorical: The metadata name and query group name combined (e.g. SampleSiteCheek)\nContinuous: The metadata name (e.g. Reads)\n\ncoef: The fit coefficient\n\nAbundance models: A one-unit change in metadata variable corresponds to 2coef fold change in the relative abundance of the feature\nPrevalence models: A one-unit change in the metadatum variable corresponds to a coef change in the log-odds/logit of a feature being present\nThis is covered more in the output plot part\n\nnull_hypothesis: The value of the null hypothesis against which the coefficient is tested\n\nThis value is zero when median comparison is off\nThis value is the median value when median comparison is on, see median comparison\nIn our results abundance model rows are median and prevalence model rows are 0\n\npval_individual: The p-value of the individual association\nqval_individual: The false discovery rate (FDR) corrected q-value of the individual association\n\nFDR correction is performed over all p-values without errors in the abundance and prevalence modeling together\n\npval_joint: p-value of the joint prevalence and abundance association\n\nMore info below\nCalculated from plugging in the minimum of the association’s abundance and prevalence p-values into the Beta(1,2) CDF\nInterpreted as the probability that either the abundance or prevalence association would be as extreme as observed if there was neither an abundance nor prevalence association between the feature and metadatum\n\nqval_joint: q-value of the joint prevalence and abundance association\nerror: Lists any errors from the model fitting\nmodel: Specifies whether the association is abundance or prevalence\nN: Total number of data points for the feature\nN_not_zero: Total number of non-zero data points for the feature\n\n\n\n\n\n\n\n\n\nThe Individual p-value is the p-value from the linear/abundance or logistic/prevalence model testing depending on the value of the model column. It’s q-value indicates if the association is significant (&lt;0.1) or not (&gt;=0.1)\nThe joint p-value is equal to pbeta(min_p_value,1,2), where:\n\npbeta(): Function to generate probability density values for the Beta Distribution\n\nFunction webpage\n\nmin_p_value: The minimum value between the abundance and prevalence modelling p-values of the feature comparison\n1,2: In essence represents 1 out of 2\n\n\n\n\n\n\n\nNote\n\n\n\nThere is an exception to this calculation. If one of the 2 associations has an error or an NA for its p-value then the joint p-value is the p-value of the other association.\n\n\nIn essence this is a form of multiple test testing due to the fact we are running 2 tests for each feature comparison (abundance and prevalence).\nIt can be useful in the below situations:\n\nThe abundance test of a comparison is significant but the prevalence test is insignificant\n\nIf the joint p-value is insignificant then it is likely the abundance p-value may not be as extreme, i.e. its significant p-value came about by chance\n\nThe prevalence test of a comparison is significant but the abundance test is insignificant\n\nIf the joint p-value is insignificant then it is likely the prevalence p-value may not be as extreme, i.e. its significant p-value came about by chance\n\n\nGenerally this is only a concern if the significant p-value is very near significance (i.e. a bit lower than 0.1). If this is the case and the joint p-value is not significant (&gt;=0.1) we should be sceptical of the association.\nIf both the individual p/q-values of the association (abundance & prevalence) are signifcant we can generally ignore the joint p/q-value.\nFor this and your future analysis we recommend using the q-values rather than p-values.",
+    "crumbs": [
+      "MaAsLin3",
+      "Text output",
+      "Metrics"
+    ]
+  },
+  {
+    "objectID": "maaslin3/metrics.html#interpretation",
+    "href": "maaslin3/metrics.html#interpretation",
+    "title": "Metrics",
+    "section": "",
+    "text": "There is a lot of information in this file as can be seen in the number of metrics below. Rather than interrogate the file you can read through the list and then we’ll carry onto the plots.\nAlthough the metrics are important they do not give a full picture of the results. Rather it is better to use the metrics and plots together.",
+    "crumbs": [
+      "MaAsLin3",
+      "Text output",
+      "Metrics"
+    ]
+  },
+  {
+    "objectID": "maaslin3/metrics.html#columns",
+    "href": "maaslin3/metrics.html#columns",
+    "title": "Metrics",
+    "section": "",
+    "text": "Both the files all_results.tsv and significant_results.tsv have the following columns/metrics:\n\nfeature: Feature name\n\nFeatures are species in our data\n\nmetadata: Metadata name (e.g. SampleSite or Reads)\nvalue: Metadata value\n\nCategorical: The query group name (e.g. Cheek)\nContinuous: The metadata name (e.g. Reads)\n\nname: Variable name from model\n\nCategorical: The metadata name and query group name combined (e.g. SampleSiteCheek)\nContinuous: The metadata name (e.g. Reads)\n\ncoef: The fit coefficient\n\nAbundance models: A one-unit change in metadata variable corresponds to 2coef fold change in the relative abundance of the feature\nPrevalence models: A one-unit change in the metadatum variable corresponds to a coef change in the log-odds/logit of a feature being present\nThis is covered more in the output plot part\n\nnull_hypothesis: The value of the null hypothesis against which the coefficient is tested\n\nThis value is zero when median comparison is off\nThis value is the median value when median comparison is on, see median comparison\nIn our results abundance model rows are median and prevalence model rows are 0\n\npval_individual: The p-value of the individual association\nqval_individual: The false discovery rate (FDR) corrected q-value of the individual association\n\nFDR correction is performed over all p-values without errors in the abundance and prevalence modeling together\n\npval_joint: p-value of the joint prevalence and abundance association\n\nMore info below\nCalculated from plugging in the minimum of the association’s abundance and prevalence p-values into the Beta(1,2) CDF\nInterpreted as the probability that either the abundance or prevalence association would be as extreme as observed if there was neither an abundance nor prevalence association between the feature and metadatum\n\nqval_joint: q-value of the joint prevalence and abundance association\nerror: Lists any errors from the model fitting\nmodel: Specifies whether the association is abundance or prevalence\nN: Total number of data points for the feature\nN_not_zero: Total number of non-zero data points for the feature",
+    "crumbs": [
+      "MaAsLin3",
+      "Text output",
+      "Metrics"
+    ]
+  },
+  {
+    "objectID": "maaslin3/metrics.html#p-values",
+    "href": "maaslin3/metrics.html#p-values",
+    "title": "Metrics",
+    "section": "",
+    "text": "The Individual p-value is the p-value from the linear/abundance or logistic/prevalence model testing depending on the value of the model column. It’s q-value indicates if the association is significant (&lt;0.1) or not (&gt;=0.1)\nThe joint p-value is equal to pbeta(min_p_value,1,2), where:\n\npbeta(): Function to generate probability density values for the Beta Distribution\n\nFunction webpage\n\nmin_p_value: The minimum value between the abundance and prevalence modelling p-values of the feature comparison\n1,2: In essence represents 1 out of 2\n\n\n\n\n\n\n\nNote\n\n\n\nThere is an exception to this calculation. If one of the 2 associations has an error or an NA for its p-value then the joint p-value is the p-value of the other association.\n\n\nIn essence this is a form of multiple test testing due to the fact we are running 2 tests for each feature comparison (abundance and prevalence).\nIt can be useful in the below situations:\n\nThe abundance test of a comparison is significant but the prevalence test is insignificant\n\nIf the joint p-value is insignificant then it is likely the abundance p-value may not be as extreme, i.e. its significant p-value came about by chance\n\nThe prevalence test of a comparison is significant but the abundance test is insignificant\n\nIf the joint p-value is insignificant then it is likely the prevalence p-value may not be as extreme, i.e. its significant p-value came about by chance\n\n\nGenerally this is only a concern if the significant p-value is very near significance (i.e. a bit lower than 0.1). If this is the case and the joint p-value is not significant (&gt;=0.1) we should be sceptical of the association.\nIf both the individual p/q-values of the association (abundance & prevalence) are signifcant we can generally ignore the joint p/q-value.\nFor this and your future analysis we recommend using the q-values rather than p-values.",
+    "crumbs": [
+      "MaAsLin3",
+      "Text output",
+      "Metrics"
     ]
   }
 ]

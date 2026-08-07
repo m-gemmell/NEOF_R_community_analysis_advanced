@@ -1,0 +1,47 @@
+# lme4 formula
+![](images/formula.png){style="width:200px; background:white; border-radius:5px" fig-align="center"}
+
+When using the `formula=` parameter of the `maaslin3()` function the formula needs to be specified in `lme4` specification.
+
+The following terms can be included in a lme4 formula:
+
+- Fixed effects
+- Random effects
+- Interaction terms
+- Others
+
+The `lme4` specification was originally created for the [`lme4` R package](https://cran.r-project.org/web/packages/lme4/index.html) which stands for "Liner Mixed Effect Models using 'Eigen' and S4".
+
+## Our formula
+
+The formula we specify to `maaslin3()` is a string that contains our formula.
+The string contains the column names from `metadata` that we want to use.
+
+Below is the formula that we specified:
+
+`"~ Site + Media + Reads"`
+
+### ~
+
+The first feature of note is the `~` operator.
+This separates the responses and the fixed and random effects
+
+### Fixed and random effects
+
+To the right of the `~` operator are the fixed effects and random effects.
+
+Fixed effects are specified as normal strings.
+Our fixed effects are `"Site + Media + Reads"`.
+
+More information is in the [Fixed effects page](/relative/fixed_effects.qmd).
+
+Random effects are specified as strings within brackets that includes a pipe symbol (`(|)`)
+An example could be: `"(1|SubjectID)"`.
+
+More information is in the [Random effects page](/relative/random_effects.qmd)
+
+### Responses
+
+The response variable is the variable that we’re testing for associations against our metadata. e.g. Pseudomonas abundance. 
+In standard regression, the response variable is written to the left of the `~`. 
+In MaAsLin3, we usually leave the left-hand side empty because it automatically models each feature (Genus in our analysis) in the abundance table as a response variable, separately.

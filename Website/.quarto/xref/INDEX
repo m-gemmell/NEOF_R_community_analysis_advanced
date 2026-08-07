@@ -520,5 +520,29 @@
   },
   "maaslin3/genus_aggregation.qmd": {
     "genus_aggregation.html": "b52daa60"
+  },
+  "maaslin3/fixed_effects.qmd": {
+    "fixed_effects.html": "2625735a"
+  },
+  "maaslin3/lme4.qmd": {
+    "lme4.html": "7f492d1b"
+  },
+  "maaslin3/maaslin3_function.qmd": {
+    "maaslin3_function.html": "6421a3ac"
+  },
+  "maaslin3/median_comparison.qmd": {
+    "median_comparison.html": "7f512e7e"
+  },
+  "maaslin3/random_effects.qmd": {
+    "random_effects.html": "e12e68a1"
+  },
+  "maaslin3/html_table.qmd": {
+    "html_table.html": "c25679bc"
+  },
+  "maaslin3/metrics.qmd": {
+    "metrics.html": "e6201ca8"
+  },
+  "maaslin3/text_task.qmd": {
+    "text_task.html": "073eb9d7"
   }
 }

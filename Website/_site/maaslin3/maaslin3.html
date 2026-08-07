@@ -395,7 +395,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../maaslin3/genus_aggregation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Genus phyloseq</span></a>
+ <span class="menu-text">Genus aggregation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -418,6 +418,76 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">MaAsLin3 analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/maaslin3_function.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MaAsLin3 function</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/lme4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">lme4 formula</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/fixed_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fixed effects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/random_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Random effects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/median_comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Median comparisons</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Text output</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/html_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Significant results table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/metrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metrics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/text_task.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Text tasks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -431,9 +501,6 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#maaslin3" id="toc-maaslin3" class="nav-link active" data-scroll-target="#maaslin3">MaAsLin3</a>
   <ul class="collapse">
   <li><a href="#sections" id="toc-sections" class="nav-link" data-scroll-target="#sections">Sections</a></li>
-  </ul></li>
-  <li><a href="#cgr-maaslin3-for-unilever" id="toc-cgr-maaslin3-for-unilever" class="nav-link" data-scroll-target="#cgr-maaslin3-for-unilever">CGR MaAsLin3 for Unilever</a>
-  <ul class="collapse">
   <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a></li>
   <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
   <li><a href="#maaslin3-analysis" id="toc-maaslin3-analysis" class="nav-link" data-scroll-target="#maaslin3-analysis">MaAslin3 analysis</a></li>
@@ -457,22 +524,19 @@ ul.task-list li input[type="checkbox"] {
 <li>Abundance testing
 <ul>
 <li>Determines the difference in the abundance values between groups</li>
-<li>Carried out with <a href="..\maaslin3/background/linear_model.qmd">linear modelling</a></li>
+<li>Carried out with <a href="../maaslin3/linear_model.html">linear modelling</a></li>
 </ul></li>
 <li>Prevalence testing
 <ul>
 <li>Determines the likelihood of features being present based on groupings</li>
-<li>Carried out with <a href="..\aaslin3/background/logistic_model.qmd">logistic modelling</a></li>
+<li>Carried out with <a href="..\aaslin3/logistic_model.qmd">logistic modelling</a></li>
 </ul></li>
 </ol>
 <p>Both tests produce q-values plus a joint q-value is given.</p>
 <section id="sections" class="level2">
 <h2 class="anchored" data-anchor-id="sections">Sections</h2>
-</section>
-</section>
-<section id="cgr-maaslin3-for-unilever" class="level1">
-<h1>CGR MaAsLin3 for Unilever</h1>
 <p>There are multiple sections in this website. These are described below.</p>
+</section>
 <section id="background" class="level2">
 <h2 class="anchored" data-anchor-id="background">Background</h2>
 <div class="quarto-figure quarto-figure-center">
@@ -482,8 +546,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>Info on MaAsLin3 and Mixed effect liner models including:</p>
 <ul>
-<li><a href="..\background/linear_model.qmd">Linear regression</a>: Theory of linear models for abundance testing, and mixed effect models</li>
-<li><a href="..\background/logistic_model.qmd">Logistic model</a>: Theory of logistic models for prevalence testing</li>
+<li><a href="../maaslin3/linear_model.html">Linear regression</a>: Theory of linear models for abundance testing, and mixed effect models</li>
+<li><a href="../maaslin3/logistic_model.html">Logistic model</a>: Theory of logistic models for prevalence testing</li>
 </ul>
 </section>
 <section id="setup" class="level2">
@@ -495,8 +559,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>Environment and <code>jupyter-notebook</code> setup including:</p>
 <ul>
-<li><a href="../setup/setup.html">Setup</a>: Directory and mamba/conda environment setup</li>
-<li><a href="..\setup/jupyter.qmd">Jupyter</a>: <code>Jupyter-notebook</code> tutorial</li>
+<li><a href="..\maaslin3/setup.qmd">Setup</a>: Directory and mamba/conda environment setup</li>
+<li><a href="..\maaslin3/jupyter.qmd">Jupyter</a>: <code>Jupyter-notebook</code> tutorial</li>
 </ul>
 </section>
 <section id="maaslin3-analysis" class="level2">
@@ -508,13 +572,13 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>A standard MaAsLin3 analysis with an relative/count table based on genomic reads. Includes:</p>
 <ul>
-<li><a href="..\relative/relative.qmd">Overview</a>: Description of dataset, and more detailed descriptions of the section’s parts and their pages</li>
-<li><a href="..\relative/notebook.qmd">Notebook setup</a>: Setup of the first jupyter-notebook for this section</li>
-<li><a href="..\relative/count_table.qmd">Data importing &amp; formatting</a>: Setting up the count table and metadata table for MaAsLin3 analysis</li>
-<li><a href="..\relative/maaslin3.qmd">MaAsLin3 analysis</a>: Use of the <code>maaslin3()</code> function and considerations for its inputs</li>
-<li><a href="..\relative/html_table.qmd">Text output</a>: Viewing and interpreting the text output of <code>maaslin3()</code></li>
-<li><a href="..\relative/plots.qmd">Output plots</a>: Viewing, understanding, and interpreting the various plot types produced by <code>maaslin3()</code></li>
-<li><a href="..\relative/timepoint_challenge.qmd">Challenge</a>: Tasks based on interrogating the <code>maaslin3()</code> output related to the <code>TimepointName</code> metadata variable</li>
+<li><a href="..\maaslin3/relative.qmd">Overview</a>: Description of dataset, and more detailed descriptions of the section’s parts and their pages</li>
+<li><a href="..\maaslin3/notebook.qmd">Notebook setup</a>: Setup of the first jupyter-notebook for this section</li>
+<li><a href="../maaslin3/count_table.html">Data importing &amp; formatting</a>: Setting up the count table and metadata table for MaAsLin3 analysis</li>
+<li><a href="../maaslin3/maaslin3.html">MaAsLin3 analysis</a>: Use of the <code>maaslin3()</code> function and considerations for its inputs</li>
+<li><a href="../maaslin3/html_table.html">Text output</a>: Viewing and interpreting the text output of <code>maaslin3()</code></li>
+<li><a href="..\maaslin3/plots.qmd">Output plots</a>: Viewing, understanding, and interpreting the various plot types produced by <code>maaslin3()</code></li>
+<li><a href="..\maaslin3/timepoint_challenge.qmd">Challenge</a>: Tasks based on interrogating the <code>maaslin3()</code> output related to the <code>TimepointName</code> metadata variable</li>
 </ul>
 </section>
 <section id="appendix" class="level2">
