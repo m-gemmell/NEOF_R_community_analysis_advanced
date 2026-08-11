@@ -20,6 +20,7 @@ pseq_rarefy <- phyloseq::rarefy_even_depth(
   pseq,
   sample.size = rarefaction_size,
   rngseed = rngseed_vec[1],
+  replace=FALSE,
   verbose = FALSE)
 #Alpha diversity
 alpha_df_sum <- microbiome::alpha(pseq_rarefy, index = "all")
@@ -30,6 +31,7 @@ for (i in 2:rarefaction_iters){
     pseq,
     sample.size = rarefaction_size,
     rngseed = rngseed_vec[i],
+    replace = FALSE,
     verbose = FALSE)
   #Alpha diversity
   alpha_df <- microbiome::alpha(pseq_rarefy, index = "all")

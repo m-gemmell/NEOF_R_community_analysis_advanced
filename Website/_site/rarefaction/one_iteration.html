@@ -669,11 +669,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Minimum read count as rarefaction size</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">sample.size =</span> <span class="fu">min</span>(microbiome<span class="sc">::</span><span class="fu">readcount</span>(pseq_env_phyla)),</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#First random seed as the rng seed</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">rngseed =</span> rngseed_vec[<span class="dv">1</span>])</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#View count table</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">otu_table</span>(pseq_env_phyla_rarefy_1)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Sum count of samples</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>microbiome<span class="sc">::</span><span class="fu">readcount</span>(pseq_env_phyla_rarefy_1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">rngseed =</span> rngseed_vec[<span class="dv">1</span>],</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Sampling without replacement</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">replace =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Stop message about random seed</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">verbose =</span> <span class="cn">FALSE</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#View count table</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">otu_table</span>(pseq_env_phyla_rarefy_1)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Sum count of samples</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>microbiome<span class="sc">::</span><span class="fu">readcount</span>(pseq_env_phyla_rarefy_1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We set <code>replace = FALSE</code> to carry out rarefaction subsampling without replacement, we recommend using this for all rarefaction. By default <code>phyloseq::rarefy_even_depth()</code> uses sampling with replacement (<code>replace = TRUE</code>).</p>
+</div>
 </div>
 <p>You should see that all the samples now have a total count of <strong>11046</strong>.</p>
 </section>
@@ -730,8 +748,8 @@ Important
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(single_rarefaction_diff, <span class="at">main =</span> <span class="st">"Single rarefaction"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 What is the range of the differences?
-<div id="radio_CEPUNIWMZS" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_CEPUNIWMZS" value=""> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_CEPUNIWMZS" value=""> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_CEPUNIWMZS" value="answer"> <span><strong>-0.015 to 0.015</strong></span></label>
+<div id="radio_UUTTCNAJHN" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_UUTTCNAJHN" value=""> <span><strong>-0.00015 to 0.00015</strong></span></label><label><input type="radio" autocomplete="off" name="radio_UUTTCNAJHN" value=""> <span><strong>-0.001 (-1e-03) to 0.005</strong></span></label><label><input type="radio" autocomplete="off" name="radio_UUTTCNAJHN" value="answer"> <span><strong>-0.004 to 0.005</strong></span></label>
 </div>
 <p>These values appear quite small. However, keep in mind we are working with relative abundance values. Each sample has a total relative abundance of 1.00 so a relative abundance value of 0.01 is 1%.</p>
 <p>Let’s see if we can make these differences smaller with multiple rounds of rarefaction.</p>

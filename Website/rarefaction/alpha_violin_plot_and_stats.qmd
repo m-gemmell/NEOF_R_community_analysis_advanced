@@ -83,4 +83,4 @@ pairwise.wilcox.test(meta_alpha_mean_df$observed, meta_alpha_mean_df$media, p.ad
 pairwise.wilcox.test(meta_alpha_mean_df$shannon, meta_alpha_mean_dfl$media, p.adjust.method = "holm")
 ```
 
-You'll see three p-value adjusted tables with all the values (except Shannon: ENV against TSA) being significant (<0.05).
+You'll see three p-value adjusted tables with most of the values being significant (<0.05).

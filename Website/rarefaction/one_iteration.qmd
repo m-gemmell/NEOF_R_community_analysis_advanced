@@ -21,12 +21,23 @@ pseq_env_phyla_rarefy_1 <- phyloseq::rarefy_even_depth(
   #Minimum read count as rarefaction size
   sample.size = min(microbiome::readcount(pseq_env_phyla)),
   #First random seed as the rng seed
-  rngseed = rngseed_vec[1])
+  rngseed = rngseed_vec[1],
+  #Sampling without replacement
+  replace = FALSE,
+  #Stop message about random seed
+  verbose = FALSE
+)
 #View count table
 otu_table(pseq_env_phyla_rarefy_1)
 #Sum count of samples
 microbiome::readcount(pseq_env_phyla_rarefy_1)
 ```
+
+
+::: {.callout-note}
+We set `replace = FALSE` to carry out rarefaction subsampling without replacement, we recommend using this for all rarefaction. By default `phyloseq::rarefy_even_depth()` uses sampling with replacement (`replace = TRUE`).
+:::
+
 
 You should see that all the samples now have a total count of __11046__.
 
@@ -74,7 +85,7 @@ hist(single_rarefaction_diff, main = "Single rarefaction")
 ```
 
 ```{r, echo = FALSE}
-opts_p <- c("__-0.0003(-3e-04) to 0.0003(3e-04)__", "__-0.003 to 0.003__", answer="__-0.015 to 0.015__")
+opts_p <- c("__-0.00015 to 0.00015__", "__-0.001 (-1e-03) to 0.005__", answer="__-0.004 to 0.005__")
 ```
 What is the range of the differences? `r longmcq(opts_p)`
 

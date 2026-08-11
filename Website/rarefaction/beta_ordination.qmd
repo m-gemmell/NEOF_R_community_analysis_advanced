@@ -202,7 +202,7 @@ ggsave(filename = "./Beta_diversity_pcoa_wunifrac_media_site.png", plot = pcoa.w
 IRdisplay::display_png(file = "./Beta_diversity_pcoa_wunifrac_media_site.png")
 ```
 
-We have a PCoA plot which represents 82.1% (67.46+14.64) of the variance of our data.
+We have a PCoA plot which represents 82.07% (67.41 + 14.66) of the variance of our data.
 It is quite similar to our NMDS plot.
 
 ## Ordination recap

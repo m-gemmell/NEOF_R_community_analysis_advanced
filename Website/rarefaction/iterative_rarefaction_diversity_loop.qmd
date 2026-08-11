@@ -101,7 +101,8 @@ In the below code block the following metrics are calculated:
 #First rarefaction
 pseq_rarefy <- phyloseq::rarefy_even_depth(
     pseq, sample.size = rarefaction_size,
-    rngseed = rngseed_vec[1], verbose = FALSE)
+    rngseed = rngseed_vec[1], 
+    replace = FALSE, verbose = FALSE)
 #Alpha diversity
 alpha_df_sum <- microbiome::alpha(pseq_rarefy, index= "all")
 #Beta diveristy values
@@ -130,7 +131,8 @@ jaccard_df_sum <- rbiom::bdiv_matrix(
 for (i in 2:rarefaction_iters){
     pseq_rarefy <- phyloseq::rarefy_even_depth(
         pseq, sample.size = rarefaction_size,
-        rngseed = rngseed_vec[i], verbose = FALSE)
+        rngseed = rngseed_vec[i], 
+        replace  = FALSE, verbose = FALSE)
     #Alpha diversity
     alpha_df <- microbiome::alpha(pseq_rarefy, index= "all")
     #Add to sum dataframe

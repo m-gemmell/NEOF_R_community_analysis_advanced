@@ -35,6 +35,7 @@ pseq_rarefy <- phyloseq::rarefy_even_depth(
     pseq,
     sample.size = rarefaction_size,
     rngseed = rngseed_vec[1],
+    replace = FALSE,
     verbose = FALSE
 )
 #wunifrac beta diversity
@@ -50,6 +51,7 @@ for (i in 2:rarefaction_iters){
         pseq,
         sample.size = rarefaction_size,
         rngseed = rngseed_vec[i],
+        replace = FALSE<
         verbose = FALSE
     )
     #Beta diversity

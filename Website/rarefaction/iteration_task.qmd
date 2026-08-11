@@ -17,7 +17,7 @@ The iterative rarefaction step may take a few minutes.
 After creating the relative abundance matrix determine how different the values are compared to the non-rarefied relative abundance with a histogram.
 
 ```{r, echo = FALSE}
-opts_p <- c(answer="__-0.0003(-3e-04) to 0.0003(3e-04)__", "__-0.003 to 0.003__", "__-0.015 to 0.015__")
+opts_p <- c(answer="__-0.00015 to 0.00015__", "__-0.0015 to 0.002__", "__-0.004 to 0.005__")
 ```
 What is the range of the differences compared to the non rarefied relative abundance values? `r longmcq(opts_p)`
 
@@ -57,7 +57,9 @@ load("rngseeds_1000.RData")
 pseq_rarefy <- phyloseq::rarefy_even_depth(pseq_env_phyla,
                                            sample.size = rarefaction_size,
                                            #First random seed as the rng seed
-                                           rngseed = rngseed_vec[1])
+                                           rngseed = rngseed_vec[1],
+                                           replace = FALSE,
+                                           verbose = FALSE)
 rarefy_phyla_df <- as.data.frame(phyloseq::otu_table(pseq_rarefy))
 
 #Loop through the next 999 iterations
@@ -66,7 +68,9 @@ for (i in 2:length(rngseed_vec)){
   #Rarefy
   pseq_rarefy <- phyloseq::rarefy_even_depth(pseq_env_phyla,
                                            sample.size = rarefaction_size,
-                                           rngseed = rngseed_vec[i])
+                                           rngseed = rngseed_vec[i],
+                                           replace = FALSE,
+                                           verbose = FALSE)
   #Add values to rarefy_phyla_df
   rarefy_phyla_df <- 
     rarefy_phyla_df + as.data.frame(phyloseq::otu_table(pseq_rarefy))

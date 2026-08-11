@@ -316,6 +316,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link" href="../upset/upset.html"> 
 <span class="menu-text">Upset</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../maaslin3/maaslin3.html"> 
+<span class="menu-text">MaAsLin3</span></a>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
@@ -520,14 +524,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_rarefaction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">β iterative rarefaction</span></a>
+  <a href="../rarefaction/beta_distance_matrices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">β distance matrices</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../rarefaction/beta_distance_matrices.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">β distance matrices</span></a>
+  <a href="../rarefaction/beta_rarefaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">β iterative rarefaction</span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -565,12 +569,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Templates</span></a>
+ <span class="menu-text">Rarefaction slopes</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../rarefaction/rareslope_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Slope intro</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../rarefaction/rarefaction_curve.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rarefaction curve</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../rarefaction/rarefaction_slope_tibble.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Rarefaction slope tibble</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../rarefaction/rareslope_boxplots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Slope boxplots</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Templates</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../rarefaction/iterative_rarefaction_diversity_loop.html" class="sidebar-item-text sidebar-link">
@@ -631,8 +670,8 @@ Note
 </div>
 <p>After creating the relative abundance matrix determine how different the values are compared to the non-rarefied relative abundance with a histogram.</p>
 What is the range of the differences compared to the non rarefied relative abundance values?
-<div id="radio_RCYJGOSEKD" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_RCYJGOSEKD" value="answer"> <span><strong>-0.0003(-3e-04) to 0.0003(3e-04)</strong></span></label><label><input type="radio" autocomplete="off" name="radio_RCYJGOSEKD" value=""> <span><strong>-0.003 to 0.003</strong></span></label><label><input type="radio" autocomplete="off" name="radio_RCYJGOSEKD" value=""> <span><strong>-0.015 to 0.015</strong></span></label>
+<div id="radio_GQHABRSHUW" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_GQHABRSHUW" value="answer"> <span><strong>-0.00015 to 0.00015</strong></span></label><label><input type="radio" autocomplete="off" name="radio_GQHABRSHUW" value=""> <span><strong>-0.0015 to 0.002</strong></span></label><label><input type="radio" autocomplete="off" name="radio_GQHABRSHUW" value=""> <span><strong>-0.004 to 0.005</strong></span></label>
 </div>
 </section>
 <section id="solution" class="level2">
@@ -693,24 +732,28 @@ What is the range of the differences compared to the non rarefied relative abund
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>pseq_rarefy <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">rarefy_even_depth</span>(pseq_env_phyla,</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">sample.size =</span> rarefaction_size,</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                                           <span class="co">#First random seed as the rng seed</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">rngseed =</span> rngseed_vec[<span class="dv">1</span>])</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>rarefy_phyla_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(phyloseq<span class="sc">::</span><span class="fu">otu_table</span>(pseq_rarefy))</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#Loop through the next 999 iterations</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Add the rarefied values to rarefy_phyla_df</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(rngseed_vec)){</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Rarefy</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  pseq_rarefy <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">rarefy_even_depth</span>(pseq_env_phyla,</span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">sample.size =</span> rarefaction_size,</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">rngseed =</span> rngseed_vec[i])</span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Add values to rarefy_phyla_df</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  rarefy_phyla_df <span class="ot">&lt;-</span> </span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    rarefy_phyla_df <span class="sc">+</span> <span class="fu">as.data.frame</span>(phyloseq<span class="sc">::</span><span class="fu">otu_table</span>(pseq_rarefy))</span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co">#Average the values of the summed relabund phyla_table</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>rarefy_phyla_mean_df <span class="ot">&lt;-</span> rarefy_phyla_df <span class="sc">/</span> <span class="fu">length</span>(rngseed_vec)</span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove unwanted objects</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(pseq_rarefy, rarefy_phyla_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">rngseed =</span> rngseed_vec[<span class="dv">1</span>],</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">replace =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>rarefy_phyla_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(phyloseq<span class="sc">::</span><span class="fu">otu_table</span>(pseq_rarefy))</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Loop through the next 999 iterations</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#Add the rarefied values to rarefy_phyla_df</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">length</span>(rngseed_vec)){</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Rarefy</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  pseq_rarefy <span class="ot">&lt;-</span> phyloseq<span class="sc">::</span><span class="fu">rarefy_even_depth</span>(pseq_env_phyla,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">sample.size =</span> rarefaction_size,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">rngseed =</span> rngseed_vec[i],</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">replace =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>                                           <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Add values to rarefy_phyla_df</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  rarefy_phyla_df <span class="ot">&lt;-</span> </span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    rarefy_phyla_df <span class="sc">+</span> <span class="fu">as.data.frame</span>(phyloseq<span class="sc">::</span><span class="fu">otu_table</span>(pseq_rarefy))</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="co">#Average the values of the summed relabund phyla_table</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>rarefy_phyla_mean_df <span class="ot">&lt;-</span> rarefy_phyla_df <span class="sc">/</span> <span class="fu">length</span>(rngseed_vec)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove unwanted objects</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(pseq_rarefy, rarefy_phyla_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
