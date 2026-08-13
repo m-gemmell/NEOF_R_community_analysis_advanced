@@ -3,6 +3,9 @@
 
 This section will introduce you to our dataset and how to prepare it for `MaAsLin3` from a `phyloseq` object.
 
+Dataset changed to: https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2025.1608399/full#h1
+
+
 ## Durance river data
 ![](images/france_ibm.png){style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white" fig-align="center"}
 
