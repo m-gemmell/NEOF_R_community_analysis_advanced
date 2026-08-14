@@ -1,0 +1,48 @@
+# Plots
+![](images/plotting.png){style="width:200px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+Many plots of significant associations are created by `maaslin3()` .
+The types of plots can be grouped into 3 main types:
+
+1. The summary plot
+    - This shows abundance and prevalence modelling information for the top 25 features
+2. Linear plots
+    - These are for the abundance based linear modelling
+    - Box plots are produced for categorical fixed effects
+    - Scatter plots with a linear model line are produced for continuous fixed effects
+3. Logistics plots
+    - These are for the prevalence based logistic modelling
+    - Grids are produced for categorical fixed effects
+    - Box plots are produced for continuous fixed effects
+
+
+In your own analysis you would start by looking at the summary plot.
+However, we will look at the other plots beforehand to get a better understanding of the coefficient values so we can better interpret the summary plot.
+
+## Notebook setup
+![](images/jupiter.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+We'll create one notebook for our plot investigations, meaning it'll be quite large.
+
+Save then close and halt your "3-Text_output.ipynb" notebook.
+
+Create and open a new jupyter notebook called "4-Plots.ipynb".
+
+Create a markdown cell at the top with:
+
+```{r, eval=FALSE}
+# 4-Plots
+## Libraries & data
+```
+
+In a code cell load the required libraries and data.
+
+```{r, eval=FALSE}
+#Library
+library("maaslin3")
+library("IRdisplay")
+library("tidyverse")
+#Data
+load("genus_output/significant_results.RData")
+load("metadata.RData")
+```

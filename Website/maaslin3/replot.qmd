@@ -1,0 +1,48 @@
+# Replot
+![](images/plotter.png){style="width:200px; background:white; border-radius:5px; border: white solid 5px" fig-align='center'}
+
+When we ran `maaslin3()` it created 250 plot files as we set `max_pngs = 250`.
+Unfortunately this means that some of the significant associations we want to interrogate do not have plots.
+
+Fortunately rather than rerunning the `maaslin3()` function, which can take a long time, we can run the function `maaslin_plot_results_from_output()`.
+
+Run the below code to recreate the plots whilst making more by setting `max_pngs=` to 1000.
+
+```{r, eval=FALSE}
+#MaAsLin3 replot
+maaslin3::maaslin_plot_results_from_output(
+    output = 'genus_output',
+    metadata = metadf,
+    normalization = 'TSS',
+    transform = 'LOG',
+    #Max value of qval_individual value for plot to be generated
+    #qval_joint has no effect on this
+    max_significance = 0.1,
+    median_comparison_abundance = TRUE,
+    median_comparison_prevalence = FALSE,
+    max_pngs = 1000
+)
+```
+
+## Parameters
+![](images/parameter_ibm_purple.png){style="width:100px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+Unfortunately when running `maaslin_plot_results_from_output()` we can't copy the parameters from our `maaslin3()` function.
+But at the same time `maaslin_plot_results_from_output()` uses some of the same parameters as `maaslin3()` and we need to have these being identical to our previous `maaslin3()` function.
+
+Below are the parameters used above:
+
+- `output`: This is the output directory of our `maaslin3()` function
+    - Our replot function will uses its contents to recreate the plots
+    - The recreated and new plots will be placed in the relevant directories within this directory
+- `metadf`: The metadata table to be used for the plot generation
+    - We are using the same table as our `maaslin3()` function
+    - This can be an opportunity to rename variables and values (see: [MaAsLin3 manual on replotting](https://www.bioconductor.org/packages//release/bioc/vignettes/maaslin3/inst/doc/maaslin3_manual.html#replotting))
+- `normalization`: Same as `maaslin3()`
+- `transform`: Same as `maaslin3()`
+- `max_significance = 0.1`: Same as `maaslin3()`
+    - This indicates the `qval_individual` value of the features
+- `median_comparison_abundance`: Same as `maaslin3()`
+- `median_comparison_prevalence`: Same as `maaslin3()`
+- `max_pngs`: New maximum number of pngs to create
+    - If there are less significant features than the max number set you will get as many plots as significant features

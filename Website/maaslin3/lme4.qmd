@@ -19,7 +19,7 @@ The string contains the column names from `metadata` that we want to use.
 
 Below is the formula that we specified:
 
-`"~ Site + Media + Reads"`
+`'~ Soil + Reads + (1|Plate)`
 
 ### ~
 
@@ -31,14 +31,14 @@ This separates the responses and the fixed and random effects
 To the right of the `~` operator are the fixed effects and random effects.
 
 Fixed effects are specified as normal strings.
-Our fixed effects are `"Site + Media + Reads"`.
+Our fixed effects are `"Soil + Reads"`.
 
-More information is in the [Fixed effects page](/relative/fixed_effects.qmd).
+More information is in the [Fixed effects page](/maaslin3/fixed_effects.qmd).
 
 Random effects are specified as strings within brackets that includes a pipe symbol (`(|)`)
-An example could be: `"(1|SubjectID)"`.
+We've set `Plate` as a random effect with: `"(1|Plate)"`.
 
-More information is in the [Random effects page](/relative/random_effects.qmd)
+More information is in the [Random effects page](/maaslin3/random_effects.qmd)
 
 ### Responses
 

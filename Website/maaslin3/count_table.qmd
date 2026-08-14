@@ -4,7 +4,7 @@
 The count table for MaAsLin3 needs to be a `data.frame` with:
 
 - Columns names of features
-    - In our case species
+    - In our case genera
 - Row names of sample names
 - Values of counts
     - In our case abundance values
@@ -46,10 +46,14 @@ taxa_df <- taxa_df |>
     t() |> as.data.frame() |>
     #Ensure all values are numerics
     dplyr::mutate_all(as.numeric)
-#Replace an NAs with 0
+#Replace any NAs with 0
 taxa_df[is.na(taxa_df)] <- 0
 #Check
 taxa_df[1:5,1:10]
 ```
+
+::: {.callout-tip title="Tidyverse functions used above"}
+- [`dplyr::mutate_all()`](https://dplyr.tidyverse.org/reference/mutate_all.html)
+:::
 
 Perfect! Now its on to the metadata.

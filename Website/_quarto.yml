@@ -203,6 +203,10 @@ website:
       - href: maaslin3/html_table.qmd
       - href: maaslin3/metrics.qmd
       - href: maaslin3/text_task.qmd
+    - section: "Output plots"
+      contents:
+      - href: maaslin3/plots.qmd
+      - href: maaslin3/replot.qmd
 #Format
 format:
   html:

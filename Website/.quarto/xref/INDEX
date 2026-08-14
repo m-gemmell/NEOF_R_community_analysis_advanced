@@ -544,5 +544,11 @@
   },
   "maaslin3/text_task.qmd": {
     "text_task.html": "073eb9d7"
+  },
+  "maaslin3/plots.qmd": {
+    "plots.html": "750a728f"
+  },
+  "maaslin3/replot.qmd": {
+    "replot.html": "f65f1b84"
   }
 }

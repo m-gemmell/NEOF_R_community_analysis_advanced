@@ -3,19 +3,19 @@
 
 This section will introduce you to our dataset and how to prepare it for `MaAsLin3` from a `phyloseq` object.
 
-Dataset changed to: https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2025.1608399/full#h1
+## Rhizosphere soil
+![](images/wyoming_flower.png){style="width: 300px; background-color: white;" fig-align="center"}
 
+We will use a new dataset from:
 
-## Durance river data
-![](images/france_ibm.png){style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white" fig-align="center"}
+[A comparison of 16S rRNA-gene and 16S rRNA-transcript derived microbial communities in bulk and rhizosphere soils](https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2025.1608399/full#h1).
 
-We will use the same dataset from the Durance river as the [R community analysis workshop](https://neof-workshops.github.io/R_community_whqkt8/Course/02-Dataset_and_workflow.html#dataset).
+This study aimed to compare the microbial communities of two different types of soil of a Wyoming native plant [*Boechera stricta*](https://en.wikipedia.org/wiki/Boechera_stricta). These were:
 
-We will use MaAsLin3 to determine the differential abundance and prevalence of genera between the sites and the media.
-These groupings are:
+- **Rhizosphere soil:** The soil penetrated by the roots
+- **Bulk soil:** The soil not penetrated by the roots
 
-- `site`: UD (Upper Durance), MD (Middle Durance), and LD (Lower Durance)
-- `media`: ENV (Environmental samples, no media), CVP, KBC, and TSA
+We will use MaAsLin3 to determine the differential abundance and prevalence of bacterial genera between the two soils.
 
 ## Jupyter notebook
 ![](images/jupyter_notebook.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
@@ -41,7 +41,7 @@ library("phyloseq")
 library("tidyverse")
 library("microbiome")
 #Data
-load("/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData")
+load("/pub14/tea/nsc206/NEOF/R_community_advanced/rhizo_pseq.RData")
 ```
 
 Please create other useful markdown cells in this and future notebooks.
@@ -49,7 +49,10 @@ Please create other useful markdown cells in this and future notebooks.
 ## Workflow
 ![](images/workflow_ibm.png){style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white" fig-align="center"}
 
-We need 2 `data.frames` for MaAsLin3: genus taxa counts, and metadata.
+We need 2 `data.frames` for MaAsLin3: 
+
+- genus taxa counts
+- metadata
 
 We'll create these in our `jupyter` notebook with four main stages:
 

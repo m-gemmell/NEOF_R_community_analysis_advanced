@@ -454,6 +454,76 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">MaAsLin3 analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/maaslin3_function.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">MaAsLin3 function</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/lme4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">lme4 formula</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/fixed_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Fixed effects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/random_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Random effects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/median_comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Median comparisons</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Text output</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/html_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Significant results table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/metrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metrics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/text_task.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Text tasks</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -513,11 +583,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Check rows 1:5</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>metadf <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Capitalise columns we’ll use as fixed effects. This is to make the MaAsLin3 output look nicer.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Capitalise column names for MaAsLin3 output</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>metadf <span class="ot">&lt;-</span> metadf <span class="sc">|&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">Site=</span>site, <span class="at">Media=</span>media)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Tidyverse functions used above">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Tidyverse functions used above
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/slice.html"><code>dplyr::slice()</code></a></li>
+</ul>
+</div>
 </div>
 </section>
 <section id="fixed-effects-and-random-effects" class="level2">
@@ -538,7 +617,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>All other levels are compared to the reference in pairwise fashion (i.e.&nbsp;the query)</li>
 <li>For example healthy vs disease states</li>
 </ul></li>
-<li>We will use <code>Site</code> and <code>Media</code> as categorical fixed effects</li>
+<li>We will use <code>Soil</code> as a categorical fixed effect (you can have more than one)</li>
 </ul></li>
 <li><strong>Continuous fixed effects</strong>
 <ul>
@@ -551,13 +630,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Categorical variables to include that you are not necessarily interested in evaluating</li>
 <li>These don’t need to be factors since a reference group is not required</li>
 <li>An example includes experimental blocks, different sequencing runs, or subjects</li>
-<li>We won’t use any random effects in our analysis</li>
+<li>We will use <code>Plate</code> (plate used for sequencing) as a random effect</li>
 </ul></li>
 </ul>
 <p>More theory and considerations are included in the later pages:</p>
 <ul>
-<li><a href="..\maaslin3/fixed_effects.qmd">Fixed effects</a></li>
-<li><a href="..\maaslin3/random_effects.qmd">Random effects</a></li>
+<li><a href="../maaslin3/fixed_effects.html">Fixed effects</a></li>
+<li><a href="../maaslin3/random_effects.html">Random effects</a></li>
 </ul>
 </section>
 <section id="factorisation" class="level2">
@@ -567,9 +646,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="images/factor_key.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px"></p>
 </figure>
 </div>
-<p>We are going to use <code>Site</code> and <code>Media</code> as categorical fixed effects. Therefore, we need to set the order of their factor levels.</p>
+<p>We are going to use <code>Soil</code> as a categorical fixed effect. Therefore, we need to set the order of its factor levels.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Factors">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -578,31 +657,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>A factor is R’s way of storing categorical data. It tells the model to compare categories, and lets us set which category is used as the reference level.</p>
-<p>For more info please see: <a href="https://cgr-liverpool.github.io/R_primer_f81b92/course/14-Plots_scatterplot_and_box_plots.html#factors">R primer for omics explanation of factors</a></p>
+<p>For more info please see: <a href="https://neof-workshops.github.io/R_j4c0xh/13-Plots_scatterplot_and_box_plots.html#factors">R primer for omics explanation of factors</a></p>
 </div>
 </div>
 </div>
-<p>Before factor ordering, let’s see what groupings are in the two variables.</p>
+<p>Before factor ordering, let’s see what groupings are in the <code>Soil</code> variable.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Check unique values of site and media</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>metadf <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">pull</span>(site) <span class="sc">|&gt;</span> <span class="fu">unique</span>()</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>metadf <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">pull</span>(media) <span class="sc">|&gt;</span> <span class="fu">unique</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Check unique values of Soil</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>metadf <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">pull</span>(Soil) <span class="sc">|&gt;</span> <span class="fu">unique</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>We have 3 for <code>Site</code>. Let’s use <code>UD</code> as the reference group and <code>MD</code> and <code>LD</code> as the queries. We’ve chosen <code>UD</code> as it is the site with the lowest anthropisation.</p>
-<p>We have four groups for <code>Media</code>. We’ll use <code>ENV</code> as the reference so all media groups are compared to it.</p>
-<p>Type and run the below code to order tje factor levels of the two metadata variables. The code uses some piping and the <a href="https://cgr-liverpool.github.io/Tidyverse/dplyr/mutate.html"><code>dplyr::mutate()</code> function</a>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Tidyverse functions used above">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Tidyverse functions used above
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/pull.html"><code>dplyr::pull()</code></a></li>
+</ul>
+</div>
+</div>
+<p>We have 2 for <code>Soil</code>. Let’s use <code>Bulk Soil</code> as the reference group and <code>Rhizosphere Soil</code> as the query.</p>
+<p>Type and run the below code to order the factor levels of the two metadata variables. The code uses some piping and the <a href="https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html"><code>dplyr::mutate()</code> function</a>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Factorise to order our categorical fixed effects</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>metadf <span class="ot">&lt;-</span> metadf <span class="sc">|&gt;</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Factorise site with UD as the reference level</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">site=</span><span class="fu">factor</span>(site,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"UD"</span>,<span class="st">"MD"</span>,<span class="st">"LD"</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Factorise media with ENV as the reference level</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">media=</span><span class="fu">factor</span>(media,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"ENV"</span>,<span class="st">"CVP"</span>,<span class="st">"KBC"</span>,<span class="st">"TSA"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Factorise to order our categorical fixed effects</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>metadf <span class="ot">&lt;-</span> metadf <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Factorise Soil with Bulk Soil as the reference level</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">Soil=</span><span class="fu">factor</span>(Soil,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                              <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Bulk Soil"</span>,<span class="st">"Rhizosphere Soil"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Tidyverse functions used above">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Tidyverse functions used above
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html"><code>dplyr::mutate()</code></a></li>
+</ul>
+</div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -614,7 +718,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>For the purposes of setting a reference it only matters which group is set as the first group. The order of the subsequent levels does not matter for the MaAsLin3 analysis we will carry out.</p>
+<p>For the purposes of setting a reference it only matters which group is set as the first group. If you have more than one query group their level order does not matter for the MaAsLin3 analysis we will carry out.</p>
 </div>
 </div>
 <p>Great! Next we’ll add read counts/depth to the metadata table.</p>

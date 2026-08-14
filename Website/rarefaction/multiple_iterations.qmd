@@ -137,10 +137,13 @@ iterative_rarefaction_diff
 hist(iterative_rarefaction_diff)
 ```
 
+
 ```{r, echo = FALSE}
 opts_p <- c("__-0.00015 to 0.00015__", answer="__-0.001 (-1e-03) to 0.005__", "__-0.004 to 0.005__")
 ```
 What is the range of the differences compared to the non rarefied relative abundance values? `r longmcq(opts_p)`
+
+
 
 You should notice that the differences are much smaller compared to the differences found in [with one iteration of rarefaction](/rarefaction/one_iteration.qmd#difference-from-non-rarefied).
 This indicates that the relative abundance structure of the __iteratively rarefied__ data is much closer to the non-rarefied data compared to the one round __rarefied__ data.

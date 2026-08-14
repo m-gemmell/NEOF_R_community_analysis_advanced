@@ -3,8 +3,7 @@
 
 Fixed effects are any term related to your hypothesis that requires evaluation and any continuous control variables.
 
-We are interested in the differences of our three sites (UD, MD, and LD) so we used it as a fixed effect.
-We are also interested in the difference of the media compared ot the environmental sample so we used `Media` as a fixed effect.
+We are interested in the differences between our two soil types sites (Bulk Soil and Rhizosphere Soil) so we used it as a fixed effect.
 
 To control for the read counts/depths of the samples we used `Reads` as a fixed effect.
 This uses it as a continuous control variable.
@@ -33,6 +32,6 @@ Below is a list of examples on how to specify the usage of fixed effects.
 
 
 ::: {.callout-tip}
-The `maaslin3()` developers recommend combing 2 fixed effect columns into one for interactions rather than the `a:b` method.
-For example, you could use the column `site.media` as a main effect to see the interactions of `Site` and `Media` rather than using `site:media` in the formula.
+The `maaslin3()` developers recommend combining 2 fixed effect columns into one for interactions rather than the `a:b` method.
+For example, with our Durance river dataset you could combine the `Site` and `Media` columns into one called `site.media` and use it as a main effect to see the interactions of `Site` and `Media` rather than using `Site:Media` in the formula.
 :::

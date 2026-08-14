@@ -590,7 +590,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="images/read.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white 5px solid"></p>
 </figure>
 </div>
-<p>To view the significant results we need to first read in the file. In this case we’ll read it in as a <strong>tibble</strong> with <a href="https://cgr-liverpool.github.io/Tidyverse/readr/read.html"><code>readr::read_delim()</code></a> and then <a href="https://cgr-liverpool.github.io/Tidyverse/dplyr/glimpse.html">glimpse</a> it.</p>
+<p>To view the significant results we need to first read in the file. In this case we’ll read it in as a <strong>tibble</strong> with <a href="https://neof-workshops.github.io/Tidyverse/readr/read.html"><code>readr::read_delim()</code></a> and then <a href="https://neof-workshops.github.io/Tidyverse/dplyr/glimpse.html">glimpse</a> it.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sig_res_tbl <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_delim</span>(</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">file=</span><span class="st">"./genus_output/significant_results.tsv"</span>,</span>

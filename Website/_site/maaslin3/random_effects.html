@@ -68,6 +68,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../maaslin3/median_comparison.html" rel="next">
 <link href="../maaslin3/fixed_effects.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
@@ -486,6 +487,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Random effects</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/median_comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Median comparisons</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Text output</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/html_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Significant results table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/metrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metrics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/text_task.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Text tasks</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -526,7 +562,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Common spatial groupings that create non-independence (e.g.&nbsp;samples from the same people or country)</li>
 <li>Temporal groupings that also create non-independence (e.g.&nbsp;samples collected from different places in the same year)</li>
 </ul>
-<p>In our analysis we are using the <code>SubjectID</code> variable as a random effect.</p>
+<p>In our analysis we are using the <code>Plate</code> variable as a random effect.</p>
 <section id="random-effect-specifications" class="level2">
 <h2 class="anchored" data-anchor-id="random-effect-specifications">Random effect specifications</h2>
 <p>Random effects are always included by writing elements in <code>()</code> with a <code>|</code>. On the left of the <code>|</code> you specify the random effect/s. On the right of the <code>|</code> you specify the grouping factor/s on which the random effects depend on, these must be categorical.</p>
@@ -554,7 +590,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Expands to <code>(0+a|s) + (1|s)</code></li>
 </ul></li>
 </ul>
-<p>You are most likely to only use grouping factors (<code>(1|grouping_effect)</code>). In our formula our random effect specification is <code>(1|SubjectID)</code> so we are using <code>SubjectID</code> as a grouping effect.</p>
+<p>You are most likely to only use grouping factors (<code>(1|grouping_effect)</code>). In our formula our random effect specification is <code>(1|Plate)</code> so we are using <code>Plate</code> as a grouping effect.</p>
 </section>
 <section id="small-random-effect" class="level2">
 <h2 class="anchored" data-anchor-id="small-random-effect">Small random effect</h2>
@@ -594,18 +630,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Reminder: This only benefits prevalence testing as abundance testing is not greatly affected by small random effects</li>
 </ul></li>
 </ul>
-<p>Therefore, it is always good to check the number of observations per group of your random effects. The below code uses the functions <a href="https://cgr-liverpool.github.io/Tidyverse/dplyr/count.html">dplyr::count()</a> to show this for our <code>Media</code> variable as an example.</p>
+<p>Therefore, it is always good to check the number of observations per group of your random effects. The below code uses the functions <a href="https://cgr-liverpool.github.io/Tidyverse/dplyr/count.html">dplyr::count()</a> to show this for our <code>Plate</code> variable as an example.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Number of observations for each SubjectID grouping</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>metadata <span class="sc">|&gt;</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">count</span>(Media)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Number of observations for each plate</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>metadf <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">count</span>(Plate)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>In this case all our observations have &gt;=4 so our average will also be &gt;= 4. Using <code>small_random_effects=FALSE</code> in our <code>maaslin3()</code> analysis would be the correct choice. You should check this before running <code>maaslin3()</code> in your own analysis when using random effects.</p>
 <p>It is not always easy to determine whether the average is &gt;=4 by viewing them all. You can quickly calculate the average with the below code.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Average number of observations per group</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>metadata <span class="sc">|&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">count</span>(Media) <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>metadf <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">count</span>(Plate) <span class="sc">|&gt;</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">pull</span>(n) <span class="sc">|&gt;</span> <span class="fu">mean</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
@@ -1446,6 +1482,9 @@ window.onload = function() {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../maaslin3/median_comparison.html" class="pagination-link" aria-label="Median comparisons">
+        <span class="nav-page-text">Median comparisons</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

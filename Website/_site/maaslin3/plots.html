@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>maaslin3_function – Advanced R community analysis</title>
+<title>plots – Advanced R community analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -68,8 +68,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../maaslin3/lme4.html" rel="next">
-<link href="../maaslin3/read_counts.html" rel="prev">
+<link href="../maaslin3/replot.html" rel="next">
+<link href="../maaslin3/text_task.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -465,7 +465,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../maaslin3/maaslin3_function.html" class="sidebar-item-text sidebar-link active">
+  <a href="../maaslin3/maaslin3_function.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">MaAsLin3 function</span></a>
   </div>
 </li>
@@ -524,6 +524,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text">Output plots</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/plots.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/replot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Replot</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -534,11 +557,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#maaslin3-function" id="toc-maaslin3-function" class="nav-link active" data-scroll-target="#maaslin3-function">MaAsLin3 function</a>
+  <li><a href="#plots" id="toc-plots" class="nav-link active" data-scroll-target="#plots">Plots</a>
   <ul class="collapse">
   <li><a href="#notebook-setup" id="toc-notebook-setup" class="nav-link" data-scroll-target="#notebook-setup">Notebook setup</a></li>
-  <li><a href="#maaslin3-function-1" id="toc-maaslin3-function-1" class="nav-link" data-scroll-target="#maaslin3-function-1">MaAsLin3 function</a></li>
-  <li><a href="#input-output-parameters" id="toc-input-output-parameters" class="nav-link" data-scroll-target="#input-output-parameters">Input &amp; output parameters</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -550,21 +571,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="maaslin3-function" class="level1">
-<h1>MaAsLin3 function</h1>
+<section id="plots" class="level1">
+<h1>Plots</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/mixtape.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; background:white; border-radius:5px; border: white solid 5px"></p>
+<p><img src="images/plotting.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; background:white; border-radius:5px; border: white solid 5px"></p>
 </figure>
 </div>
-<p>For our analysis we will immediately run the <code>maaslin3()</code> function. It takes quite a while to run so we’ll use pre-made results instead of running the code.</p>
-<p>Additionally, this section contains a lot of theory on the following:</p>
+<p>Many plots of significant associations are created by <code>maaslin3()</code> . The types of plots can be grouped into 3 main types:</p>
+<ol type="1">
+<li>The summary plot
 <ul>
-<li><a href="../maaslin3/lme4.html">lme4 specification</a>: The formula containing the fixed and random effects</li>
-<li><a href="../maaslin3/fixed_effects.html">Fixed effects</a>: The effects your hypothesis are interested in</li>
-<li><a href="../maaslin3/random_effects.html">Random effects</a>: Effects your hypothesis is not necessarily interested in but you want to control for</li>
-<li><a href="../maaslin3/median_comparison.html">Median comparison</a>: When to and when not to use median comparison in association testing</li>
-</ul>
+<li>This shows abundance and prevalence modelling information for the top 25 features</li>
+</ul></li>
+<li>Linear plots
+<ul>
+<li>These are for the abundance based linear modelling</li>
+<li>Box plots are produced for categorical fixed effects</li>
+<li>Scatter plots with a linear model line are produced for continuous fixed effects</li>
+</ul></li>
+<li>Logistics plots
+<ul>
+<li>These are for the prevalence based logistic modelling</li>
+<li>Grids are produced for categorical fixed effects</li>
+<li>Box plots are produced for continuous fixed effects</li>
+</ul></li>
+</ol>
+<p>In your own analysis you would start by looking at the summary plot. However, we will look at the other plots beforehand to get a better understanding of the coefficient values so we can better interpret the summary plot.</p>
 <section id="notebook-setup" class="level2">
 <h2 class="anchored" data-anchor-id="notebook-setup">Notebook setup</h2>
 <div class="quarto-figure quarto-figure-center">
@@ -572,138 +605,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="images/jupiter.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white solid 5px"></p>
 </figure>
 </div>
-<p>Create and open a new jupyter notebook called “2-MaAsLin3.ipynb”.</p>
+<p>We’ll create one notebook for our plot investigations, meaning it’ll be quite large.</p>
+<p>Save then close and halt your “3-Text_output.ipynb” notebook.</p>
+<p>Create and open a new jupyter notebook called “4-Plots.ipynb”.</p>
 <p>Create a markdown cell at the top with:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2-MaAsLin3</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Libraries</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4-Plots</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Libraries &amp; data</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>In a code cell load the required libraries and data.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Libraries</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Library</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"maaslin3"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Load data</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"genus_taxa_df.RData"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"metadf.RData"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"IRdisplay"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Data</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"genus_output/significant_results.RData"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"metadata.RData"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Check the top of our metadata to see the variable names to be used for <code>masslin3()</code> below.</p>
-</section>
-<section id="maaslin3-function-1" class="level2">
-<h2 class="anchored" data-anchor-id="maaslin3-function-1">MaAsLin3 function</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/cassette_player.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px"></p>
-</figure>
-</div>
-<p>Run the MaAsLin3 analysis.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Set a random seed</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">419</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#MaAsLin3</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>fit_out <span class="ot">&lt;-</span> <span class="fu">maaslin3</span>(<span class="at">input_data=</span>taxa_df,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">input_metadata=</span>metadf,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                    <span class="at">output=</span><span class="st">'genus_output'</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                    <span class="at">formula=</span><span class="st">'~ Soil + Reads + (1|Plate)'</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                    <span class="at">normalization=</span><span class="st">'TSS'</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                    <span class="at">transform=</span><span class="st">'LOG'</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                    <span class="at">augment=</span><span class="cn">TRUE</span>,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">standardize=</span><span class="cn">TRUE</span>,</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                    <span class="at">max_significance=</span><span class="fl">0.1</span>,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                    <span class="at">median_comparison_abundance=</span><span class="cn">TRUE</span>,</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                    <span class="at">median_comparison_prevalence=</span><span class="cn">FALSE</span>,</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                    <span class="at">small_random_effects=</span><span class="cn">FALSE</span>,</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                    <span class="at">max_pngs=</span><span class="dv">250</span>,</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                    <span class="at">cores=</span><span class="dv">1</span>)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#Set random seed back to null</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The above command will take a while. As it runs please read the below and other pages in this section.</p>
-</div>
-</div>
-</section>
-<section id="input-output-parameters" class="level2">
-<h2 class="anchored" data-anchor-id="input-output-parameters">Input &amp; output parameters</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/parameter_ibm_blue.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100px; background:white; border-radius:5px; border: white solid 5px"></p>
-</figure>
-</div>
-<p>The parameters we have used are described below.</p>
-<ul>
-<li><code>input_data</code>: Our formatted count table containing abundance values of species against samples.</li>
-<li><code>input_metadata</code>: Our formatted metadata table for our samples</li>
-<li><code>output</code>: Name of output directory
-<ul>
-<li>This will be created by the function</li>
-</ul></li>
-<li><code>formula</code>: The comparison formula in lme4 specification
-<ul>
-<li>Details in <a href="../maaslin3/lme4.html">lme4 formula page</a></li>
-</ul></li>
-<li><code>normalization</code>: Normalisation of the counts before transformation and analysis. Options include:
-<ul>
-<li><code>'TTS'</code> (default): Total Sum Scaling
-<ul>
-<li>Converts the counts to fractional relative abundance values so total count of each sample = 1</li>
-</ul></li>
-<li><code>'CLR'</code>: Centred Log Ratio</li>
-<li><code>'NONE'</code>: No normalisation</li>
-</ul></li>
-<li><code>transform</code>: Transformation of feature counts after normalisation but before analysis
-<ul>
-<li>Allows MaAsLin3 and us to see the log difference of features between comparisons/groups</li>
-<li>Options include:
-<ul>
-<li><code>LOG</code>: Base 2 log transformation (recommended)
-<ul>
-<li>Our TSS normalised values will all become -ve values or 0 (log(1, base=2) = 0, log(0.1, base=2)=-3.321928)</li>
-</ul></li>
-<li><code>PLOG</code>: Pseudo-log with a pseudo-count of half the dataset’s minimum non-zero abundance replacing zeroes
-<ul>
-<li>Suggested for metabolomics data</li>
-</ul></li>
-<li><code>NONE</code></li>
-</ul></li>
-</ul></li>
-<li><code>augment</code>: Default is TRUE
-<ul>
-<li>Avoids linear separability and is almost always recommended</li>
-</ul></li>
-<li><code>standardise</code>: When <code>TRUE</code> it applies z-scores to continuous metadata variables so they are on the same scale
-<ul>
-<li>The default is <code>TRUE</code> and is recommended</li>
-<li>Allows comparison of coefficients across metadata variables</li>
-</ul></li>
-<li><code>max_significance</code>: FDR corrected q-value threshold for significance
-<ul>
-<li>This will determine what associations are written as signifiant and what plots are created</li>
-<li>Associations with an individual or joint q-value less than the threshold will be included in the <a href="../maaslin3/html_table.html">significant results out</a></li>
-<li>Only associations with an individual q-value lower than the threshold will be <a href="..\maaslin3/plots.qmd">plotted</a></li>
-</ul></li>
-<li><code>median_comparison_abundance</code> &amp; <code>median_comparison_prevalence</code>: Whether to compare coefficients against median coefficient (TRUE) or against 0
-<ul>
-<li>For normal taxa abundance data set <code>median_comparison_abundance = TRUE</code> and <code>median_comparison_prevalence = FALSE</code></li>
-<li>More info, including when to use <code>TRUE</code> and <code>FALSE</code>, in <a href="../maaslin3/median_comparison.html">Median comparison page</a></li>
-</ul></li>
-<li><code>small_random_effect</code>: Replace random effects with fixed effects in logistic prevalence model
-<ul>
-<li>default <code>FALSE</code></li>
-<li>Use <code>TRUE</code> to handle low number of observations per group</li>
-<li>More information in the <a href="../maaslin3/random_effects.html#small-random-effect">Random effect page</a></li>
-</ul></li>
-</ul>
-<p>Full information here: <a href="https://github.com/biobakery/Maaslin3#analysis-options">MaAslin3 analysis options</a></p>
 
 
 </section>
@@ -1537,13 +1456,13 @@ window.onload = function() {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../maaslin3/read_counts.html" class="pagination-link" aria-label="Read counts">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Read counts</span>
+      <a href="../maaslin3/text_task.html" class="pagination-link" aria-label="Text tasks">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Text tasks</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../maaslin3/lme4.html" class="pagination-link" aria-label="lme4 formula">
-        <span class="nav-page-text">lme4 formula</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../maaslin3/replot.html" class="pagination-link" aria-label="Replot">
+        <span class="nav-page-text">Replot</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

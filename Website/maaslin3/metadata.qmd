@@ -22,14 +22,9 @@ metadf <- genus_pseq |>
 metadf |> dplyr::slice(1:5)
 ```
 
-Capitalise columns we'll use as fixed effects. 
-This is to make the MaAsLin3 output look nicer.
-
-```{r,eval=FALSE}
-#Capitalise column names for MaAsLin3 output
-metadf <- metadf |>
-    dplyr::rename(Site=site, Media=media)
-```
+::: {.callout-tip title="Tidyverse functions used above"}
+- [`dplyr::slice()`](https://neof-workshops.github.io/Tidyverse/dplyr/slice.html)
+:::
 
 ## Fixed effects and random effects
 ![](images/dice_three.png){style="width:150px; background:white; border-radius:5px" fig-align="center"}
@@ -43,7 +38,7 @@ These are:
         - The first level is the reference group
         - All other levels are compared to the reference in pairwise fashion (i.e. the query)
         - For example healthy vs disease states
-    - We will use `Site` and `Media` as categorical fixed effects
+    - We will use `Soil` as a categorical fixed effect (you can have more than one)
 - __Continuous fixed effects__
     - This could be a continuous variable that is related to your hypothesis and requires evaluation (e.g. dosage)
     - Or it could be a continuous control variable (e.g. age)
@@ -52,7 +47,7 @@ These are:
     - Categorical variables to include that you are not necessarily interested in evaluating
     - These don't need to be factors since a reference group is not required
     - An example includes experimental blocks, different sequencing runs, or subjects
-    - We won't use any random effects in our analysis
+    - We will use `Plate` (plate used for sequencing) as a random effect
 
 More theory and considerations are included in the later pages:
 
@@ -62,49 +57,48 @@ More theory and considerations are included in the later pages:
 ## Factorisation
 ![](images/factor_key.png){style="width:150px; background:white; border-radius:5px" fig-align="center"}
 
-We are going to use `Site` and `Media` as categorical fixed effects.
-Therefore, we need to set the  order of their factor levels.
+We are going to use `Soil` as a categorical fixed effect.
+Therefore, we need to set the  order of its factor levels.
 
 ::: {.callout-note collapse="true" title="Factors"}
 A factor is R’s way of storing categorical data. 
 It tells the model to compare categories, and lets us set which category is used as the reference level.
 
-For more info please see: [R primer for omics explanation of factors](https://cgr-liverpool.github.io/R_primer_f81b92/course/14-Plots_scatterplot_and_box_plots.html#factors)
+For more info please see: [R primer for omics explanation of factors](https://neof-workshops.github.io/R_j4c0xh/13-Plots_scatterplot_and_box_plots.html#factors)
 :::
 
-Before factor ordering, let's see what groupings are in the two variables.
+Before factor ordering, let's see what groupings are in the `Soil` variable.
 
 ```{r, eval=FALSE}
-#Check unique values of site and media
-metadf |> dplyr::pull(site) |> unique()
-metadf |> dplyr::pull(media) |> unique()
+#Check unique values of Soil
+metadf |> dplyr::pull(Soil) |> unique()
 ```
 
-We have 3 for `Site`.
-Let's use `UD` as the reference group and `MD` and `LD` as the queries.
-We've chosen `UD` as it is the site with the lowest anthropisation.
+::: {.callout-tip title="Tidyverse functions used above"}
+- [`dplyr::pull()`](https://neof-workshops.github.io/Tidyverse/dplyr/pull.html)
+:::
 
-We have four groups for `Media`.
-We'll use `ENV` as the reference so all media groups are compared to it.
+We have 2 for `Soil`.
+Let's use `Bulk Soil` as the reference group and `Rhizosphere Soil` as the query.
 
-Type and run the below code to order tje factor levels of the two metadata variables.
-The code uses some piping and the [`dplyr::mutate()` function](https://cgr-liverpool.github.io/Tidyverse/dplyr/mutate.html).
+Type and run the below code to order the factor levels of the two metadata variables.
+The code uses some piping and the [`dplyr::mutate()` function](https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html).
 
 ```{r, eval=FALSE}
 #Factorise to order our categorical fixed effects
 metadf <- metadf |>
-    #Factorise site with UD as the reference level
-    dplyr::mutate(site=factor(site,
-                              levels = c("UD","MD","LD"))) |>
-    #Factorise media with ENV as the reference level
-    dplyr::mutate(media=factor(media,
-                               levels = c("ENV","CVP","KBC","TSA")))
+    #Factorise Soil with Bulk Soil as the reference level
+    dplyr::mutate(Soil=factor(Soil,
+                              levels = c("Bulk Soil","Rhizosphere Soil")))
 ```
 
+::: {.callout-tip title="Tidyverse functions used above"}
+- [`dplyr::mutate()`](https://neof-workshops.github.io/Tidyverse/dplyr/mutate.html)
+:::
 
 ::: {.callout-note}
 For the purposes of setting a reference it only matters which group is set as the first group.
-The order of the subsequent levels does not matter for the MaAsLin3 analysis we will carry out.
+If you have more than one query group their level order does not matter for the MaAsLin3 analysis we will carry out.
 :::
 
 Great! Next we'll add read counts/depth to the metadata table.

@@ -33,6 +33,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../maaslin3/random_effects.html" rel="next">
 <link href="../maaslin3/lme4.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
@@ -445,6 +446,47 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Fixed effects</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/random_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Random effects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/median_comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Median comparisons</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Text output</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/html_table.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Significant results table</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/metrics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metrics</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/text_task.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Text tasks</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -480,7 +522,7 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 <p>Fixed effects are any term related to your hypothesis that requires evaluation and any continuous control variables.</p>
-<p>We are interested in the differences of our three sites (UD, MD, and LD) so we used it as a fixed effect. We are also interested in the difference of the media compared ot the environmental sample so we used <code>Media</code> as a fixed effect.</p>
+<p>We are interested in the differences between our two soil types sites (Bulk Soil and Rhizosphere Soil) so we used it as a fixed effect.</p>
 <p>To control for the read counts/depths of the samples we used <code>Reads</code> as a fixed effect. This uses it as a continuous control variable.</p>
 <section id="main-effect-and-interactions" class="level2">
 <h2 class="anchored" data-anchor-id="main-effect-and-interactions">Main effect and interactions</h2>
@@ -510,7 +552,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The <code>maaslin3()</code> developers recommend combing 2 fixed effect columns into one for interactions rather than the <code>a:b</code> method. For example you could use the column <code>site.media</code> as a main effect rather than using <code>site:media</code> in the formula.</p>
+<p>The <code>maaslin3()</code> developers recommend combining 2 fixed effect columns into one for interactions rather than the <code>a:b</code> method. For example, with our Durance river dataset you could combine the <code>Site</code> and <code>Media</code> columns into one called <code>site.media</code> and use it as a main effect to see the interactions of <code>Site</code> and <code>Media</code> rather than using <code>Site:Media</code> in the formula.</p>
 </div>
 </div>
 
@@ -1351,6 +1393,9 @@ window.onload = function() {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../maaslin3/random_effects.html" class="pagination-link" aria-label="Random effects">
+        <span class="nav-page-text">Random effects</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

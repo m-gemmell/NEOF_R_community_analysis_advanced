@@ -13,6 +13,7 @@ When using abundance values (not quantitative abundance values) the read numbers
 We can calculate read depths from our count table with `rowSums()`.
 
 ```{r, eval=FALSE}
+#Use abundance/read count of taxa_table as read count value
 #Calculate read count of each sample
 read_counts <- taxa_df |> rowSums()
 read_counts
@@ -20,14 +21,14 @@ read_counts
 
 To add these values to our metadata we can create a `data.frame` containing 2 columns:
 
-- `sample.name`: Name of samples matching `sample.name` column in `metadf`
+- `Sample`: Name of samples matching `Sample` column in `metadf`
 - `Reads`: The read depth values that we'll add to `metadf`
 
 ```{r,eval=FALSE}
 #Convert to data.frame
 read_df <- data.frame(names(read_counts), unname(read_counts))
 #Change column names
-colnames(read_df) <- c("sample.name", "Reads")
+colnames(read_df) <- c("Sample", "Reads")
 #Check top of df
 read_df |> head()
 ```
@@ -38,13 +39,13 @@ To add the depths to our `metadf` `data.frame` we can use the function [`dplyr::
 This function joins 2 `data.frames`/`tibbles` ensuring the rows are assigned correctly by a shared column.
 It is similar to VLOOKUP in excel.
 
-In our case this is the column `sample.name`, ensuring that each sample is assigned the correct read depth value.
+In our case this is the column `Sample`, ensuring that each sample is assigned the correct read depth value.
 
 ```{r,eval=FALSE}
 #Add read count values to metadf with dplyr::inner_join()
 #Similar to excel's vlookup
 metadf <- metadf |>
-    dplyr::inner_join(read_df, by="sample.name")
+    dplyr::inner_join(read_df, by="Sample")
 #Check top of df
 metadf |> head()
 ```
@@ -54,10 +55,9 @@ These are required for our `metadf` so let's add them back.
 
 ```{r,eval=FALSE}
 #Add row names back (removed from inner_join)
-row.names(metadf) <- metadf$sample.name
+row.names(metadf) <- metadf$Sample
 #Check top of df
 metadf |> head()
-
 ```
 
 ## Save R objects
@@ -69,6 +69,7 @@ Save your `taxa_df` and `metadf` objects as files so you can load them into the 
 ```{r,eval=FALSE}
 save(taxa_df,file="genus_taxa_df.RData")
 save(metadf,file="metadf.RData")
+
 ```
 
 You can now save then close and halt the notebook.

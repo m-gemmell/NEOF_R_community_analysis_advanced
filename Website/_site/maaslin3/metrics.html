@@ -530,7 +530,7 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="images/magnifying_glass_ibm_blue.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white 5px solid"></p>
 </figure>
 </div>
-<p>There is a lot of information in this file as can be seen in the number of metrics below. Rather than interrogate the file you can read through the list and then we’ll carry onto the plots.</p>
+<p>There is a lot of information in this file as can be seen in the number of metrics below.</p>
 <p>Although the metrics are important they do not give a full picture of the results. Rather it is better to use the metrics and plots together.</p>
 </section>
 <section id="columns" class="level2">
@@ -560,19 +560,19 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>coef:</strong> The fit coefficient
 <ul>
 <li>Abundance models: A one-unit change in metadata variable corresponds to 2<sup>coef</sup> fold change in the relative abundance of the feature</li>
-<li>Prevalence models: A one-unit change in the metadatum variable corresponds to a coef change in the <a href="..\background/logistic_model.qmd#log-oddslogit">log-odds/logit</a> of a feature being present</li>
-<li>This is covered more in the <a href="..\relative/plots.qmd">output plot part</a></li>
+<li>Prevalence models: A one-unit change in the metadatum variable corresponds to a coef change in the <a href="../maaslin3/logistic_model.html#log-oddslogit">log-odds/logit</a> of a feature being present</li>
+<li>This is covered more in the <a href="..\maaslin3/plots.qmd">output plot part</a></li>
 </ul></li>
 <li><strong>null_hypothesis:</strong> The value of the null hypothesis against which the coefficient is tested
 <ul>
 <li>This value is zero when median comparison is off</li>
-<li>This value is the median value when median comparison is on, <a href="..\relative/median_comparison.qmd">see median comparison</a></li>
+<li>This value is the median value when median comparison is on, <a href="../maaslin3/median_comparison.html">see median comparison</a></li>
 <li>In our results abundance model rows are median and prevalence model rows are 0</li>
 </ul></li>
 <li><strong>pval_individual:</strong> The p-value of the individual association</li>
 <li><strong>qval_individual:</strong> The false discovery rate (FDR) corrected q-value of the individual association
 <ul>
-<li>FDR correction is performed over all p-values without errors in the abundance and prevalence modeling together</li>
+<li>FDR correction is performed over all p-values without errors in the abundance and prevalence modelling together</li>
 </ul></li>
 <li><strong>pval_joint:</strong> p-value of the joint prevalence and abundance association
 <ul>
@@ -630,7 +630,7 @@ Note
 </ul></li>
 </ol>
 <p>Generally this is only a concern if the significant p-value is very near significance (i.e.&nbsp;a bit lower than 0.1). If this is the case and the joint p-value is not significant (&gt;=0.1) we should be sceptical of the association.</p>
-<p>If both the individual p/q-values of the association (abundance &amp; prevalence) are signifcant we can generally ignore the joint p/q-value.</p>
+<p>If both the individual p/q-values of the association (abundance &amp; prevalence) are significant we can generally ignore the joint p/q-value.</p>
 <p>For this and your future analysis we recommend using the q-values rather than p-values.</p>
 
 

@@ -536,7 +536,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#dataset" id="toc-dataset" class="nav-link active" data-scroll-target="#dataset">Dataset</a>
   <ul class="collapse">
-  <li><a href="#durance-river-data" id="toc-durance-river-data" class="nav-link" data-scroll-target="#durance-river-data">Durance river data</a></li>
+  <li><a href="#rhizosphere-soil" id="toc-rhizosphere-soil" class="nav-link" data-scroll-target="#rhizosphere-soil">Rhizosphere soil</a></li>
   <li><a href="#jupyter-notebook" id="toc-jupyter-notebook" class="nav-link" data-scroll-target="#jupyter-notebook">Jupyter notebook</a></li>
   <li><a href="#workflow" id="toc-workflow" class="nav-link" data-scroll-target="#workflow">Workflow</a></li>
   </ul></li>
@@ -558,20 +558,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 <p>This section will introduce you to our dataset and how to prepare it for <code>MaAsLin3</code> from a <code>phyloseq</code> object.</p>
-<p>Dataset changed to: https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2025.1608399/full#h1</p>
-<section id="durance-river-data" class="level2">
-<h2 class="anchored" data-anchor-id="durance-river-data">Durance river data</h2>
+<section id="rhizosphere-soil" class="level2">
+<h2 class="anchored" data-anchor-id="rhizosphere-soil">Rhizosphere soil</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/france_ibm.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white"></p>
+<p><img src="images/wyoming_flower.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width: 300px; background-color: white;"></p>
 </figure>
 </div>
-<p>We will use the same dataset from the Durance river as the <a href="https://neof-workshops.github.io/R_community_whqkt8/Course/02-Dataset_and_workflow.html#dataset">R community analysis workshop</a>.</p>
-<p>We will use MaAsLin3 to determine the differential abundance and prevalence of genera between the sites and the media. These groupings are:</p>
+<p>We will use a new dataset from:</p>
+<p><a href="https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2025.1608399/full#h1">A comparison of 16S rRNA-gene and 16S rRNA-transcript derived microbial communities in bulk and rhizosphere soils</a>.</p>
+<p>This study aimed to compare the microbial communities of two different types of soil of a Wyoming native plant <a href="https://en.wikipedia.org/wiki/Boechera_stricta"><em>Boechera stricta</em></a>. These were:</p>
 <ul>
-<li><code>site</code>: UD (Upper Durance), MD (Middle Durance), and LD (Lower Durance)</li>
-<li><code>media</code>: ENV (Environmental samples, no media), CVP, KBC, and TSA</li>
+<li><strong>Rhizosphere soil:</strong> The soil penetrated by the roots</li>
+<li><strong>Bulk soil:</strong> The soil not penetrated by the roots</li>
 </ul>
+<p>We will use MaAsLin3 to determine the differential abundance and prevalence of bacterial genera between the two soils.</p>
 </section>
 <section id="jupyter-notebook" class="level2">
 <h2 class="anchored" data-anchor-id="jupyter-notebook">Jupyter notebook</h2>
@@ -606,7 +607,7 @@ Important
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"microbiome"</span>)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Data</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"/pub14/tea/nsc206/NEOF/R_community/data/phyloseq.RData"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"/pub14/tea/nsc206/NEOF/R_community_advanced/rhizo_pseq.RData"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Please create other useful markdown cells in this and future notebooks.</p>
 </section>
@@ -617,7 +618,11 @@ Important
 <p><img src="images/workflow_ibm.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white"></p>
 </figure>
 </div>
-<p>We need 2 <code>data.frames</code> for MaAsLin3: genus taxa counts, and metadata.</p>
+<p>We need 2 <code>data.frames</code> for MaAsLin3:</p>
+<ul>
+<li>genus taxa counts</li>
+<li>metadata</li>
+</ul>
 <p>We’ll create these in our <code>jupyter</code> notebook with four main stages:</p>
 <ol type="1">
 <li><a href="../maaslin3/genus_aggregation.html">Genus aggregation</a>: Creating a genus count <code>phyloseq</code> from our ASV <code>phyloseq</code></li>

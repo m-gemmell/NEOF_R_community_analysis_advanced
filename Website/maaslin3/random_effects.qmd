@@ -8,7 +8,7 @@ These include:
 - Common spatial groupings that create non-independence (e.g. samples from the same people or country)
 - Temporal groupings that also create non-independence (e.g. samples collected from different places in the same year)
 
-In our analysis we are using the `SubjectID` variable as a random effect.
+In our analysis we are using the `Plate` variable as a random effect.
 
 ## Random effect specifications
 
@@ -33,7 +33,7 @@ Examples include:
     - Expands to `(0+a|s) + (1|s)`
 
 You are most likely to only use grouping factors (`(1|grouping_effect)`).
-In our formula our random effect specification is `(1|SubjectID)` so we are using `SubjectID` as a grouping effect.
+In our formula our random effect specification is `(1|Plate)` so we are using `Plate` as a grouping effect.
 
 ## Small random effect
 ![](images/small.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
@@ -63,12 +63,12 @@ Recommendations:
     - Reminder: This only benefits prevalence testing as abundance testing is not greatly affected by small random effects
 
 Therefore, it is always good to check the number of observations per group of your random effects.
-The below code uses the functions [dplyr::count()](https://cgr-liverpool.github.io/Tidyverse/dplyr/count.html) to show this for our `Media` variable as an example.
+The below code uses the functions [dplyr::count()](https://cgr-liverpool.github.io/Tidyverse/dplyr/count.html) to show this for our `Plate` variable as an example.
 
 ```{r, eval=FALSE}
-#Number of observations for each SubjectID grouping
-metadata |>
-    dplyr::count(Media)
+#Number of observations for each plate
+metadf |>
+    dplyr::count(Plate)
 ```
 
 In this case all our observations have >=4 so our average will also be >= 4.
@@ -80,7 +80,7 @@ You can quickly calculate the average with the below code.
 
 ```{r, eval=FALSE}
 #Average number of observations per group
-metadata |>
-    dplyr::count(Media) |>
+metadf |>
+    dplyr::count(Plate) |>
     dplyr::pull(n) |> mean()
 ```
