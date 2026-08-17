@@ -550,5 +550,17 @@
   },
   "maaslin3/replot.qmd": {
     "replot.html": "f65f1b84"
+  },
+  "maaslin3/categorical_linear_plots.qmd": {
+    "categorical_linear_plots.html": "aba0a3e6"
+  },
+  "maaslin3/categorical_logistic_plots.qmd": {
+    "categorical_logistic_plots.html": "a591f85d"
+  },
+  "maaslin3/continuous_linear_plots.qmd": {
+    "continuous_linear_plots.html": "f0990fba"
+  },
+  "maaslin3/continuous_logistic_plots.qmd": {
+    "continuous_logistic_plots.html": "2dafcf06"
   }
 }

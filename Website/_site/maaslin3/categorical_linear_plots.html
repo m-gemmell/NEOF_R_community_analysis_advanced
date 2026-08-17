@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>replot – Advanced R community analysis</title>
+<title>categorical_linear_plots – Advanced R community analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -68,7 +68,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../maaslin3/plots.html" rel="prev">
+<link href="../maaslin3/continuous_linear_plots.html" rel="next">
+<link href="../maaslin3/replot.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -540,10 +541,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../maaslin3/replot.html" class="sidebar-item-text sidebar-link active">
+  <a href="../maaslin3/replot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Replot</span></a>
   </div>
 </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear plots</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/categorical_linear_plots.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Categorical linear boxplots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/continuous_linear_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Continuous linear scatter plots</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Categorical plots</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/categorical_logistic_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Categorical logistic grid plots</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
       </ul>
   </li>
     </ul>
@@ -556,9 +597,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#replot" id="toc-replot" class="nav-link active" data-scroll-target="#replot">Replot</a>
+  <li><a href="#categorical-linear-boxplots" id="toc-categorical-linear-boxplots" class="nav-link active" data-scroll-target="#categorical-linear-boxplots">Categorical linear boxplots</a>
   <ul class="collapse">
-  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
+  <li><a href="#significant-results-table" id="toc-significant-results-table" class="nav-link" data-scroll-target="#significant-results-table">Significant results table</a></li>
+  <li><a href="#coefficient" id="toc-coefficient" class="nav-link" data-scroll-target="#coefficient">Coefficient</a></li>
+  <li><a href="#box-plot" id="toc-box-plot" class="nav-link" data-scroll-target="#box-plot">Box plot</a></li>
+  <li><a href="#tasks-and-mcqs" id="toc-tasks-and-mcqs" class="nav-link" data-scroll-target="#tasks-and-mcqs">Tasks and MCQs</a>
+  <ul class="collapse">
+  <li><a href="#task-1" id="toc-task-1" class="nav-link" data-scroll-target="#task-1">Task 1</a></li>
+  <li><a href="#task-2" id="toc-task-2" class="nav-link" data-scroll-target="#task-2">Task 2</a></li>
+  </ul></li>
+  <li><a href="#the-power-of-n" id="toc-the-power-of-n" class="nav-link" data-scroll-target="#the-power-of-n">The power of n=</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -570,77 +619,314 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="replot" class="level1">
-<h1>Replot</h1>
+<section id="categorical-linear-boxplots" class="level1">
+<h1>Categorical linear boxplots</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/plotter.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; background:white; border-radius:5px; border: white solid 5px"></p>
+<p><img src="images/boxplot_vert.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; background:white; border-radius:5px; border: white solid 5px"></p>
 </figure>
 </div>
-<p>When we ran <code>maaslin3()</code> it created 250 plot files as we set <code>max_pngs = 250</code>. Unfortunately this means that some of the significant associations we want to interrogate do not have plots.</p>
-<p>Fortunately rather than rerunning the <code>maaslin3()</code> function, which can take a long time, we can run the function <code>maaslin_plot_results_from_output()</code>.</p>
-<p>Run the below code to recreate the plots whilst making more by setting <code>max_pngs=</code> to 1000.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#MaAsLin3 replot</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>maaslin3<span class="sc">::</span><span class="fu">maaslin_plot_results_from_output</span>(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">output =</span> <span class="st">'genus_output'</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">metadata =</span> metadf,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">normalization =</span> <span class="st">'TSS'</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">transform =</span> <span class="st">'LOG'</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Max value of qval_individual value for plot to be generated</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#qval_joint has no effect on this</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_significance =</span> <span class="fl">0.1</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_comparison_abundance =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_comparison_prevalence =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_pngs =</span> <span class="dv">1000</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Boxplots are used to visualise relative/linear modelling associations with categorical fixed effects. To learn about these we will look at the <code>Soil</code> association to interpret the metrics and plots. As a reminder we used Bulk Soil as the reference and Rhizosphere Soil as the query.</p>
+<p>In this page we will:</p>
+<ul>
+<li>Create a significant results table with only abundance model and <code>Soil</code> rows</li>
+<li>Explain the coefficient value</li>
+<li>View and display box plots</li>
+</ul>
+<section id="significant-results-table" class="level2">
+<h2 class="anchored" data-anchor-id="significant-results-table">Significant results table</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/table.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white solid 5px"></p>
+</figure>
 </div>
-<div class="callout callout-style-default callout-important callout-titled">
+<p>To start we’ll create a significant result tibble only containing <code>Soil</code> associations with the abundance model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Tibble of significant abundance associations for Soil</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sig_res_soil_abund_tbl <span class="ot">&lt;-</span> sig_res_tbl <span class="sc">|&gt;</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter to retain metadata Soil rows</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(metadata <span class="sc">==</span> <span class="st">"Soil"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter to retain abundance model rows</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(model <span class="sc">==</span> <span class="st">"abundance"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Glimpse the tibble</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>sig_res_soil_abund_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>With this tibble we’ll extract the top 5 associations by their q-values (<code>qval_individual</code>).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Top 5 lowest qval individual values species by abundance for Soil</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sig_res_soil_abund_tbl <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Extract the five rows with the smallest qval_individual values</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">slice_min</span>(qval_individual, <span class="at">n=</span><span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Select rows of interest</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">15</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>You’ll see the top association is:</p>
+<ul>
+<li>feature: <em>Leifsonia</em></li>
+<li>name: SoilRhizosphere Soil</li>
+<li>coefficient: 4.630948</li>
+</ul>
+<p>But what does the coefficient mean?</p>
+</section>
+<section id="coefficient" class="level2">
+<h2 class="anchored" data-anchor-id="coefficient">Coefficient</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/coef.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:250px; background:white; border-radius:5px; border: white solid 5px"></p>
+</figure>
+</div>
+<p>The coefficient value of abundance modelling with categorical data represents the fold change in relative abundance from the <strong>reference group</strong> to the <strong>query group</strong>. The MaAsLin3 manual’s description is: “a one-unit change in the metadatum variable corresponds to a 2<sup>coef</sup> fold change in the relative abundance of the feature.”</p>
+<p>In our data the coefficient of <em>Leifsonia</em> for Rhizosphere Soil (query) is 4.630948. This indicates the relative abundance of the feature is &gt;16 times larger in Rhizosphere SOil (query) samples compared to Bulk Soil (reference) samples.</p>
+<p>In the above we say &gt;16 times as 2<sup>4</sup> is 16. The actual value of <strong>2^4.630948</strong> is <strong>24.77732</strong>.</p>
+<p>Below is a table of 2 to the power of:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>2<sup>0</sup></th>
+<th>2<sup>1</sup></th>
+<th>2<sup>2</sup></th>
+<th>2<sup>3</sup></th>
+<th>2<sup>4</sup></th>
+<th>2<sup>5</sup></th>
+<th>2<sup>6</sup></th>
+<th>2<sup>7</sup></th>
+<th>2<sup>8</sup></th>
+<th>2<sup>9</sup></th>
+<th>2<sup>10</sup></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>8</td>
+<td>16</td>
+<td>32</td>
+<td>64</td>
+<td>128</td>
+<td>256</td>
+<td>512</td>
+<td>1024</td>
+</tr>
+</tbody>
+</table>
+<p>If the value is <strong>negative</strong> it indicates the relative abundance of the feature is 2<sup>coef</sup> times less in the query compared to the reference.</p>
+</section>
+<section id="box-plot" class="level2">
+<h2 class="anchored" data-anchor-id="box-plot">Box plot</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/boxplot_vert.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white solid 5px"></p>
+</figure>
+</div>
+<p>With an understanding of the coefficient value we’ll now look at the boxplot for the <code>Rhizosphere Soil</code> association of <em>Leifsonia</em>.</p>
+<p>You can open it in the jupyter file explorer. Its path is <code>./genus_output/figures/association_plots/Soil/linear/Soil_Leifsonia_linear.png</code>. The breakdown of this path is:</p>
+<ul>
+<li><code>./</code>: Represents the work directory of your jupyter notebook</li>
+<li><code>genus_output/</code>: The output directory specified and created by <code>maaslin3()</code></li>
+<li><code>figures/</code>: The directory with all output figures</li>
+<li><code>association_plots/</code>: Contains directories of association figures
+<ul>
+<li>Each subdirectory is for each specified fixed effect (i.e.&nbsp;<code>Soil</code> and <code>Reads</code>)</li>
+</ul></li>
+<li><code>Soil</code>: Directory for <code>Soil</code> association figures containing 2 subdirectories
+<ul>
+<li><code>linear</code>: Contains linear/relative model figures</li>
+<li><code>logistic</code>: Contains logistic/prevalence model figures</li>
+</ul></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The above function will take a while (&gt;5 minutes).</p>
+<p>As a reminder plots are only created for significant associations.</p>
 </div>
 </div>
-<section id="parameters" class="level2">
-<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
+<p>If the figure is particularly interesting you can display it in your jupyter notebook.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plot for Leifsonia</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>IRdisplay<span class="sc">::</span><span class="fu">display_png</span>(<span class="at">file=</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"./genus_output/figures/association_plots/Soil/linear/Soil_Leifsonia_linear.png"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="dv">600</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>For convenience the plot is shown below:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/parameter_ibm_purple.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100px; background:white; border-radius:5px; border: white solid 5px"></p>
+<p><img src="images/Soil_Leifsonia_linear.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:400px"></p>
 </figure>
 </div>
-<p>Unfortunately when running <code>maaslin_plot_results_from_output()</code> we can’t copy the parameters from our <code>maaslin3()</code> function. But at the same time <code>maaslin_plot_results_from_output()</code> uses some of the same parameters as <code>maaslin3()</code> and we need to have these being identical to our previous <code>maaslin3()</code> function.</p>
-<p>Below are the parameters used above:</p>
+<p><br></p>
+<p>The features of the plot are:</p>
 <ul>
-<li><code>output</code>: This is the output directory of our <code>maaslin3()</code> function
+<li><strong>x-axis:</strong> The different categorical values of the fixed effect (Bulk Soil and Rhizosphere Soil).
 <ul>
-<li>Our replot function will uses its contents to recreate the plots</li>
-<li>The recreated and new plots will be placed in the relevant directories within this directory</li>
+<li>Shows the number of samples for each category (e.g.&nbsp;Bulk Soil has 26 samples)</li>
 </ul></li>
-<li><code>metadf</code>: The metadata table to be used for the plot generation
+<li><strong>y-axis:</strong> The abundance of the feature (<em>Leifsonia</em>)
 <ul>
-<li>We are using the same table as our <code>maaslin3()</code> function</li>
-<li>This can be an opportunity to rename variables and values (see: <a href="https://www.bioconductor.org/packages//release/bioc/vignettes/maaslin3/inst/doc/maaslin3_manual.html#replotting">MaAsLin3 manual on replotting</a>)</li>
+<li>These values are the log base 2 of the relative abundance values (total sum scaling)</li>
 </ul></li>
-<li><code>normalization</code>: Same as <code>maaslin3()</code></li>
-<li><code>transform</code>: Same as <code>maaslin3()</code></li>
-<li><code>max_significance = 0.1</code>: Same as <code>maaslin3()</code>
-<ul>
-<li>This indicates the <code>qval_individual</code> value of the features</li>
-</ul></li>
-<li><code>median_comparison_abundance</code>: Same as <code>maaslin3()</code></li>
-<li><code>median_comparison_prevalence</code>: Same as <code>maaslin3()</code></li>
-<li><code>max_pngs</code>: New maximum number of pngs to create
-<ul>
-<li>If there are less significant features than the max number set you will get as many plots as significant features</li>
-</ul></li>
+<li><strong>Top right:</strong> Statistical information</li>
 </ul>
+<p>Log scale to relative abundance:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Relative abundance</th>
+<th>1</th>
+<th>0.9</th>
+<th>0.5</th>
+<th>0.1</th>
+<th>0.05</th>
+<th>0.01</th>
+<th>0.005</th>
+<th>0.001</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Log relative abundance</td>
+<td>0</td>
+<td>-0.105</td>
+<td>-0.693</td>
+<td>-2.303</td>
+<td>-3.000</td>
+<td>-4.605</td>
+<td>-5.298</td>
+<td>-6.908</td>
+</tr>
+</tbody>
+</table>
+<p>With this plot we can clearly see that the relative abundance of the Rhizosphere Soil samples is much higher than for Bulk SOil. The median value for Rhizosphere Soil is around -11 (relative abundance = ~0.00001) whereas its around -13 (relative abundance = ~ 0.000002) for Bulk Soil.</p>
+</section>
+<section id="tasks-and-mcqs" class="level2">
+<h2 class="anchored" data-anchor-id="tasks-and-mcqs">Tasks and MCQs</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/question_bubble_ibm_blue.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white solid 5px"></p>
+</figure>
+</div>
+<p>Please attempt the following tasks and MCQs:</p>
+<section id="task-1" class="level3">
+<h3 class="anchored" data-anchor-id="task-1">Task 1</h3>
+<p>View the metrics of the top five significant Soil associations with negative coefficient values. I.e. filter out associations with positive values and then look at the five associations with the lowest (most significant) q-values.</p>
+<ol type="1">
+<li>Which feature association has the highest significance (i.e lowest individual q-value)?
+<div id="radio_PGSMFNZLWT" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_PGSMFNZLWT" value="answer"> <span>Streptosporangium</span></label><label><input type="radio" autocomplete="off" name="radio_PGSMFNZLWT" value=""> <span>Pseudonocardia</span></label><label><input type="radio" autocomplete="off" name="radio_PGSMFNZLWT" value=""> <span>Hyphomicrobium</span></label><label><input type="radio" autocomplete="off" name="radio_PGSMFNZLWT" value=""> <span>Desulfosporosinus</span></label><label><input type="radio" autocomplete="off" name="radio_PGSMFNZLWT" value=""> <span>Kribbella</span></label>
+</div></li>
+</ol>
+<ol start="2" type="1">
+<li>Which feature association has the greatest coefficient value (i.e.&nbsp;the value furtherest from 0 representing the largest fold change difference comparing the query to the reference)?
+<div id="radio_KPEPFVCLIR" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_KPEPFVCLIR" value=""> <span>Streptosporangium</span></label><label><input type="radio" autocomplete="off" name="radio_KPEPFVCLIR" value=""> <span>Pseudonocardia</span></label><label><input type="radio" autocomplete="off" name="radio_KPEPFVCLIR" value=""> <span>Hyphomicrobium</span></label><label><input type="radio" autocomplete="off" name="radio_KPEPFVCLIR" value="answer"> <span>Desulfosporosinus</span></label><label><input type="radio" autocomplete="off" name="radio_KPEPFVCLIR" value=""> <span>Kribbella</span></label>
+</div></li>
+</ol>
+<ol start="3" type="1">
+<li>Which feature association has the lowest prevalence (i.e.&nbsp;the lowest <code>N_not_zero</code> value)?
+<div id="radio_RFOUDWZYDQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_RFOUDWZYDQ" value=""> <span>Streptosporangium</span></label><label><input type="radio" autocomplete="off" name="radio_RFOUDWZYDQ" value=""> <span>Pseudonocardia</span></label><label><input type="radio" autocomplete="off" name="radio_RFOUDWZYDQ" value=""> <span>Hyphomicrobium</span></label><label><input type="radio" autocomplete="off" name="radio_RFOUDWZYDQ" value="answer"> <span>Desulfosporosinus</span></label><label><input type="radio" autocomplete="off" name="radio_RFOUDWZYDQ" value=""> <span>Kribbella</span></label>
+</div></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="Code solution">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#View the metrics of the top five significant associations with negative coefficients</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sig_res_soil_abund_tbl <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Retain rows with a coefficient value less than 0</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(coef <span class="sc">&lt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">slice_min</span>(qval_individual, <span class="at">n=</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="task-2" class="level3">
+<h3 class="anchored" data-anchor-id="task-2">Task 2</h3>
+<p>Using the relevant plots answer the below MCQs:</p>
+<ol type="1">
+<li>Approximately, what is the median log relative abundance of <em>Desulfosporosinus</em> for the Rhizosphere Soil samples?
+<div id="radio_KDKGPMRCEX" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_KDKGPMRCEX" value=""> <span><strong>-7</strong></span></label><label><input type="radio" autocomplete="off" name="radio_KDKGPMRCEX" value=""> <span><strong>-7.5</strong></span></label><label><input type="radio" autocomplete="off" name="radio_KDKGPMRCEX" value="answer"> <span><strong>-17</strong></span></label>
+</div></li>
+</ol>
+<ol start="2" type="1">
+<li>Approximately, what is the median log relative abundance of <em>Pseudonocardia</em> for the Bulk Soil samples?
+<div id="radio_RIOIWFQLQA" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_RIOIWFQLQA" value="answer"> <span><strong>-7</strong></span></label><label><input type="radio" autocomplete="off" name="radio_RIOIWFQLQA" value=""> <span><strong>-7.5</strong></span></label><label><input type="radio" autocomplete="off" name="radio_RIOIWFQLQA" value=""> <span><strong>-17</strong></span></label>
+</div></li>
+</ol>
+<ol start="3" type="1">
+<li>Approximately, what is the median log relative abundance of <em>Noviherbaspirillum</em> for the Rhizosphere Soil samples?
+<div id="radio_MAANGJFAXP" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_MAANGJFAXP" value=""> <span><strong>-7</strong></span></label><label><input type="radio" autocomplete="off" name="radio_MAANGJFAXP" value="answer"> <span><strong>-7.5</strong></span></label><label><input type="radio" autocomplete="off" name="radio_MAANGJFAXP" value=""> <span><strong>-17</strong></span></label>
+</div></li>
+</ol>
+</section>
+</section>
+<section id="the-power-of-n" class="level2">
+<h2 class="anchored" data-anchor-id="the-power-of-n">The power of n=</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/sample_size.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; background:white; border-radius:5px"></p>
+</figure>
+</div>
+<p>Abundance association tests only use samples where the feature is present. This means associations where the feature is more prevalent will have greater power.</p>
+<p>This can be seen in our tibble of the most significant Soil abundance associations with -ve coefficients you created for task 1. For convenience this is below:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 9
+  feature      metadata value name   coef qval_individual error     N N_not_zero
+  &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;           &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;      &lt;dbl&gt;
+1 Streptospor… Soil     Rhiz… Soil… -4.74        1.24e-13 &lt;NA&gt;     64         63
+2 Pseudonocar… Soil     Rhiz… Soil… -2.27        1.69e-13 &lt;NA&gt;     64         64
+3 Hyphomicrob… Soil     Rhiz… Soil… -1.74        2.58e- 9 &lt;NA&gt;     64         64
+4 Desulfospor… Soil     Rhiz… Soil… -5.61        9.37e- 9 &lt;NA&gt;     64         42
+5 Kribbella    Soil     Rhiz… Soil… -3.01        2.72e- 8 &lt;NA&gt;     64         64</code></pre>
+</div>
+</div>
+<p>In these results <em>Desulfosporosinus</em> has the largest log fold change (-5.61) Yet, it does not have the most significant individual q-value. This is because there are 42 samples with <em>Desulfosporosinus</em> present compared the four other top genera which are present in &gt;60 samples.</p>
 
 
 </section>
@@ -1474,11 +1760,14 @@ window.onload = function() {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../maaslin3/plots.html" class="pagination-link" aria-label="Plots">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Plots</span>
+      <a href="../maaslin3/replot.html" class="pagination-link" aria-label="Replot">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Replot</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../maaslin3/continuous_linear_plots.html" class="pagination-link" aria-label="Continuous linear scatter plots">
+        <span class="nav-page-text">Continuous linear scatter plots</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

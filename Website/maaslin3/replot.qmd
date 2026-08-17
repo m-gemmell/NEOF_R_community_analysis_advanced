@@ -24,6 +24,12 @@ maaslin3::maaslin_plot_results_from_output(
 )
 ```
 
+
+::: {.callout-important}
+The above function will take a while (>5 minutes).
+:::
+
+
 ## Parameters
 ![](images/parameter_ibm_purple.png){style="width:100px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
 

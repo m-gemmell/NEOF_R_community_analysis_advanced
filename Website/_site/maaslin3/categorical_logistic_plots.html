@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>replot – Advanced R community analysis</title>
+<title>categorical_logistic_plots – Advanced R community analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -68,7 +68,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../maaslin3/plots.html" rel="prev">
+<link href="../maaslin3/continuous_linear_plots.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -540,10 +540,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../maaslin3/replot.html" class="sidebar-item-text sidebar-link active">
+  <a href="../maaslin3/replot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Replot</span></a>
   </div>
 </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear plots</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/categorical_linear_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Categorical linear boxplots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/continuous_linear_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Continuous linear scatter plots</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Categorical plots</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/categorical_logistic_plots.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Categorical logistic grid plots</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
       </ul>
   </li>
     </ul>
@@ -556,9 +596,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#replot" id="toc-replot" class="nav-link active" data-scroll-target="#replot">Replot</a>
+  <li><a href="#categorical-logistic-grid-plots" id="toc-categorical-logistic-grid-plots" class="nav-link active" data-scroll-target="#categorical-logistic-grid-plots">Categorical logistic grid plots</a>
   <ul class="collapse">
-  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
+  <li><a href="#significant-results-table" id="toc-significant-results-table" class="nav-link" data-scroll-target="#significant-results-table">Significant results table</a></li>
+  <li><a href="#coefficient" id="toc-coefficient" class="nav-link" data-scroll-target="#coefficient">Coefficient</a></li>
+  <li><a href="#plots" id="toc-plots" class="nav-link" data-scroll-target="#plots">Plots</a>
+  <ul class="collapse">
+  <li><a href="#quadrisphaera" id="toc-quadrisphaera" class="nav-link" data-scroll-target="#quadrisphaera"><em>Quadrisphaera</em></a></li>
+  <li><a href="#plantactinospora" id="toc-plantactinospora" class="nav-link" data-scroll-target="#plantactinospora"><em>Plantactinospora</em></a></li>
+  </ul></li>
+  <li><a href="#errors" id="toc-errors" class="nav-link" data-scroll-target="#errors">Errors</a>
+  <ul class="collapse">
+  <li><a href="#prevalence-association" id="toc-prevalence-association" class="nav-link" data-scroll-target="#prevalence-association">Prevalence association</a></li>
+  </ul></li>
+  <li><a href="#mcqs" id="toc-mcqs" class="nav-link" data-scroll-target="#mcqs">MCQs</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -570,77 +621,294 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="replot" class="level1">
-<h1>Replot</h1>
+<section id="categorical-logistic-grid-plots" class="level1">
+<h1>Categorical logistic grid plots</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/plotter.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; background:white; border-radius:5px; border: white solid 5px"></p>
+<p><img src="images/tiles.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; background:white; border-radius:5px; border: white solid 5px"></p>
 </figure>
 </div>
-<p>When we ran <code>maaslin3()</code> it created 250 plot files as we set <code>max_pngs = 250</code>. Unfortunately this means that some of the significant associations we want to interrogate do not have plots.</p>
-<p>Fortunately rather than rerunning the <code>maaslin3()</code> function, which can take a long time, we can run the function <code>maaslin_plot_results_from_output()</code>.</p>
-<p>Run the below code to recreate the plots whilst making more by setting <code>max_pngs=</code> to 1000.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#MaAsLin3 replot</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>maaslin3<span class="sc">::</span><span class="fu">maaslin_plot_results_from_output</span>(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">output =</span> <span class="st">'genus_output'</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">metadata =</span> metadf,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">normalization =</span> <span class="st">'TSS'</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">transform =</span> <span class="st">'LOG'</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Max value of qval_individual value for plot to be generated</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#qval_joint has no effect on this</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_significance =</span> <span class="fl">0.1</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_comparison_abundance =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_comparison_prevalence =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_pngs =</span> <span class="dv">1000</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Grid/tile plots are used to visualise prevalence/logistic modelling associations with categorical effects. These show the number of samples where the feature is present and absent in for each group.</p>
+<p>We will use the <code>Soil</code> grouping to look at categorical logistic results.</p>
+<p>In this page we will:</p>
+<ul>
+<li>Create a significant results table with only prevalence model and sample site rows</li>
+<li>Explain the coefficient value</li>
+<li>View and display grid plots</li>
+</ul>
+<p>The concept of log-odds is very important in this and the next page. It was covered earlier in this website: <a href="../maaslin3/logistic_model.html">logistic modelling</a></p>
+<section id="significant-results-table" class="level2">
+<h2 class="anchored" data-anchor-id="significant-results-table">Significant results table</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/table.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white solid 5px"></p>
+</figure>
 </div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
+<p>Create a significant result tibble containing <code>SampleSite</code> associations with the prevalence model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create a tbl with our sig results of interest</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sig_res_soil_prev_tbl <span class="ot">&lt;-</span> sig_res_tbl <span class="sc">|&gt;</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter to retain metadata Soil rows</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(metadata <span class="sc">==</span> <span class="st">"Soil"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter to retain prevalence model rows</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(model <span class="sc">==</span> <span class="st">"prevalence"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Extract the top 5 associations by their q-values (qval_individual).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Top 5 significant associations for prevalence modelling of Soil</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sig_res_soil_prev_tbl <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Extract the five rows with the smallest qval_individual values</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">slice_min</span>(qval_individual, <span class="at">n=</span><span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Select rows of interest</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">15</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In this table all the associations have very low q-values (significant) and reasonably high positive coefficients (higher in query/Rhizosphere Soil).</p>
+</section>
+<section id="coefficient" class="level2">
+<h2 class="anchored" data-anchor-id="coefficient">Coefficient</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/coef.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:250px; background:white; border-radius:5px; border: white solid 5px"></p>
+</figure>
+</div>
+<p>The coefficient indicates the difference of log-odds/logit of the feature being present in query samples compared to the reference samples.</p>
+<p>The feature in the 1st row is:</p>
+<ul>
+<li><strong>feature:</strong> <em>Quadrisphaera</em></li>
+<li><strong>name:</strong> SoilRhizosphere Soil</li>
+<li><strong>coefficient:</strong> 4.394469</li>
+</ul>
+<p>This indicates that the <a href="../maaslin3/logistic_model.html#log-oddslogit">log-odds/logit</a> of Streptococcus infantis_H being present in Rhizosphere Soil samples compared to Bulk Soil samples is higher by 4.4. In other words the probability of <em>Quadrisphaera</em> being present is higher in Rhizosphere Soil compared to Bulk Soil. This could work if the log-odds of Rhizosphere Soil and Bulk Soil were both negative, both positive, or if the Rhizosphere Soil’s log-odds is positive whilst the Bulk Soil’s is negative. To know this we need to look at the plot.</p>
+</section>
+<section id="plots" class="level2">
+<h2 class="anchored" data-anchor-id="plots">Plots</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/tiles.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white solid 5px"></p>
+</figure>
+</div>
+<p>Logistic categorical plots shows us how many samples the feature is present and absent in for the different groupings. We’ll look at 2 examples.</p>
+<section id="quadrisphaera" class="level3">
+<h3 class="anchored" data-anchor-id="quadrisphaera"><em>Quadrisphaera</em></h3>
+<p>Below is the grid/tile plot created for the logistic modelling of <em>Quadrisphaera</em> for the sample site groupings.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Soil_Quadrisphaera_logistic.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:400px"></p>
+</figure>
+</div>
+<p>In this case the plot shows:</p>
+<ul>
+<li><em>Quadrisphaera</em> is present in 34 out of the 36 cheek samples (94%)
+<ul>
+<li>The feature is more likely than not (&gt;50% chance) to be present in Rhizosphere Soil samples</li>
+</ul></li>
+<li><em>Quadrisphaera</em> is present in 10 out of the 28 Bulk Soil samples (13%)
+<ul>
+<li>The feature is not more likely than not (&lt;50% chance) to be present in Bulk Soil samples</li>
+</ul></li>
+</ul>
+<p>The coefficient is positive (4.4) showing the log-odds of the feature being present in Rhizosphere Soil samples is higher than the log-odds of the feature being present in Bulk Soil samples. This would be an instance of a positive log-odds for Rhizosphere soil (probability &gt; 0.5) and a negative one (probability &lt; 0.5) for Bulk Soil.</p>
+</section>
+<section id="plantactinospora" class="level3">
+<h3 class="anchored" data-anchor-id="plantactinospora"><em>Plantactinospora</em></h3>
+<p>Lets look at a different example. Below is the grid plot for <em>Plantactinospora</em>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Soil_Plantactinospora_logistic.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:400px"></p>
+</figure>
+</div>
+<p>In this case the plot shows:</p>
+<ul>
+<li><em>Plantactinospora</em> is present in 12 out of the 36 cheek samples (33%)
+<ul>
+<li>The feature is more likely than not (&gt;50% chance) to be present in Rhizosphere Soil samples</li>
+</ul></li>
+<li><em>Plantactinospora</em> is present in 2 out of the 28 Bulk Soil samples (4%)
+<ul>
+<li>The feature is not more likely than not (&lt;50% chance) to be present in Bulk Soil samples</li>
+</ul></li>
+</ul>
+<p>In this case even though the log-odds is negative for Rhizosphere Soil it is still much closer to 1 (100% probability) compared to the Bulk Soil samples. This is a reminder that the coefficient is the difference of the log-odds, not the log-odds value of the query group.</p>
+</section>
+</section>
+<section id="errors" class="level2">
+<h2 class="anchored" data-anchor-id="errors">Errors</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/decline.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white solid 5px"></p>
+</figure>
+</div>
+<p>There is an <code>error</code> column (column 12) in our results table. Most rows will have the value <code>NA</code> meaning there was no error. However, some will have information on an error that occurred for the association.</p>
+<p>View the rows with errors in <code>sig_res_soil_prev_tbl</code>.</p>
+<p>View the strongest associations (by q-value) with negative coefficient values. These associations indicate the feature is less likely to be present in query samples compared to reference samples. The further the value is from 0 the stronger the association.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#View rows where error is not NA</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for prevalence modelling of Soil</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sig_res_soil_prev_tbl <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Drop rows where error is NA</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#I.e. retain rows with errors</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">drop_na</span>(error) <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Select rows of interest</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">15</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The various error messages we have include:</p>
+<ul>
+<li>Prevalence association possibly induced by stronger abundance association</li>
+<li>All logistic values are the same</li>
+<li>A large coefficient (&gt;15 in absolute value) or small p-value (&lt; 10^-10) was obtained from a feature present in &gt;95% of samples. Check this is intended.</li>
+<li>pwrssUpdate did not converge in (maxit) iterations</li>
+</ul>
+<p>Below we’ll demonstrate the Prevalence association error. For toher errors please see: <a href="https://github.com/biobakery/Maaslin3#diagnostics">MaAsLin3 diagnostics</a></p>
+<section id="prevalence-association" class="level3">
+<h3 class="anchored" data-anchor-id="prevalence-association">Prevalence association</h3>
+<p>Below is the logistic grid plot for <em>Larkinella</em>, one of the associations with the “Prevalence association possibly induced by stronger abundance association” error. From the plot we can see that the percentage of Bulk Soil samples with presence of the feature is lower than for the Rhizosphere Sample samples (68% vs 89%).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Soil_Larkinella_logistic.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:400px"></p>
+</figure>
+</div>
+<p>To discover the meaning of the error it is best to view the abundance/linear modelling plot for the feature. In the below plot we can see a strong association for the feature when comparing Rhizosphere Soil to Bulk SOil. Additionally, the abundance of the feature in the scalp samples it is found in are very low. The values are all less than -10 (&gt;0.001 relative abundance) with a median of around -16 (&gt;0.0001 relative abundance).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Soil_Larkinella_linear.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:400px"></p>
+</figure>
+</div>
+<p>Additionally, lets look at the results of all the <em>Larkinella</em> associations.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#All results of Larkinella</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sig_res_tbl <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter to only retain Larkinella associations</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(feature<span class="sc">==</span><span class="st">"Larkinella"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Select rows of interest</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">8</span>,<span class="dv">12</span>,<span class="dv">13</span>,<span class="dv">14</span>,<span class="dv">15</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Here we can see the abundance modelling is quite strong with a coefficient of 2.13. Therefore, MaAsLin3 is unsure if the prevalence association is true biology or if true presence was undetected in samples. A low abundance feature may not be detected due to the inherent nature of upstream wet lab procedures and/or bioinformatics processes.</p>
+</section>
+</section>
+<section id="mcqs" class="level2">
+<h2 class="anchored" data-anchor-id="mcqs">MCQs</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/question_bubble_ibm_magenta.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white solid 5px"></p>
+</figure>
+</div>
+<p>Attempt the below MCQs based on the prevalence modelling with the <code>Soil</code> fixed effect:</p>
+<ol type="1">
+<li>Looking at the five most significant associations with negative coefficients, which feature has the highest <code>N_not_zero</code> value?
+<div id="radio_NHRXQTFSNP" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_NHRXQTFSNP" value="answer"> <span><em>Candidatus_Nitrotoga</em></span></label><label><input type="radio" autocomplete="off" name="radio_NHRXQTFSNP" value=""> <span><em>Ferrovibrio</em></span></label><label><input type="radio" autocomplete="off" name="radio_NHRXQTFSNP" value=""> <span><em>Fluviicola</em></span></label>
+</div></li>
+</ol>
+<ol start="2" type="1">
+<li>Looking at the five most significant associations with positive coefficients, which feature has the highest coefficient value?
+<div id="radio_GEPHZSMFCY" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_GEPHZSMFCY" value=""> <span><em>Candidatus_Nitrotoga</em></span></label><label><input type="radio" autocomplete="off" name="radio_GEPHZSMFCY" value="answer"> <span><em>Ferrovibrio</em></span></label><label><input type="radio" autocomplete="off" name="radio_GEPHZSMFCY" value=""> <span><em>Fluviicola</em></span></label>
+</div></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="Code solutions for MCQ 1 &amp; 2">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+<span class="screen-reader-only">Note</span>Code solutions for MCQ 1 &amp; 2
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The above function will take a while (&gt;5 minutes).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#MCQ1: Of the top 5 significant -ve coef features</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Which has the highest N_not_zero value</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>sig_res_soil_prev_tbl <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter to retain -ve coef</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(coef <span class="sc">&lt;</span><span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Top 5 by significance</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">slice_min</span>(qval_individual,<span class="at">n=</span><span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Highest N_not_zero</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">slice_max</span>(N_not_zero, <span class="at">n=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#MCQ2: Of the top 5 significant +ve coef features</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Which has the highest coefficient value value</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>sig_res_soil_prev_tbl <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter to retain +ve coef</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(coef <span class="sc">&gt;</span><span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Top 5 by significance</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">slice_min</span>(qval_individual,<span class="at">n=</span><span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Top coefficient value</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">slice_max</span>(coef, <span class="at">n=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<section id="parameters" class="level2">
-<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/parameter_ibm_purple.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100px; background:white; border-radius:5px; border: white solid 5px"></p>
-</figure>
 </div>
-<p>Unfortunately when running <code>maaslin_plot_results_from_output()</code> we can’t copy the parameters from our <code>maaslin3()</code> function. But at the same time <code>maaslin_plot_results_from_output()</code> uses some of the same parameters as <code>maaslin3()</code> and we need to have these being identical to our previous <code>maaslin3()</code> function.</p>
-<p>Below are the parameters used above:</p>
-<ul>
-<li><code>output</code>: This is the output directory of our <code>maaslin3()</code> function
-<ul>
-<li>Our replot function will uses its contents to recreate the plots</li>
-<li>The recreated and new plots will be placed in the relevant directories within this directory</li>
-</ul></li>
-<li><code>metadf</code>: The metadata table to be used for the plot generation
-<ul>
-<li>We are using the same table as our <code>maaslin3()</code> function</li>
-<li>This can be an opportunity to rename variables and values (see: <a href="https://www.bioconductor.org/packages//release/bioc/vignettes/maaslin3/inst/doc/maaslin3_manual.html#replotting">MaAsLin3 manual on replotting</a>)</li>
-</ul></li>
-<li><code>normalization</code>: Same as <code>maaslin3()</code></li>
-<li><code>transform</code>: Same as <code>maaslin3()</code></li>
-<li><code>max_significance = 0.1</code>: Same as <code>maaslin3()</code>
-<ul>
-<li>This indicates the <code>qval_individual</code> value of the features</li>
-</ul></li>
-<li><code>median_comparison_abundance</code>: Same as <code>maaslin3()</code></li>
-<li><code>median_comparison_prevalence</code>: Same as <code>maaslin3()</code></li>
-<li><code>max_pngs</code>: New maximum number of pngs to create
-<ul>
-<li>If there are less significant features than the max number set you will get as many plots as significant features</li>
-</ul></li>
-</ul>
+</div>
+<p>Looking at specific tile plots will allow you answer the next 2 questions.</p>
+<ol start="3" type="1">
+<li>What percentage of Rhizosphere Soil samples is <em>Fluviicola</em> present in?
+<div id="radio_BLCNQDXSWI" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_BLCNQDXSWI" value=""> <span><strong>6%</strong></span></label><label><input type="radio" autocomplete="off" name="radio_BLCNQDXSWI" value=""> <span><strong>29%</strong></span></label><label><input type="radio" autocomplete="off" name="radio_BLCNQDXSWI" value="answer"> <span><strong>83%</strong></span></label>
+</div></li>
+</ol>
+<ol start="4" type="1">
+<li>What percentage of Bulk Soil samples is <em>Bordetella</em> present in?
+<div id="radio_MFBXIUBZJN" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_MFBXIUBZJN" value=""> <span><strong>6%</strong></span></label><label><input type="radio" autocomplete="off" name="radio_MFBXIUBZJN" value="answer"> <span><strong>29%</strong></span></label><label><input type="radio" autocomplete="off" name="radio_MFBXIUBZJN" value=""> <span><strong>83%</strong></span></label>
+</div></li>
+</ol>
+<p>Creating some filtering code will help answer the below questions.</p>
+<p><strong>Tip:</strong> The below filter function will retain rows where <code>error</code> is <code>NA</code>. Normally filtering won’t work with <code>NA</code> values.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Retain rows where error is NA</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#needs to be part piped code</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="fu">if_any</span>(error, is.na))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="5" type="1">
+<li>How many significant (based on qval_individual &lt;0.1) prevalence Soil associations are there with no errors?
+<div id="radio_VEYHQRHZAM" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_VEYHQRHZAM" value=""> <span><strong>4</strong></span></label><label><input type="radio" autocomplete="off" name="radio_VEYHQRHZAM" value="answer"> <span><strong>55</strong></span></label><label><input type="radio" autocomplete="off" name="radio_VEYHQRHZAM" value=""> <span><strong>59</strong></span></label>
+</div></li>
+</ol>
+<ol start="6" type="1">
+<li>How many significant (based on qval_individual &lt;0.1) prevalence Soil associations are there with errors?
+<div id="radio_TKADPGVJKW" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_TKADPGVJKW" value="answer"> <span><strong>4</strong></span></label><label><input type="radio" autocomplete="off" name="radio_TKADPGVJKW" value=""> <span><strong>55</strong></span></label><label><input type="radio" autocomplete="off" name="radio_TKADPGVJKW" value=""> <span><strong>59</strong></span></label>
+</div></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="Code solutions for MCQ 5 &amp; 6">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Code solutions for MCQ 5 &amp; 6
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="do">##Significant associations with no errors</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>sig_res_soil_prev_tbl <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter by q-value</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(qval_individual<span class="sc">&lt;</span><span class="fl">0.1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter to retain rows where error is NA</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="fu">if_any</span>(error, is.na)) <span class="sc">|&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Count rows</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nrow</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="do">##Significant associations with errors</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sig_res_soil_prev_tbl <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter by q value</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(qval_individual<span class="sc">&lt;</span><span class="fl">0.1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Drop NAs in error</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    tidyr<span class="sc">::</span><span class="fu">drop_na</span>(error) <span class="sc">|&gt;</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Count rows</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nrow</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -1474,8 +1742,8 @@ window.onload = function() {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../maaslin3/plots.html" class="pagination-link" aria-label="Plots">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Plots</span>
+      <a href="../maaslin3/continuous_linear_plots.html" class="pagination-link" aria-label="Continuous linear scatter plots">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Continuous linear scatter plots</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

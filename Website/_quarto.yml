@@ -172,7 +172,7 @@ website:
   - id: MaAsLin3
     title: Upset
     style: floating
-    collapse-level: 2
+    collapse-level: 3
     align: left
     contents:
     - href: maaslin3/maaslin3.qmd
@@ -207,6 +207,13 @@ website:
       contents:
       - href: maaslin3/plots.qmd
       - href: maaslin3/replot.qmd
+      - section: Linear plots
+        contents:
+        - href: maaslin3/categorical_linear_plots.qmd
+        - href: maaslin3/continuous_linear_plots.qmd
+      - section: Categorical plots
+        contents:
+        - href: maaslin3/categorical_logistic_plots.qmd
 #Format
 format:
   html:

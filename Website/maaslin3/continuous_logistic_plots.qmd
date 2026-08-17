@@ -1,0 +1,221 @@
+# Continuous logistic boxplots
+<center>
+![](/images/boxplot_horiz.png){style="width:200px; background:white; border-radius:5px; border: white solid 5px"}
+</center>
+
+Box plots are used to visualise prevalence/logistic modelling associations with continuous effects.
+These show the range of read sizes for samples where the feature is absent and samples where the feature is absent.
+
+We will use the `Reads` grouping to look at continuous logistic results.
+
+In this page we will:
+
+- Create a significant results table with only prevalence model and read rows
+- Explain the coefficient value
+- View and display box plots
+
+## Significant results table
+<center>
+![](/images/table.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px"}
+</center>
+
+Create a significant result tibble only containing `Reads` associations with the prevalence model.
+
+```{r, eval=FALSE}
+#Create a tbl with our sig results of interest
+sig_res_reads_prev_tbl <- sig_res_tbl |> 
+    #Filter to retain metadata Reads rows
+    dplyr::filter(metadata == "Reads") |>
+    #Filter to retain prevalence model rows
+    dplyr::filter(model == "prevalence")
+#Glimpse the tibble
+sig_res_reads_prev_tbl |> dplyr::glimpse()
+```
+
+Extract the top 5 associations by their q-values (qval_individual).
+
+```{r, eval=FALSE}
+#Top 5 significant associations for prevalence modelling of Reads
+sig_res_reads_prev_tbl |>
+    #Extract the five rows with the smallest qval_individual values
+    dplyr::slice_min(qval_individual, n=5) |>
+    #Select rows of interest
+    dplyr::select(c(1:5,9,12,14,15))
+```
+
+In this case we actually get 6 rows. This is because the q-value of the 5th and 6th row are identical (i.e. they are both 5th equal place).
+
+The results aren't terribly significant with fairly low coefficients (<2).
+
+## Coefficient
+<center>
+![](/images/coef.png){style="width:250px; background:white; border-radius:5px; border: white solid 5px"}
+</center>
+
+Let's look at the top association:
+
+- __Feature:__ *Malassezia globosa*
+- **Coefficient:** 1.300098
+- **Q-value:** 0.002123845
+
+For continuous metadata the coefficient represents the amount of increased/decreased likelihood of the feature's presence with a higher value of the metadata.
+A positive value for `Reads` would indicate the feature is more likely to be present with samples of higher read counts.
+In other words a positive coefficient means the logit of the feature being present increases.
+
+## Plots
+<center>
+![](/images/boxplot_horiz.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px"}
+</center>
+
+Logistic continuous plots are horizontal box plots of read counts separated into 2 groupings:
+
+- Samples where the feature is absent
+- Samples where the feature is present
+
+Let's look at an example.
+
+### *M.globosa*
+
+Below is the box plot created for the logistic modelling of *Malassezia globosa* for the reads effect. 
+
+<center>
+![](images/Reads_Malassezia.globosa_logistic.png){style="width:400px"}
+</center>
+<br>
+
+In this case the plot shows:
+
+- Samples where the feature are present tend to have higher read counts
+- There are more samples where the feature is present (N (not zero) = 145) compared to where it is absent (172-145=27).
+
+## Negative coefficient
+<center>
+![](/images/decline.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px"}
+</center>
+
+View the most significant associations with negative coefficients.
+
+```{r, eval=FALSE}
+#Top 5 significant associations with negative coefficients
+# for prevalence modelling of Reads
+sig_res_reads_prev_tbl |>
+    #Retain rows with a coefficient value less than 0
+    dplyr::filter(coef < 0) |>
+    #Extract the five rows with the smallest qval_individual values
+    dplyr::slice_min(qval_individual, n=5) |>
+    #Select rows of interest
+    dplyr::select(c(1:5,9,11,12,14,15))
+```
+
+There only is one association and it has the error: "Prevalence association possibly induced by stronger abundance association".
+Additionally, its individual q-value is >0.1 meaning there will not be a plot of it.
+It was included in the significant results table as its joint q-value is < 0.1.
+
+In fact the association is of our old friend [*Pseudomonas_E lactis*](/relative/continuous_linear_plots.qmd#plots).
+Its linear prevalence association was very strong for the [continuous linear analysis and plots](/relative/continuous_linear_plots.qmd#plots).
+Therefore, its very likely the above error is true and the prevalence association is due to the abundance association.
+
+It makes sense that you are more likely to get positive coefficient values for reads.
+The more reads you have the more likely you are to detect all organisms present.
+
+## MCQs
+<center>
+![](/images/question_bubble_ibm_yellow.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px"}
+</center>
+
+Attempt the below MCQs based on the prevalence modelling with the `Reads` fixed effect:
+
+Answer the two below MCQs based on the top 6 significant features of Reads with the prevalence model.
+
+```{r, echo = FALSE}
+opts_p <- c("*Malassezia globosa*",
+            answer="*Corynebacterium aurimucosum_E*",
+            "*Staphylococcus capitis*",
+            "*Xanthomonas campestris*",
+            "*Cutibacterium granulosum*",
+            "*Staphylococcus haemolyticus*"
+            )
+```
+1. Which feature association has the largest coefficient value? `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c("*Malassezia globosa*",
+            answer="*Corynebacterium aurimucosum_E*",
+            "*Staphylococcus capitis*",
+            "*Xanthomonas campestris*",
+            "*Cutibacterium granulosum*",
+            "*Staphylococcus haemolyticus*"
+            )
+```
+2. Which feature has the highest amount of samples where the feature is absent (i.e. lowest prevalence)? `r longmcq(opts_p)`
+
+Open and view the reads logistic plots for the following features to answer the next 4 MCQs.
+
+- *Malassezia globosa*
+- *Corynebacterium aurimucosum_E*
+- *Staphylococcus capitis*
+- *Xanthomonas campestris*
+
+__Tip:__ The reads/x-axis scale is identical for all the plots making for easier comparisons.
+
+```{r, echo = FALSE}
+opts_p <- c("*Malassezia globosa*",
+            answer="*Corynebacterium aurimucosum_E*",
+            "*Staphylococcus capitis*",
+            "*Xanthomonas campestris*"
+            )
+```
+3. Which feature has the smallest difference between its median values for the absent and present groupings? `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c("*Malassezia globosa*",
+            "*Corynebacterium aurimucosum_E*",
+            answer="*Staphylococcus capitis*",
+            "*Xanthomonas campestris*"
+            )
+```
+4. Which feature has the highest amount of outliers for the `Present` box (i.e. points outside the range of the box and whiskers)? `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c("*Malassezia globosa*",
+            answer="*Corynebacterium aurimucosum_E*",
+            "*Staphylococcus capitis*",
+            "*Xanthomonas campestris*"
+            )
+```
+5. Which feature has the highest median value for the absent samples? `r longmcq(opts_p)`
+
+Using the object `sig_res_reads_prev_tbl`, create some code to answer the below questions.
+
+```{r, echo = FALSE}
+opts_p <- c("**12**",
+            answer="**26**",
+            "**172**"
+            )
+```
+5. How many associations have a `qval_individual` value of less than 0.1? `r longmcq(opts_p)`
+
+```{r, echo = FALSE}
+opts_p <- c(answer="**12**",
+            "**26**",
+            "**172**"
+            )
+```
+6. How many associations are there where the feature is absent in more than 50% of the samples? `r longmcq(opts_p)`
+
+__Tip:__ You can carry out mathematical operations on different columns in a [`dplyr::filter()` function](https://cgr-liverpool.github.io/Tidyverse/dplyr/filter.html) and carry out a comparison/filter on its result.
+
+`r hide("Code solution")`
+```{r, eval=FALSE}
+#MCQs
+## Significant results with individual q-value < 0.1
+sig_res_reads_prev_tbl |>
+   filter(qval_individual<0.1) |>
+   nrow()
+## Number of results where the feature is absent in more than
+# 50% of the samples
+sig_res_reads_prev_tbl |>
+   filter(N_not_zero/N < 0.5) |>
+   nrow()
+```
+`r unhide()`

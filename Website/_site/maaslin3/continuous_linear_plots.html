@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>replot – Advanced R community analysis</title>
+<title>continuous_linear_plots – Advanced R community analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -68,7 +68,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../maaslin3/plots.html" rel="prev">
+<link href="../maaslin3/categorical_linear_plots.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -540,10 +540,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../maaslin3/replot.html" class="sidebar-item-text sidebar-link active">
+  <a href="../maaslin3/replot.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Replot</span></a>
   </div>
 </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear plots</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/categorical_linear_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Categorical linear boxplots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/continuous_linear_plots.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Continuous linear scatter plots</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
       </ul>
   </li>
     </ul>
@@ -556,9 +579,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#replot" id="toc-replot" class="nav-link active" data-scroll-target="#replot">Replot</a>
+  <li><a href="#continuous-linear-scatter-plots" id="toc-continuous-linear-scatter-plots" class="nav-link active" data-scroll-target="#continuous-linear-scatter-plots">Continuous linear scatter plots</a>
   <ul class="collapse">
-  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
+  <li><a href="#significant-results-table" id="toc-significant-results-table" class="nav-link" data-scroll-target="#significant-results-table">Significant results table</a></li>
+  <li><a href="#non-significant-result" id="toc-non-significant-result" class="nav-link" data-scroll-target="#non-significant-result">Non-significant result</a></li>
+  <li><a href="#coefficient" id="toc-coefficient" class="nav-link" data-scroll-target="#coefficient">Coefficient</a></li>
+  <li><a href="#scatter-plots" id="toc-scatter-plots" class="nav-link" data-scroll-target="#scatter-plots">Scatter plots</a></li>
+  <li><a href="#mcqs" id="toc-mcqs" class="nav-link" data-scroll-target="#mcqs">MCQs</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -570,77 +597,151 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="replot" class="level1">
-<h1>Replot</h1>
+<section id="continuous-linear-scatter-plots" class="level1">
+<h1>Continuous linear scatter plots</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/plotter.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; background:white; border-radius:5px; border: white solid 5px"></p>
+<p><img src="images/linear_regression.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; background:white; border-radius:5px; border: white solid 5px"></p>
 </figure>
 </div>
-<p>When we ran <code>maaslin3()</code> it created 250 plot files as we set <code>max_pngs = 250</code>. Unfortunately this means that some of the significant associations we want to interrogate do not have plots.</p>
-<p>Fortunately rather than rerunning the <code>maaslin3()</code> function, which can take a long time, we can run the function <code>maaslin_plot_results_from_output()</code>.</p>
-<p>Run the below code to recreate the plots whilst making more by setting <code>max_pngs=</code> to 1000.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#MaAsLin3 replot</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>maaslin3<span class="sc">::</span><span class="fu">maaslin_plot_results_from_output</span>(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">output =</span> <span class="st">'genus_output'</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">metadata =</span> metadf,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">normalization =</span> <span class="st">'TSS'</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">transform =</span> <span class="st">'LOG'</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Max value of qval_individual value for plot to be generated</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#qval_joint has no effect on this</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_significance =</span> <span class="fl">0.1</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_comparison_abundance =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_comparison_prevalence =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_pngs =</span> <span class="dv">1000</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Scatter plots with a line of best fit (regression line) are used to visualise relative/linear modelling associations with continuous fixed effects. We will use the results from our <code>Reads</code> associations to interpret the metrics and plots. Preferably we’ll have no associations but as always biology has other ideas.</p>
+<p>In this page we will:</p>
+<ul>
+<li>Create a significant results table with only abundance model and Reads rows</li>
+<li>Explain the coefficient value</li>
+<li>View and display scatter plots</li>
+</ul>
+<section id="significant-results-table" class="level2">
+<h2 class="anchored" data-anchor-id="significant-results-table">Significant results table</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/table.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white solid 5px"></p>
+</figure>
 </div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
+<p>Create a significant result tibble only containing <code>Reads</code> associations with the abundance model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Tibble of significant abundance associations for Reads</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sig_res_reads_abund_tbl <span class="ot">&lt;-</span> sig_res_tbl <span class="sc">|&gt;</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter to retain metadata SampleSite rows</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(metadata <span class="sc">==</span> <span class="st">"Reads"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter to retain abundance model rows</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(model <span class="sc">==</span> <span class="st">"abundance"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Glimpse the tibble</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>sig_res_reads_abund_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Extract the top 5 associations by their q-values (<code>qval_individual</code>).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Top 5 significant abundance read associations by qval</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sig_res_reads_abund_tbl <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Extract the five rows with the smallest qval_individual values</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">slice_min</span>(qval_individual, <span class="at">n=</span><span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Select rows of interest</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">15</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>You’ll see the top association is:</p>
+<ul>
+<li>feature: <em>Candidatus_Nostocoida</em></li>
+<li>coefficient: 0.9792495</li>
+</ul>
+</section>
+<section id="non-significant-result" class="level2">
+<h2 class="anchored" data-anchor-id="non-significant-result">Non-significant result</h2>
+<p>Run the below command to see the non-significant results in the tibble you created.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Non significant results</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sig_res_reads_abund_tbl <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter by non-significance</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(qval_individual<span class="sc">&gt;</span><span class="fl">0.1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Select rows of interest</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">15</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>With this you can see that you have 36 non-significant <code>Reads</code> associations in <code>sig_res_reads_abund_tbl</code>. These are included in the significant results table as their joint q-values are &lt;0.1. However, plots of these associations were not created since their q-values are larger than the max significance value (0.1) we chose when running <code>maaslin3()</code> and the replot function.</p>
+<p>More info about joint q-values: <a href="../maaslin3/metrics.html#p-values">P-value in Metrics page</a></p>
+</section>
+<section id="coefficient" class="level2">
+<h2 class="anchored" data-anchor-id="coefficient">Coefficient</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/coef.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:250px; background:white; border-radius:5px; border: white solid 5px"></p>
+</figure>
+</div>
+<p>For continuous metadata the coefficient represents the amount of change the variable causes, i.e.&nbsp;the slope. For example, a high positive value would represent a steep positive slope in a linear model. If we had this for our reads metadata that would indicate the abundance of the feature is likely to be higher if the sample has a higher read count compared to the samples with lower read counts. As <code>maaslin3()</code> analysed relative abundance values (<code>normalization = 'TSS'</code>) we would ideally like no features to have significant associations with <code>Reads</code>, but we most likely will.</p>
+</section>
+<section id="scatter-plots" class="level2">
+<h2 class="anchored" data-anchor-id="scatter-plots">Scatter plots</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/linear_regression.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white solid 5px"></p>
+</figure>
+</div>
+<p>Below is the plot for the association of <em>Penicillium_digitatum_PHI26</em> for Reads. In it we can see the slope is reasonably steep and goes downwards. This matches our coefficient values of -3.2.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Reads_Penicillium_digitatum_PHI26_linear.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:400px"></p>
+</figure>
+</div>
+<p>Below is the plot for the association of <em>Singulisphaera</em> for Reads. Its slope is positive and a lot more gentle, matching our coefficient of 0.57. Additionally, the association appears relatively modest, with a diffuse spread of points and a fairly wide confidence band.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Reads_Singulisphaera_linear.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:400px"></p>
+</figure>
+</div>
+</section>
+<section id="mcqs" class="level2">
+<h2 class="anchored" data-anchor-id="mcqs">MCQs</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/question_bubble_ibm_orange.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white solid 5px"></p>
+</figure>
+</div>
+<p>Please attempt the following questions based on the <strong>top 20 significant associations</strong>:</p>
+<ol type="1">
+<li>Which feature association has the largest positive coefficient?
+<div id="radio_XXMNIYVVBN" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XXMNIYVVBN" value="answer"> <span><em>Agaricicola</em></span></label><label><input type="radio" autocomplete="off" name="radio_XXMNIYVVBN" value=""> <span><em>Mycobacterium</em></span></label><label><input type="radio" autocomplete="off" name="radio_XXMNIYVVBN" value=""> <span><em>Penicillium_digitatum_PHI26</em></span></label>
+</div></li>
+</ol>
+<ol start="2" type="1">
+<li>Which feature association has the largest <code>N_not_zero</code> value?
+<div id="radio_TQHIZUCRME" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_TQHIZUCRME" value=""> <span><em>Agaricicola</em></span></label><label><input type="radio" autocomplete="off" name="radio_TQHIZUCRME" value=""> <span><em>Mycobacterium</em></span></label><label><input type="radio" autocomplete="off" name="radio_TQHIZUCRME" value="answer"> <span><em>Penicillium_digitatum_PHI26</em></span></label>
+</div></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="Code solutions">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+<span class="screen-reader-only">Note</span>Code solutions
 </div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>The above function will take a while (&gt;5 minutes).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#MCQ1: Largest positive coefficient</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>sig_res_reads_abund_tbl <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Extract the five rows with the smallest qval_individual values</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">slice_min</span>(qval_individual, <span class="at">n=</span><span class="dv">20</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Select rows of interest</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">15</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Largest coef</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">slice_max</span>(coef, <span class="at">n=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#MCQ2: Smallest N_not_zero</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sig_res_reads_abund_tbl <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Extract the five rows with the smallest qval_individual values</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">slice_min</span>(qval_individual, <span class="at">n=</span><span class="dv">20</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Select rows of interest</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">15</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Smallest N_not_zero</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">slice_min</span>(N_not_zero, <span class="at">n=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<section id="parameters" class="level2">
-<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/parameter_ibm_purple.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100px; background:white; border-radius:5px; border: white solid 5px"></p>
-</figure>
 </div>
-<p>Unfortunately when running <code>maaslin_plot_results_from_output()</code> we can’t copy the parameters from our <code>maaslin3()</code> function. But at the same time <code>maaslin_plot_results_from_output()</code> uses some of the same parameters as <code>maaslin3()</code> and we need to have these being identical to our previous <code>maaslin3()</code> function.</p>
-<p>Below are the parameters used above:</p>
-<ul>
-<li><code>output</code>: This is the output directory of our <code>maaslin3()</code> function
-<ul>
-<li>Our replot function will uses its contents to recreate the plots</li>
-<li>The recreated and new plots will be placed in the relevant directories within this directory</li>
-</ul></li>
-<li><code>metadf</code>: The metadata table to be used for the plot generation
-<ul>
-<li>We are using the same table as our <code>maaslin3()</code> function</li>
-<li>This can be an opportunity to rename variables and values (see: <a href="https://www.bioconductor.org/packages//release/bioc/vignettes/maaslin3/inst/doc/maaslin3_manual.html#replotting">MaAsLin3 manual on replotting</a>)</li>
-</ul></li>
-<li><code>normalization</code>: Same as <code>maaslin3()</code></li>
-<li><code>transform</code>: Same as <code>maaslin3()</code></li>
-<li><code>max_significance = 0.1</code>: Same as <code>maaslin3()</code>
-<ul>
-<li>This indicates the <code>qval_individual</code> value of the features</li>
-</ul></li>
-<li><code>median_comparison_abundance</code>: Same as <code>maaslin3()</code></li>
-<li><code>median_comparison_prevalence</code>: Same as <code>maaslin3()</code></li>
-<li><code>max_pngs</code>: New maximum number of pngs to create
-<ul>
-<li>If there are less significant features than the max number set you will get as many plots as significant features</li>
-</ul></li>
-</ul>
+</div>
 
 
 </section>
@@ -1474,8 +1575,8 @@ window.onload = function() {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../maaslin3/plots.html" class="pagination-link" aria-label="Plots">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Plots</span>
+      <a href="../maaslin3/categorical_linear_plots.html" class="pagination-link" aria-label="Categorical linear boxplots">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Categorical linear boxplots</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

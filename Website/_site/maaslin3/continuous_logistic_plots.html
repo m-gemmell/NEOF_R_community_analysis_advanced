@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>replot – Advanced R community analysis</title>
+<title>continuous_logistic_plots – Advanced R community analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -68,7 +68,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../maaslin3/plots.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -114,7 +113,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../include/webex.css">
 </head>
 
-<body class="nav-sidebar floating nav-fixed quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-fixed quarto-dark"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -316,7 +315,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Upset</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../maaslin3/maaslin3.html" aria-current="page"> 
+    <a class="nav-link" href="../maaslin3/maaslin3.html"> 
 <span class="menu-text">MaAsLin3</span></a>
   </li>  
 </ul>
@@ -343,222 +342,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <a class="flex-grow-1 no-decor" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title"></h1>
-        </a>     
-    </div>
-  </nav>
 </header>
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/maaslin3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">MaAsLin3</span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Background</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/linear_model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear model</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/mixed_effects_model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mixed effect model</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/logistic_model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Logistic model</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Setup</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/environment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Environment</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/dataset.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Dataset</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/genus_aggregation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Genus aggregation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/count_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Count table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/metadata.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Metadata</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/read_counts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Read counts</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">MaAsLin3 analysis</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/maaslin3_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">MaAsLin3 function</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/lme4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">lme4 formula</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/fixed_effects.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Fixed effects</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/random_effects.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Random effects</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/median_comparison.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Median comparisons</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Text output</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/html_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Significant results table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/metrics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Metrics</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/text_task.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Text tasks</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Output plots</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/plots.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plots</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/replot.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Replot</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#replot" id="toc-replot" class="nav-link active" data-scroll-target="#replot">Replot</a>
+  <li><a href="#continuous-logistic-boxplots" id="toc-continuous-logistic-boxplots" class="nav-link active" data-scroll-target="#continuous-logistic-boxplots">Continuous logistic boxplots</a>
   <ul class="collapse">
-  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters</a></li>
+  <li><a href="#significant-results-table" id="toc-significant-results-table" class="nav-link" data-scroll-target="#significant-results-table">Significant results table</a></li>
+  <li><a href="#coefficient" id="toc-coefficient" class="nav-link" data-scroll-target="#coefficient">Coefficient</a></li>
+  <li><a href="#plots" id="toc-plots" class="nav-link" data-scroll-target="#plots">Plots</a>
+  <ul class="collapse">
+  <li><a href="#m.globosa" id="toc-m.globosa" class="nav-link" data-scroll-target="#m.globosa"><em>M.globosa</em></a></li>
+  </ul></li>
+  <li><a href="#negative-coefficient" id="toc-negative-coefficient" class="nav-link" data-scroll-target="#negative-coefficient">Negative coefficient</a></li>
+  <li><a href="#mcqs" id="toc-mcqs" class="nav-link" data-scroll-target="#mcqs">MCQs</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -570,77 +373,182 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="replot" class="level1">
-<h1>Replot</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/plotter.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; background:white; border-radius:5px; border: white solid 5px"></p>
-</figure>
-</div>
-<p>When we ran <code>maaslin3()</code> it created 250 plot files as we set <code>max_pngs = 250</code>. Unfortunately this means that some of the significant associations we want to interrogate do not have plots.</p>
-<p>Fortunately rather than rerunning the <code>maaslin3()</code> function, which can take a long time, we can run the function <code>maaslin_plot_results_from_output()</code>.</p>
-<p>Run the below code to recreate the plots whilst making more by setting <code>max_pngs=</code> to 1000.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#MaAsLin3 replot</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>maaslin3<span class="sc">::</span><span class="fu">maaslin_plot_results_from_output</span>(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">output =</span> <span class="st">'genus_output'</span>,</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">metadata =</span> metadf,</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">normalization =</span> <span class="st">'TSS'</span>,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">transform =</span> <span class="st">'LOG'</span>,</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Max value of qval_individual value for plot to be generated</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#qval_joint has no effect on this</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_significance =</span> <span class="fl">0.1</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_comparison_abundance =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">median_comparison_prevalence =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_pngs =</span> <span class="dv">1000</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The above function will take a while (&gt;5 minutes).</p>
-</div>
-</div>
-<section id="parameters" class="level2">
-<h2 class="anchored" data-anchor-id="parameters">Parameters</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/parameter_ibm_purple.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100px; background:white; border-radius:5px; border: white solid 5px"></p>
-</figure>
-</div>
-<p>Unfortunately when running <code>maaslin_plot_results_from_output()</code> we can’t copy the parameters from our <code>maaslin3()</code> function. But at the same time <code>maaslin_plot_results_from_output()</code> uses some of the same parameters as <code>maaslin3()</code> and we need to have these being identical to our previous <code>maaslin3()</code> function.</p>
-<p>Below are the parameters used above:</p>
+<section id="continuous-logistic-boxplots" class="level1">
+<h1>Continuous logistic boxplots</h1>
+<center>
+<img src="..\images/boxplot_horiz.png" class="img-fluid" style="width:200px; background:white; border-radius:5px; border: white solid 5px">
+</center>
+<p>Box plots are used to visualise prevalence/logistic modelling associations with continuous effects. These show the range of read sizes for samples where the feature is absent and samples where the feature is absent.</p>
+<p>We will use the <code>Reads</code> grouping to look at continuous logistic results.</p>
+<p>In this page we will:</p>
 <ul>
-<li><code>output</code>: This is the output directory of our <code>maaslin3()</code> function
-<ul>
-<li>Our replot function will uses its contents to recreate the plots</li>
-<li>The recreated and new plots will be placed in the relevant directories within this directory</li>
-</ul></li>
-<li><code>metadf</code>: The metadata table to be used for the plot generation
-<ul>
-<li>We are using the same table as our <code>maaslin3()</code> function</li>
-<li>This can be an opportunity to rename variables and values (see: <a href="https://www.bioconductor.org/packages//release/bioc/vignettes/maaslin3/inst/doc/maaslin3_manual.html#replotting">MaAsLin3 manual on replotting</a>)</li>
-</ul></li>
-<li><code>normalization</code>: Same as <code>maaslin3()</code></li>
-<li><code>transform</code>: Same as <code>maaslin3()</code></li>
-<li><code>max_significance = 0.1</code>: Same as <code>maaslin3()</code>
-<ul>
-<li>This indicates the <code>qval_individual</code> value of the features</li>
-</ul></li>
-<li><code>median_comparison_abundance</code>: Same as <code>maaslin3()</code></li>
-<li><code>median_comparison_prevalence</code>: Same as <code>maaslin3()</code></li>
-<li><code>max_pngs</code>: New maximum number of pngs to create
-<ul>
-<li>If there are less significant features than the max number set you will get as many plots as significant features</li>
-</ul></li>
+<li>Create a significant results table with only prevalence model and read rows</li>
+<li>Explain the coefficient value</li>
+<li>View and display box plots</li>
 </ul>
+<section id="significant-results-table" class="level2">
+<h2 class="anchored" data-anchor-id="significant-results-table">Significant results table</h2>
+<center>
+<img src="..\images/table.png" class="img-fluid" style="width:150px; background:white; border-radius:5px; border: white solid 5px">
+</center>
+<p>Create a significant result tibble only containing <code>Reads</code> associations with the prevalence model.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Create a tbl with our sig results of interest</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sig_res_reads_prev_tbl <span class="ot">&lt;-</span> sig_res_tbl <span class="sc">|&gt;</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter to retain metadata Reads rows</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(metadata <span class="sc">==</span> <span class="st">"Reads"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Filter to retain prevalence model rows</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(model <span class="sc">==</span> <span class="st">"prevalence"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Glimpse the tibble</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>sig_res_reads_prev_tbl <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Extract the top 5 associations by their q-values (qval_individual).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Top 5 significant associations for prevalence modelling of Reads</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sig_res_reads_prev_tbl <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Extract the five rows with the smallest qval_individual values</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">slice_min</span>(qval_individual, <span class="at">n=</span><span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Select rows of interest</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">15</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In this case we actually get 6 rows. This is because the q-value of the 5th and 6th row are identical (i.e.&nbsp;they are both 5th equal place).</p>
+<p>The results aren’t terribly significant with fairly low coefficients (&lt;2).</p>
+</section>
+<section id="coefficient" class="level2">
+<h2 class="anchored" data-anchor-id="coefficient">Coefficient</h2>
+<center>
+<img src="..\images/coef.png" class="img-fluid" style="width:250px; background:white; border-radius:5px; border: white solid 5px">
+</center>
+<p>Let’s look at the top association:</p>
+<ul>
+<li><strong>Feature:</strong> <em>Malassezia globosa</em></li>
+<li><strong>Coefficient:</strong> 1.300098</li>
+<li><strong>Q-value:</strong> 0.002123845</li>
+</ul>
+<p>For continuous metadata the coefficient represents the amount of increased/decreased likelihood of the feature’s presence with a higher value of the metadata. A positive value for <code>Reads</code> would indicate the feature is more likely to be present with samples of higher read counts. In other words a positive coefficient means the logit of the feature being present increases.</p>
+</section>
+<section id="plots" class="level2">
+<h2 class="anchored" data-anchor-id="plots">Plots</h2>
+<center>
+<img src="..\images/boxplot_horiz.png" class="img-fluid" style="width:150px; background:white; border-radius:5px; border: white solid 5px">
+</center>
+<p>Logistic continuous plots are horizontal box plots of read counts separated into 2 groupings:</p>
+<ul>
+<li>Samples where the feature is absent</li>
+<li>Samples where the feature is present</li>
+</ul>
+<p>Let’s look at an example.</p>
+<section id="m.globosa" class="level3">
+<h3 class="anchored" data-anchor-id="m.globosa"><em>M.globosa</em></h3>
+<p>Below is the box plot created for the logistic modelling of <em>Malassezia globosa</em> for the reads effect.</p>
+<center>
+<img src="images/Reads_Malassezia.globosa_logistic.png" class="img-fluid" style="width:400px">
+</center>
+<p><br></p>
+<p>In this case the plot shows:</p>
+<ul>
+<li>Samples where the feature are present tend to have higher read counts</li>
+<li>There are more samples where the feature is present (N (not zero) = 145) compared to where it is absent (172-145=27).</li>
+</ul>
+</section>
+</section>
+<section id="negative-coefficient" class="level2">
+<h2 class="anchored" data-anchor-id="negative-coefficient">Negative coefficient</h2>
+<center>
+<img src="..\images/decline.png" class="img-fluid" style="width:150px; background:white; border-radius:5px; border: white solid 5px">
+</center>
+<p>View the most significant associations with negative coefficients.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Top 5 significant associations with negative coefficients</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># for prevalence modelling of Reads</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sig_res_reads_prev_tbl <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Retain rows with a coefficient value less than 0</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(coef <span class="sc">&lt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Extract the five rows with the smallest qval_individual values</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">slice_min</span>(qval_individual, <span class="at">n=</span><span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Select rows of interest</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,<span class="dv">9</span>,<span class="dv">11</span>,<span class="dv">12</span>,<span class="dv">14</span>,<span class="dv">15</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>There only is one association and it has the error: “Prevalence association possibly induced by stronger abundance association”. Additionally, its individual q-value is &gt;0.1 meaning there will not be a plot of it. It was included in the significant results table as its joint q-value is &lt; 0.1.</p>
+<p>In fact the association is of our old friend <a href="..\relative/continuous_linear_plots.qmd#plots"><em>Pseudomonas_E lactis</em></a>. Its linear prevalence association was very strong for the <a href="..\relative/continuous_linear_plots.qmd#plots">continuous linear analysis and plots</a>. Therefore, its very likely the above error is true and the prevalence association is due to the abundance association.</p>
+<p>It makes sense that you are more likely to get positive coefficient values for reads. The more reads you have the more likely you are to detect all organisms present.</p>
+</section>
+<section id="mcqs" class="level2">
+<h2 class="anchored" data-anchor-id="mcqs">MCQs</h2>
+<center>
+<img src="..\images/question_bubble_ibm_yellow.png" class="img-fluid" style="width:150px; background:white; border-radius:5px; border: white solid 5px">
+</center>
+<p>Attempt the below MCQs based on the prevalence modelling with the <code>Reads</code> fixed effect:</p>
+<p>Answer the two below MCQs based on the top 6 significant features of Reads with the prevalence model.</p>
+<ol type="1">
+<li>Which feature association has the largest coefficient value?
+<div id="radio_FRCZIMQPEU" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_FRCZIMQPEU" value=""> <span><em>Malassezia globosa</em></span></label><label><input type="radio" autocomplete="off" name="radio_FRCZIMQPEU" value="answer"> <span><em>Corynebacterium aurimucosum_E</em></span></label><label><input type="radio" autocomplete="off" name="radio_FRCZIMQPEU" value=""> <span><em>Staphylococcus capitis</em></span></label><label><input type="radio" autocomplete="off" name="radio_FRCZIMQPEU" value=""> <span><em>Xanthomonas campestris</em></span></label><label><input type="radio" autocomplete="off" name="radio_FRCZIMQPEU" value=""> <span><em>Cutibacterium granulosum</em></span></label><label><input type="radio" autocomplete="off" name="radio_FRCZIMQPEU" value=""> <span><em>Staphylococcus haemolyticus</em></span></label>
+</div></li>
+</ol>
+<ol start="2" type="1">
+<li>Which feature has the highest amount of samples where the feature is absent (i.e.&nbsp;lowest prevalence)?
+<div id="radio_WPBHGDVXBX" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_WPBHGDVXBX" value=""> <span><em>Malassezia globosa</em></span></label><label><input type="radio" autocomplete="off" name="radio_WPBHGDVXBX" value="answer"> <span><em>Corynebacterium aurimucosum_E</em></span></label><label><input type="radio" autocomplete="off" name="radio_WPBHGDVXBX" value=""> <span><em>Staphylococcus capitis</em></span></label><label><input type="radio" autocomplete="off" name="radio_WPBHGDVXBX" value=""> <span><em>Xanthomonas campestris</em></span></label><label><input type="radio" autocomplete="off" name="radio_WPBHGDVXBX" value=""> <span><em>Cutibacterium granulosum</em></span></label><label><input type="radio" autocomplete="off" name="radio_WPBHGDVXBX" value=""> <span><em>Staphylococcus haemolyticus</em></span></label>
+</div></li>
+</ol>
+<p>Open and view the reads logistic plots for the following features to answer the next 4 MCQs.</p>
+<ul>
+<li><em>Malassezia globosa</em></li>
+<li><em>Corynebacterium aurimucosum_E</em></li>
+<li><em>Staphylococcus capitis</em></li>
+<li><em>Xanthomonas campestris</em></li>
+</ul>
+<p><strong>Tip:</strong> The reads/x-axis scale is identical for all the plots making for easier comparisons.</p>
+<ol start="3" type="1">
+<li>Which feature has the smallest difference between its median values for the absent and present groupings?
+<div id="radio_HWPITXAXUH" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_HWPITXAXUH" value=""> <span><em>Malassezia globosa</em></span></label><label><input type="radio" autocomplete="off" name="radio_HWPITXAXUH" value="answer"> <span><em>Corynebacterium aurimucosum_E</em></span></label><label><input type="radio" autocomplete="off" name="radio_HWPITXAXUH" value=""> <span><em>Staphylococcus capitis</em></span></label><label><input type="radio" autocomplete="off" name="radio_HWPITXAXUH" value=""> <span><em>Xanthomonas campestris</em></span></label>
+</div></li>
+</ol>
+<ol start="4" type="1">
+<li>Which feature has the highest amount of outliers for the <code>Present</code> box (i.e.&nbsp;points outside the range of the box and whiskers)?
+<div id="radio_HZACYONQGA" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_HZACYONQGA" value=""> <span><em>Malassezia globosa</em></span></label><label><input type="radio" autocomplete="off" name="radio_HZACYONQGA" value=""> <span><em>Corynebacterium aurimucosum_E</em></span></label><label><input type="radio" autocomplete="off" name="radio_HZACYONQGA" value="answer"> <span><em>Staphylococcus capitis</em></span></label><label><input type="radio" autocomplete="off" name="radio_HZACYONQGA" value=""> <span><em>Xanthomonas campestris</em></span></label>
+</div></li>
+</ol>
+<ol start="5" type="1">
+<li>Which feature has the highest median value for the absent samples?
+<div id="radio_SVQAQIIGPF" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_SVQAQIIGPF" value=""> <span><em>Malassezia globosa</em></span></label><label><input type="radio" autocomplete="off" name="radio_SVQAQIIGPF" value="answer"> <span><em>Corynebacterium aurimucosum_E</em></span></label><label><input type="radio" autocomplete="off" name="radio_SVQAQIIGPF" value=""> <span><em>Staphylococcus capitis</em></span></label><label><input type="radio" autocomplete="off" name="radio_SVQAQIIGPF" value=""> <span><em>Xanthomonas campestris</em></span></label>
+</div></li>
+</ol>
+<p>Using the object <code>sig_res_reads_prev_tbl</code>, create some code to answer the below questions.</p>
+<ol start="5" type="1">
+<li>How many associations have a <code>qval_individual</code> value of less than 0.1?
+<div id="radio_FHXEFFIFFO" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_FHXEFFIFFO" value=""> <span><strong>12</strong></span></label><label><input type="radio" autocomplete="off" name="radio_FHXEFFIFFO" value="answer"> <span><strong>26</strong></span></label><label><input type="radio" autocomplete="off" name="radio_FHXEFFIFFO" value=""> <span><strong>172</strong></span></label>
+</div></li>
+</ol>
+<ol start="6" type="1">
+<li>How many associations are there where the feature is absent in more than 50% of the samples?
+<div id="radio_FNLGRAJVNY" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_FNLGRAJVNY" value="answer"> <span><strong>12</strong></span></label><label><input type="radio" autocomplete="off" name="radio_FNLGRAJVNY" value=""> <span><strong>26</strong></span></label><label><input type="radio" autocomplete="off" name="radio_FNLGRAJVNY" value=""> <span><strong>172</strong></span></label>
+</div></li>
+</ol>
+<p><strong>Tip:</strong> You can carry out mathematical operations on different columns in a <a href="https://cgr-liverpool.github.io/Tidyverse/dplyr/filter.html"><code>dplyr::filter()</code> function</a> and carry out a comparison/filter on its result.</p>
+<div class="webex-solution">
+<button>
+Code solution
+</button>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#MCQs</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Significant results with individual q-value &lt; 0.1</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>sig_res_reads_prev_tbl <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(qval_individual<span class="sc">&lt;</span><span class="fl">0.1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">nrow</span>()</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">## Number of results where the feature is absent in more than</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 50% of the samples</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>sig_res_reads_prev_tbl <span class="sc">|&gt;</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>   <span class="fu">filter</span>(N_not_zero<span class="sc">/</span>N <span class="sc">&lt;</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>   <span class="fu">nrow</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
 
 
 </section>
@@ -1472,15 +1380,6 @@ window.onload = function() {
     }
   });
   </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="../maaslin3/plots.html" class="pagination-link" aria-label="Plots">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Plots</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-  </div>
-</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
