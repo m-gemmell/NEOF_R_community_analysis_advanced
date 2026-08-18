@@ -214,6 +214,14 @@ website:
       - section: Categorical plots
         contents:
         - href: maaslin3/categorical_logistic_plots.qmd
+        - href: maaslin3/continuous_logistic_plots.qmd
+      - href: maaslin3/plot_types.qmd
+      - section: Summary plot
+        contents:
+        - href: maaslin3/summary_plot.qmd
+        - href: maaslin3/coefficient_plot.qmd
+        - href: maaslin3/heatmap_plot.qmd
+        - href: maaslin3/summary_plot_interpretation.qmd
 #Format
 format:
   html:

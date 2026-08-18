@@ -562,5 +562,20 @@
   },
   "maaslin3/continuous_logistic_plots.qmd": {
     "continuous_logistic_plots.html": "2dafcf06"
+  },
+  "maaslin3/plot_types.qmd": {
+    "plot_types.html": "8a656c15"
+  },
+  "maaslin3/summary_plot.qmd": {
+    "summary_plot.html": "388854ff"
+  },
+  "maaslin3/coefficient_plot.qmd": {
+    "coefficient_plot.html": "3bcaa5ec"
+  },
+  "maaslin3/heatmap_plot.qmd": {
+    "heatmap_plot.html": "64aeb119"
+  },
+  "maaslin3/summary_plot_interpretation.qmd": {
+    "summary_plot_interpretation.html": "6adceaaa"
   }
 }

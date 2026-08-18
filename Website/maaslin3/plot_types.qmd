@@ -1,0 +1,44 @@
+# Plot types
+![](images/four_plots.png){style="width:300px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+As a recap the four different types of plots are below.
+
+## Linear plots
+
+For abundance associations.
+
+### Categorical linear
+
+Box plot showing the log base 2 relative abundance values of the features.
+
+![](images/Soil_Leifsonia_linear.png){style="width:400px" fig-align="center"}
+
+Coefficient represents the fold change from the reference to the query group.
+
+### Continuous linear
+
+Scatter plot of log base 2 relative abundance (y) against continuous effect (x, read depth in below figure) with best fit line.
+
+![](images/Reads_Penicillium_digitatum_PHI26_linear.png){style="width:400px" fig-align="center"}
+
+Coefficient represents the amount of change the variable causes, i.e. the slope. 
+
+## Logistic plots
+
+For prevalence associations.
+
+### Categorical logistic
+
+Tile plot showing the number of samples where the feature is present and absent for each grouping.
+
+![](images/Soil_Quadrisphaera_logistic.png){style="width:400px" fig-align="center"}
+
+The coefficient indicates the difference of log-odds/logit of the feature being present in query samples compared to the reference samples.
+
+### Continuous logistic
+
+Box plot of the continuous value (read depth in below figure) split by samples where the feature is present and absent.
+
+![](images/Reads_Pilimelia_logistic.png){style="width:400px" fig-align="center"}
+
+The coefficient represents the amount of increased/decreased likelihood (log-odds/logit) of the feature's presence with a higher value of the metadata.

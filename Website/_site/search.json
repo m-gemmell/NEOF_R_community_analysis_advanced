@@ -3803,42 +3803,78 @@
     "href": "maaslin3/continuous_logistic_plots.html",
     "title": "Continuous logistic boxplots",
     "section": "",
-    "text": "Box plots are used to visualise prevalence/logistic modelling associations with continuous effects. These show the range of read sizes for samples where the feature is absent and samples where the feature is absent.\nWe will use the Reads grouping to look at continuous logistic results.\nIn this page we will:\n\nCreate a significant results table with only prevalence model and read rows\nExplain the coefficient value\nView and display box plots\n\n\n\n\n\n\nCreate a significant result tibble only containing Reads associations with the prevalence model.\n\n#Create a tbl with our sig results of interest\nsig_res_reads_prev_tbl &lt;- sig_res_tbl |&gt; \n    #Filter to retain metadata Reads rows\n    dplyr::filter(metadata == \"Reads\") |&gt;\n    #Filter to retain prevalence model rows\n    dplyr::filter(model == \"prevalence\")\n#Glimpse the tibble\nsig_res_reads_prev_tbl |&gt; dplyr::glimpse()\n\nExtract the top 5 associations by their q-values (qval_individual).\n\n#Top 5 significant associations for prevalence modelling of Reads\nsig_res_reads_prev_tbl |&gt;\n    #Extract the five rows with the smallest qval_individual values\n    dplyr::slice_min(qval_individual, n=5) |&gt;\n    #Select rows of interest\n    dplyr::select(c(1:5,9,12,14,15))\n\nIn this case we actually get 6 rows. This is because the q-value of the 5th and 6th row are identical (i.e. they are both 5th equal place).\nThe results aren’t terribly significant with fairly low coefficients (&lt;2).\n\n\n\n\n\n\nLet’s look at the top association:\n\nFeature: Malassezia globosa\nCoefficient: 1.300098\nQ-value: 0.002123845\n\nFor continuous metadata the coefficient represents the amount of increased/decreased likelihood of the feature’s presence with a higher value of the metadata. A positive value for Reads would indicate the feature is more likely to be present with samples of higher read counts. In other words a positive coefficient means the logit of the feature being present increases.\n\n\n\n\n\n\nLogistic continuous plots are horizontal box plots of read counts separated into 2 groupings:\n\nSamples where the feature is absent\nSamples where the feature is present\n\nLet’s look at an example.\n\n\nBelow is the box plot created for the logistic modelling of Malassezia globosa for the reads effect.\n\n\n\n\nIn this case the plot shows:\n\nSamples where the feature are present tend to have higher read counts\nThere are more samples where the feature is present (N (not zero) = 145) compared to where it is absent (172-145=27).\n\n\n\n\n\n\n\n\nView the most significant associations with negative coefficients.\n\n#Top 5 significant associations with negative coefficients\n# for prevalence modelling of Reads\nsig_res_reads_prev_tbl |&gt;\n    #Retain rows with a coefficient value less than 0\n    dplyr::filter(coef &lt; 0) |&gt;\n    #Extract the five rows with the smallest qval_individual values\n    dplyr::slice_min(qval_individual, n=5) |&gt;\n    #Select rows of interest\n    dplyr::select(c(1:5,9,11,12,14,15))\n\nThere only is one association and it has the error: “Prevalence association possibly induced by stronger abundance association”. Additionally, its individual q-value is &gt;0.1 meaning there will not be a plot of it. It was included in the significant results table as its joint q-value is &lt; 0.1.\nIn fact the association is of our old friend Pseudomonas_E lactis. Its linear prevalence association was very strong for the continuous linear analysis and plots. Therefore, its very likely the above error is true and the prevalence association is due to the abundance association.\nIt makes sense that you are more likely to get positive coefficient values for reads. The more reads you have the more likely you are to detect all organisms present.\n\n\n\n\n\n\nAttempt the below MCQs based on the prevalence modelling with the Reads fixed effect:\nAnswer the two below MCQs based on the top 6 significant features of Reads with the prevalence model.\n\nWhich feature association has the largest coefficient value?\n\n Malassezia globosa Corynebacterium aurimucosum_E Staphylococcus capitis Xanthomonas campestris Cutibacterium granulosum Staphylococcus haemolyticus\n\n\n\nWhich feature has the highest amount of samples where the feature is absent (i.e. lowest prevalence)?\n\n Malassezia globosa Corynebacterium aurimucosum_E Staphylococcus capitis Xanthomonas campestris Cutibacterium granulosum Staphylococcus haemolyticus\n\n\nOpen and view the reads logistic plots for the following features to answer the next 4 MCQs.\n\nMalassezia globosa\nCorynebacterium aurimucosum_E\nStaphylococcus capitis\nXanthomonas campestris\n\nTip: The reads/x-axis scale is identical for all the plots making for easier comparisons.\n\nWhich feature has the smallest difference between its median values for the absent and present groupings?\n\n Malassezia globosa Corynebacterium aurimucosum_E Staphylococcus capitis Xanthomonas campestris\n\n\n\nWhich feature has the highest amount of outliers for the Present box (i.e. points outside the range of the box and whiskers)?\n\n Malassezia globosa Corynebacterium aurimucosum_E Staphylococcus capitis Xanthomonas campestris\n\n\n\nWhich feature has the highest median value for the absent samples?\n\n Malassezia globosa Corynebacterium aurimucosum_E Staphylococcus capitis Xanthomonas campestris\n\n\nUsing the object sig_res_reads_prev_tbl, create some code to answer the below questions.\n\nHow many associations have a qval_individual value of less than 0.1?\n\n 12 26 172\n\n\n\nHow many associations are there where the feature is absent in more than 50% of the samples?\n\n 12 26 172\n\n\nTip: You can carry out mathematical operations on different columns in a dplyr::filter() function and carry out a comparison/filter on its result.\n\n\nCode solution\n\n\n#MCQs\n## Significant results with individual q-value &lt; 0.1\nsig_res_reads_prev_tbl |&gt;\n   filter(qval_individual&lt;0.1) |&gt;\n   nrow()\n## Number of results where the feature is absent in more than\n# 50% of the samples\nsig_res_reads_prev_tbl |&gt;\n   filter(N_not_zero/N &lt; 0.5) |&gt;\n   nrow()"
+    "text": "Box plots are used to visualise prevalence/logistic modelling associations with continuous effects. These show the range of read sizes for samples where the feature is absent and samples where the feature is absent.\nWe will use the Reads grouping to look at continuous logistic results.\nIn this page we will:\n\nCreate a significant results table with only prevalence model and read rows\nExplain the coefficient value\nView and display box plots\n\n\n\n\n\n\n\n\nCreate a significant result tibble only containing Reads associations with the prevalence model.\n\n#Create a tbl with our sig results of interest\nsig_res_reads_prev_tbl &lt;- sig_res_tbl |&gt; \n    #Filter to retain metadata Reads rows\n    dplyr::filter(metadata == \"Reads\") |&gt;\n    #Filter to retain prevalence model rows\n    dplyr::filter(model == \"prevalence\")\n#Glimpse the tibble\nsig_res_reads_prev_tbl |&gt; dplyr::glimpse()\n\nExtract the top 5 associations by their q-values (qval_individual).\n\n#Top 5 significant associations for prevalence modelling of Reads\nsig_res_reads_prev_tbl |&gt;\n    #Extract the five rows with the smallest qval_individual values\n    dplyr::slice_min(qval_individual, n=5) |&gt;\n    #Select rows of interest\n    dplyr::select(c(1:5,9,12,14,15))\n\n\n\n\n\n\n\n\n\nLet’s look at the top association:\n\nFeature: Azospira\nCoefficient: 2.360408\nQ-value: 0.012062\n\nFor continuous metadata the coefficient represents the amount of increased/decreased likelihood of the feature’s presence with a higher value of the metadata. A positive value for Reads would indicate the feature is more likely to be present with samples of higher read counts. In other words a positive coefficient means the logit of the feature being present increases.\n\n\n\n\n\n\n\n\nLogistic continuous plots are horizontal box plots of read counts separated into 2 groupings:\n\nSamples where the feature is absent\nSamples where the feature is present\n\nLet’s look at an example.\n\n\nBelow is the box plot created for the logistic modelling of Pilimelia for the reads effect.\n\n\n\n\n\nIn this case the plot shows:\n\nSamples where the feature are present tend to have higher read counts\nThere are more samples where the feature is absent (N (not zero) = 16) compared to where it is absent (64-16=48).\n\n\n\n\n\n\n\n\n\n\nView the associations with negative coefficients in sig_res_reads_prev_tbl.\n\n#Significant associations with negative coefficients\n# for prevalence modelling of Reads\nsig_res_reads_prev_tbl |&gt;\n    #Retain rows with a coefficient value less than 0\n    dplyr::filter(coef &lt; 0) |&gt;\n    #Select rows of interest\n    dplyr::select(c(1:5,9,11,12,14,15)) |&gt;\n    #Arrange by individual q-value\n    dplyr::arrange(qval_individual)\n\nFrom this we can see that we have 12 associations. This is in contrast to the 129 positive associations (141-12=129). However, there are some caveats to these negative associations.\nOnly four of the associations do not have errors. The other eight have the error: “Prevalence association possibly induced by stronger abundance association”.\nThe most important feature to notice is that only 4 of the associations are significant (qval_individual&lt;0.1). The other eight are included because their joint q-values are &lt; 0.1.\nIt makes sense that you are more likely to get positive coefficient values for reads. The more reads you have the more likely you are to detect all organisms present.\n\n\n\n\n\n\n\n\nAttempt the below MCQs based on the prevalence modelling with the Reads fixed effect:\nAnswer the two below MCQs based on the top 5 significant features of Reads with the prevalence model.\n\nWhich feature association has the largest coefficient value?\n\n Azospira Talaromyces_phialosporus Amaricoccus Bacteriovorax Advenella\n\n\n\nWhich feature has the highest amount of samples where the feature is absent (i.e. lowest prevalence)?\n\n Azospira Talaromyces_phialosporus Amaricoccus Bacteriovorax Advenella\n\n\nOpen and view the reads logistic plots for the following features to answer the next 3 MCQs.\n\nActinocorallia\nHirschia\nTruepera\n\nTip: The reads/x-axis scale is identical for all the plots making for easier comparisons.\n\nWhich feature has the smallest difference between its median values for the absent and present groupings?\n\n Actinocorallia Hirschia Truepera\n\n\n\nWhich feature has the lowest IQR range for the Absent box?\n\n Actinocorallia Hirschia Truepera\n\n\n\nWhich feature has the lowest median value for the absent samples?\n\n Actinocorallia Hirschia Truepera\n\n\nUsing the object sig_res_reads_prev_tbl, create some code to answer the below questions.\n\nHow many associations have a qval_individual value of less than 0.1?\n\n 24 60 141\n\n\n\nHow many associations are there where the feature is absent in more than 50% of the samples?\n\n 24 60 141\n\n\nTip: You can carry out mathematical operations on different columns in a dplyr::filter() function and carry out a comparison/filter on its result.\n\n\nCode solution\n\n\n#MCQs\n## Significant results with individual q-value &lt; 0.1\nsig_res_reads_prev_tbl |&gt;\n   filter(qval_individual&lt;0.1) |&gt;\n   nrow()\n## Number of results where the feature is absent in more than\n# 50% of the samples\nsig_res_reads_prev_tbl |&gt;\n   filter(N_not_zero/N &lt; 0.5) |&gt;\n   nrow()",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Categorical plots",
+      "Continuous logistic boxplots"
+    ]
   },
   {
     "objectID": "maaslin3/continuous_logistic_plots.html#significant-results-table",
     "href": "maaslin3/continuous_logistic_plots.html#significant-results-table",
     "title": "Continuous logistic boxplots",
     "section": "",
-    "text": "Create a significant result tibble only containing Reads associations with the prevalence model.\n\n#Create a tbl with our sig results of interest\nsig_res_reads_prev_tbl &lt;- sig_res_tbl |&gt; \n    #Filter to retain metadata Reads rows\n    dplyr::filter(metadata == \"Reads\") |&gt;\n    #Filter to retain prevalence model rows\n    dplyr::filter(model == \"prevalence\")\n#Glimpse the tibble\nsig_res_reads_prev_tbl |&gt; dplyr::glimpse()\n\nExtract the top 5 associations by their q-values (qval_individual).\n\n#Top 5 significant associations for prevalence modelling of Reads\nsig_res_reads_prev_tbl |&gt;\n    #Extract the five rows with the smallest qval_individual values\n    dplyr::slice_min(qval_individual, n=5) |&gt;\n    #Select rows of interest\n    dplyr::select(c(1:5,9,12,14,15))\n\nIn this case we actually get 6 rows. This is because the q-value of the 5th and 6th row are identical (i.e. they are both 5th equal place).\nThe results aren’t terribly significant with fairly low coefficients (&lt;2)."
+    "text": "Create a significant result tibble only containing Reads associations with the prevalence model.\n\n#Create a tbl with our sig results of interest\nsig_res_reads_prev_tbl &lt;- sig_res_tbl |&gt; \n    #Filter to retain metadata Reads rows\n    dplyr::filter(metadata == \"Reads\") |&gt;\n    #Filter to retain prevalence model rows\n    dplyr::filter(model == \"prevalence\")\n#Glimpse the tibble\nsig_res_reads_prev_tbl |&gt; dplyr::glimpse()\n\nExtract the top 5 associations by their q-values (qval_individual).\n\n#Top 5 significant associations for prevalence modelling of Reads\nsig_res_reads_prev_tbl |&gt;\n    #Extract the five rows with the smallest qval_individual values\n    dplyr::slice_min(qval_individual, n=5) |&gt;\n    #Select rows of interest\n    dplyr::select(c(1:5,9,12,14,15))",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Categorical plots",
+      "Continuous logistic boxplots"
+    ]
   },
   {
     "objectID": "maaslin3/continuous_logistic_plots.html#coefficient",
     "href": "maaslin3/continuous_logistic_plots.html#coefficient",
     "title": "Continuous logistic boxplots",
     "section": "",
-    "text": "Let’s look at the top association:\n\nFeature: Malassezia globosa\nCoefficient: 1.300098\nQ-value: 0.002123845\n\nFor continuous metadata the coefficient represents the amount of increased/decreased likelihood of the feature’s presence with a higher value of the metadata. A positive value for Reads would indicate the feature is more likely to be present with samples of higher read counts. In other words a positive coefficient means the logit of the feature being present increases."
+    "text": "Let’s look at the top association:\n\nFeature: Azospira\nCoefficient: 2.360408\nQ-value: 0.012062\n\nFor continuous metadata the coefficient represents the amount of increased/decreased likelihood of the feature’s presence with a higher value of the metadata. A positive value for Reads would indicate the feature is more likely to be present with samples of higher read counts. In other words a positive coefficient means the logit of the feature being present increases.",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Categorical plots",
+      "Continuous logistic boxplots"
+    ]
   },
   {
     "objectID": "maaslin3/continuous_logistic_plots.html#plots",
     "href": "maaslin3/continuous_logistic_plots.html#plots",
     "title": "Continuous logistic boxplots",
     "section": "",
-    "text": "Logistic continuous plots are horizontal box plots of read counts separated into 2 groupings:\n\nSamples where the feature is absent\nSamples where the feature is present\n\nLet’s look at an example.\n\n\nBelow is the box plot created for the logistic modelling of Malassezia globosa for the reads effect.\n\n\n\n\nIn this case the plot shows:\n\nSamples where the feature are present tend to have higher read counts\nThere are more samples where the feature is present (N (not zero) = 145) compared to where it is absent (172-145=27)."
+    "text": "Logistic continuous plots are horizontal box plots of read counts separated into 2 groupings:\n\nSamples where the feature is absent\nSamples where the feature is present\n\nLet’s look at an example.\n\n\nBelow is the box plot created for the logistic modelling of Pilimelia for the reads effect.\n\n\n\n\n\nIn this case the plot shows:\n\nSamples where the feature are present tend to have higher read counts\nThere are more samples where the feature is absent (N (not zero) = 16) compared to where it is absent (64-16=48).",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Categorical plots",
+      "Continuous logistic boxplots"
+    ]
   },
   {
     "objectID": "maaslin3/continuous_logistic_plots.html#negative-coefficient",
     "href": "maaslin3/continuous_logistic_plots.html#negative-coefficient",
     "title": "Continuous logistic boxplots",
     "section": "",
-    "text": "View the most significant associations with negative coefficients.\n\n#Top 5 significant associations with negative coefficients\n# for prevalence modelling of Reads\nsig_res_reads_prev_tbl |&gt;\n    #Retain rows with a coefficient value less than 0\n    dplyr::filter(coef &lt; 0) |&gt;\n    #Extract the five rows with the smallest qval_individual values\n    dplyr::slice_min(qval_individual, n=5) |&gt;\n    #Select rows of interest\n    dplyr::select(c(1:5,9,11,12,14,15))\n\nThere only is one association and it has the error: “Prevalence association possibly induced by stronger abundance association”. Additionally, its individual q-value is &gt;0.1 meaning there will not be a plot of it. It was included in the significant results table as its joint q-value is &lt; 0.1.\nIn fact the association is of our old friend Pseudomonas_E lactis. Its linear prevalence association was very strong for the continuous linear analysis and plots. Therefore, its very likely the above error is true and the prevalence association is due to the abundance association.\nIt makes sense that you are more likely to get positive coefficient values for reads. The more reads you have the more likely you are to detect all organisms present."
+    "text": "View the associations with negative coefficients in sig_res_reads_prev_tbl.\n\n#Significant associations with negative coefficients\n# for prevalence modelling of Reads\nsig_res_reads_prev_tbl |&gt;\n    #Retain rows with a coefficient value less than 0\n    dplyr::filter(coef &lt; 0) |&gt;\n    #Select rows of interest\n    dplyr::select(c(1:5,9,11,12,14,15)) |&gt;\n    #Arrange by individual q-value\n    dplyr::arrange(qval_individual)\n\nFrom this we can see that we have 12 associations. This is in contrast to the 129 positive associations (141-12=129). However, there are some caveats to these negative associations.\nOnly four of the associations do not have errors. The other eight have the error: “Prevalence association possibly induced by stronger abundance association”.\nThe most important feature to notice is that only 4 of the associations are significant (qval_individual&lt;0.1). The other eight are included because their joint q-values are &lt; 0.1.\nIt makes sense that you are more likely to get positive coefficient values for reads. The more reads you have the more likely you are to detect all organisms present.",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Categorical plots",
+      "Continuous logistic boxplots"
+    ]
   },
   {
     "objectID": "maaslin3/continuous_logistic_plots.html#mcqs",
     "href": "maaslin3/continuous_logistic_plots.html#mcqs",
     "title": "Continuous logistic boxplots",
     "section": "",
-    "text": "Attempt the below MCQs based on the prevalence modelling with the Reads fixed effect:\nAnswer the two below MCQs based on the top 6 significant features of Reads with the prevalence model.\n\nWhich feature association has the largest coefficient value?\n\n Malassezia globosa Corynebacterium aurimucosum_E Staphylococcus capitis Xanthomonas campestris Cutibacterium granulosum Staphylococcus haemolyticus\n\n\n\nWhich feature has the highest amount of samples where the feature is absent (i.e. lowest prevalence)?\n\n Malassezia globosa Corynebacterium aurimucosum_E Staphylococcus capitis Xanthomonas campestris Cutibacterium granulosum Staphylococcus haemolyticus\n\n\nOpen and view the reads logistic plots for the following features to answer the next 4 MCQs.\n\nMalassezia globosa\nCorynebacterium aurimucosum_E\nStaphylococcus capitis\nXanthomonas campestris\n\nTip: The reads/x-axis scale is identical for all the plots making for easier comparisons.\n\nWhich feature has the smallest difference between its median values for the absent and present groupings?\n\n Malassezia globosa Corynebacterium aurimucosum_E Staphylococcus capitis Xanthomonas campestris\n\n\n\nWhich feature has the highest amount of outliers for the Present box (i.e. points outside the range of the box and whiskers)?\n\n Malassezia globosa Corynebacterium aurimucosum_E Staphylococcus capitis Xanthomonas campestris\n\n\n\nWhich feature has the highest median value for the absent samples?\n\n Malassezia globosa Corynebacterium aurimucosum_E Staphylococcus capitis Xanthomonas campestris\n\n\nUsing the object sig_res_reads_prev_tbl, create some code to answer the below questions.\n\nHow many associations have a qval_individual value of less than 0.1?\n\n 12 26 172\n\n\n\nHow many associations are there where the feature is absent in more than 50% of the samples?\n\n 12 26 172\n\n\nTip: You can carry out mathematical operations on different columns in a dplyr::filter() function and carry out a comparison/filter on its result.\n\n\nCode solution\n\n\n#MCQs\n## Significant results with individual q-value &lt; 0.1\nsig_res_reads_prev_tbl |&gt;\n   filter(qval_individual&lt;0.1) |&gt;\n   nrow()\n## Number of results where the feature is absent in more than\n# 50% of the samples\nsig_res_reads_prev_tbl |&gt;\n   filter(N_not_zero/N &lt; 0.5) |&gt;\n   nrow()"
+    "text": "Attempt the below MCQs based on the prevalence modelling with the Reads fixed effect:\nAnswer the two below MCQs based on the top 5 significant features of Reads with the prevalence model.\n\nWhich feature association has the largest coefficient value?\n\n Azospira Talaromyces_phialosporus Amaricoccus Bacteriovorax Advenella\n\n\n\nWhich feature has the highest amount of samples where the feature is absent (i.e. lowest prevalence)?\n\n Azospira Talaromyces_phialosporus Amaricoccus Bacteriovorax Advenella\n\n\nOpen and view the reads logistic plots for the following features to answer the next 3 MCQs.\n\nActinocorallia\nHirschia\nTruepera\n\nTip: The reads/x-axis scale is identical for all the plots making for easier comparisons.\n\nWhich feature has the smallest difference between its median values for the absent and present groupings?\n\n Actinocorallia Hirschia Truepera\n\n\n\nWhich feature has the lowest IQR range for the Absent box?\n\n Actinocorallia Hirschia Truepera\n\n\n\nWhich feature has the lowest median value for the absent samples?\n\n Actinocorallia Hirschia Truepera\n\n\nUsing the object sig_res_reads_prev_tbl, create some code to answer the below questions.\n\nHow many associations have a qval_individual value of less than 0.1?\n\n 24 60 141\n\n\n\nHow many associations are there where the feature is absent in more than 50% of the samples?\n\n 24 60 141\n\n\nTip: You can carry out mathematical operations on different columns in a dplyr::filter() function and carry out a comparison/filter on its result.\n\n\nCode solution\n\n\n#MCQs\n## Significant results with individual q-value &lt; 0.1\nsig_res_reads_prev_tbl |&gt;\n   filter(qval_individual&lt;0.1) |&gt;\n   nrow()\n## Number of results where the feature is absent in more than\n# 50% of the samples\nsig_res_reads_prev_tbl |&gt;\n   filter(N_not_zero/N &lt; 0.5) |&gt;\n   nrow()",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Categorical plots",
+      "Continuous logistic boxplots"
+    ]
   },
   {
     "objectID": "maaslin3/categorical_logistic_plots.html#errors",
@@ -3851,6 +3887,211 @@
       "Output plots",
       "Categorical plots",
       "Categorical logistic grid plots"
+    ]
+  },
+  {
+    "objectID": "maaslin3/plot_types.html",
+    "href": "maaslin3/plot_types.html",
+    "title": "Plot types",
+    "section": "",
+    "text": "As a recap the four different types of plots are below.\n\n\nFor abundance associations.\n\n\nBox plot showing the log base 2 relative abundance values of the features.\n\n\n\n\n\nCoefficient represents the fold change from the reference to the query group.\n\n\n\nScatter plot of log base 2 relative abundance (y) against continuous effect (x, read depth in below figure) with best fit line.\n\n\n\n\n\nCoefficient represents the amount of change the variable causes, i.e. the slope.\n\n\n\n\nFor prevalence associations.\n\n\nTile plot showing the number of samples where the feature is present and absent for each grouping.\n\n\n\n\n\nThe coefficient indicates the difference of log-odds/logit of the feature being present in query samples compared to the reference samples.\n\n\n\nBox plot of the continuous value (read depth in below figure) split by samples where the feature is present and absent.\n\n\n\n\n\nThe coefficient represents the amount of increased/decreased likelihood (log-odds/logit) of the feature’s presence with a higher value of the metadata.",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Plot types"
+    ]
+  },
+  {
+    "objectID": "maaslin3/plot_types.html#linear-plots",
+    "href": "maaslin3/plot_types.html#linear-plots",
+    "title": "Plot types",
+    "section": "",
+    "text": "For abundance associations.\n\n\nBox plot showing the log base 2 relative abundance values of the features.\n\n\n\n\n\nCoefficient represents the fold change from the reference to the query group.\n\n\n\nScatter plot of log base 2 relative abundance (y) against continuous effect (x, read depth in below figure) with best fit line.\n\n\n\n\n\nCoefficient represents the amount of change the variable causes, i.e. the slope.",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Plot types"
+    ]
+  },
+  {
+    "objectID": "maaslin3/plot_types.html#logistic-plots",
+    "href": "maaslin3/plot_types.html#logistic-plots",
+    "title": "Plot types",
+    "section": "",
+    "text": "For prevalence associations.\n\n\nTile plot showing the number of samples where the feature is present and absent for each grouping.\n\n\n\n\n\nThe coefficient indicates the difference of log-odds/logit of the feature being present in query samples compared to the reference samples.\n\n\n\nBox plot of the continuous value (read depth in below figure) split by samples where the feature is present and absent.\n\n\n\n\n\nThe coefficient represents the amount of increased/decreased likelihood (log-odds/logit) of the feature’s presence with a higher value of the metadata.",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Plot types"
+    ]
+  },
+  {
+    "objectID": "maaslin3/summary_plot.html",
+    "href": "maaslin3/summary_plot.html",
+    "title": "Summary plot intro",
+    "section": "",
+    "text": "We have looked at the four different types of plots and their coefficients. With this knowledge we can now look at the summary plot.\nNormally, this would be the first plot you look at but it was best to look through the other plots to learn bit by bit rather than all at once.\n\n\nIt is good to display the summary plot in your jupyter notebook since it is a very useful overview. Type and run the below code to do so.\n\n#View summary image\nIRdisplay::display_png(file=\"./genus_output/figures/summary_plot.png\")\n\nThe plot should be the same as below:\n\nThis only contains the coefficient plot since we only tested 2 fixed effects. So you can see what the heatmap looks like we’ll replot to include one.\n\n\n\n\n\n\n\n\nWe can use the function maaslin3::maaslin_plot_results_from_output() to recreate our plots. Importantly we can use the parameters coef_plot_vars= and heatmap_vars= to set which variables will be included in the heatmap and coefficient plot. Additionally, it sets the order of the variables too.\nThe easiest option is to create vectors of the variable names. Some important notes:\n\nThe variables names need to be exactly as they are shown in the summary plot\n\nFor example the first variable in the plot above is “Soil Rhizosphere Soil” i.e. The metadata name, a space, and then the value\n\nYou can add variables to the heatmap that only show in the coefficient plot to the heatmap and vice versa\nIf you exclude a variable it will not show in the subsequent plot\nIf you include a variable that does not exist the replot function will ignore the variables you provide\n\nFor example, if you try to include “Soil Bulk Soil” it will not work as it is the reference value\n\n\nSet the order of variables for replotting.\n\n#Set order of Coefficient plot variables\ncoef_plot_variables &lt;- c(\"\", \"Sample Scalp\")\n#Set order of heatmap variables for plot recreation\n#Do not include V1 since it is the reference\nheatmap_variables &lt;-\n    c(\"Visit V2\",\"Visit V3\",\"Visit V4\",\"Visit V5\",\"Visit V6\",\n     \"Visit V7\",\"Visit V8\",\"Visit V9\",\"Visit V10\",\"Visit V11\",\"Visit V12\")\n\nReplot with the coefficient and heatmap variables.\n\n\n\n\n\n\nNote\n\n\n\nYou can include the parameters coef_plot_vars and heatmap_vars in the maaslin3() function. However, it is normally best to see the first summary plot maaslin3() creates and then replot with the parameters so you can see what you want to change.\n\n\n\n#MaAsLin3 replot\nmaaslin3::maaslin_plot_results_from_output(\n    output = 'PMP_output',\n    metadata = metadata,\n    normalization = 'NONE',\n    transform = 'LOG',\n    max_significance = 0.1,\n    median_comparison_abundance = TRUE,\n    median_comparison_prevalence = FALSE,\n    #Coefficient and heatmap variables\n    coef_plot_vars = coef_plot_variables,\n    heatmap_vars = heatmap_variables,\n    max_pngs = 500\n)\n\nYou’ll then get the below summary plot.\n\n\n\n\n\n\n\n\nThe plot show us the top 25 features by significant associations with 2 main types of plots:\n\nCoefficient plot\n\nOn the left side\nOne plot each for the two most significant fixed effect comparisons (unless you choose them with replotting)\n\nCoefficient heatmap\n\nOn the right side\nOne plot is for the prevalence logistic modelling of all the fixed effect comparisons not in the coefficient plot (unless you choose them with replotting)\nOne plot is for the abundance linear modelling of all the fixed effect comparisons not in the coefficient plot (unless you choose them with replotting)\n\n\nThere is a legend on the right side. We’ll explain the plots and their values starting with the coefficient plot.",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Summary plot",
+      "Summary plot intro"
+    ]
+  },
+  {
+    "objectID": "maaslin3/summary_plot.html#the-plot",
+    "href": "maaslin3/summary_plot.html#the-plot",
+    "title": "Summary plot intro",
+    "section": "",
+    "text": "It is good to display the summary plot in your jupyter notebook since it is a very useful overview. Type and run the below code to do so.\n\n#View summary image\nIRdisplay::display_png(file=\"./genus_output/figures/summary_plot.png\")\n\nThe plot should be the same as below:\n\nThis only contains the coefficient plot since we only tested 2 fixed effects. So you can see what the heatmap looks like we’ll replot to include one.",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Summary plot",
+      "Summary plot intro"
+    ]
+  },
+  {
+    "objectID": "maaslin3/coefficient_plot.html",
+    "href": "maaslin3/coefficient_plot.html",
+    "title": "Coefficient plot",
+    "section": "",
+    "text": "The coefficient plots display information on the abundance and prevalence models. Below is the coefficient plot by itself (made by manual editing of the summary plot).\n\n\n\n\n\nLets go through its features/aesthetics one by one.\n\n\nThe features outside of the plotting area are:\n\nx-axis: The coefficient value of the association\ny-axis: The feature (e.g. Peridibacter)\nFacet header: The Fixed effect comparison (e.g. Soil Rhizosphere Soil indicates the Rhizosphere Soil against Bulk Soil comparison)\n\n\n\n\n\n\n\n\n\nThe features inside the plotting area can be split by Abundance and Prevalence modelling.\nLets look at the abundance modelling first.\n\nCircles: The abundance coefficient\n\nx-axis: The position represents its coefficient value\ncolour: Represents its q-value (PFDR)\n\nGradient goes from white to dark purple\nGradient range is displayed on the legend (1 -&gt; 1e-31)\n\n\nHorizontal line: Represents the null hypothesis\n\nIn this case this is the median coefficient value of the metadata\nWe set the abundance median comparison to TRUE, more info: Median comparisons\n\n\n\n\n\n\n\n\n\n\n\nTriangle: The prevalence coefficient\n\nx-axis: The position represents its coefficient value\ncolour: Represents its q-value (PFDR)\n\nGradient goes from white to dark cyan\nGradient range is displayed on the legend (1 -&gt; 1e-31)\n\n\nHorizontal dashed line: Represents the null hypothesis\n\nIn this case this is 0\nWe set the abundance median comparison to FALSE, more info: Median comparisons\n\n\n\n\n\n\n\n\n\n\nUsing the coefficient plot, answer the below MCQs.\n\nWhich comparison has a higher null hypothesis for abundance (i.e. median coefficient used for median comparison)?\n\n Soil Rhizosphere Soil Reads\n\n\n\nWhich comparison has a larger amount of significant prevalence associations?\n\n Soil Rhizosphere Soil Reads\n\n\n\nWhich significant association has the highest prevalence coefficient?\n\n Corynebacterium pseudokroppenstedtii-SampleSite Scalp Gemella sanguinis-SampleSite Cheek Veillonella parvula_A-SampleSite Cheek\n\n\n\nWhich significant association has the lowest abundance coefficient?\n\n Corynebacterium pseudokroppenstedtii-SampleSite Scalp Gemella sanguinis-SampleSite Cheek Veillonella parvula_A-SampleSite Cheek",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Summary plot",
+      "Coefficient plot"
+    ]
+  },
+  {
+    "objectID": "maaslin3/coefficient_plot.html#outside-plotting-area",
+    "href": "maaslin3/coefficient_plot.html#outside-plotting-area",
+    "title": "Coefficient plot",
+    "section": "",
+    "text": "The features outside of the plotting area are:\n\nx-axis: The coefficient value of the association\ny-axis: The feature (e.g. Peridibacter)\nFacet header: The Fixed effect comparison (e.g. Soil Rhizosphere Soil indicates the Rhizosphere Soil against Bulk Soil comparison)",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Summary plot",
+      "Coefficient plot"
+    ]
+  },
+  {
+    "objectID": "maaslin3/coefficient_plot.html#abundance-values",
+    "href": "maaslin3/coefficient_plot.html#abundance-values",
+    "title": "Coefficient plot",
+    "section": "",
+    "text": "The features inside the plotting area can be split by Abundance and Prevalence modelling.\nLets look at the abundance modelling first.\n\nCircles: The abundance coefficient\n\nx-axis: The position represents its coefficient value\ncolour: Represents its q-value (PFDR)\n\nGradient goes from white to dark purple\nGradient range is displayed on the legend (1 -&gt; 1e-31)\n\n\nHorizontal line: Represents the null hypothesis\n\nIn this case this is the median coefficient value of the metadata\nWe set the abundance median comparison to TRUE, more info: Median comparisons",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Summary plot",
+      "Coefficient plot"
+    ]
+  },
+  {
+    "objectID": "maaslin3/coefficient_plot.html#prevalence-values",
+    "href": "maaslin3/coefficient_plot.html#prevalence-values",
+    "title": "Coefficient plot",
+    "section": "",
+    "text": "Triangle: The prevalence coefficient\n\nx-axis: The position represents its coefficient value\ncolour: Represents its q-value (PFDR)\n\nGradient goes from white to dark cyan\nGradient range is displayed on the legend (1 -&gt; 1e-31)\n\n\nHorizontal dashed line: Represents the null hypothesis\n\nIn this case this is 0\nWe set the abundance median comparison to FALSE, more info: Median comparisons",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Summary plot",
+      "Coefficient plot"
+    ]
+  },
+  {
+    "objectID": "maaslin3/coefficient_plot.html#mcqs",
+    "href": "maaslin3/coefficient_plot.html#mcqs",
+    "title": "Coefficient plot",
+    "section": "",
+    "text": "Using the coefficient plot, answer the below MCQs.\n\nWhich comparison has a higher null hypothesis for abundance (i.e. median coefficient used for median comparison)?\n\n Soil Rhizosphere Soil Reads\n\n\n\nWhich comparison has a larger amount of significant prevalence associations?\n\n Soil Rhizosphere Soil Reads\n\n\n\nWhich significant association has the highest prevalence coefficient?\n\n Corynebacterium pseudokroppenstedtii-SampleSite Scalp Gemella sanguinis-SampleSite Cheek Veillonella parvula_A-SampleSite Cheek\n\n\n\nWhich significant association has the lowest abundance coefficient?\n\n Corynebacterium pseudokroppenstedtii-SampleSite Scalp Gemella sanguinis-SampleSite Cheek Veillonella parvula_A-SampleSite Cheek",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Summary plot",
+      "Coefficient plot"
+    ]
+  },
+  {
+    "objectID": "maaslin3/heatmap_plot.html",
+    "href": "maaslin3/heatmap_plot.html",
+    "title": "Coefficient heatmap",
+    "section": "",
+    "text": "Coefficient heatmap\nThere are two heatmaps, one for abundance and one for prevalence. These heatmaps are further split by metadata/effects, in this case Reads and TimepointNamePool_visits7,8,9.\nBelow is the coefficient heatmap by itself (made by manual editing of the summary plot).\n\n\n\n\n\nThe features of the plot are:\n\nColour: Coefficient value\n\nThe colour goes from blue (-Infinity) to white (0) to red (+Infinity).\n\nStars: The significance threshold\n\nOne star (*) represents a q-value less than our threshold (&lt;0.1)\nTwo stars (**) represents a q-value 10 times less than our threshold (&lt;0.01)\nNote: We have no 2 star associations in our heatmap",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Summary plot",
+      "Coefficient heatmap"
+    ]
+  },
+  {
+    "objectID": "maaslin3/heatmap_plot.html#mcqs",
+    "href": "maaslin3/heatmap_plot.html#mcqs",
+    "title": "Coefficient heatmap",
+    "section": "",
+    "text": "Using the coefficient heatmap, answer the below MCQs.\n\nWhich model produced more significant results?\n\n Logistic/Prevalence Linear/Abundance\n\n\n\nWhich metadata produced more significant results?\n\n Reads TimepointNamePool_visits7,8,9",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Summary plot",
+      "Coefficient heatmap"
+    ]
+  },
+  {
+    "objectID": "maaslin3/summary_plot_interpretation.html",
+    "href": "maaslin3/summary_plot_interpretation.html",
+    "title": "Summary interpretation",
+    "section": "",
+    "text": "Summary interpretation\nWith the plot we’ll interpret the results of Cutibacterium acnes and some overall patterns.\n\n\n\n\n\nC.acnes\nCutibacterium acnes is the top feature in the plot so lets discuss what the plot can tell us.\nThe top associations are the abundance associations for cheek and scalp. We can see both their coefficients are higher than the median coefficient via the circles in the coefficient plot. Additionally, these circle are dark purple indicating high significance (q-value &lt; 0.1).\nInterestingly the coefficients of the prevalence models are high but not significant (&gt;0.1). This seems strange due to the fact the coefficient values are the largest in the coefficient plot (&gt;10).\nTo find out why this is we can look in the significant_results.html and search for Cutibacterium acnes. Carry this out and you’ll see four rows, 2 for the cheek and scalp abundance modelling and 2 for their prevalence modelling. The individual q-values for the prevalence modelling are both 0. What’s causing this lack of significance?\nIn this case it is lack of power. The column N_not_zero shows 170 out of the 172 samples have the feature present. With only 2 samples not containing the feature the prevalence association test does not have enough power to give a significant result.\nWhy is the coefficient so large then? This can occur in logistics modelling when the feature is present in all the query samples but absent in only a few reference samples. The other way round can cause highly negative coefficient values.\n\n\n\n\n\n\nNote\n\n\n\nIn your own analysis you may need to look at all the results all_results.tsv to find feature associations that are not present in the significant results output.\n\n\n\n\nOverall\nSome overall patterns to notice are:\n\nScalp versus axilla has similar results to cheek versus axilla, axilla was a good reference to choose\nThe top five features have strong positive coefficients for abundance for the scalp and cheek comparisons\nThe middle features (G.adiacens to L.mirabilis, except S.capitis) have higher prevalence in the cheek samples compared to axilla\nThe bottom features (A.octavius to C.pseudokroppenstedtii) are in lower abundance in the scalp and cheek samples compared to the axilla samples\nFeatures where prevalence is more likely with higher read depths also seem to have associations of lower prevalence in the TimepointNamePool_visit7,8,9\nThere are no significant abundance associations for Reads or TimepointNamePool_visits7,8,9\n\nThat’s been a lot but we have even more!",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Summary plot",
+      "Summary interpretation"
+    ]
+  },
+  {
+    "objectID": "maaslin3/summary_plot.html#replot-1",
+    "href": "maaslin3/summary_plot.html#replot-1",
+    "title": "Summary plot intro",
+    "section": "",
+    "text": "We can use the function maaslin3::maaslin_plot_results_from_output() to recreate our plots. Importantly we can use the parameters coef_plot_vars= and heatmap_vars= to set which variables will be included in the heatmap and coefficient plot. Additionally, it sets the order of the variables too.\nThe easiest option is to create vectors of the variable names. Some important notes:\n\nThe variables names need to be exactly as they are shown in the summary plot\n\nFor example the first variable in the plot above is “Soil Rhizosphere Soil” i.e. The metadata name, a space, and then the value\n\nYou can add variables to the heatmap that only show in the coefficient plot to the heatmap and vice versa\nIf you exclude a variable it will not show in the subsequent plot\nIf you include a variable that does not exist the replot function will ignore the variables you provide\n\nFor example, if you try to include “Soil Bulk Soil” it will not work as it is the reference value\n\n\nSet the order of variables for replotting.\n\n#Set order of Coefficient plot variables\ncoef_plot_variables &lt;- c(\"\", \"Sample Scalp\")\n#Set order of heatmap variables for plot recreation\n#Do not include V1 since it is the reference\nheatmap_variables &lt;-\n    c(\"Visit V2\",\"Visit V3\",\"Visit V4\",\"Visit V5\",\"Visit V6\",\n     \"Visit V7\",\"Visit V8\",\"Visit V9\",\"Visit V10\",\"Visit V11\",\"Visit V12\")\n\nReplot with the coefficient and heatmap variables.\n\n\n\n\n\n\nNote\n\n\n\nYou can include the parameters coef_plot_vars and heatmap_vars in the maaslin3() function. However, it is normally best to see the first summary plot maaslin3() creates and then replot with the parameters so you can see what you want to change.\n\n\n\n#MaAsLin3 replot\nmaaslin3::maaslin_plot_results_from_output(\n    output = 'PMP_output',\n    metadata = metadata,\n    normalization = 'NONE',\n    transform = 'LOG',\n    max_significance = 0.1,\n    median_comparison_abundance = FALSE,\n    median_comparison_prevalence = FALSE,\n    #Coefficient and heatmap variables\n    coef_plot_vars = coef_plot_variables,\n    heatmap_vars = heatmap_variables,\n    max_pngs = 500\n)\n\nYou’ll then get the below summary plot.",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Summary plot",
+      "Summary plot intro"
+    ]
+  },
+  {
+    "objectID": "maaslin3/summary_plot.html#plot-features",
+    "href": "maaslin3/summary_plot.html#plot-features",
+    "title": "Summary plot intro",
+    "section": "",
+    "text": "The plot show us the top 25 features by significant associations with 2 main types of plots:\n\nCoefficient plot\n\nOn the left side\nOne plot each for the two most significant fixed effect comparisons (unless you choose them with replotting)\n\nCoefficient heatmap\n\nOn the right side\nOne plot is for the prevalence logistic modelling of all the fixed effect comparisons not in the coefficient plot (unless you choose them with replotting)\nOne plot is for the abundance linear modelling of all the fixed effect comparisons not in the coefficient plot (unless you choose them with replotting)\n\n\nThere is a legend on the right side. We’ll explain the plots and their values starting with the coefficient plot.",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Summary plot",
+      "Summary plot intro"
+    ]
+  },
+  {
+    "objectID": "maaslin3/summary_plot.html#replot",
+    "href": "maaslin3/summary_plot.html#replot",
+    "title": "Summary plot intro",
+    "section": "",
+    "text": "We can use the function maaslin3::maaslin_plot_results_from_output() to recreate our plots. Importantly we can use the parameters coef_plot_vars= and heatmap_vars= to set which variables will be included in the heatmap and coefficient plot. Additionally, it sets the order of the variables too.\nThe easiest option is to create vectors of the variable names. Some important notes:\n\nThe variables names need to be exactly as they are shown in the summary plot\n\nFor example the first variable in the plot above is “Soil Rhizosphere Soil” i.e. The metadata name, a space, and then the value\n\nYou can add variables to the heatmap that only show in the coefficient plot to the heatmap and vice versa\nIf you exclude a variable it will not show in the subsequent plot\nIf you include a variable that does not exist the replot function will ignore the variables you provide\n\nFor example, if you try to include “Soil Bulk Soil” it will not work as it is the reference value\n\n\nSet the order of variables for replotting.\n\n#Set order of Coefficient plot variables\ncoef_plot_variables &lt;- c(\"\", \"Sample Scalp\")\n#Set order of heatmap variables for plot recreation\n#Do not include V1 since it is the reference\nheatmap_variables &lt;-\n    c(\"Visit V2\",\"Visit V3\",\"Visit V4\",\"Visit V5\",\"Visit V6\",\n     \"Visit V7\",\"Visit V8\",\"Visit V9\",\"Visit V10\",\"Visit V11\",\"Visit V12\")\n\nReplot with the coefficient and heatmap variables.\n\n\n\n\n\n\nNote\n\n\n\nYou can include the parameters coef_plot_vars and heatmap_vars in the maaslin3() function. However, it is normally best to see the first summary plot maaslin3() creates and then replot with the parameters so you can see what you want to change.\n\n\n\n#MaAsLin3 replot\nmaaslin3::maaslin_plot_results_from_output(\n    output = 'PMP_output',\n    metadata = metadata,\n    normalization = 'NONE',\n    transform = 'LOG',\n    max_significance = 0.1,\n    median_comparison_abundance = TRUE,\n    median_comparison_prevalence = FALSE,\n    #Coefficient and heatmap variables\n    coef_plot_vars = coef_plot_variables,\n    heatmap_vars = heatmap_variables,\n    max_pngs = 500\n)\n\nYou’ll then get the below summary plot.",
+    "crumbs": [
+      "MaAsLin3",
+      "Output plots",
+      "Summary plot",
+      "Summary plot intro"
     ]
   }
 ]
