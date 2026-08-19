@@ -1,0 +1,15 @@
+# MaAsLin3 resources
+
+Below are various resources for MaAsLin3:
+
+- [MaAsLin3 github main page](https://github.com/biobakery/Maaslin3)
+- [MaAsLin3 Tutorial](https://github.com/biobakery/biobakery/wiki/MaAsLin3)
+    - [Interactions](https://github.com/biobakery/biobakery/wiki/MaAsLin3#43-interactions): Seeing interactions or 2 effects
+        - Note: It may be easier to create a metadata column combining 2 categorical metadata columns rather than using interactions
+    - [Level contrasts](https://github.com/biobakery/biobakery/wiki/MaAsLin3#44-level-contrasts): Comparison of ordered effects
+        - This will compare second level against the first, third level against the second etc.
+        - No random effects can be used in the formula when using and ordered effect
+    - [Group-wise differences](https://github.com/biobakery/biobakery/wiki/MaAsLin3#45-group-wise-differences): Produce one overall p/q-value for the variable
+        - Uses an ANOVA or ANOVA-like procedure
+- [Explanation of hierarchical models](https://mfviz.com/hierarchical-models/)
+- [Martin Speekenbrink's chapter on Linear mixed-effect models](https://mspeekenbrink.github.io/sdam-r-companion/linear-mixed-effects-models.html#formulating-and-estimating-linear-mixed-effects-models-with-lme4)

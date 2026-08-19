@@ -20,7 +20,7 @@ In MaAsLin3 this is to test prevalence, determining the probability of a feature
 With this test we could attempt to answer the following example questions:
 
 - Is _Helicobacter pylori_ more likely to be present in patients with ulcers compared to healthy controls?
-- Are _Corynebacterium_ species more likely to be present in the axilla compared to the cheek or scalp?
+- Is _Rhizobium_ more likely to be present in Rhizosphere soil compared to Bulk soil (non-rhizosphere soil)?
 - Are certain species more likely to be present/detected in samples with higher sampling depth?
 
 We won't go into the workings of binary logistics rather we'll explain its main value: log-odds/logit.
@@ -102,4 +102,4 @@ It is hard for us to see the difference between a probability of 0.000859 and 0.
 
 I hope this gives you a clear idea of the log-odds/logit value so you interpret them in future analysis.
 
-More information on how to interpret the logit value is found later in the abundance section: [MaAsLin3 coefficients](/relative/metrics.qmd#coefficients)
+More information on how to interpret the logit value is found later in the abundance section: [MaAsLin3 coefficients](/maaslin3/metrics.qmd#coefficients)

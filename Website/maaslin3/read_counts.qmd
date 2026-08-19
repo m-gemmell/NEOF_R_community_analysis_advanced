@@ -7,13 +7,29 @@ This is called a prevalence test.
 Prevalence of organisms can be greatly affected by the read depth of the different samples.
 When using abundance values (not quantitative abundance values) the read numbers/depth for each sample should be included as a continuous fixed effect.
 
+
+::: {.callout-note collapse="true" title="Quantitative abundance?"}
+Quantitative abundances (aka absolute abundances) are the actual count of cells in an environment.
+With the correct protocol this can be calculated, such as through qPCR and 16S rRNA spike-ins.
+This approach is still relatively rare.
+
+Some people like to call non-quantitative abundances as relative abundance values (i.e. normal 16S rRNA approach).
+However I find this confusing.
+Instead I like to use the following 3 terms for normal 16S rRNA counts:
+
+- __Abundance/counts:__ The 16S counts without any normalisation
+- **Relative abundance:** The 16S counts normalised to fractions so each sample has a total count of 1
+- **Rarefied abundances:** Normalised 16S counts made of whole numbers (>=1), via subsampling, so each sample has the same total count/depth
+
+More information about absolute abundances and how to analyse them can be found in the [official MaAsLin3 manual](https://github.com/biobakery/biobakery/wiki/MaAsLin3#41-absolute-abundance)
+:::
+
 ## Calculate read depth data
 ![](images/depth_gauge.png){style="width: 100px; border-radius:5px;  background-color: white; border: 5px solid white" fig-align="center"}
 
 We can calculate read depths from our count table with `rowSums()`.
 
 ```{r, eval=FALSE}
-#Use abundance/read count of taxa_table as read count value
 #Calculate read count of each sample
 read_counts <- taxa_df |> rowSums()
 read_counts

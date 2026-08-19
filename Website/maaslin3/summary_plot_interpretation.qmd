@@ -1,35 +1,78 @@
+```{r, echo=FALSE, warning=FALSE, results=FALSE, output=FALSE}
+#Load library so functions run smoothly
+library(tidyverse)
+```
+
 # Summary interpretation
 
 With the plot we'll interpret the results of *Cutibacterium acnes* and some overall patterns.
 
-<center>
-![](images/summary_plot.png){style="width:800px"}
-</center>
-<br>
+![](images/summary_plot.png){style="width:800px" fig-align="center"}
 
-### *C.acnes*
+## *Peredibacter*
 
-*Cutibacterium acnes* is the top feature in the plot so lets discuss what the plot can tell us.
+*Peredibacter* is the top feature in the plot so lets discuss what the plot can tell us.
 
-The top associations are the abundance associations for cheek and scalp.
-We can see both their coefficients are higher than the median coefficient via the circles in the coefficient plot.
-Additionally, these circle are dark purple indicating high significance (q-value < 0.1).
+### Soil
 
-Interestingly the coefficients of the prevalence models are high but not significant (>0.1).
-This seems strange due to the fact the coefficient values are the largest in the coefficient plot (>10).
+**Peredibacter's* abundance association for Rhizosphere Soil is very signifiant with a deep purple colour.
+Additionally, the coefficient value (~5) indicates a 32 increase in abundance of the genus in Rhizosphere Soil compared to Bulk Soil.
 
-To find out why this is we can look in the `significant_results.html` and search for `Cutibacterium acnes`.
-Carry this out and you'll see four rows, 2 for the cheek and scalp abundance modelling and 2 for their prevalence modelling.
-The individual q-values for the prevalence modelling are both 0.
-What's causing this lack of significance?
+The prevalence model for the feature has a very high coefficient (>10).
+However, this association is not significant.
 
-In this case it is lack of power.
-The column `N_not_zero` shows 170 out of the 172 samples have the feature present.
-With only 2 samples not containing the feature the prevalence association test does not have enough power to give a significant result.
+Let's look at the table results for this feature below.
+
+```{r, echo=FALSE}
+#Read in all results
+readr::read_delim(
+    file = "./files/all_results.tsv", 
+    delim="\t", show_col_types = FALSE) |>
+    filter(feature=="Peredibacter") |>
+    filter(metadata=="Soil") |>
+    select(1,4,5,8,12,14,15)
+
+```
+
+Unfortunately this does not clarify why the prevalence association is not significant.
+If you go back to your "1-Data.ipynb" `jupyter` notebook, rerun all the cells and then run the below at the bottom of the notebook:
+
+```{r,eval=FALSE}
+#Rhizosphere Soil prevalences of Peredibacter
+rhizo_genus_prevs <- genus_pseq |>
+    #Create phyloseq of only Rhizosphere Soil samples
+    phyloseq::subset_samples(Soil == "Rhizosphere Soil") |>
+    #Calculate prevalences of all features/genera
+    microbiome::prevalence()
+rhizo_genus_prevs["Peredibacter"]
+```
+
+```{r,eval=FALSE}
+#Bulk Soil prevalence of Peredibacter
+bulk_genus_prevs <- genus_pseq |>
+    #Create phyloseq of only Bulk Soil samples
+    phyloseq::subset_samples(Soil == "Bulk Soil") |>
+    #Calculate prevalences of all features/genera
+    microbiome::prevalence()
+bulk_genus_prevs["Peredibacter"]
+```
+
+You will discover that *Peredibacter* is in 100% of the Rhizosphere Soil samples (1=100%) whilst it is found in 54% of the Bulk Soil samples.
+Because their is no absence in the Rhizosphere Soil samples there is a lack of power of this categorical logistic test.
+This leads to a low q-value.
 
 Why is the coefficient so large then?
-This can occur in logistics modelling when the feature is present in all the query samples but absent in only a few reference samples.
+This can occur in logistics modelling when the feature is present in all the query samples.
 The other way round can cause highly negative coefficient values.
+
+### Reads
+
+There is no significant abundance association for *Peredibacter* but there is a prevalence significant association.
+We get a significant results in this case because we are comparing read depths of samples where the feature is present against samples where it is absent.
+This is comparing 13 against 51 samples.
+Not very powerful but the signifcnat value is not that great either.
+
+![](images/Reads_Peredibacter_logistic.png){style="width:400px" fig-align="center"}
 
 :::{.callout-note}
 In your own analysis you may need to look at all the results `all_results.tsv` to find feature associations that are not present in the significant results output.
@@ -39,11 +82,11 @@ In your own analysis you may need to look at all the results `all_results.tsv` t
 
 Some overall patterns to notice are:
 
-- Scalp versus axilla has similar results to cheek versus axilla, axilla was a good reference to choose
-- The top five features have strong positive coefficients for abundance for the scalp and cheek comparisons
-- The middle features (*G.adiacens* to *L.mirabilis*, except *S.capitis*) have higher prevalence in the cheek samples compared to axilla
-- The bottom features (*A.octavius* to *C.pseudokroppenstedtii*) are in lower abundance in the scalp and cheek samples compared to the axilla samples
-- Features where prevalence is more likely with higher read depths also seem to have associations of lower prevalence in the TimepointNamePool_visit7,8,9
-- There are no significant abundance associations for Reads or TimepointNamePool_visits7,8,9
+- Most of the displayed features are in higher abundance in the Rhizosphere Soil compared to the Bulk Soil
+- There are no significant prevalence associations for Soil in the summary plot
+- Most features have significant abundance associations for Reads but these coefficient values are relatively low
 
-That's been a lot but we have even more!
+Overall the summary plot is nice to get a quick glance at the results but the significant results table and individual plots are much more informative to look at specific features.
+
+Brilliant! that's everything for MaAsLin3.
+Check out the [appendix](/appendix/resources.qmd) for more resources and information.

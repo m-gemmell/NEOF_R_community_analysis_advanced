@@ -19,7 +19,7 @@ To open a new terminal:
 ## MaAsLin3 directory
 ![](images/directory.png){style="width: 200px; border-radius:5px;  background-color: white" fig-align="center"}
 
-Make an d change into a directory named `~/adv_R_comm/maaslin3`.
+Make and change into a directory named `~/adv_R_comm/maaslin3`.
 
 ```{bash, eval=FALSE}
 mkdir ~/adv_R_comm/maaslin3
@@ -36,7 +36,7 @@ Load the conda/mamba environment `maaslin3` with a use script made for this envi
 ```
 
 ::: {.callout-note}
-Instructions on creating the environment for your own future analysis are in the [appendix](/appendix/mamba.qmd).
+Instructions on creating the environment for your own future analysis are in the [appendix](/appendix/mamba.qmd#maaslin3).
 :::
 
 ## Jupyter

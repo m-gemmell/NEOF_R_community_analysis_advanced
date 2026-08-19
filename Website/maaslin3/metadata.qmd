@@ -7,7 +7,7 @@ Our metadata table requires:
 - Columns of the different metadata variables
     - The column names are the names of the variables
 - Rows of observations per sample
-    - The row names need to contain the same sample names as the [count table](/relative/count_table.qmd)
+    - The row names need to contain the same sample names as the [count table](/maaslin3/count_table.qmd)
 
 ## Extract metadata
 ![](images/extractor_keys_ibm.png){style="width: 200px; border-radius:5px;  background-color: white; border: 10px solid white" fig-align="center"}
@@ -15,7 +15,7 @@ Our metadata table requires:
 Extract and check our metadata.
 
 ```{r, eval=FALSE}
-#Extract metadata from phyloseq as data.frame
+#Extract metadata from phyloseq as a data.frame
 metadf <- genus_pseq |> 
     microbiome::meta()
 #Check rows 1:5

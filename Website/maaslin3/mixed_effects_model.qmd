@@ -84,15 +84,16 @@ In this case we can see that our simple linear model based only on _E.coli_ abun
 The first addition to our linear model to incorporate mixed effects is to add random intercepts.
 In essence this is allowing each group to have different intercept values.
 
-`r hide("Random?")`
+
+::: {.callout-note collapse="true" title="Random?"}
 The word "random" can be confusing, here. 
-The intercepts are not chosen randomly at random. 
+The intercepts are not chosen randomly. 
 Instead A random intercept allows each group to have its own baseline (intercept) value rather than sharing the same one across groups.
 
 In our example samples from different hospitals start from slightly different average E. coli abundances. 
 The model estimates these hospital-specific baselines, while also estimating the overall average across all hospitals. 
 This means each hospital can differ, but the model still tries to learn what is typical across hospitals.
-`r unhide()`
+:::
 
 Let's see that in practice with our dataset.
 
@@ -229,4 +230,4 @@ tbl |>  ggplot2::ggplot(aes(x=Dosage, y=Ecoli)) +
 For an animated explanation please see the following link: [mfviz Introduction to Hierarchical Modeling](https://mfviz.com/hierarchical-models/)
 
 In our MaAsLin3 analysis we will only use random intercepts.
-This is covered in the [MaAsLin3 relative abundance analysis section](/relative/relative.qmd).
+This is covered in the [MaAsLin3 relative abundance analysis section](/maaslin3/relative.qmd).

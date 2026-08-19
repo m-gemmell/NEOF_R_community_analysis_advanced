@@ -36,7 +36,7 @@ Our fixed effects are `"Soil + Reads"`.
 More information is in the [Fixed effects page](/maaslin3/fixed_effects.qmd).
 
 Random effects are specified as strings within brackets that includes a pipe symbol (`(|)`)
-We've set `Plate` as a random effect with: `"(1|Plate)"`.
+We set `Plate` as a random effect with: `"(1|Plate)"`.
 
 More information is in the [Random effects page](/maaslin3/random_effects.qmd)
 

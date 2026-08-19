@@ -284,6 +284,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link active" href="../maaslin3/maaslin3.html" aria-current="page"> 
 <span class="menu-text">MaAsLin3</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../appendix/resources.html"> 
+<span class="menu-text">Appendix</span></a>
+  </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
@@ -535,7 +539,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text">Categorical plots</span></a>
+ <span class="menu-text">Logistic plots</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -545,6 +549,53 @@ ul.task-list li input[type="checkbox"] {
   <div class="sidebar-item-container"> 
   <a href="../maaslin3/categorical_logistic_plots.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Categorical logistic grid plots</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/continuous_logistic_plots.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Continuous logistic boxplots</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/plot_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Plot types</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text">Summary plot</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/summary_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary plot intro</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/coefficient_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Coefficient plot</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/heatmap_plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Coefficient heatmap</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../maaslin3/summary_plot_interpretation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Summary interpretation</span></a>
   </div>
 </li>
       </ul>
@@ -566,8 +617,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#sections" id="toc-sections" class="nav-link" data-scroll-target="#sections">Sections</a></li>
   <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a></li>
   <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#dataset" id="toc-dataset" class="nav-link" data-scroll-target="#dataset">Dataset</a></li>
   <li><a href="#maaslin3-analysis" id="toc-maaslin3-analysis" class="nav-link" data-scroll-target="#maaslin3-analysis">MaAslin3 analysis</a></li>
-  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a></li>
+  <li><a href="#text-output" id="toc-text-output" class="nav-link" data-scroll-target="#text-output">Text output</a></li>
+  <li><a href="#output-plots" id="toc-output-plots" class="nav-link" data-scroll-target="#output-plots">Output plots</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -592,13 +645,13 @@ ul.task-list li input[type="checkbox"] {
 <li>Prevalence testing
 <ul>
 <li>Determines the likelihood of features being present based on groupings</li>
-<li>Carried out with <a href="..\aaslin3/logistic_model.qmd">logistic modelling</a></li>
+<li>Carried out with <a href="../maaslin3/logistic_model.html">logistic modelling</a></li>
 </ul></li>
 </ol>
 <p>Both tests produce q-values plus a joint q-value is given.</p>
 <section id="sections" class="level2">
 <h2 class="anchored" data-anchor-id="sections">Sections</h2>
-<p>There are multiple sections in this website. These are described below.</p>
+<p>There are multiple sections in this part. These are described below.</p>
 </section>
 <section id="background" class="level2">
 <h2 class="anchored" data-anchor-id="background">Background</h2>
@@ -609,7 +662,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>Info on MaAsLin3 and Mixed effect liner models including:</p>
 <ul>
-<li><a href="../maaslin3/linear_model.html">Linear regression</a>: Theory of linear models for abundance testing, and mixed effect models</li>
+<li><a href="../maaslin3/linear_model.html">Linear regression</a>: Theory of linear models for abundance testing</li>
+<li><a href="../maaslin3/mixed_effects_model.html">Mixed effect model</a>: Theory of mixed effect/hierarchical models</li>
 <li><a href="../maaslin3/logistic_model.html">Logistic model</a>: Theory of logistic models for prevalence testing</li>
 </ul>
 </section>
@@ -620,42 +674,68 @@ ul.task-list li input[type="checkbox"] {
 <p><img src="..\images/setup.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width: 150px; border-radius:5px;  background-color: white"></p>
 </figure>
 </div>
-<p>Environment and <code>jupyter-notebook</code> setup including:</p>
+<p><a href="../maaslin3/environment.html">Environment</a> setup including a new terminal, directory, <code>mamba</code> environment, and <code>jupyter</code> instance.</p>
+</section>
+<section id="dataset" class="level2">
+<h2 class="anchored" data-anchor-id="dataset">Dataset</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/dataset_ibm.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white"></p>
+</figure>
+</div>
+<p>Introduction and formatting of our dataset for MaAsLin3. This involves creating a genus count/abundance <code>data.frame</code> and metadata <code>data.frame</code> for MaAsLin3.</p>
 <ul>
-<li><a href="..\maaslin3/setup.qmd">Setup</a>: Directory and mamba/conda environment setup</li>
-<li><a href="..\maaslin3/jupyter.qmd">Jupyter</a>: <code>Jupyter-notebook</code> tutorial</li>
+<li><a href="../maaslin3/dataset.html">Dataset</a>: Information on our rhizosphere associated soil dataset and <code>jupyter</code> notebook setup</li>
+<li><a href="../maaslin3/genus_aggregation.html">Genus aggregation</a>: Aggregating our species level <code>phyloseq</code> object to genus level</li>
+<li><a href="../maaslin3/count_table.html">Count table</a>: Creating and formatting the genus count/abundance <code>data.frame</code></li>
+<li><a href="../maaslin3/metadata.html">Metadata</a>: Creating and formatting the metadata `data.frame</li>
+<li><a href="../maaslin3/read_counts.html">Read counts</a>: Adding read counts/depth to the metadata</li>
 </ul>
 </section>
 <section id="maaslin3-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="maaslin3-analysis">MaAslin3 analysis</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/relative_piechart.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white solid 5px"></p>
+<p><img src="images/cassette_player.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white solid 5px"></p>
 </figure>
 </div>
-<p>A standard MaAsLin3 analysis with an relative/count table based on genomic reads. Includes:</p>
+<p>A standard MaAsLin3 analysis with a count table based on genomic reads. Includes the basic analysis and a lot of theory.</p>
 <ul>
-<li><a href="..\maaslin3/relative.qmd">Overview</a>: Description of dataset, and more detailed descriptions of the section’s parts and their pages</li>
-<li><a href="..\maaslin3/notebook.qmd">Notebook setup</a>: Setup of the first jupyter-notebook for this section</li>
-<li><a href="../maaslin3/count_table.html">Data importing &amp; formatting</a>: Setting up the count table and metadata table for MaAsLin3 analysis</li>
-<li><a href="../maaslin3/maaslin3.html">MaAsLin3 analysis</a>: Use of the <code>maaslin3()</code> function and considerations for its inputs</li>
-<li><a href="../maaslin3/html_table.html">Text output</a>: Viewing and interpreting the text output of <code>maaslin3()</code></li>
-<li><a href="../maaslin3/plots.html">Output plots</a>: Viewing, understanding, and interpreting the various plot types produced by <code>maaslin3()</code></li>
-<li><a href="..\maaslin3/timepoint_challenge.qmd">Challenge</a>: Tasks based on interrogating the <code>maaslin3()</code> output related to the <code>TimepointName</code> metadata variable</li>
+<li><a href="../maaslin3/maaslin3_function.html">MaAsLin3 function</a>: Running <code>maaslin3()</code> on our dataset and descriptions its parameters</li>
+<li><a href="../maaslin3/lme4.html">lme4 specification</a>: The formula containing the fixed and random effects</li>
+<li><a href="../maaslin3/fixed_effects.html">Fixed effects</a>: The effects your hypothesis are interested in</li>
+<li><a href="../maaslin3/random_effects.html">Random effects</a>: Effects your hypothesis is not necessarily interested in but you want to control for</li>
+<li><a href="../maaslin3/median_comparison.html">Median comparison</a>: When to and when not to use median comparison in association testing</li>
 </ul>
 </section>
-<section id="appendix" class="level2">
-<h2 class="anchored" data-anchor-id="appendix">Appendix</h2>
+<section id="text-output" class="level2">
+<h2 class="anchored" data-anchor-id="text-output">Text output</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/appendix.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white solid 5px"></p>
+<p><img src="images/table.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; background:white; border-radius:5px"></p>
 </figure>
 </div>
-<p>A selection of resources including:</p>
 <ul>
-<li><a href="..\appendix/maaslin3.qmd">MaAsLin3 resources</a></li>
-<li><a href="..\appendix/r_courses.qmd">R courses</a></li>
-<li><a href="..\appendix/mamba.qmd">Mamba</a></li>
+<li><a href="../maaslin3/html_table.html">Significant results table</a>: Viewing the significant results table and creating an HTML version of it</li>
+<li><a href="../maaslin3/metrics.html">Metrics</a>: Description of table metrics and the explanation of individual and joint p/q-values</li>
+<li><a href="../maaslin3/text_task.html">Text tasks</a>: Tasks to solidify your knowledge and searching of the text output</li>
+</ul>
+</section>
+<section id="output-plots" class="level2">
+<h2 class="anchored" data-anchor-id="output-plots">Output plots</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/plotting.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:200px; background:white; border-radius:5px; border: white solid 5px"></p>
+</figure>
+</div>
+<p>A look and explanation of all the various plots that MaAsLin3 creates.</p>
+<ul>
+<li><a href="../maaslin3/plots.html">Plots</a>: Introduction to the section and setting up a <code>jupyter</code> notebook for plots</li>
+<li><a href="../maaslin3/replot.html">Replot</a>: Replotting function to produce more plots without rerunning <code>maaslin3()</code></li>
+<li><a href="../maaslin3/categorical_linear_plots.html">Linear plots</a>: Linear model plots for abundance associations</li>
+<li><a href="../maaslin3/categorical_logistic_plots.html">Logistic plots</a>: Logistic model plots for prevalence associations</li>
+<li><a href="../maaslin3/plot_types.html">Plot types</a>: Recap on the four main plot types</li>
+<li><a href="../maaslin3/summary_plot.html">Summary plot</a>: Interpretation of the summary plot</li>
 </ul>
 
 

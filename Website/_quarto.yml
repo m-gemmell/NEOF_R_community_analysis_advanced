@@ -26,6 +26,8 @@ website:
       href: upset/upset.qmd
     - text: MaAsLin3
       href: maaslin3/maaslin3.qmd
+    - text: Appendix
+      href: appendix/resources.qmd
     right:
     - icon: house-fill
       href: https://neof.org.uk/training/
@@ -211,7 +213,7 @@ website:
         contents:
         - href: maaslin3/categorical_linear_plots.qmd
         - href: maaslin3/continuous_linear_plots.qmd
-      - section: Categorical plots
+      - section: Logistic plots
         contents:
         - href: maaslin3/categorical_logistic_plots.qmd
         - href: maaslin3/continuous_logistic_plots.qmd
@@ -222,6 +224,16 @@ website:
         - href: maaslin3/coefficient_plot.qmd
         - href: maaslin3/heatmap_plot.qmd
         - href: maaslin3/summary_plot_interpretation.qmd
+  - id: Appendix
+    title: Upset
+    style: floating
+    collapse-level: 2
+    align: left
+    contents:
+    - href: appendix/resources.qmd
+    - href: appendix/mamba.qmd
+    - href: appendix/r_courses.qmd
+      
 #Format
 format:
   html:

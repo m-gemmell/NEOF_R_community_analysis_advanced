@@ -9,13 +9,13 @@ It carries out 2 types of association tests:
     - Carried out with [linear modelling](/maaslin3/linear_model.qmd)
 2. Prevalence testing
     - Determines the likelihood of features being present based on groupings
-    - Carried out with [logistic modelling](/aaslin3/logistic_model.qmd)
+    - Carried out with [logistic modelling](/maaslin3/logistic_model.qmd)
 
 Both tests produce q-values plus a joint q-value is given.
 
 ## Sections
 
-There are multiple sections in this website.
+There are multiple sections in this part.
 These are described below.
 
 ## Background
@@ -23,36 +23,54 @@ These are described below.
 
 Info on MaAsLin3 and Mixed effect liner models including:
 
-- [Linear regression](/maaslin3/linear_model.qmd): Theory of linear models for abundance testing, and mixed effect models
+- [Linear regression](/maaslin3/linear_model.qmd): Theory of linear models for abundance testing
+- [Mixed effect model](/maaslin3/mixed_effects_model.qmd): Theory of mixed effect/hierarchical models
 - [Logistic model](/maaslin3/logistic_model.qmd): Theory of logistic models for prevalence testing
 
 ## Setup
 ![](/images/setup.png){style="width: 150px; border-radius:5px;  background-color: white" fig-align="center"}
 
-Environment and `jupyter-notebook` setup including:
+[Environment](/maaslin3/environment.qmd) setup including a new terminal, directory, `mamba` environment, and `jupyter` instance.
 
-- [Setup](/maaslin3/setup.qmd): Directory and mamba/conda environment setup
-- [Jupyter](/maaslin3/jupyter.qmd): `Jupyter-notebook` tutorial
+## Dataset
+![](images/dataset_ibm.png){style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white" fig-align="center"}
+
+Introduction and formatting of our dataset for MaAsLin3.
+This involves creating a genus count/abundance `data.frame` and metadata `data.frame` for MaAsLin3.
+
+- [Dataset](/maaslin3/dataset.qmd): Information on our rhizosphere associated soil dataset and `jupyter` notebook setup
+- [Genus aggregation](/maaslin3/genus_aggregation.qmd): Aggregating our species level `phyloseq` object to genus level
+- [Count table](/maaslin3/count_table.qmd): Creating and formatting the genus count/abundance `data.frame`
+- [Metadata](/maaslin3/metadata.qmd): Creating and formatting the metadata `data.frame`
+- [Read counts](/maaslin3/read_counts.qmd): Adding read counts/depth to the metadata
 
 ## MaAslin3 analysis
-![](images/relative_piechart.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+![](images/cassette_player.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
 
-A standard MaAsLin3 analysis with an relative/count table based on genomic reads.
-Includes:
+A standard MaAsLin3 analysis with a count table based on genomic reads.
+Includes the basic analysis and a lot of theory.
 
-- [Overview](/maaslin3/relative.qmd): Description of dataset, and more detailed descriptions of the section's parts and their pages
-- [Notebook setup](/maaslin3/notebook.qmd): Setup of the first jupyter-notebook for this section
-- [Data importing & formatting](/maaslin3/count_table.qmd): Setting up the count table and metadata table for MaAsLin3 analysis
-- [MaAsLin3 analysis](/maaslin3/maaslin3.qmd): Use of the `maaslin3()` function and considerations for its inputs
-- [Text output](/maaslin3/html_table.qmd): Viewing and interpreting the text output of `maaslin3()`
-- [Output plots](/maaslin3/plots.qmd): Viewing, understanding, and interpreting the various plot types produced by `maaslin3()`
-- [Challenge](/maaslin3/timepoint_challenge.qmd): Tasks based on interrogating the `maaslin3()` output related to the `TimepointName` metadata variable
+- [MaAsLin3 function](maaslin3_function.qmd): Running `maaslin3()` on our dataset and descriptions of its parameters
+- [lme4 specification](/maaslin3/lme4.qmd): The formula containing the fixed and random effects
+- [Fixed effects](/maaslin3/fixed_effects.qmd): The effects your hypothesis are interested in
+- [Random effects](/maaslin3/random_effects.qmd): Effects your hypothesis is not necessarily interested in but you want to control for
+- [Median comparison](/maaslin3/median_comparison.qmd): When to and when not to use median comparison in association testing
 
-## Appendix
-![](images/appendix.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+## Text output
+![](images/table.png){style="width:200px; background:white; border-radius:5px" fig-align="center"}
 
-A selection of resources including:
+- [Significant results table](/maaslin3/html_table.qmd): Viewing the significant results table and creating an HTML version of it
+- [Metrics](/maaslin3/metrics.qmd): Description of table metrics and the explanation of individual and joint p/q-values
+- [Text tasks](/maaslin3/text_task.qmd): Tasks to solidify your knowledge and searching of the text output
 
-- [MaAsLin3 resources](/appendix/maaslin3.qmd)
-- [R courses](/appendix/r_courses.qmd)
-- [Mamba](/appendix/mamba.qmd)
+## Output plots
+![](images/plotting.png){style="width:200px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
+
+A look and explanation of all the various plots that MaAsLin3 creates.
+
+- [Plots](/maaslin3/plots.qmd): Introduction to the section and setting up a `jupyter` notebook for plots
+- [Replot](/maaslin3/replot.qmd): Replotting function to produce more plots without rerunning `maaslin3()`
+- [Linear plots](/maaslin3/categorical_linear_plots.qmd): Linear model plots for abundance associations
+- [Logistic plots](/maaslin3/categorical_logistic_plots.qmd): Logistic model plots for prevalence associations
+- [Plot types](/maaslin3/plot_types.qmd): Recap on the four main plot types
+- [Summary plot](/maaslin3/summary_plot.qmd): Interpretation of the summary plot

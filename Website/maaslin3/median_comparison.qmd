@@ -2,7 +2,7 @@
 ![](images/median.png){style="width:400px; background:white; border-radius:5px" fig-align="center"}
 
 MaAsLin3 analysis compares the coefficient of each feature against either 0 or the median coefficient value.
-The median coefficient value being calculated from all the coefficient values of all the features for the one specific comparison (e.g. ENV vs CVP).
+The median coefficient value being calculated from all the coefficient values of all the features for the one specific comparison (e.g. Rhizosphere Soil vs Bulk Soil).
 
 Median comparison can be set in `maaslin3()` with the following 2 options:
 
@@ -34,7 +34,7 @@ We can see that Taxa A-D each have 2 times the counts in the Media compared to t
 As these are raw counts, the overall doubling could be due to library size, bacterial load, etc.
 
 ### Convert to relative abundance
-In our [MaAsLin3 analysis](/relative/maaslin3.qmd) we convert the counts to relative abundances (`normalization = 'TSS'`):
+In our [MaAsLin3 analysis](/maaslin3/maaslin3.qmd) we convert the counts to relative abundances (`normalization = 'TSS'`):
 
 |Taxa|Environment|Media|
 |---|---|---|
@@ -48,7 +48,7 @@ Now it still appears like Taxon E has a higher count in Media but lower in the o
 
 ### Calculate coefficients (changes)
 
-Next coefficients are calculated as log2-fold changes (coefficients explained in the [plots section](/relative/plots.qmd)).
+Next coefficients are calculated as log2-fold changes (coefficients explained in the [plots section](/maaslin3/plots.qmd)).
 
 Feature|Relative abundance change| Coefficient|
 |---|---|---|
@@ -122,7 +122,7 @@ The primary reason for this is that testing against zero on the relative scale i
 
 When using abundance median comparison:
 
-- A median coefficient for the comparison/metadatum (e.g. UD vs MD) is created
+- A median coefficient for the comparison/metadatum (e.g. Rhizosphere Soil vs Bulk Soil) is created
 - The abundance coefficient for each feature is tested against the median value 
 - Compositionality is accounted for
 - Only p-values and q-values change

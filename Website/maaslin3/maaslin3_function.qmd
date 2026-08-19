@@ -2,13 +2,12 @@
 ![](images/mixtape.png){style="width:200px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
 
 For our analysis we will immediately run the `maaslin3()` function.
-It takes quite a while to run so we'll use pre-made results instead of running the code.
 
 Additionally, this section contains a lot of theory on the following:
 
 - [lme4 specification](/maaslin3/lme4.qmd): The formula containing the fixed and random effects
 - [Fixed effects](/maaslin3/fixed_effects.qmd): The effects your hypothesis are interested in
-- [Random effects](/maaslin3/random_effects.qmd): Effects your hypothesis is not necessarily interested in but you want to control for
+- [Random effects](/maaslin3/random_effects.qmd): Effects your hypothesis may not necessarily be interested in but you want to control for
 - [Median comparison](/maaslin3/median_comparison.qmd): When to and when not to use median comparison in association testing
 
 ## Notebook setup
@@ -74,7 +73,7 @@ As it runs please read the below and other pages in this section.
 
 The parameters we have used are described below.
 
-- `input_data`: Our formatted count table containing abundance values of species against samples.
+- `input_data`: Our formatted count table containing abundance values of species against samples
 - `input_metadata`: Our formatted metadata table for our samples
 - `output`: Name of output directory
     - This will be created by the function
@@ -102,7 +101,7 @@ The parameters we have used are described below.
     - This will determine what associations are written as signifiant and what plots are created
     - Associations with an individual or joint q-value less than the threshold will be included in the [significant results out](/maaslin3/html_table.qmd)
     - Only associations with an individual q-value lower than the threshold will be [plotted](/maaslin3/plots.qmd)
-- `median_comparison_abundance` & `median_comparison_prevalence`: Whether to compare coefficients against median coefficient (TRUE) or against 0
+- `median_comparison_abundance` & `median_comparison_prevalence`: Whether to compare coefficients against median coefficient (TRUE) or against 0 (FALSE)
     - For normal taxa abundance data set `median_comparison_abundance = TRUE` and `median_comparison_prevalence = FALSE`
     - More info, including when to use `TRUE` and `FALSE`, in [Median comparison page](/maaslin3/median_comparison.qmd)
 - `small_random_effect`: Replace random effects with fixed effects in logistic prevalence model

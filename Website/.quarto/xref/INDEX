@@ -577,5 +577,26 @@
   },
   "maaslin3/summary_plot_interpretation.qmd": {
     "summary_plot_interpretation.html": "6adceaaa"
+  },
+  "maaslin3/appendix.qmd": {
+    "appendix.html": "a82af8b2"
+  },
+  "maaslin3/mamba.qmd": {
+    "mamba.html": "3dbf1df2"
+  },
+  "maaslin3/resources.qmd": {
+    "resources.html": "7ce0b73a"
+  },
+  "maaslin3/r_courses.qmd": {
+    "r_courses.html": "691596d5"
+  },
+  "appendix/mamba.qmd": {
+    "mamba.html": "5bb1e9cf"
+  },
+  "appendix/resources.qmd": {
+    "resources.html": "7b051d71"
+  },
+  "appendix/r_courses.qmd": {
+    "r_courses.html": "ce0fc70e"
   }
 }

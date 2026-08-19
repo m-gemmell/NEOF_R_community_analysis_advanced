@@ -1,0 +1,71 @@
+# Mamba
+<center>
+![](images/mamba_logo.png){style="width:200px; border-radius:5px"}
+</center>
+
+## Program installation
+
+Mamba is a reimplementation of conda. It is a great tool for installing bioinformatic packages including R packages.
+
+Mamba github: [https://github.com/mamba-org/mamba](https://github.com/mamba-org/mamba)
+
+The best way to use Mamba is to install Miniforge. It has both Conda and Mamba commands.
+
+Miniforge installation: [https://github.com/conda-forge/miniforge](https://github.com/conda-forge/miniforge)
+
+Mamba guide: [https://mamba.readthedocs.io/en/latest/user_guide/mamba.html](https://mamba.readthedocs.io/en/latest/user_guide/mamba.html)
+
+## MaAsLin3
+
+To create the mamba environment `maaslin3` run the below commands in your bash. You will need to have installed mamba first.
+
+```{bash, eval=FALSE}
+#maaslin3
+#create conda env
+conda create -n maaslin3
+#activate
+conda activate maaslin3
+#Install required software
+conda install conda-forge::r-base=4.5.3 conda-forge::r-irkernel \
+conda-forge::r-biocmanager=1.30.27 conda-forge::r-tidyverse=2.0.0 \
+conda-forge::r-plotly=4.12.0 conda-forge::r-htmlwidgets=1.6.4 \
+conda-forge::r-rcolorbrewer=1.1.3 conda-forge::r-scales=1.4.0 \
+bioconda::bioconductor-biocparallel=1.44.0 conda-forge::r-dt=0.34 \
+biconda::bioconductor-maaslin3=1.2.0
+```
+
+## jupyter
+<center>
+![](images/jupyter_logo.png){style="width:150px; background: white; border-radius:5px"}
+</center>
+
+If you are running this on your own computer you can use RStudio. However, you can also use `Jupyter-notebook` if you are using an HPC or prefer it.
+
+If using bash you will need to create an environment with Jupyter-notebook. Ensure you are in the (base) mamba environment.
+
+```{bash, eval=FALSE}
+conda create -n jupyter
+conda activate jupyter
+conda install -c anaconda jupyter
+conda deactivate
+```
+
+To run `Jupyter-notebook` with your `maaslin3` environment you can run the following.
+
+```{bash, eval=FALSE}
+#Activate your maaslin3 env if it is not activate already
+mamba activate r_community
+#Run jupyter-notebook (may be a slightly different path)
+#~/miniforge/envs/jupyter/bin/jupyter-notebook
+```
+
+## Metadata exploration
+
+To create the mamba environment `meta_explore` run the below commands in your bash. You will need to have installed mamba first.
+
+```{r, eval=FALSE}
+conda create -n meta_explore
+conda activate meta_explore
+conda install bioconda::bioconductor-variancepartition conda-forge::r-irkernel \
+conda-forge::r-tidyverse
+```

@@ -12,7 +12,7 @@ MaAsLin3 carries out linear modelling for abundance testing.
 
 ## Simple linear regression
 
-A simple linear regression can be carried two variables. These variables are:
+A simple linear regression can be carried otu with two variables. These variables are:
 
 - The independent variable: Not dependent on any other variable
     - Preferably controlled by the experimenter

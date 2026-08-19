@@ -1,0 +1,7 @@
+# R courses
+
+Links to previous R courses are:
+
+- [R primer for omics](https://neof-workshops.github.io/R_j4c0xh/)
+- [R community analysis](https://neof-workshops.github.io/R_community_whqkt8/Course)
+- [R Tidyverse](https://neof-workshops.github.io/Tidyverse)
