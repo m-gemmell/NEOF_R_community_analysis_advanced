@@ -152,7 +152,7 @@ opts_p <- c(answer="*Actinocorallia*",
             "*Truepera*"
             )
 ```
-4. Which feature has the lowest IQR range for the `Absent` box? `r longmcq(opts_p)`
+4. Which feature has the lowest IQR range for the absent box? `r longmcq(opts_p)`
 
 ```{r, echo = FALSE}
 opts_p <- c("*Actinocorallia*",
@@ -182,7 +182,8 @@ opts_p <- c(answer="**24**",
 
 __Tip:__ You can carry out mathematical operations on different columns in a [`dplyr::filter()` function](https://cgr-liverpool.github.io/Tidyverse/dplyr/filter.html) and carry out a comparison/filter on its result.
 
-`r hide("Code solution")`
+
+::: {.callout-note collapse="true" title="Code solutions"}
 ```{r, eval=FALSE}
 #MCQs
 ## Significant results with individual q-value < 0.1
@@ -195,4 +196,4 @@ sig_res_reads_prev_tbl |>
    filter(N_not_zero/N < 0.5) |>
    nrow()
 ```
-`r unhide()`
+:::

@@ -17,7 +17,7 @@ Create a significant result tibble only containing `Reads` associations with the
 ```{r, eval=FALSE}
 #Tibble of significant abundance associations for Reads
 sig_res_reads_abund_tbl <- sig_res_tbl |> 
-    #Filter to retain metadata SampleSite rows
+    #Filter to retain metadata Reads rows
     dplyr::filter(metadata == "Reads") |>
     #Filter to retain abundance model rows
     dplyr::filter(model == "abundance")
@@ -54,7 +54,7 @@ sig_res_reads_abund_tbl |>
     dplyr::select(c(1:5,9,11,12,14,15))
 ```
 
-With this you can see that you have 36 non-significant `Reads` associations in `sig_res_reads_abund_tbl`.
+With this you can see that we have 36 non-significant `Reads` associations in `sig_res_reads_abund_tbl`.
 These are included in the significant results table as their joint q-values are <0.1. 
 However, plots of these associations were not created since their q-values are larger than the max significance value (0.1) we chose when running `maaslin3()` and the replot function.
 
@@ -63,7 +63,7 @@ More info about joint q-values: [P-value in Metrics page](/maaslin3/metrics.qmd#
 ## Coefficient
 ![](images/coef.png){style="width:250px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
 
-For continuous metadata the coefficient represents the amount of change the variable causes, i.e. the slope. For example, a high positive value would represent a steep positive slope in a linear model. If we had this for our reads metadata that would indicate the abundance of the feature is likely to be higher if the sample has a higher read count compared to the samples with lower read counts. As `maaslin3()` analysed relative abundance values (`normalization = 'TSS'`) we would ideally like no features to have significant associations with `Reads`, but we most likely will.
+For continuous metadata the coefficient represents the amount of change the variable causes, i.e. the slope. For example, a high positive value would represent a steep positive slope in a linear model. If we had this for our reads metadata that would indicate the abundance of the feature is likely to be higher if the sample has a higher read count compared to the samples with lower read counts.
 
 ## Scatter plots
 ![](images/linear_regression.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
@@ -76,7 +76,6 @@ This matches our coefficient values of -3.2.
 
 Below is the plot for the association of _Singulisphaera_ for Reads.
 Its slope is positive and a lot more gentle, matching our coefficient of 0.57.
-Additionally, the association appears relatively modest, with a diffuse spread of points and a fairly wide confidence band.
 
 ![](images/Reads_Singulisphaera_linear.png){style="width:400px" fig-align="center"}
 
@@ -105,7 +104,7 @@ opts_p <- c("*Agaricicola*",
 ```{r,eval=FALSE}
 #MCQ1: Largest positive coefficient
 sig_res_reads_abund_tbl |> 
-    #Extract the five rows with the smallest qval_individual values
+    #Extract the twenty rows with the smallest qval_individual values
     dplyr::slice_min(qval_individual, n=20) |>
     #Select rows of interest
     dplyr::select(c(1:5,9,11,12,14,15)) |>
@@ -115,7 +114,7 @@ sig_res_reads_abund_tbl |>
 ```{r,eval=FALSE}
 #MCQ2: Smallest N_not_zero
 sig_res_reads_abund_tbl |> 
-    #Extract the five rows with the smallest qval_individual values
+    #Extract the twenty rows with the smallest qval_individual values
     dplyr::slice_min(qval_individual, n=20) |>
     #Select rows of interest
     dplyr::select(c(1:5,9,11,12,14,15)) |>

@@ -1,6 +1,6 @@
 # Coefficient plot
 
-The coefficient plots display information on the abundance and prevalence models.
+The coefficient plot displays information on the abundance and prevalence models.
 Below is the coefficient plot by itself (made by manual editing of the summary plot).
 
 ![](images/coeffecient_plot.png){style="width:600px" fig-align="center"}
@@ -26,7 +26,7 @@ Lets look at the abundance modelling first.
     - __x-axis:__ The position represents its coefficient value
     - __colour:__ Represents its q-value (P~FDR~) 
         - Gradient goes from white to dark purple
-        - Gradient range is displayed on the legend (1 -> 1e-31)
+        - Gradient range is displayed on the legend (1 -> 1e-17)
 - __Horizontal line:__ Represents the null hypothesis
     - In this case this is the median coefficient value of the metadata
     - We set the abundance median comparison to `TRUE`, more info: [Median comparisons](/maaslin3/median_comparison.qmd)
@@ -38,7 +38,7 @@ Lets look at the abundance modelling first.
     - __x-axis:__ The position represents its coefficient value
     - __colour:__ Represents its q-value (P~FDR~) 
         - Gradient goes from white to dark cyan
-        - Gradient range is displayed on the legend (1 -> 1e-31)
+        - Gradient range is displayed on the legend (1 -> 1e-17)
 - __Horizontal dashed line:__ Represents the null hypothesis
     - In this case this is 0
     - We set the abundance median comparison to `FALSE`, more info: [Median comparisons](/maaslin3/median_comparison.qmd)

@@ -53,7 +53,7 @@ The feature in the 1st row is:
 - __name:__ SoilRhizosphere Soil
 - __coefficient:__ 4.394469
 
-This indicates that the [log-odds/logit](/maaslin3/logistic_model.qmd#log-oddslogit) of Streptococcus infantis_H being present in Rhizosphere Soil samples compared to Bulk Soil samples is higher by 4.4.
+This indicates that the [log-odds/logit](/maaslin3/logistic_model.qmd#log-oddslogit) of *Quadrisphaera* being present in Rhizosphere Soil samples compared to Bulk Soil samples is higher by 4.4.
 In other words the probability of *Quadrisphaera* being present is higher in Rhizosphere Soil compared to Bulk Soil.
 This could work if the log-odds of Rhizosphere Soil and Bulk Soil were both negative, both positive, or if the Rhizosphere Soil's log-odds is positive whilst the Bulk Soil's is negative.
 To know this we need to look at the plot.
@@ -66,7 +66,7 @@ We'll look at 2 examples.
 
 ### *Quadrisphaera*
 
-Below is the grid/tile plot created for the logistic modelling of *Quadrisphaera* for the sample site groupings. 
+Below is the grid/tile plot created for the logistic modelling of *Quadrisphaera* for the Soil groupings. 
 
 ![](images/Soil_Quadrisphaera_logistic.png){style="width:400px" fig-align="center"}
 
@@ -106,10 +106,6 @@ However, some will have information on an error that occurred for the associatio
 
 View the rows with errors in `sig_res_soil_prev_tbl`.
 
-View the strongest associations (by q-value) with negative coefficient values.
-These associations indicate the feature is less likely to be present in query samples compared to reference samples.
-The further the value is from 0 the stronger the association.
-
 ```{r, eval=FALSE}
 #View rows where error is not NA
 # for prevalence modelling of Soil
@@ -129,7 +125,7 @@ The various error messages we have include:
 - pwrssUpdate did not converge in (maxit) iterations
 
 Below we'll demonstrate the Prevalence association error.
-For toher errors please see: [MaAsLin3 diagnostics](https://github.com/biobakery/Maaslin3#diagnostics)
+For other errors please see: [MaAsLin3 diagnostics](https://github.com/biobakery/Maaslin3#diagnostics)
 
 ### Prevalence association
 
@@ -139,8 +135,8 @@ From the plot we can see that the percentage of Bulk Soil samples with presence 
 ![](images/Soil_Larkinella_logistic.png){style="width:400px" fig-align="center"}
 
 To discover the meaning of the error it is best to view the abundance/linear modelling plot for the feature.
-In the below plot we can see a strong association for the feature when comparing Rhizosphere Soil to Bulk SOil.
-Additionally, the abundance of the feature in the scalp samples it is found in are very low.
+In the below plot we can see a strong association for the feature when comparing Rhizosphere Soil to Bulk Soil.
+Additionally, the abundance of the feature in the Soil samples it is found in are very low.
 The values are all less than -10 (>0.001 relative abundance) with a median of around -16 (>0.0001 relative abundance).
 
 ![](images/Soil_Larkinella_linear.png){style="width:400px" fig-align="center"}
@@ -226,13 +222,16 @@ opts_p <- c("__6%__",
 
 Creating some filtering code will help answer the below questions.
 
-__Tip:__ The below filter function will retain rows where `error` is `NA`. Normally filtering won't work with `NA` values.
+
+::: {.callout-tip}
+The below filter function will retain rows where `error` is `NA`. Normally filtering won't work with `NA` values.
 
 ```{r,eval=FALSE}
 #Retain rows where error is NA
 #needs to be part piped code
 dplyr::filter(if_any(error, is.na))
 ```
+:::
 
 ```{r, echo = FALSE}
 opts_p <- c("__4__",

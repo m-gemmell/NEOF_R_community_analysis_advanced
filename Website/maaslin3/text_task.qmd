@@ -76,7 +76,7 @@ sig_res_tbl |>
 
 The next three question involve looking up the results of a specific feature and association.
 This can be carried out with the search bar in the HTML.
-With tidyverse you can use multiple [`dplyr::filter()` functions](https://neof-workshops.github.io/Tidyverse/dplyr/filter.html) and the [`dplyr::pull() function](https://neof-workshops.github.io/Tidyverse/dplyr/pull.html).
+With tidyverse you can use multiple [`dplyr::filter()` functions](https://neof-workshops.github.io/Tidyverse/dplyr/filter.html) and the [`dplyr::pull()` function](https://neof-workshops.github.io/Tidyverse/dplyr/pull.html).
 
 ```{r, echo = FALSE}
 opts_p <- c(
@@ -84,7 +84,7 @@ opts_p <- c(
     "**2.36040830013277**", 
     "**3.3300534208379**")
 ```
-4. What is the coefficient value of Acinetobacter johnsonii for the Scalp vs Axilla comparison for the abundance model? `r longmcq(opts_p)`
+4. What is the coefficient value of *Kribella* for the Rhizosphere Soil vs Bulk Soil comparison for the abundance model? `r longmcq(opts_p)`
 
 ```{r, echo = FALSE}
 opts_p <- c(
@@ -92,7 +92,7 @@ opts_p <- c(
     "**2.36040830013277**", 
     answer="**3.3300534208379**")
 ```
-5. What is the coefficient value of Staphylococcus epidermidis for the Cheek vs Axilla comparison for the abundance model? `r longmcq(opts_p)`
+5. What is the coefficient value of *Bordetella* for the Rhizosphere Soil vs Bulk Soil comparison for the prevalence model? `r longmcq(opts_p)`
 
 ```{r, echo = FALSE}
 opts_p <- c(
@@ -100,7 +100,7 @@ opts_p <- c(
     answer="**2.36040830013277**", 
     "**3.3300534208379**")
 ```
-6. What is the coefficient value of Staphylococcus pasteuri for the reads association for the prevalence model? `r longmcq(opts_p)`
+6. What is the coefficient value of *Azospira* for the reads association for the prevalence model? `r longmcq(opts_p)`
 
 `r hide("MCQ4 code")`
 ```{r, eval=FALSE}
@@ -118,7 +118,7 @@ sig_res_tbl |>
 ```{r, eval=FALSE}
 #MCQ5
 #Coefficient value of Bordetella for Soil comparison
-# for the abundance model
+# for the prevalence model
 sig_res_tbl |>
     dplyr::filter(feature=="Bordetella") |>
     dplyr::filter(name=="SoilRhizosphere Soil") |>
@@ -157,7 +157,7 @@ Answer the below MCQs based on the `sig_res_tbl` and `all_res_tbl` objects.
 opts_p <- c(
     "**15**", 
     answer="**689**", 
-    "**1404**")
+    "**1,404**")
 ```
 1. How many observations are there in the significant results table? `r longmcq(opts_p)`
 
@@ -165,7 +165,7 @@ opts_p <- c(
 opts_p <- c(
     "**15**", 
     "**689**", 
-    answer="**1404**")
+    answer="**1,404**")
 ```
 2. How many observations are there in the all results table? `r longmcq(opts_p)`
 

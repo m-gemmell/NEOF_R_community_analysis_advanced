@@ -44,12 +44,9 @@ Set the order of variables for replotting.
 
 ```{r, eval=FALSE}
 #Set order of Coefficient plot variables
-coef_plot_variables <- c("", "Sample Scalp")
+coef_plot_variables <- c("Soil Rhizosphere Soil", "Reads")
 #Set order of heatmap variables for plot recreation
-#Do not include V1 since it is the reference
-heatmap_variables <-
-    c("Visit V2","Visit V3","Visit V4","Visit V5","Visit V6",
-     "Visit V7","Visit V8","Visit V9","Visit V10","Visit V11","Visit V12")
+heatmap_variables <- c("Soil Rhizosphere Soil", "Reads")
 ```
 
 Replot with the coefficient and heatmap variables.
@@ -62,8 +59,8 @@ However, it is normally best to see the first summary plot `maaslin3()` creates 
 ```{r,eval=FALSE}
 #MaAsLin3 replot
 maaslin3::maaslin_plot_results_from_output(
-    output = 'PMP_output',
-    metadata = metadata,
+    output = 'genus_output',
+    metadata = metadf,
     normalization = 'NONE',
     transform = 'LOG',
     max_significance = 0.1,
@@ -72,9 +69,8 @@ maaslin3::maaslin_plot_results_from_output(
     #Coefficient and heatmap variables
     coef_plot_vars = coef_plot_variables,
     heatmap_vars = heatmap_variables,
-    max_pngs = 500
+    max_pngs = 1000
 )
-
 ```
 
 You'll then get the below summary plot.
@@ -90,8 +86,8 @@ The plot show us the top 25 features by significant associations with 2 main typ
     - One plot each for the two most significant fixed effect comparisons (unless you choose them with replotting)
 - Coefficient heatmap
     - On the right side
-    - One plot is for the prevalence logistic modelling of all the fixed effect comparisons not in the coefficient plot (unless you choose them with replotting)
-    - One plot is for the abundance linear modelling of all the fixed effect comparisons not in the coefficient plot (unless you choose them with replotting)
+    - One plot is for the prevalence logistic modelling of fixed effect comparisons not in the coefficient plot (unless you choose them with replotting)
+    - One plot is for the abundance linear modelling of fixed effect comparisons not in the coefficient plot (unless you choose them with replotting)
 
 There is a legend on the right side.
 We'll explain the plots and their values starting with the coefficient plot.

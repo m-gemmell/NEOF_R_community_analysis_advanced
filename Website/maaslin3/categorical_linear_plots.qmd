@@ -52,7 +52,7 @@ The coefficient value of abundance modelling with categorical data represents th
 The MaAsLin3 manual's description is: "a one-unit change in the metadatum variable corresponds to a 2^coef^ fold change in the relative abundance of the feature."
 
 In our data the coefficient of *Leifsonia* for Rhizosphere Soil (query) is 4.630948. 
-This indicates the relative abundance of the feature is \>16 times larger in Rhizosphere SOil (query) samples compared to Bulk Soil (reference) samples.
+This indicates the relative abundance of the feature is \>16 times larger in Rhizosphere Soil (query) samples compared to Bulk Soil (reference) samples.
 
 In the above we say \>16 times as 2^4^ is 16. The actual value of **2\^4.630948** is **24.77732**.
 
@@ -98,8 +98,6 @@ For convenience the plot is shown below:
 
 ![](images/Soil_Leifsonia_linear.png){style="width:400px" fig-align="center"}
 
-<br>
-
 The features of the plot are:
 
 -   **x-axis:** The different categorical values of the fixed effect (Bulk Soil and Rhizosphere Soil).
@@ -114,12 +112,11 @@ Log scale to relative abundance:
 |-------|-------|-------|-------|-------|-------|-------|-------|-------|
 | Log relative abundance     | 0   | -0.105 | -0.693 | -2.303 | -3.000 | -4.605 | -5.298 | -6.908 |
 
-With this plot we can clearly see that the relative abundance of the Rhizosphere Soil samples is much higher than for Bulk SOil.
-The median value for Rhizosphere Soil is around -11 (relative abundance = ~0.00001) whereas its around -13 (relative abundance = ~ 0.000002) for Bulk Soil.
+With this plot we can clearly see that the relative abundance of the Rhizosphere Soil samples is much higher than for Bulk Soil.
+The median value for Rhizosphere Soil is around -11 (relative abundance = ~0.00001) whereas its around -15 (relative abundance = ~ 0.0000003) for Bulk Soil.
 
 ## Tasks and MCQs
 ![](images/question_bubble_ibm_blue.png){style="width:150px; background:white; border-radius:5px; border: white solid 5px" fig-align="center"}
-
 
 Please attempt the following tasks and MCQs:
 
@@ -209,4 +206,4 @@ sig_res_soil_abund_tbl |>
 
 In these results *Desulfosporosinus* has the largest log fold change (-5.61)
 Yet, it does not have the most significant individual q-value.
-This is because there are 42 samples with _Desulfosporosinus_ present compared the four other top genera which are present in >60 samples.
+This is because there are 42 samples with _Desulfosporosinus_ present compared to the four other top genera which are present in >60 samples.

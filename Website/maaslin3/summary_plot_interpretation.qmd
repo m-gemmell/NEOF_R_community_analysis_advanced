@@ -5,7 +5,7 @@ library(tidyverse)
 
 # Summary interpretation
 
-With the plot we'll interpret the results of *Cutibacterium acnes* and some overall patterns.
+With the plot we'll interpret the results of *Peredibacter* and some overall patterns.
 
 ![](images/summary_plot.png){style="width:800px" fig-align="center"}
 
@@ -15,13 +15,13 @@ With the plot we'll interpret the results of *Cutibacterium acnes* and some over
 
 ### Soil
 
-**Peredibacter's* abundance association for Rhizosphere Soil is very signifiant with a deep purple colour.
+*Peredibacter's* abundance association for Rhizosphere Soil is very signifiant with a deep purple colour.
 Additionally, the coefficient value (~5) indicates a 32 increase in abundance of the genus in Rhizosphere Soil compared to Bulk Soil.
 
 The prevalence model for the feature has a very high coefficient (>10).
 However, this association is not significant.
 
-Let's look at the table results for this feature below.
+Let's look at the table results for this feature.
 
 ```{r, echo=FALSE}
 #Read in all results
@@ -35,7 +35,7 @@ readr::read_delim(
 ```
 
 Unfortunately this does not clarify why the prevalence association is not significant.
-If you go back to your "1-Data.ipynb" `jupyter` notebook, rerun all the cells and then run the below at the bottom of the notebook:
+If you go back to your "1-Data.ipynb" `jupyter` notebook, rerun all the cells, and then run the below at the bottom of the notebook:
 
 ```{r,eval=FALSE}
 #Rhizosphere Soil prevalences of Peredibacter
@@ -58,7 +58,7 @@ bulk_genus_prevs["Peredibacter"]
 ```
 
 You will discover that *Peredibacter* is in 100% of the Rhizosphere Soil samples (1=100%) whilst it is found in 54% of the Bulk Soil samples.
-Because their is no absence in the Rhizosphere Soil samples there is a lack of power of this categorical logistic test.
+Because there is no absence in the Rhizosphere Soil samples there is a lack of power of this categorical logistic test.
 This leads to a low q-value.
 
 Why is the coefficient so large then?
@@ -68,9 +68,9 @@ The other way round can cause highly negative coefficient values.
 ### Reads
 
 There is no significant abundance association for *Peredibacter* but there is a prevalence significant association.
-We get a significant results in this case because we are comparing read depths of samples where the feature is present against samples where it is absent.
+We get a significant result in this case because we are comparing read depths of samples where the feature is present against samples where it is absent.
 This is comparing 13 against 51 samples.
-Not very powerful but the signifcnat value is not that great either.
+Not very powerful but the significant value is not that great either.
 
 ![](images/Reads_Peredibacter_logistic.png){style="width:400px" fig-align="center"}
 

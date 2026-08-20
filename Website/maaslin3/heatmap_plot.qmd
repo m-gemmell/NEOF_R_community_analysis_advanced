@@ -1,7 +1,7 @@
 # Coefficient heatmap
 
 There are two heatmaps, one for abundance and one for prevalence.
-These heatmaps are further split by metadata/effects, in this case `Reads` and `TimepointNamePool_visits7,8,9`.
+These heatmaps are further split by metadata/effects, in this case `Soil Rhizosphere Soil` and `Reads`.
 
 Below is the coefficient heatmap by itself (made by manual editing of the summary plot).
 
@@ -14,5 +14,4 @@ The features of the plot are:
 - __Stars:__ The significance threshold
     - One star (`*`) represents a q-value less than our threshold (<0.1)
     - Two stars (`**`) represents a q-value 10 times less than our threshold (<0.01)
-    - Note: We have no 2 star associations in our heatmap
  
