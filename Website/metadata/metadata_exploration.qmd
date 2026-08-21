@@ -1,0 +1,45 @@
+# Metadata exploration
+![](images/explore.png){style="border-radius: 15px; width: 200px; background-color: white" fig-align="center"}
+
+The choice of metadata is always important.
+This is especially so when you are using mixed models like with [MaAsLin3](/maaslin3/maaslin3.qmd).
+
+It is good to test and see if any metadata variables are collinear/aligned.
+Generally we want to avoid using multiple variables that are collinear in statistical formulas.
+
+As an extreme example you would not want to use date of birth and age.
+A less clear example would be if you had read depth and agar concentration.
+In this case you are likely to have more organisms growing on higher agar concentrations and therefore more reads.
+In the end it is up to you to decide which variables to include or not.
+
+In this part we'll carry out some quick metadata correlation analysis.
+We'll do this for the [Rhizosphere soil metadata](/maaslin3/dataset.html#rhizosphere-soil).
+However, we'll include even more metadata variables that were present in the original dataset.
+
+For this we'll use functions from the R package [`variancePartition`](https://github.com/GabrielHoffman/variancePartition) which was developed for gene expression analysis.
+
+## Conda environment
+<center>
+![](../images/mamba_logo.png){style="border-radius: 15px; width: 200px; background-color: white"}
+</center>
+
+For this section you'll need a new conda environment and `jupyter-notebook` session.
+
+Before continuing save then close and halt all your open jupyter notebooks.
+Then close your current jupyter-notebook server.
+To carry this out:
+
+1. Click on the terminal running the server
+2. Press "ctrl + c"
+3. Press y then enter to confirm closing the server
+
+To run the new jupyter notebook:
+
+1. Open a new terminal (right click on background and choose "Terminal")
+2. Run the following command to activate the `metadata_explore` environment: `. usemetaexplore`
+3. Move directory into "adv_R_comm": `cd ~/adv_R_comm`
+4. Create a new directory for the analysis: `mkdir meta_exploration` 
+5. Open jupyter-notebook: `jupyter-notebook`
+6. With the jupyter notebook file explorer move into your "meta_exploration" directory
+
+The next page is carrying out some metadata correlation.

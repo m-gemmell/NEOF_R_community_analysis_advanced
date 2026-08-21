@@ -598,5 +598,14 @@
   },
   "appendix/r_courses.qmd": {
     "r_courses.html": "ce0fc70e"
+  },
+  "metadata/correlation.qmd": {
+    "correlation.html": "6de48a41"
+  },
+  "metadata/metadata_exploration.qmd": {
+    "metadata_exploration.html": "e77827c4"
+  },
+  "metadata/correlation_exploration.qmd": {
+    "correlation_exploration.html": "e028d1b8"
   }
 }

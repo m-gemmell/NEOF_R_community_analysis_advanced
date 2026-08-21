@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>dataset – Advanced R community analysis</title>
+<title>correlation_exploration – Advanced R community analysis</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -68,8 +68,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../maaslin3/genus_aggregation.html" rel="next">
-<link href="../maaslin3/environment.html" rel="prev">
+<link href="../metadata/correlation.html" rel="prev">
 <link href="..//images/NEOF_favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -317,11 +316,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Upset</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../maaslin3/maaslin3.html" aria-current="page"> 
+    <a class="nav-link" href="../maaslin3/maaslin3.html"> 
 <span class="menu-text">MaAsLin3</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../metadata/metadata_exploration.html"> 
+    <a class="nav-link active" href="../metadata/metadata_exploration.html" aria-current="page"> 
 <span class="menu-text">Metadata</span></a>
   </li>  
   <li class="nav-item">
@@ -371,277 +370,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../maaslin3/maaslin3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">MaAsLin3</span></a>
+  <a href="../metadata/metadata_exploration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata exploration</span></a>
   </div>
 </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Background</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../maaslin3/linear_model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Linear model</span></a>
+  <a href="../metadata/correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Metadata correlation</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
+        <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../maaslin3/mixed_effects_model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Mixed effect model</span></a>
+  <a href="../metadata/correlation_exploration.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Correlation exploration</span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/logistic_model.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Logistic model</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text">Setup</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/environment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Environment</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text">Data</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/dataset.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Dataset</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/genus_aggregation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Genus aggregation</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/count_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Count table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/metadata.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Metadata</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/read_counts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Read counts</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text">MaAsLin3 analysis</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/maaslin3_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">MaAsLin3 function</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/lme4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">lme4 formula</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/fixed_effects.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Fixed effects</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/random_effects.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Random effects</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/median_comparison.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Median comparisons</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text">Text output</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/html_table.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Significant results table</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/metrics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Metrics</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/text_task.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Text tasks</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text">Output plots</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/plots.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plots</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/replot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Replot</span></a>
-  </div>
-</li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text">Linear plots</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth2 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/categorical_linear_plots.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Categorical linear boxplots</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/continuous_linear_plots.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Continuous linear scatter plots</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text">Logistic plots</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth2 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/categorical_logistic_plots.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Categorical logistic grid plots</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/continuous_logistic_plots.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Continuous logistic boxplots</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/plot_types.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Plot types</span></a>
-  </div>
-</li>
-          <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
- <span class="menu-text">Summary plot</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth2 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/summary_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Summary plot intro</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/coefficient_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Coefficient plot</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/heatmap_plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Coefficient heatmap</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../maaslin3/summary_plot_interpretation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Summary interpretation</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-      </ul>
-  </li>
     </ul>
     </div>
 </nav>
@@ -652,11 +396,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#dataset" id="toc-dataset" class="nav-link active" data-scroll-target="#dataset">Dataset</a>
+  <li><a href="#correlation-exploration" id="toc-correlation-exploration" class="nav-link active" data-scroll-target="#correlation-exploration">Correlation exploration</a>
   <ul class="collapse">
-  <li><a href="#rhizosphere-soil" id="toc-rhizosphere-soil" class="nav-link" data-scroll-target="#rhizosphere-soil">Rhizosphere soil</a></li>
-  <li><a href="#jupyter-notebook" id="toc-jupyter-notebook" class="nav-link" data-scroll-target="#jupyter-notebook">Jupyter notebook</a></li>
-  <li><a href="#workflow" id="toc-workflow" class="nav-link" data-scroll-target="#workflow">Workflow</a></li>
+  <li><a href="#categorical-vs-continuous" id="toc-categorical-vs-continuous" class="nav-link" data-scroll-target="#categorical-vs-continuous">Categorical vs continuous</a>
+  <ul class="collapse">
+  <li><a href="#soil-vs-reads" id="toc-soil-vs-reads" class="nav-link" data-scroll-target="#soil-vs-reads">Soil vs Reads</a></li>
+  <li><a href="#rna-vs-volume_ul" id="toc-rna-vs-volume_ul" class="nav-link" data-scroll-target="#rna-vs-volume_ul">RNA vs Volume_ul</a></li>
+  </ul></li>
+  <li><a href="#categorical-vs-categorical" id="toc-categorical-vs-categorical" class="nav-link" data-scroll-target="#categorical-vs-categorical">Categorical vs categorical</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -668,86 +415,74 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="dataset" class="level1">
-<h1>Dataset</h1>
+<section id="correlation-exploration" class="level1">
+<h1>Correlation exploration</h1>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/dataset_ibm.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white"></p>
+<p><img src="./images/magnifying_glass.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px"></p>
 </figure>
 </div>
-<p>This section will introduce you to our dataset and how to prepare it for <code>MaAsLin3</code> from a <code>phyloseq</code> object.</p>
-<section id="rhizosphere-soil" class="level2">
-<h2 class="anchored" data-anchor-id="rhizosphere-soil">Rhizosphere soil</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/wyoming_flower.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width: 300px; background-color: white;"></p>
-</figure>
-</div>
-<p>We will use a new dataset from:</p>
-<p><a href="https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2025.1608399/full#h1">A comparison of 16S rRNA-gene and 16S rRNA-transcript derived microbial communities in bulk and rhizosphere soils</a>.</p>
-<p>This study aimed to compare the microbial communities of two different types of soil of a Wyoming native plant <a href="https://en.wikipedia.org/wiki/Boechera_stricta"><em>Boechera stricta</em></a>. These were:</p>
+<p>When choosing which metadata variables to use and not use it is not enough to know which ones are correlated. What we want to know most of the time is which ones are collinear. In essence we don’t want to use 2 metadata variables that have directly/indirectly measured the same thing.</p>
+<p>In this page we’ll look at three different types of comparisons.</p>
 <ul>
-<li><strong>Rhizosphere soil:</strong> The soil penetrated by the roots</li>
-<li><strong>Bulk soil:</strong> The soil not penetrated by the roots</li>
+<li>Categorical vs continuous</li>
+<li>Categorical vs categorical</li>
+<li>Continuous vs continuous</li>
 </ul>
-<p>We will use MaAsLin3 to determine the differential abundance and prevalence of bacterial genera between the two soils.</p>
-</section>
-<section id="jupyter-notebook" class="level2">
-<h2 class="anchored" data-anchor-id="jupyter-notebook">Jupyter notebook</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/jupyter_notebook.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px; border: white solid 5px"></p>
-</figure>
+<section id="categorical-vs-continuous" class="level2">
+<h2 class="anchored" data-anchor-id="categorical-vs-continuous">Categorical vs continuous</h2>
+<p>A quick way to look for correlation of a continuous and categorical variable is with box plots.</p>
+<section id="soil-vs-reads" class="level3">
+<h3 class="anchored" data-anchor-id="soil-vs-reads">Soil vs Reads</h3>
+<p>First we’ll compare <code>Soil</code> against <code>Reads</code> which had a correlation value of 0.41 (not very strong).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Soil vs Reads</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>metadf <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Soil, <span class="at">y =</span> Reads)) <span class="sc">+</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Create and open a new <code>jupyter</code> notebook called “1-Data.ipynb”.</p>
-<div class="callout callout-style-default callout-important callout-titled">
+<p>In the resulting plot we can see that Bulk Soil samples have a higher range of read depths compared to Rhizosphere Soil. However, this is expected and this actually shows us why we should use <code>Reads</code> as a <a href="..\maaslin3/fixed_effects.html#">continuous control variable</a>.</p>
+</section>
+<section id="rna-vs-volume_ul" class="level3">
+<h3 class="anchored" data-anchor-id="rna-vs-volume_ul">RNA vs Volume_ul</h3>
+<p>The variables <code>RNA</code> and <code>Volume_ul</code> have a very strong correlation (0.89). Let’s compare with another box plot.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#RNA vs Volume_ul</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>metadf <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> RNA, <span class="at">y =</span> Volume_ul)) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>There’s definitely a correlation. Let’s look at these variables a bit more.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Count combinations of DNA and Volume_ul</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>metadf <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Group by RNA and Volume_ul</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">group_by</span>(RNA,Volume_ul) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Count number of distinct groupings</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">n=</span><span class="fu">n</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Cookbook links for Tidyverse functions used above">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+<span class="screen-reader-only">Tip</span>Cookbook links for Tidyverse functions used above
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Ensure all notebooks for this part are created in your <code>~/adv_R_comm/maaslin3</code> directory.</p>
-</div>
-</div>
-<p>At the top create a markdown cell with the following headers.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1-Data</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="do">## Libraries</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Then load all the libraries we need in a new code cell along with the <code>phyloseq</code> object containing our dataset.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Libraries</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"phyloseq"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"microbiome"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Data</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">"/pub14/tea/nsc206/NEOF/R_community_advanced/rhizo_pseq.RData"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Please create other useful markdown cells in this and future notebooks.</p>
-</section>
-<section id="workflow" class="level2">
-<h2 class="anchored" data-anchor-id="workflow">Workflow</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/workflow_ibm.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width: 200px; border-radius:5px;  background-color: white; border: 5px solid white"></p>
-</figure>
-</div>
-<p>We need 2 <code>data.frames</code> for MaAsLin3:</p>
 <ul>
-<li>genus taxa counts</li>
-<li>metadata</li>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/group_by.html"><code>dplyr::group_by()</code></a></li>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/summarise.html"><code>dplyr::summarise()</code></a></li>
 </ul>
-<p>We’ll create these in our <code>jupyter</code> notebook with four main stages:</p>
-<ol type="1">
-<li><a href="../maaslin3/genus_aggregation.html">Genus aggregation</a>: Creating a genus count <code>phyloseq</code> from our <code>phyloseq</code></li>
-<li><a href="../maaslin3/count_table.html">Count table</a>: Extracting the genus count table from our genus <code>phyloseq</code> and formatting it</li>
-<li><a href="../maaslin3/metadata.html">Metadata</a>: Extracting the metadata from the <code>phyloseq</code> object and setting reference levels in our groupings</li>
-<li><a href="../maaslin3/read_counts.html">Read counts</a>: Adding read counts/depths to our metadata which are required for prevalence association testing</li>
-</ol>
+</div>
+</div>
+<p>In this case I would most likely not use <code>Volume_ul</code>. There are only 3 values and 2 of them (25 &amp; 28) are only found in RNA samples whilst the third (30) is only found in DNA samples.</p>
+</section>
+</section>
+<section id="categorical-vs-categorical" class="level2">
+<h2 class="anchored" data-anchor-id="categorical-vs-categorical">Categorical vs categorical</h2>
+<p>To compare two categorical variables we will create heatmaps containing counts.</p>
 
 
 </section>
@@ -1581,14 +1316,11 @@ window.onload = function() {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../maaslin3/environment.html" class="pagination-link" aria-label="Environment">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Environment</span>
+      <a href="../metadata/correlation.html" class="pagination-link" aria-label="Metadata correlation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Metadata correlation</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../maaslin3/genus_aggregation.html" class="pagination-link" aria-label="Genus aggregation">
-        <span class="nav-page-text">Genus aggregation</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

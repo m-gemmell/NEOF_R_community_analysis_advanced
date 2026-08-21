@@ -1,0 +1,68 @@
+# Correlation exploration
+![](./images/magnifying_glass.png){style="width:150px; background:white; border-radius:5px" fig-align="center"}
+
+When choosing which metadata variables to use and not use it is not enough to know which ones are correlated.
+What we want to know most of the time is which ones are collinear.
+In essence we don't want to use 2 metadata variables that have directly/indirectly measured the same thing.
+
+In this page we'll look at three different types of comparisons.
+
+- Categorical vs continuous
+- Categorical vs categorical
+- Continuous vs continuous
+
+## Categorical vs continuous
+
+A quick way to look for correlation of a continuous and categorical variable is with box plots.
+
+### Soil vs Reads
+
+First we'll compare `Soil` against `Reads` which had a correlation value of 0.41 (not very strong).
+
+```{r,eval=FALSE}
+#Soil vs Reads
+metadf |>
+    ggplot2::ggplot(aes(x = Soil, y = Reads)) +
+    ggplot2::geom_boxplot()
+```
+
+In the resulting plot we can see that Bulk Soil samples have a higher range of read depths compared to Rhizosphere Soil.
+However, this is expected and this actually shows us why we should use `Reads` as a [continuous control variable](/maaslin3/fixed_effects.html#).
+
+### RNA vs Volume_ul
+
+The variables `RNA` and `Volume_ul` have a very strong correlation (0.89).
+Let's compare with another box plot.
+
+```{r,eval=FALSE}
+#RNA vs Volume_ul
+metadf |>
+    ggplot2::ggplot(aes(x = RNA, y = Volume_ul)) +
+    ggplot2::geom_boxplot()
+```
+
+There's definitely a correlation.
+Let's look at these variables a bit more.
+
+```{r,eval=FALSE}
+#Count combinations of DNA and Volume_ul
+metadf |>
+    #Group by RNA and Volume_ul
+    dplyr::group_by(RNA,Volume_ul) |>
+    #Count number of distinct groupings
+    dplyr::summarise(n=n())
+```
+
+::: {.callout-tip title="Cookbook links for Tidyverse functions used above"}
+- [`dplyr::group_by()`](https://neof-workshops.github.io/Tidyverse/dplyr/group_by.html)
+- [`dplyr::summarise()`](https://neof-workshops.github.io/Tidyverse/dplyr/summarise.html)
+:::
+
+In this case I would most likely not use `Volume_ul`.
+There are only 3 values and 2 of them (25 & 28) are only found in RNA samples whilst the third (30) is only found in DNA samples.
+
+## Categorical vs categorical
+
+To compare two categorical variables we will create heatmaps containing counts.
+
+

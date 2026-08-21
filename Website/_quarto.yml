@@ -26,6 +26,8 @@ website:
       href: upset/upset.qmd
     - text: MaAsLin3
       href: maaslin3/maaslin3.qmd
+    - text: Metadata
+      href: metadata/metadata_exploration.qmd
     - text: Appendix
       href: appendix/resources.qmd
     right:
@@ -224,8 +226,17 @@ website:
         - href: maaslin3/coefficient_plot.qmd
         - href: maaslin3/heatmap_plot.qmd
         - href: maaslin3/summary_plot_interpretation.qmd
+  - id: Metadata
+    title: Metadata
+    style: floating
+    collapse-level: 2
+    align: left
+    contents:
+    - href: metadata/metadata_exploration.qmd
+    - href: metadata/correlation.qmd
+    - href: metadata/correlation_exploration.qmd
   - id: Appendix
-    title: Upset
+    title: Appendix
     style: floating
     collapse-level: 2
     align: left

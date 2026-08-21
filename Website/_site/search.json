@@ -2432,7 +2432,7 @@
     "href": "maaslin3/maaslin3.html",
     "title": "MaAsLin3",
     "section": "",
-    "text": "MaAsLin3 is a tool to detect feature associations based on metadata groupings using mixed effect models.\nIt carries out 2 types of association tests:\n\nAbundance testing\n\nDetermines the difference in the abundance values between groups\nCarried out with linear modelling\n\nPrevalence testing\n\nDetermines the likelihood of features being present based on groupings\nCarried out with logistic modelling\n\n\nBoth tests produce q-values plus a joint q-value is given.\n\n\nThere are multiple sections in this part. These are described below.\n\n\n\n\n\n\n\n\nInfo on MaAsLin3 and Mixed effect liner models including:\n\nLinear regression: Theory of linear models for abundance testing\nMixed effect model: Theory of mixed effect/hierarchical models\nLogistic model: Theory of logistic models for prevalence testing\n\n\n\n\n\n\n\n\n\nEnvironment setup including a new terminal, directory, mamba environment, and jupyter instance.\n\n\n\n\n\n\n\n\nIntroduction and formatting of our dataset for MaAsLin3. This involves creating a genus count/abundance data.frame and metadata data.frame for MaAsLin3.\n\nDataset: Information on our rhizosphere associated soil dataset and jupyter notebook setup\nGenus aggregation: Aggregating our species level phyloseq object to genus level\nCount table: Creating and formatting the genus count/abundance data.frame\nMetadata: Creating and formatting the metadata `data.frame\nRead counts: Adding read counts/depth to the metadata\n\n\n\n\n\n\n\n\n\nA standard MaAsLin3 analysis with a count table based on genomic reads. Includes the basic analysis and a lot of theory.\n\nMaAsLin3 function: Running maaslin3() on our dataset and descriptions its parameters\nlme4 specification: The formula containing the fixed and random effects\nFixed effects: The effects your hypothesis are interested in\nRandom effects: Effects your hypothesis is not necessarily interested in but you want to control for\nMedian comparison: When to and when not to use median comparison in association testing\n\n\n\n\n\n\n\n\n\n\nSignificant results table: Viewing the significant results table and creating an HTML version of it\nMetrics: Description of table metrics and the explanation of individual and joint p/q-values\nText tasks: Tasks to solidify your knowledge and searching of the text output\n\n\n\n\n\n\n\n\n\nA look and explanation of all the various plots that MaAsLin3 creates.\n\nPlots: Introduction to the section and setting up a jupyter notebook for plots\nReplot: Replotting function to produce more plots without rerunning maaslin3()\nLinear plots: Linear model plots for abundance associations\nLogistic plots: Logistic model plots for prevalence associations\nPlot types: Recap on the four main plot types\nSummary plot: Interpretation of the summary plot",
+    "text": "MaAsLin3 is a tool to detect feature associations based on metadata groupings using mixed effect models.\nIt carries out 2 types of association tests:\n\nAbundance testing\n\nDetermines the difference in the abundance values between groups\nCarried out with linear modelling\n\nPrevalence testing\n\nDetermines the likelihood of features being present based on groupings\nCarried out with logistic modelling\n\n\nBoth tests produce q-values plus a joint q-value is given.\n\n\nThere are multiple sections in this part. These are described below.\n\n\n\n\n\n\n\n\nInfo on MaAsLin3 and Mixed effect liner models including:\n\nLinear regression: Theory of linear models for abundance testing\nMixed effect model: Theory of mixed effect/hierarchical models\nLogistic model: Theory of logistic models for prevalence testing\n\n\n\n\n\n\n\n\n\nEnvironment setup including a new terminal, directory, mamba environment, and jupyter instance.\n\n\n\n\n\n\n\n\nIntroduction and formatting of our dataset for MaAsLin3. This involves creating a genus count/abundance data.frame and metadata data.frame for MaAsLin3.\n\nDataset: Information on our rhizosphere associated soil dataset and jupyter notebook setup\nGenus aggregation: Aggregating our species level phyloseq object to genus level\nCount table: Creating and formatting the genus count/abundance data.frame\nMetadata: Creating and formatting the metadata data.frame\nRead counts: Adding read counts/depth to the metadata\n\n\n\n\n\n\n\n\n\nA standard MaAsLin3 analysis with a count table based on genomic reads. Includes the basic analysis and a lot of theory.\n\nMaAsLin3 function: Running maaslin3() on our dataset and descriptions of its parameters\nlme4 specification: The formula containing the fixed and random effects\nFixed effects: The effects your hypothesis are interested in\nRandom effects: Effects your hypothesis is not necessarily interested in but you want to control for\nMedian comparison: When to and when not to use median comparison in association testing\n\n\n\n\n\n\n\n\n\n\nSignificant results table: Viewing the significant results table and creating an HTML version of it\nMetrics: Description of table metrics and the explanation of individual and joint p/q-values\nText tasks: Tasks to solidify your knowledge and searching of the text output\n\n\n\n\n\n\n\n\n\nA look and explanation of all the various plots that MaAsLin3 creates.\n\nPlots: Introduction to the section and setting up a jupyter notebook for plots\nReplot: Replotting function to produce more plots without rerunning maaslin3()\nLinear plots: Linear model plots for abundance associations\nLogistic plots: Logistic model plots for prevalence associations\nPlot types: Recap on the four main plot types\nSummary plot: Interpretation of the summary plot",
     "crumbs": [
       "MaAsLin3"
     ]
@@ -2462,7 +2462,7 @@
     "href": "maaslin3/maaslin3.html#maaslin3-analysis",
     "title": "MaAsLin3",
     "section": "",
-    "text": "A standard MaAsLin3 analysis with a count table based on genomic reads. Includes the basic analysis and a lot of theory.\n\nMaAsLin3 function: Running maaslin3() on our dataset and descriptions its parameters\nlme4 specification: The formula containing the fixed and random effects\nFixed effects: The effects your hypothesis are interested in\nRandom effects: Effects your hypothesis is not necessarily interested in but you want to control for\nMedian comparison: When to and when not to use median comparison in association testing",
+    "text": "A standard MaAsLin3 analysis with a count table based on genomic reads. Includes the basic analysis and a lot of theory.\n\nMaAsLin3 function: Running maaslin3() on our dataset and descriptions of its parameters\nlme4 specification: The formula containing the fixed and random effects\nFixed effects: The effects your hypothesis are interested in\nRandom effects: Effects your hypothesis is not necessarily interested in but you want to control for\nMedian comparison: When to and when not to use median comparison in association testing",
     "crumbs": [
       "MaAsLin3"
     ]
@@ -4099,7 +4099,7 @@
     "href": "maaslin3/maaslin3.html#dataset",
     "title": "MaAsLin3",
     "section": "",
-    "text": "Introduction and formatting of our dataset for MaAsLin3. This involves creating a genus count/abundance data.frame and metadata data.frame for MaAsLin3.\n\nDataset: Information on our rhizosphere associated soil dataset and jupyter notebook setup\nGenus aggregation: Aggregating our species level phyloseq object to genus level\nCount table: Creating and formatting the genus count/abundance data.frame\nMetadata: Creating and formatting the metadata `data.frame\nRead counts: Adding read counts/depth to the metadata",
+    "text": "Introduction and formatting of our dataset for MaAsLin3. This involves creating a genus count/abundance data.frame and metadata data.frame for MaAsLin3.\n\nDataset: Information on our rhizosphere associated soil dataset and jupyter notebook setup\nGenus aggregation: Aggregating our species level phyloseq object to genus level\nCount table: Creating and formatting the genus count/abundance data.frame\nMetadata: Creating and formatting the metadata data.frame\nRead counts: Adding read counts/depth to the metadata",
     "crumbs": [
       "MaAsLin3"
     ]
@@ -4268,6 +4268,160 @@
       "Output plots",
       "Summary plot",
       "Summary interpretation"
+    ]
+  },
+  {
+    "objectID": "metadata/metadata_exploration.html",
+    "href": "metadata/metadata_exploration.html",
+    "title": "Metadata exploration",
+    "section": "",
+    "text": "The choice of metadata is always important but even moreso when using mixed models. It is good to test and see if any metadata variables are collinear/aligned. Generally we want to avoid using multiple variables that are collinear in statistical formulas.\nAs an extreme example you would not want to use date of birth and age. A less clear example would be if you had read depth and agar concentration. In this case you are likely to have more organisms growing on higher agar concentrations and therefore more reads. In the end is up to you to decide which variables to include or not.\nIn this section we’ll carry out some quick metadata correlation analysis. We’ll do this for the relative data and then the quantitative data.\nFor this we’ll use functions from the R package variancePartition which was developed for gene expression analysis.\n\n\n\n\n\nFor this section you’ll need a new conda environment and jupyter-notebook session.\nBefore continuing save then close and halt all your open jupyter notebooks. Then close your current jupyter-notebook server. To carry this out:\n\nClick on the terminal running the server\nPress “ctrl + c”\nPress y then enter to confirm closing the server\n\nTo run the new jupyter notebook:\n\nOpen a new terminal (right click on background and choose “Terminal”)\nRun the following command to activate the metadata_explore environment: . usemetaexplore\nMove directory into “maaslin3_workshop”: cd ~/maaslin3_workshop\nCreate a new directory for the analysis: mkdir meta_exploration\nOpen jupyter-notebook: jupyter-notebook\nWith the jupyter notebook file explorer move into your “metadata_exploration” directory\n\nThe next page is carrying out the analysis for the “Relative” metadata.",
+    "crumbs": [
+      "Metadata",
+      "Metadata exploration"
+    ]
+  },
+  {
+    "objectID": "metadata/metadata_exploration.html#conda-environment",
+    "href": "metadata/metadata_exploration.html#conda-environment",
+    "title": "Metadata exploration",
+    "section": "",
+    "text": "For this section you’ll need a new conda environment and jupyter-notebook session.\nBefore continuing save then close and halt all your open jupyter notebooks. Then close your current jupyter-notebook server. To carry this out:\n\nClick on the terminal running the server\nPress “ctrl + c”\nPress y then enter to confirm closing the server\n\nTo run the new jupyter notebook:\n\nOpen a new terminal (right click on background and choose “Terminal”)\nRun the following command to activate the metadata_explore environment: . usemetaexplore\nMove directory into “maaslin3_workshop”: cd ~/maaslin3_workshop\nCreate a new directory for the analysis: mkdir meta_exploration\nOpen jupyter-notebook: jupyter-notebook\nWith the jupyter notebook file explorer move into your “metadata_exploration” directory\n\nThe next page is carrying out the analysis for the “Relative” metadata.",
+    "crumbs": [
+      "Metadata",
+      "Metadata exploration"
+    ]
+  },
+  {
+    "objectID": "metadata/correlation.html",
+    "href": "metadata/correlation.html",
+    "title": "Metadata correlation",
+    "section": "",
+    "text": "In this page we’ll carry out correlation analysis of the metadata from the Rhizosphere soil dataset.\n\n\n\n\n\n\n\nIn the “metad_exploration” directory create a new R jupyter notebook called “1-metadata_exploration.ipynb”.\n\n\n\n\n\n\n\n\nLoad the only library we need: variancepartition.\n\n#Library\nlibrary(\"variancePartition\")\nlibrary(\"tidyverse\")\n\n\n\n\n\n\n\n\n\nLoad the full metadata data.frame for the rhizosphere dataset. THis is in the same format as the metadata data.frame that is used for MaAsLin3.\n\n#Load metadata\nload(\"/pub14/tea/nsc206/NEOF/R_community_advanced/rhizo_full_metadata_df.RData\")\n\nGlimpse the metadata.\n\n#View head of data.frame\nmetadata |&gt; head()\n\nNow we have 17 different variables. When you have so many it can be difficult to know which ones to use. Thankfully, we can narrow down our options with the following correlation analysis.\n\n\n\nWe will create an object containing the formula we will test. Prior to this, let’s see all the unique values per column/variable.\n\n#Unique values of all columns\nlapply(metadf, unique)\n\nLooking through this we see that Genotype and `Collection_Time variables each have one (non-NA) value. There is not point in using metadata with one variable in any analysis. Due to this and the fact the correlation function will not work with one value variables we will not include them in our formula.\nAdditionally, we won’t use SampleID or Sample. These values are unique for each row/observation so again are not useful for any group comparisons.\n\n\n\n\n\n\n\n\nNow to create our formula object, this is the same as the lme formula for MaAsLin3.\nWe’ll use all the variables except the ones noted above. We’ll write the formula ready for MaAsLin3 with fixed effects (e.g. Soil) and random effects (e.g. (1|Plate)).\n\n#Create formula to specify metadata variables that will be tested \n# against each other\nform &lt;- ~ Soil + Reads + RNA + Volume_ul +\n    (1|Plate) + (1|Collection_Date) + (1|Pot_ID) +\n    (1|Plot) + (1|Type) + (1|PCR_PlateBarcode) +\n    (1|Cell)\n\n\n\n\n\n\n\nTip\n\n\n\nWhen running correlation analysis putting variables as random effects is no different than putting them as fixed effects. We write the formula in the above manner so we can then easily use it for the maaslin3() function.\n\n\n\n\n\n\n\n\n\n\nNow we can create a matrix of all the pairwise correlations between the metadata variables with the canCorPairs() function. This requires the formula (created above) and then the metadata data.frame.\n\nC &lt;- variancePartition::canCorPairs(form, metadf)\n\nWe can view the matrix where values of 1 mean complete correlation and 0 means no correlation.\n\nC\n\n\n\n\n\n\n\nNote\n\n\n\nSome of the correlation of Pot_ID are NA because it had some NA values.\n\n\n\n\n\n\n\n\n\n\nThe plotCorrMatrix() function allows us to quickly create a correlation heatmap.\n\n#Create correlation heatmap\nvariancePartition::plotCorrMatrix(C)\n\nWith this plot we can which metadata variables correlate which don’t. However, we want more than that. We also want to know how they correlate. We’ll explore this with some tidyverse functions in the next page.",
+    "crumbs": [
+      "Metadata",
+      "Metadata correlation"
+    ]
+  },
+  {
+    "objectID": "metadata/correlation.html#jupyter-notebook",
+    "href": "metadata/correlation.html#jupyter-notebook",
+    "title": "Metadata correlation",
+    "section": "",
+    "text": "In the “metad_exploration” directory create a new R jupyter notebook called “1-metadata_exploration.ipynb”.",
+    "crumbs": [
+      "Metadata",
+      "Metadata correlation"
+    ]
+  },
+  {
+    "objectID": "metadata/correlation.html#library",
+    "href": "metadata/correlation.html#library",
+    "title": "Metadata correlation",
+    "section": "",
+    "text": "Load the only library we need: variancepartition.\n\n#Library\nlibrary(\"variancePartition\")\nlibrary(\"tidyverse\")",
+    "crumbs": [
+      "Metadata",
+      "Metadata correlation"
+    ]
+  },
+  {
+    "objectID": "metadata/correlation.html#data",
+    "href": "metadata/correlation.html#data",
+    "title": "Metadata correlation",
+    "section": "",
+    "text": "Load the full metadata data.frame for the rhizosphere dataset. THis is in the same format as the metadata data.frame that is used for MaAsLin3.\n\n#Load metadata\nload(\"/pub14/tea/nsc206/NEOF/R_community_advanced/rhizo_full_metadata_df.RData\")\n\nGlimpse the metadata.\n\n#View head of data.frame\nmetadata |&gt; head()\n\nNow we have 17 different variables. When you have so many it can be difficult to know which ones to use. Thankfully, we can narrow down our options with the following correlation analysis.",
+    "crumbs": [
+      "Metadata",
+      "Metadata correlation"
+    ]
+  },
+  {
+    "objectID": "metadata/correlation.html#formula",
+    "href": "metadata/correlation.html#formula",
+    "title": "Metadata correlation",
+    "section": "",
+    "text": "Now to create our formula object, this is the same as the lme formula for MaAsLin3.\nWe’ll use all the variables except the ones noted above. We’ll write the formula ready for MaAsLin3 with fixed effects (e.g. Soil) and random effects (e.g. (1|Plate)).\n\n#Create formula to specify metadata variables that will be tested \n# against each other\nform &lt;- ~ Soil + Reads + RNA + Volume_ul +\n    (1|Plate) + (1|Collection_Date) + (1|Pot_ID) +\n    (1|Plot) + (1|Type) + (1|PCR_PlateBarcode) +\n    (1|Cell)\n\n\n\n\n\n\n\nTip\n\n\n\nWhen running correlation analysis putting variables as random effects is no different than putting them as fixed effects. We write the formula in the above manner so we can then easily use it for the maaslin3() function.",
+    "crumbs": [
+      "Metadata",
+      "Metadata correlation"
+    ]
+  },
+  {
+    "objectID": "metadata/correlation.html#pairwise-correlations",
+    "href": "metadata/correlation.html#pairwise-correlations",
+    "title": "Metadata correlation",
+    "section": "",
+    "text": "Now we can create a matrix of all the pairwise correlations between the metadata variables with the canCorPairs() function. This requires the formula (created above) and then the metadata data.frame.\n\nC &lt;- variancePartition::canCorPairs(form, metadf)\n\nWe can view the matrix where values of 1 mean complete correlation and 0 means no correlation.\n\nC\n\n\n\n\n\n\n\nNote\n\n\n\nSome of the correlation of Pot_ID are NA because it had some NA values.",
+    "crumbs": [
+      "Metadata",
+      "Metadata correlation"
+    ]
+  },
+  {
+    "objectID": "metadata/correlation.html#correlation-heatmap",
+    "href": "metadata/correlation.html#correlation-heatmap",
+    "title": "Metadata correlation",
+    "section": "",
+    "text": "The plotCorrMatrix() function allows us to quickly create a correlation heatmap.\n\n#Create correlation heatmap\nvariancePartition::plotCorrMatrix(C)\n\nWith this plot we can which metadata variables correlate which don’t. However, we want more than that. We also want to know how they correlate. We’ll explore this with some tidyverse functions in the next page.",
+    "crumbs": [
+      "Metadata",
+      "Metadata correlation"
+    ]
+  },
+  {
+    "objectID": "metadata/correlation.html#correlation-exploration",
+    "href": "metadata/correlation.html#correlation-exploration",
+    "title": "Metadata correlation",
+    "section": "",
+    "text": "We’ll look at two of the correlations:\n\nThe Reads and SampleSite to look at continuous versus categorical\nThe SampleSite and SubjectID to look at categorical versus categorical\n\n\n\nThe Reads and SampleSite variables have a correlation of 0.338. We can quickly see why with a boxplot.\n\nmetadata |&gt;\n    ggplot2::ggplot(aes(x = SampleSite, y = Reads)) +\n    ggplot2::geom_boxplot()\n\nIn this case it looks like the Axilla samples have smaller read counts than the Cheek and Scalp samples. This is a normal difference between different environments and nothing to worry about.\n\n\n\nThe SampleSite and SubjectID variables have a correlation of 0.11. First we can count the number of each pairing.\n\n#Summarise to see counts of each Sample and Subject pairing\nmetadata |&gt;\n    dplyr::count(SampleSite, SubjectID)\n\nIf you look through you may be able to see what is causing the correlation. For a clearer view lets use the function ggplot2::geom_tile().\n\nmetadata |&gt;\n    dplyr::count(SampleSite, SubjectID) |&gt;\n    ggplot2::ggplot(aes(x=SampleSite, y=SubjectID, fill=n)) +\n    ggplot2::geom_tile()\n\nWith the tile plot it is clear the correlation is caused by the Axilla samples. There are 2 samples from each subject for the Cheek and for Scalp. However, some of the subjects only have 1 Axilla sample, with one subject having none.\nI wouldn’t worry about the correlations we found in this metadata. It is very likely that read depth will correlate with other variables and the MaAsLin3 developers advice always including it as a random effect for non-quantitative datasets.\nWe don’t have 2 continuous variables to compare but if you did you could create a scatter plot to view their collinearity.",
+    "crumbs": [
+      "Metadata",
+      "Metadata correlation"
+    ]
+  },
+  {
+    "objectID": "metadata/correlation.html#metadata-values",
+    "href": "metadata/correlation.html#metadata-values",
+    "title": "Metadata correlation",
+    "section": "",
+    "text": "We will create an object containing the formula we will test. Prior to this, let’s see all the unique values per column/variable.\n\n#Unique values of all columns\nlapply(metadf, unique)\n\nLooking through this we see that Genotype and `Collection_Time variables each have one (non-NA) value. There is not point in using metadata with one variable in any analysis. Due to this and the fact the correlation function will not work with one value variables we will not include them in our formula.\nAdditionally, we won’t use SampleID or Sample. These values are unique for each row/observation so again are not useful for any group comparisons.",
+    "crumbs": [
+      "Metadata",
+      "Metadata correlation"
+    ]
+  },
+  {
+    "objectID": "metadata/correlation_exploration.html",
+    "href": "metadata/correlation_exploration.html",
+    "title": "Correlation exploration",
+    "section": "",
+    "text": "When choosing which metadata variables to use and not use it is not enough to know which ones are correlated. What we want to know most of the time is which ones are collinear. In essence we don’t want to use 2 metadata variables that have directly/indirectly measured the same thing.\nIn this page we’ll look at three different types of comparisons.\n\nCategorical vs continuous\nCategorical vs categorical\nContinuous vs continuous\n\n\n\nA quick way to look for correlation of a continuous and categorical variable is with box plots.\n\n\nFirst we’ll compare Soil against Reads which had a correlation value of 0.41 (not very strong).\n\n#Soil vs Reads\nmetadf |&gt;\n    ggplot2::ggplot(aes(x = Soil, y = Reads)) +\n    ggplot2::geom_boxplot()\n\nIn the resulting plot we can see that Bulk Soil samples have a higher range of read depths compared to Rhizosphere Soil. However, this is expected and this actually shows us why we should use Reads as a continuous control variable.\n\n\n\nThe variables RNA and Volume_ul have a very strong correlation (0.89). Let’s compare with another box plot.\n\n#RNA vs Volume_ul\nmetadf |&gt;\n    ggplot2::ggplot(aes(x = RNA, y = Volume_ul)) +\n    ggplot2::geom_boxplot()\n\nThere’s definitely a correlation. Let’s look at these variables a bit more.\n\n#Count combinations of DNA and Volume_ul\nmetadf |&gt;\n    #Group by RNA and Volume_ul\n    dplyr::group_by(RNA,Volume_ul) |&gt;\n    #Count number of distinct groupings\n    dplyr::summarise(n=n())\n\n\n\n\n\n\n\nTipCookbook links for Tidyverse functions used above\n\n\n\n\ndplyr::group_by()\ndplyr::summarise()\n\n\n\nIn this case I would most likely not use Volume_ul. There are only 3 values and 2 of them (25 & 28) are only found in RNA samples whilst the third (30) is only found in DNA samples.\n\n\n\n\nTo compare two categorical variables we will create heatmaps containing counts.",
+    "crumbs": [
+      "Metadata",
+      "Correlation exploration"
+    ]
+  },
+  {
+    "objectID": "metadata/correlation_exploration.html#categorical-vs-continuous",
+    "href": "metadata/correlation_exploration.html#categorical-vs-continuous",
+    "title": "Correlation exploration",
+    "section": "",
+    "text": "A quick way to look for correlation of a continuous and categorical variable is with box plots.\n\n\nFirst we’ll compare Soil against Reads which had a correlation value of 0.41 (not very strong).\n\n#Soil vs Reads\nmetadf |&gt;\n    ggplot2::ggplot(aes(x = Soil, y = Reads)) +\n    ggplot2::geom_boxplot()\n\nIn the resulting plot we can see that Bulk Soil samples have a higher range of read depths compared to Rhizosphere Soil. However, this is expected and this actually shows us why we should use Reads as a continuous control variable.\n\n\n\nThe variables RNA and Volume_ul have a very strong correlation (0.89). Let’s compare with another box plot.\n\n#RNA vs Volume_ul\nmetadf |&gt;\n    ggplot2::ggplot(aes(x = RNA, y = Volume_ul)) +\n    ggplot2::geom_boxplot()\n\nThere’s definitely a correlation. Let’s look at these variables a bit more.\n\n#Count combinations of DNA and Volume_ul\nmetadf |&gt;\n    #Group by RNA and Volume_ul\n    dplyr::group_by(RNA,Volume_ul) |&gt;\n    #Count number of distinct groupings\n    dplyr::summarise(n=n())\n\n\n\n\n\n\n\nTipCookbook links for Tidyverse functions used above\n\n\n\n\ndplyr::group_by()\ndplyr::summarise()\n\n\n\nIn this case I would most likely not use Volume_ul. There are only 3 values and 2 of them (25 & 28) are only found in RNA samples whilst the third (30) is only found in DNA samples.",
+    "crumbs": [
+      "Metadata",
+      "Correlation exploration"
+    ]
+  },
+  {
+    "objectID": "metadata/correlation_exploration.html#categorical-vs-categorical",
+    "href": "metadata/correlation_exploration.html#categorical-vs-categorical",
+    "title": "Correlation exploration",
+    "section": "",
+    "text": "To compare two categorical variables we will create heatmaps containing counts.",
+    "crumbs": [
+      "Metadata",
+      "Correlation exploration"
     ]
   }
 ]
