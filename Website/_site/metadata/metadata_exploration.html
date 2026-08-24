@@ -345,6 +345,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Metadata correlation</span></a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../metadata/correlation_exploration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Correlation exploration</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -371,19 +377,22 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="metadata-exploration" class="level1">
 <h1>Metadata exploration</h1>
-<center>
-<img src="images/explore.png" class="img-fluid" style="border-radius: 15px; width: 200px; background-color: white">
-</center>
-<p>The choice of metadata is always important but even moreso when using mixed models. It is good to test and see if any metadata variables are collinear/aligned. Generally we want to avoid using multiple variables that are collinear in statistical formulas.</p>
-<p>As an extreme example you would not want to use date of birth and age. A less clear example would be if you had read depth and agar concentration. In this case you are likely to have more organisms growing on higher agar concentrations and therefore more reads. In the end is up to you to decide which variables to include or not.</p>
-<p>In this section we’ll carry out some quick metadata correlation analysis. We’ll do this for the relative data and then the quantitative data.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/explore.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="border-radius: 15px; width: 200px; background-color: white"></p>
+</figure>
+</div>
+<p>The choice of metadata is always important. This is especially so when you are using mixed models like with <a href="../maaslin3/maaslin3.html">MaAsLin3</a>.</p>
+<p>It is good to test and see if any metadata variables are collinear/aligned. Generally we want to avoid using multiple variables that are collinear in statistical formulas.</p>
+<p>As an extreme example you would not want to use date of birth and age. A less clear example would be if you had read depth and agar concentration. In this case you are likely to have more organisms growing on higher agar concentrations and therefore more reads. In the end it is up to you to decide which variables to include or not.</p>
+<p>In this part we’ll carry out some quick metadata correlation analysis. We’ll do this for the <a href="..\maaslin3/dataset.html#rhizosphere-soil">Rhizosphere soil metadata</a>. However, we’ll include even more metadata variables that were present in the original dataset.</p>
 <p>For this we’ll use functions from the R package <a href="https://github.com/GabrielHoffman/variancePartition"><code>variancePartition</code></a> which was developed for gene expression analysis.</p>
 <section id="conda-environment" class="level2">
 <h2 class="anchored" data-anchor-id="conda-environment">Conda environment</h2>
 <center>
 <img src="../images/mamba_logo.png" class="img-fluid" style="border-radius: 15px; width: 200px; background-color: white">
 </center>
-<p>For this section you’ll need a new conda environment and jupyter-notebook session.</p>
+<p>For this section you’ll need a new conda environment and <code>jupyter-notebook</code> session.</p>
 <p>Before continuing save then close and halt all your open jupyter notebooks. Then close your current jupyter-notebook server. To carry this out:</p>
 <ol type="1">
 <li>Click on the terminal running the server</li>
@@ -394,12 +403,12 @@ ul.task-list li input[type="checkbox"] {
 <ol type="1">
 <li>Open a new terminal (right click on background and choose “Terminal”)</li>
 <li>Run the following command to activate the <code>metadata_explore</code> environment: <code>. usemetaexplore</code></li>
-<li>Move directory into “maaslin3_workshop”: <code>cd ~/maaslin3_workshop</code></li>
+<li>Move directory into “adv_R_comm”: <code>cd ~/adv_R_comm</code></li>
 <li>Create a new directory for the analysis: <code>mkdir meta_exploration</code></li>
 <li>Open jupyter-notebook: <code>jupyter-notebook</code></li>
-<li>With the jupyter notebook file explorer move into your “metadata_exploration” directory</li>
+<li>With the jupyter notebook file explorer move into your “meta_exploration” directory</li>
 </ol>
-<p>The next page is carrying out the analysis for the “Relative” metadata.</p>
+<p>The next page is carrying out some metadata correlation.</p>
 
 
 </section>

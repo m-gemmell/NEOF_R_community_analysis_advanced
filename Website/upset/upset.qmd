@@ -2,9 +2,7 @@
 title: "Upset"
 ---
 
-<center>
-![](images/upset_plot_icon.png){style="width:300px; background: white; border-radius:15px; border:5px white solid"}
-</center>
+![](images/upset_plot_icon.png){style="width:300px; background: white; border-radius:15px; border:5px white solid" fig-align="center"}
 
 Upset plots are a visualisation method to display __intersections__ between __sets__.
 They can be seen as a different form of a venn diagram but are able to effectively display many __intersecting sets__.
@@ -34,10 +32,10 @@ Venn diagrams and upset plots display the __intersections__ between __sets__.
 To demonstrate the concept of __intersecting sets__ this section includes a few examples of these plots.
 These plots will display:
 
-- __Sets__ of samples (e.g. S1, S2, & S3).
-- The __intersection__ of phyla.
+- __Sets__ of samples (e.g. S1, S2, & S3)
+- The __intersection__ of phyla
 
-```{r, echo=FALSE, message=FALSE}
+```{r, echo=FALSE, warning=FALSE, results=FALSE, output=FALSE}
 #Data for venn and upset plots
 #if (!require(devtools)) install.packages("devtools")
 #devtools::install_github("gaospecial/ggVennDiagram")

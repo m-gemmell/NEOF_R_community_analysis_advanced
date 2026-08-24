@@ -1,5 +1,83 @@
 ---
 title: "Introduction"
 ---
+![](./images/adv_r_comm.png){style="width:200px" fig-align="center"}
 
 This is the Website for the NEOF Advance R community analysis workshop.
+Unlike our other courses the structure of this course is more flexible as you, the learner, can choose which topics to focus on.
+
+Though this workshop is more flexible there are parts that should be carried out before other parts.
+
+## Prerequisites
+![](./images/r_passport.png){style="width:150px" fig-align="center"}
+
+Prior to go through any of this website you should be familiar with the below.
+If not, please go through the linked course materials first before continuing on this website.
+
+- Foundations of R
+  - Chapters 1 to 11 of the [NEOF R primer for omics](https://neof-workshops.github.io/R_j4c0xh/)
+- Basic R community analysis with the `phyloseq` and `microbiome` R packages
+  - [NEOF R community analysis course](https://neof-workshops.github.io/R_community_whqkt8/Course)
+- Usage of the `tidyverse` packages `tibble`, `dplyr`, `tidyr`, and `ggplot2`
+  - [NEOF Tidyverse cookbook](https://neof-workshops.github.io/Tidyverse/) 
+  - [NEOF walkthrough of Tidyverse and the cookbook with learnr tutorials](https://neof-workshops.github.io/Tidyverse/learnr.html)
+
+## Setup
+![](/images/setup_4.png){style="width:150px; background: white; border-radius:5px; border: white solid 10px" fig-align="center"}
+
+When you are ready to start these materials please start by following the instructions on the [setup page](/setup/setup.qmd).
+
+## Topics
+
+Once you are setup you can choose one of the following five topics to begin.
+After finishing one topic you can move onto the next one of your choice.
+
+If you have no particular preference we recommend following the order of this website.
+I.e. Rarefaction -> Divergence -> Upset -> MasAsLin3 -> Metadata exploration.
+
+### Rarefaction
+![](/rarefaction/images/iterative_rarefaction.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
+
+This part focuses on the alpha and beta diversity analysis with [iterative rarefaction](/rarefaction/rarefaction.qmd).
+This explains why and how to use iterations to carry out iterative rarefaction normalisation.
+This is much more robust than using one round/iteration of rarefaction.
+
+Additionally, there is a section on [rarefaction slope boxplots](/rarefaction/rareslope_intro.qmd).
+This is a new type of rarefaction plot created by me.
+This helps you choose which sample to use for rarefaction size/minimum depth filtering.
+
+### Divergence
+![](/divergence/images/divergence.png){style="width:200px; background: white; border-radius:5px" fig-align="center"}
+
+[Divergence analysis](/divergence/divergence.qmd) is the comparing of dissimilarity distances between (inter-) and within (intra-) groupings. 
+This allows us to more closely examine beta diversity.
+
+### Upset
+![](/upset/images/upset_plot_icon.png){style="width:300px; background: white; border-radius:15px; border:5px white solid" fig-align="center"}
+
+[Upset plots](/upset/upset.qmd) are a visualisation method to display intersections between sets. 
+They can be seen as a different form of a venn diagram but are able to effectively display many intersecting sets.
+
+This part demonstrates how upset plots can be used for community analysis to see:
+
+- What taxa are shared by which samples
+- What samples are shared by which taxa
+
+### MaAsLin3
+![](/maaslin3/images/maslin.png){style="width:200px; background:white; border-radius:5px" fig-align="center"}
+
+[MaAsLin3](/maaslin3/maaslin3.qmd) is a tool to detect feature associations based on metadata groupings using mixed effect models.
+It is similar to [`ANCOM-BC2` covered in the R community course](https://neof-workshops.github.io/R_community_whqkt8/Course/17-Differential_abundance_analysis.html).
+However, MaAsLin3 is a lot more complex but in addition to carrying out abundance association testing it also carried out prevalence association testing.
+
+### Metadata exploration
+![](/metadata/images/relative.png){style="border-radius: 15px; width: 200px; background-color: white" fig-align="center"}
+
+[Metadata exploration](/metadata/metadata_exploration.qmd) is very useful you have a lot of metadata variables.
+When this is the case it can be difficult to know which variables to use and which to not use, especially for MaAsLin3 analysis.
+This part uses correlation analysis to determine which metadata variables are collinear helping with the choice of metadata variables.
+
+This part references a lot of theory presented in the [MaAsLin3 part](/maaslin3/maaslin3.qmd).
+We recommend you carry out that part before starting the metadata exploration.
+
+

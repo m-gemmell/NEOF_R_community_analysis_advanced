@@ -1,7 +1,5 @@
 # Divergence
-<center>
-![](images/divergence.png){style="width:200px; background: white; border-radius:5px"}
-</center>
+![](images/divergence.png){style="width:200px; background: white; border-radius:5px" fig-align="center"}
 
 Divergence analysis is comparing the dissimilarity distances between (inter-) and within (intra-) groupings.
 This allows us to more closely examine beta diversity.

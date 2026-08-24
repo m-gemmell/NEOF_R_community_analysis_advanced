@@ -1,7 +1,6 @@
 # Setup
-<center>
-![](/images/setup_4.png){style="width:200px; background: white; border-radius:5px; border: white solid 10px"}
-</center>
+![](/images/setup_4.png){style="width:150px; background: white; border-radius:5px; border: white solid 10px" fig-align="center"}
+
 
 ```{r eval=FALSE, echo=FALSE}
 #R code block that does nothing so the engine used is knitr for this page

@@ -403,7 +403,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#soil-vs-reads" id="toc-soil-vs-reads" class="nav-link" data-scroll-target="#soil-vs-reads">Soil vs Reads</a></li>
   <li><a href="#rna-vs-volume_ul" id="toc-rna-vs-volume_ul" class="nav-link" data-scroll-target="#rna-vs-volume_ul">RNA vs Volume_ul</a></li>
   </ul></li>
-  <li><a href="#categorical-vs-categorical" id="toc-categorical-vs-categorical" class="nav-link" data-scroll-target="#categorical-vs-categorical">Categorical vs categorical</a></li>
+  <li><a href="#categorical-vs-categorical" id="toc-categorical-vs-categorical" class="nav-link" data-scroll-target="#categorical-vs-categorical">Categorical vs categorical</a>
+  <ul class="collapse">
+  <li><a href="#soil-vs-plate" id="toc-soil-vs-plate" class="nav-link" data-scroll-target="#soil-vs-plate">Soil vs Plate</a></li>
+  <li><a href="#soil-vs-cell" id="toc-soil-vs-cell" class="nav-link" data-scroll-target="#soil-vs-cell">Soil vs Cell</a></li>
+  <li><a href="#rna-vs-type" id="toc-rna-vs-type" class="nav-link" data-scroll-target="#rna-vs-type">RNA vs Type</a></li>
+  <li><a href="#soil-vs-rna" id="toc-soil-vs-rna" class="nav-link" data-scroll-target="#soil-vs-rna">Soil vs RNA</a></li>
+  </ul></li>
+  <li><a href="#finish" id="toc-finish" class="nav-link" data-scroll-target="#finish">Finish</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -422,13 +429,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="./images/magnifying_glass.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:150px; background:white; border-radius:5px"></p>
 </figure>
 </div>
-<p>When choosing which metadata variables to use and not use it is not enough to know which ones are correlated. What we want to know most of the time is which ones are collinear. In essence we don’t want to use 2 metadata variables that have directly/indirectly measured the same thing.</p>
-<p>In this page we’ll look at three different types of comparisons.</p>
+<p>When choosing which metadata variables to use and not to use it is not enough to know which ones are correlated. What we want to know most of the time is which ones are collinear. In essence we don’t want to use 2 metadata variables that have directly/indirectly measured the same thing.</p>
+<p>In this page we’ll look at two different types of comparisons.</p>
 <ul>
 <li>Categorical vs continuous</li>
 <li>Categorical vs categorical</li>
-<li>Continuous vs continuous</li>
 </ul>
+<p>If you had 2 appropriate continuous variables to compare I would suggest a <a href="https://neof-workshops.github.io/Tidyverse/ggplot2/annotation.html#statistical-abline-and-equation">scatterplot with linear model</a>.</p>
 <section id="categorical-vs-continuous" class="level2">
 <h2 class="anchored" data-anchor-id="categorical-vs-continuous">Categorical vs continuous</h2>
 <p>A quick way to look for correlation of a continuous and categorical variable is with box plots.</p>
@@ -483,6 +490,92 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="categorical-vs-categorical" class="level2">
 <h2 class="anchored" data-anchor-id="categorical-vs-categorical">Categorical vs categorical</h2>
 <p>To compare two categorical variables we will create heatmaps containing counts.</p>
+<section id="soil-vs-plate" class="level3">
+<h3 class="anchored" data-anchor-id="soil-vs-plate">Soil vs Plate</h3>
+<p>Our <code>Soil</code> and <code>Plate</code> variables have a correlation value of 0.8 which is very high. Let’s find out why.</p>
+<p>Create a heatmap of counts which includes the values as text.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Soil vs Plate count heatmap</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>metadf <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">count</span>(Soil,Plate) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Soil, <span class="at">y=</span>Plate, <span class="at">fill=</span>n)) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#Add text containing count values</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>n), <span class="at">color=</span><span class="st">"white"</span>, <span class="at">size=</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Cookbook links for Tidyverse functions used above">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Cookbook links for Tidyverse functions used above
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><a href="https://neof-workshops.github.io/Tidyverse/dplyr/count.html"><code>dplyr::count()</code></a></li>
+</ul>
+</div>
+</div>
+<p>We can see that the correlation is caused by most of the Bulk Soil samples being on Plate 2 whilst all the Rhizosphere Soil samples are on Plate 1.</p>
+<p>I would still use <code>Plate</code> as a random effect to account for the differences it may cause to the Bulk Soil samples.</p>
+</section>
+<section id="soil-vs-cell" class="level3">
+<h3 class="anchored" data-anchor-id="soil-vs-cell">Soil vs Cell</h3>
+<p>The <code>Soil</code> and <code>Cell</code> variables had total correlation with a correlation value of 1.</p>
+<p>Create another count heatmap to see why.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Soil vs Cell count heatmap</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>metadf <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">count</span>(Soil,Cell) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Soil, <span class="at">y=</span>Cell, <span class="at">fill=</span>n)) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>n), <span class="at">color=</span><span class="st">"white"</span>, <span class="at">size=</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Here we can see that each cell only has 2 samples and each cell only has Rhizosphere Soil samples or Bulk Soil samples. This indicates <code>Cell</code> would not be very useful as a random effect because it would lead to <a href="../maaslin3/random_effects.html#small-random-effect">small random effect sizes</a>.</p>
+<p>I have a hunch how the cells are being used. In this dataset we have paired samples where the original sample was DNA derived and RNA derived (<code>RNA</code> variable). Let’s compare the <code>Cell</code> variable to the <code>Barcode</code> variable which designates the original sample.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Barcode vs Cell count heatmap</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>metadf <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">count</span>(Barcode,Cell) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Barcode, <span class="at">y=</span>Cell, <span class="at">fill=</span>n)) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>n), <span class="at">color=</span><span class="st">"white"</span>, <span class="at">size=</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>My hunch was correct. Barcode and Cell are completely collinear and I wouldn’t use either in any analysis.</p>
+</section>
+<section id="rna-vs-type" class="level3">
+<h3 class="anchored" data-anchor-id="rna-vs-type">RNA vs Type</h3>
+<p>You may have noticed that <code>RNA</code> and <code>Type</code> completely correlate with a value of 1. Create a count heatmap to see why.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#RNA vs Type count heatmap</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>metadf <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">count</span>(RNA,Type) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>RNA, <span class="at">y=</span>Type, <span class="at">fill=</span>n)) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>n), <span class="at">color=</span><span class="st">"white"</span>, <span class="at">size=</span><span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In this case these two variables are completely collinear as they measure the same thing. The <code>RNA</code> value of <code>DNA</code> is <code>DNA</code> for <code>Type</code>. The <code>RNA</code> value of <code>RNA</code> is <code>cDNA</code> for <code>Type</code>. Therefore, I would use one or the other, my preference would be <code>RNA</code>.</p>
+</section>
+<section id="soil-vs-rna" class="level3">
+<h3 class="anchored" data-anchor-id="soil-vs-rna">Soil vs RNA</h3>
+<p>For the purposes of completeness let’s look at two variables with very low correlation. The correlation value of <code>Soil</code> and <code>RNA</code> is very low (6.7e-18).</p>
+<p>Create a count heatmap.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Soil vs RNA count heatmap</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>metadf <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">count</span>(Soil,RNA) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Soil, <span class="at">y=</span>RNA, <span class="at">fill=</span>n)) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    ggplot2<span class="sc">::</span><span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>n), <span class="at">color=</span><span class="st">"white"</span>, <span class="at">size=</span><span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Perfect! We have the <code>Bulk Soil</code> and <code>Rhizosphere Soil</code> samples completely divided by <code>RNA</code>. In this case it is because each original sample that was collected was used to make a RNA derived and a DNA derived sequencing sample.</p>
+</section>
+</section>
+<section id="finish" class="level2">
+<h2 class="anchored" data-anchor-id="finish">Finish</h2>
+<p>Excellent! As you can see from this exploration the choice of metadata variables is going to be very dependant on your dataset and your questions. I can’t give you a nice tidy decision tree to determine whether a metadata variable should be included or not. Rather, you need to understand what you want, what the various metadata variables represent, and how you will use the variables.</p>
 
 
 </section>

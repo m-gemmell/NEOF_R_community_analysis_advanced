@@ -1,4 +1,5 @@
 # MaAsLin3
+![](images/maslin.png){style="width:200px; background:white; border-radius:5px" fig-align="center"}
 
 MaAsLin3 is a tool to detect feature associations based on metadata groupings using mixed effect models.
 

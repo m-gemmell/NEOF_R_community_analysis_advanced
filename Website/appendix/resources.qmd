@@ -1,4 +1,13 @@
-# MaAsLin3 resources
+# Resources
+
+## Rarefaction resources
+
+- Journal papers
+  - ["To rarefy or not to rarefy: robustness and efficiency trade-offs of rarefying microbiome data"](https://academic.oup.com/bioinformatics/article/38/9/2389/6536959)
+  - ["Rarefaction is currently the best approach to control for uneven sequencing effort in amplicon sequence analyses"](https://journals.asm.org/doi/10.1128/msphere.00354-23)
+  - ["Waste Not, Want Not: Why Rarefying Microbiome Data Is Inadmissible"](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531)
+
+## MaAsLin3 resources
 
 Below are various resources for MaAsLin3:
 
