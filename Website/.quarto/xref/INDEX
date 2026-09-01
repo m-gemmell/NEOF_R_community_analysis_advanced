@@ -607,5 +607,14 @@
   },
   "metadata/correlation_exploration.qmd": {
     "correlation_exploration.html": "e028d1b8"
+  },
+  "appendix/faq.qmd": {
+    "faq.html": "b1d5e91a"
+  },
+  "appendix/course_resources.qmd": {
+    "course_resources.html": "4e6eb823"
+  },
+  "course_resources.qmd": {
+    "course_resources.html": "239d24e7"
   }
 }

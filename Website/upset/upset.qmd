@@ -125,7 +125,7 @@ It consists of 2 parts:
 By default the order of the x-axis is ordered from frequency within the intersections.
 I.e. from intersection with highest phyla count to lowest phyla count.
 
-```{r, echo=FALSE, message=FALSE}
+```{r, echo=FALSE, message=FALSE, results=FALSE, warning=FALSE}
 #Create long tibble of samples and phyla
 #Numbers and seeds based on creating Phyla list (above) for ggVennDiagram()
 set.seed(754628)

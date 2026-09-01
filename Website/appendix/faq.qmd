@@ -1,0 +1,15 @@
+# FAQ
+
+Frequently asked questions.
+
+This will be updated with the answers of questions that are asked during courses.
+
+## General
+
+::: {.callout-note collapse="true" title="Where can I get the presentation recordings and the datasets?"}
+These are included in the resources webpage that is accessed after filling in the feedback form.
+:::
+
+::: {.callout-note collapse="true" title="Can I copy and paste from computer to webVNC?"}
+You cannot copy and paste from your computer to the webVNC and vice versa. This is because the webVNC and your computer have two different clipboards (used for copy and pasting) which are not able to interact with each other as they are 2 different computers.
+:::

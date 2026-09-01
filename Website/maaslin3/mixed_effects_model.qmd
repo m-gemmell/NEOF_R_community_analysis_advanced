@@ -230,4 +230,3 @@ tbl |>  ggplot2::ggplot(aes(x=Dosage, y=Ecoli)) +
 For an animated explanation please see the following link: [mfviz Introduction to Hierarchical Modeling](https://mfviz.com/hierarchical-models/)
 
 In our MaAsLin3 analysis we will only use random intercepts.
-This is covered in the [MaAsLin3 relative abundance analysis section](/maaslin3/relative.qmd).

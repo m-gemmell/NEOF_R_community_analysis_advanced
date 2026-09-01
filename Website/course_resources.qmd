@@ -1,0 +1,37 @@
+# Course resources
+
+## Videos & slides
+
+### Tidyverse
+
+
+[Slides](https://docs.google.com/presentation/d/1Lb9LPS24-BPxHflJdmN3PlGDLsWFD850DjSQznBpFXE/edit?usp=sharing)
+
+### Adv. R community analysis
+
+
+[Slides](https://docs.google.com/presentation/d/15ZJPRKrydHoXk6eSi-ljU08wm7tA6sXT6My1gVekeLk/edit?usp=sharing)
+
+## Workshop files
+
+The below compressed directory is provided so you may attempt the workshop materials on a computer/cluster available to you.
+
+Note:
+
+The file locations will not match
+Copy the link and paste it to your browser's address bar.
+
+## Jupyter notebooks
+
+The below compressed directory contains folders of the completed jupyter notebooks and the input and output files. This is for your own interest.
+
+## Website links
+
+The link to the Tidyverse website is:
+
+[https://neof-workshops.github.io/Tidyverse](https://neof-workshops.github.io/Tidyverse)
+
+This is a hidden page on the Advanced R community course's website.
+For convenience the link to the main page of the Advanced R community website is:
+
+[https://neof-workshops.github.io/R_community_advanced_36fc78](https://neof-workshops.github.io/R_community_advanced_36fc78)

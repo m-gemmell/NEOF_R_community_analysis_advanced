@@ -244,6 +244,7 @@ website:
     - href: appendix/resources.qmd
     - href: appendix/mamba.qmd
     - href: appendix/r_courses.qmd
+    - href: appendix/faq.qmd
       
 #Format
 format:
