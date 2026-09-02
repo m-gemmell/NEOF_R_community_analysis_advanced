@@ -30,9 +30,9 @@ Below are brief bullet points about the data:
 ## Setup
 ![](/images/setup_4.png){style="width:200px; background: white; border-radius:5px; border: white solid 10px" fig-align="center"}
 
-Before you carry out any practice ensure you have setup your directory, environment, and jupyter-notebook as shown in the overall [setup](/setup/setup.qmd)
+Before you carry out any practice ensure you have setup your directory, environment, and `jupyter` as shown in the overall [setup](/setup/setup.qmd).
 
-With the jupyter-notebook file explorer:
+With the `jupyter` file explorer:
 
 1. Create a directory called `iterative_rarefaction` within your `adv_R_comm` directory
 2. Move into your newly created `iterative_rarefaction` directory.

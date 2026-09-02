@@ -11,7 +11,7 @@ These were covered in the R community analysis course:
 ![](images/iterative_rarefaction.png){style="width:200px; border-radius:5px; background:white; border: white solid 5px" fig-align="center"}
 
 In this part we will primarily focus on carrying out iterative rarefaction normalisation.
-This is the process:
+This is the process of:
 
 1. Carrying out out multiple rarefaction normalisations
 2. Producing the desired diversity (alpha and/or beta) analyses on all the normalised count tables

@@ -14,7 +14,7 @@ Sampling is meant to be random but true randomness is pretty much impossible, es
 
 To carry out random processes `R` uses a global variable called `seed`. The `seed` is normally random and changes every time it is used. This is useful for everyday analysis but what if you want replicable/repeatable results?
 
-### Sampling 1 to 10
+### Sampling 0 to 9
 
 In R we can set the `seed` with the function `seet.seed()`. Carry this out to determine the randomness of sampling.
 
@@ -50,7 +50,7 @@ sample(x = num_vec, size = 5)
 set.seed(NULL)
 ```
 
-That's right, `sample()` will always return take the 10th, 6th, 5th, 4th, and 1st values in that order if:
+That's right, `sample()` will always return the 10th, 6th, 5th, 4th, and 1st values in that order if:
 
 - The **random seed** is **1234**
 - The **input vector** is a **length** of **10**

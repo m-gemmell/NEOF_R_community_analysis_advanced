@@ -21,9 +21,13 @@ Note:
 The file locations will not match
 Copy the link and paste it to your browser's address bar.
 
+[Data files download](https://neof-workshops.github.io/R_community_advanced_36fc78/downloads/data.zip)
+
 ## Jupyter notebooks
 
 The below compressed directory contains folders of the completed jupyter notebooks and the input and output files. This is for your own interest.
+
+[Jupyter notebooks download](https://neof-workshops.github.io/R_community_advanced_36fc78/downloads/jupyter_notebooks.zip)
 
 ## Website links
 

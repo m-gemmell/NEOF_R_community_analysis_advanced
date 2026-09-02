@@ -47,21 +47,3 @@ Summarise the `phyloseq` object to get an brief idea of this:
 microbiome::summarize_phyloseq(pseq)
 ```
 
-Additionally, view the sample depths/total read counts.
-
-```{r, eval=FALSE}
-#Check sample sizes
-abund_df |>
-    rowSums() |> sort()
-```
-
-Here you can see the depths of the newly added replicates.
-These were generated for this workshop.
-The depth ranges of the replicates are:
-
-- **rep4**: 1,000-3,000
-    - Produced by subsampling the relevant replicate 1 sample
-- **rep5**: 5,000-10,000
-    - Produced by subsampling the relevant replicate 2 sample
-- **rep6**: 30,000+
-    - Produced by combining the counts of the three original/real replicates (rep1, rep2, and rep3)
