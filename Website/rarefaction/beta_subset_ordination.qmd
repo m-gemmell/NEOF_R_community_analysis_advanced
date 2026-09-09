@@ -44,7 +44,7 @@ pcoa_res <- ape::pcoa(beta_df_mean_noenv)
 pcoa_axis_var_explained <- round(pcoa_res$values[,"Relative_eig"] * 100, digits = 2)
 pcoa_axis_var_explained
 #Extract 1st 2 axes
-pcoa_res_points <- pcoa_res$vectros[,1:2]
+pcoa_res_points <- pcoa_res$vectors[,1:2]
 head(pcoa_res_points)
 ```
 

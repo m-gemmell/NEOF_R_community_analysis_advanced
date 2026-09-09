@@ -29,7 +29,7 @@ Remember:
 - Your solution might be different. As long as your solution works and you understand it that is grand. There are infinite ways to do the same thing in `R`.
 
 ::: {.callout-note collapse="true" title="Rename diversity metrics"}
-Add an extra [`dplyr::rename()` function](https://neof-workshops.github.io/Tidyverse/dplyr/rename.html) along with the previous one. You will then need to rerun the jupyter-notebook.
+Edit the [`dplyr::rename()` function](https://neof-workshops.github.io/Tidyverse/dplyr/rename.html) created in [the data frame tidying page](/rarefaction/alpha_data_frame_tidy.qmd#rename-metrics). You will then need to rerun the entire jupyter-notebook.
 In your own analysis it is best to do this at one time as rarefying with 1000 iterations will take much longer than with our demonstrative 10.
 ```{R, eval=FALSE}
 #Rename
@@ -48,17 +48,13 @@ The blocks in the below solution boxes should be created and run at the bottom o
 ::: {.callout-note collapse="true" title="Data frame with metrics of choice"}
 Subset [long alpha diversity table created earlier in this section](/rarefaction/alpha_data_frame_tidy.qmd#long-data-frame) to contain metrics of choice.
 ```{R, eval=FALSE}
-#To compare means we need to create a list of comparisons
-#Create character vector of unique metadata values (media in this case)
-uniq_media_values_chr_vec <- basic_alpha_metrics_tbl |>
-    #Extract media as a vector
-    dplyr::pull(media) |>
-    #Convert to character
-    as.character() |>
-    #Unique values
-    unique()
-#View vector
-uniq_media_values_chr_vec
+#Process our long tibble
+#Subset our long alpha diversity tibble to only contain our metrics of choice
+metrics <- c("invsimpson","pielou","fisher")
+subset_alpha_metrics_tbl <- meta_alpha_mean_tbl |>
+    dplyr::filter(metric %in% metrics)
+#Glimpse subsetted tibble
+subset_alpha_metrics_tbl |> dplyr::glimpse()
 ```
 :::
 

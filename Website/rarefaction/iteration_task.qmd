@@ -98,7 +98,7 @@ iterative_rarefaction_1000_diff <-
   as.matrix(phyloseq::otu_table(pseq_env_phyla_relabund) - rarefy_i1000_relabund_phyla_df)
 iterative_rarefaction_diff
 #Histogram
-hist(iterative_rarefaction_diff)
+hist(iterative_rarefaction_1000_diff)
 ```
 :::
 

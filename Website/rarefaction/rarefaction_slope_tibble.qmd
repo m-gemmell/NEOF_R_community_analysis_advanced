@@ -163,7 +163,7 @@ rareslope_tbl$RarefyDepthSample <-
 rareslope_tbl |> dplyr::glimpse()
 ```
 
-Now you can see we only have 2,628 rows now which is good.
+Now you can see we only have 2,556 rows now which is good.
 
 ::: {.callout-tip title="Cookbook links for Tidyverse function used above"}
 - [`tidyr::drop_na()`](https://neof-workshops.github.io/Tidyverse/tidyr/drop_na.html)

@@ -25,7 +25,7 @@ load("rngseeds.RData")
 pseq_rarefy <- phyloseq::rarefy_even_depth(pseq_env_phyla,
                                            sample.size = rarefaction_size,
                                            #First random seed as the rng seed
-                                           rngseed = rngseed_vec[1]
+                                           rngseed = rngseed_vec[1],
                                            replace = FALSE,
                                            verbose = FALSE)
 rarefy_phyla_df <- as.data.frame(phyloseq::otu_table(pseq_rarefy))
@@ -38,7 +38,7 @@ for (i in 2:length(rngseed_vec)){
                                            sample.size = rarefaction_size,
                                            rngseed = rngseed_vec[i],
                                            replace = FALSE,
-                                           verbose - FALSE)
+                                           verbose = FALSE)
   #Add values to rarefy_phyla_df
   rarefy_phyla_df <- 
     rarefy_phyla_df + as.data.frame(phyloseq::otu_table(pseq_rarefy))

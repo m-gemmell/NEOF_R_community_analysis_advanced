@@ -90,8 +90,8 @@ meta_alpha_mean_tbl <- meta_alpha_mean_df |>
     dplyr::mutate(metric=as.factor(metric))
 #Glimpse produced tibble
 meta_alpha_mean_tbl |> dplyr::glimpse()
-#Remove unneeded objects
-rm(alpha_df_mean, metadf)
+#Remove unneeded object
+rm(metadf)
 ```
 
 

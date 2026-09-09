@@ -51,7 +51,7 @@ for (i in 2:rarefaction_iters){
         pseq,
         sample.size = rarefaction_size,
         rngseed = rngseed_vec[i],
-        replace = FALSE<
+        replace = FALSE,
         verbose = FALSE
     )
     #Beta diversity
