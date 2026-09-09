@@ -4,11 +4,19 @@
 
 ### Tidyverse
 
+<div class="container">
+<iframe src="https://www.youtube.com/embed/MPL9eQ9vitE" 
+frameborder="0" allowfullscreen class="video"></iframe>
+</div>
 
 [Slides](https://docs.google.com/presentation/d/1Lb9LPS24-BPxHflJdmN3PlGDLsWFD850DjSQznBpFXE/edit?usp=sharing)
 
 ### Adv. R community analysis
 
+<div class="container">
+<iframe src="https://www.youtube.com/embed/DGZaavy5EBs" 
+frameborder="0" allowfullscreen class="video"></iframe>
+</div>
 
 [Slides](https://docs.google.com/presentation/d/15ZJPRKrydHoXk6eSi-ljU08wm7tA6sXT6My1gVekeLk/edit?usp=sharing)
 
