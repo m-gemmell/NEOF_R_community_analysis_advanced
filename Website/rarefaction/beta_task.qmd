@@ -41,7 +41,7 @@ pseq_rarefy <- phyloseq::rarefy_even_depth(
     pseq,
     sample.size = rarefaction_size,
     rngseed = rngseed_vec[1],
-    replace  = FALSE
+    replace  = FALSE,
     verbose = FALSE)
 #wunifrac beta diversity
 beta_df_sum <-
@@ -79,7 +79,7 @@ rm(beta_df_sum, beta_df_mean, pseq_rarefy)
 ::: {.callout-note collapse="true" title="Load Bray-Curtis distance matrix"}
 ```{R, eval=FALSE}
 #Load bray-curtis
-load("bray_curtis_df_mean.RData")
+load("braycurtis_df_mean.RData")
 ```
 :::
 
